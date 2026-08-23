@@ -14,6 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 def test_should_include_release_path_keeps_public_files():
     assert should_include_release_path(".gitignore")
     assert should_include_release_path("README.md")
+    assert should_include_release_path("DEPLOY_TENCENT.md")
     assert should_include_release_path("Dockerfile")
     assert should_include_release_path("requirements.txt")
     assert should_include_release_path("app/streamlit_app.py")
@@ -57,6 +58,7 @@ def test_release_package_manifest_is_public_ready():
     assert "sportrx/test_day_brief.py" in manifest["included_files"]
     assert "sportrx/terminology.py" in manifest["included_files"]
     assert "README.md" in manifest["included_files"]
+    assert "DEPLOY_TENCENT.md" in manifest["included_files"]
     assert "Dockerfile" in manifest["included_files"]
     assert "requirements.txt" in manifest["included_files"]
     assert ".gitignore" in manifest["included_files"]
@@ -79,6 +81,7 @@ def test_write_release_package_excludes_internal_files(tmp_path):
     assert "app/streamlit_app.py" in names
     assert ".gitignore" in names
     assert "README.md" in names
+    assert "DEPLOY_TENCENT.md" in names
     assert "Dockerfile" in names
     assert "requirements.txt" in names
     assert "scripts/run_local.sh" in names

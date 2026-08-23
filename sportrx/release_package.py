@@ -21,6 +21,7 @@ PACKAGE_CLAIM_BOUNDARY = (
 PUBLIC_TOP_LEVEL_FILES = {
     ".gitignore",
     "CHANGELOG.md",
+    "DEPLOY_TENCENT.md",
     "Dockerfile",
     "LICENSE",
     "README.md",
@@ -70,6 +71,7 @@ REQUIRED_PUBLIC_FILES = [
     ".gitignore",
     "README.md",
     "CHANGELOG.md",
+    "DEPLOY_TENCENT.md",
     "Dockerfile",
     "ROADMAP.md",
     "LICENSE",
