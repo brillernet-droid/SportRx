@@ -1,0 +1,16 @@
+{
+  "age": 40,
+  "sex": "female",
+  "height_cm": 165,
+  "weight_kg": 68,
+  "resting_hr": 68,
+  "exercise_days_last_4w": 0,
+  "mvpa_minutes_per_week": 0,
+  "common_activity": "walking",
+  "available_days_per_week": 3,
+  "max_minutes_per_session": 30,
+  "preferred_activity": "brisk walking",
+  "goal": "Improve aerobic fitness / general health",
+  "symptoms": [],
+  "known_conditions": []
+}

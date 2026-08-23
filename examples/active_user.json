@@ -1,0 +1,16 @@
+{
+  "age": 32,
+  "sex": "male",
+  "height_cm": 178,
+  "weight_kg": 74,
+  "resting_hr": 58,
+  "exercise_days_last_4w": 4,
+  "mvpa_minutes_per_week": 160,
+  "common_activity": "cycling",
+  "available_days_per_week": 4,
+  "max_minutes_per_session": 45,
+  "preferred_activity": "cycling",
+  "goal": "Improve aerobic fitness / general health",
+  "symptoms": [],
+  "known_conditions": []
+}

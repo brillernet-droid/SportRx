@@ -1,0 +1,45 @@
+{
+  "product": "SportRx",
+  "version": "2.2",
+  "result": "Hybrid Race Check",
+  "safety_gate": {
+    "status": "GREEN",
+    "recommendation": "No major automated stop flag identified."
+  },
+  "current_measured_picture": "Not enough measured data",
+  "training_profile": "Still being mapped",
+  "areas_assessed": {
+    "label": "1 of 5 key areas assessed",
+    "assessed": 1,
+    "total": 5
+  },
+  "measured_performance_areas": {
+    "label": "0 measured performance areas",
+    "areas": []
+  },
+  "where_you_are_now": {
+    "running": "Not tested",
+    "aerobic_fitness": "Developing",
+    "strength_endurance": "Not tested",
+    "station_experience": "Not tested",
+    "work_capacity": "Not tested"
+  },
+  "what_we_know": [
+    "Training availability: 3 days/week",
+    "Session length: 45 min/session",
+    "Recent training: 120 min/week"
+  ],
+  "what_we_do_not_know": [
+    "No recent 1 km or 5 km run test",
+    "No station or strength-endurance test",
+    "No RowErg, SkiErg, or station-specific test",
+    "No compromised running or mixed-work test"
+  ],
+  "what_to_measure_next": [
+    "1 km or 5 km run benchmark",
+    "Station strength-endurance circuit",
+    "Row/Ski or low-equipment station substitute",
+    "Compromised running or mixed-work test"
+  ],
+  "next_action": "Complete SportRx Hybrid Benchmark v1"
+}

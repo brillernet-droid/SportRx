@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Local OS/editor files
+.DS_Store
+.idea/
+.vscode/
+
+# Build and package artifacts
+dist/
+build/
+*.egg-info/
+*.zip
+
+# Streamlit local config and temporary exports
+.streamlit/secrets.toml
+exports/
+tmp/

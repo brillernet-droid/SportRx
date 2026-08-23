@@ -1,0 +1,15 @@
+{
+  "age": 35,
+  "training_days": 4,
+  "weekly_training_minutes": 200,
+  "running_minutes_per_week": 100,
+  "longest_continuous_run_minutes": 35,
+  "strength_days_per_week": 2,
+  "high_intensity_sessions_last_4w": 4,
+  "loaded_movement_sessions_last_4w": 4,
+  "available_days_per_week": 4,
+  "max_minutes_per_session": 60,
+  "primary_goal": "first finish",
+  "symptoms": [],
+  "known_conditions": []
+}
