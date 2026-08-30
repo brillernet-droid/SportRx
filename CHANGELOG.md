@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.1.1 - Aerobic Prescription Reset
+
+- Restored the default SportRX product flow to the original aerobic v0.1
+  loop: basic inputs → 4-week FITT-VP plan → session execution → weekly
+  completion/RPE feedback → next-week adjustment.
+- Kept the scope to apparently healthy adults aged 18-64 and aerobic exercise
+  only; a warning symptom, relevant condition, or uncertainty blocks automatic
+  prescription rather than producing a plan.
+- Moved measurement-lab, venue-entry, and knowledge-RAG work out of the default
+  user experience. Those modules remain repository research assets, not the
+  active product surface.
+
 ## 2.3.0 - Venue Entry Assessment v0.1
 
 - Added a member-owned Venue Entry workflow: external screening-pathway handoff,

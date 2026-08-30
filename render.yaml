@@ -5,6 +5,8 @@ services:
     plan: free
     healthCheckPath: /
     envVars:
+      - key: SPORT_RX_PRODUCT_MODE
+        value: "aerobic_v01"
       - key: SPORT_RX_PUBLIC_PREVIEW
         value: "1"
       - key: SPORT_RX_ENABLE_INTERNAL_REVIEW

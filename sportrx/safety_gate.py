@@ -20,6 +20,7 @@ WARNING_SYMPTOMS = {
     "ankle_swelling",
     "known_heart_murmur",
     "pain_with_walking",
+    "reported_warning_symptom",
 }
 
 RELEVANT_CONDITIONS = {
@@ -27,6 +28,7 @@ RELEVANT_CONDITIONS = {
     "metabolic_disease",
     "renal_disease",
     "pulmonary_disease",
+    "reported_relevant_condition",
 }
 
 HIGH_INTENSITY_GOALS = {

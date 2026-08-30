@@ -30,9 +30,9 @@ def test_chinese_readme_leads_with_product_value_and_trial_path():
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
 
     assert readme.startswith("# SportRX")
-    assert "一次标准化测量，形成可解释训练起点，并用复测证明变化。" in readme
-    assert "测得准，开得稳，讲得清，能复测。" in readme
-    assert "外部筛查路径 → Safety Gate → Hybrid Benchmark → Training Profile → Starter Path → RPE / Completion → Retest" in readme
+    assert "用有限时间条件，生成一份可解释、可调整的 4 周有氧运动处方。" in readme
+    assert "开得稳，讲得清，能调整。" in readme
+    assert "基础信息 → 基础筛查 → 当前运动状态 → 可用时间 → 4 周 FITT-VP 计划" in readme
     assert "python3 -m pip install -e \".[dev,app]\"" in readme
     assert "docs/zh-CN/quickstart.md" in readme
 
@@ -55,4 +55,4 @@ def test_public_docs_keep_ai_and_validation_claims_bounded():
     assert "完赛概率" in content
     assert "正式验证" in content
     assert "research_required" in content
-    assert "合成数据示例站" in content
+    assert "当前部署不设用户账户或持久化数据库" in content

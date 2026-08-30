@@ -20,6 +20,7 @@ BLOCKING_SYMPTOMS = {
     "ankle_swelling",
     "known_heart_murmur",
     "pain_with_walking",
+    "reported_warning_symptom",
 }
 
 BLOCKING_CONDITIONS = {
@@ -27,6 +28,7 @@ BLOCKING_CONDITIONS = {
     "metabolic_disease",
     "renal_disease",
     "pulmonary_disease",
+    "reported_relevant_condition",
 }
 
 

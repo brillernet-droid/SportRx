@@ -1,40 +1,37 @@
 # SportRX
 
-> **A standardized measurement creates an explainable training start point, then retest makes change visible.**
+> **A practical, explainable, adjustable 4-week aerobic exercise prescription.**
 
-SportRX is a measurement-first exercise decision prototype for gyms, running
-clubs, and training groups. It is not an AI fitness coach and does not turn a
-short questionnaire into a performance assessment.
+SportRX is an aerobic exercise-prescription prototype for apparently healthy
+adults. It is not an AI fitness coach: deterministic rules set the initial
+FITT-VP dose and weekly progression.
 
-The venue-entry core loop is:
+The active v0.1 core loop is:
 
 ```text
-external screening pathway → Safety Gate → Hybrid Benchmark → Training Profile → Starter Path → RPE / Completion → Retest
+basic inputs → screening boundary → 4-week FITT-VP plan → session execution → RPE / completion → next-week adjustment
 ```
 
-SportRX keeps Safety Gate separate from measured performance. It records raw
-benchmark results, protocol context, RPE, equipment and deviations; preserves
-missing tests as `Not tested`; and only creates a conservative Starter Path
-when its measurement requirements are met.
+The first interface is Chinese and mobile-first: Set-up, Plan, Today, and
+Progress. It asks only for inputs that affect the plan: recent activity, time
+availability, preferred aerobic modality, optional resting heart rate, and a
+minimal stop boundary.
 
 ## Current status
 
-This is a measurement-first prototype. Current work focuses on self-use,
-small-sample usability testing, and institution pilots. SportRX does not claim
+This is an aerobic-prescription prototype. Current work focuses on self-use
+and small-sample usability testing. SportRX does not claim
 medical clearance, injury-risk percentages, race predictions, population
 percentiles, validated readiness scores, or official event certification.
 
 AI does not decide safety, exercise dose, weekly volume, or progression.
 
-## Venue Entry status
+## Scope boundary
 
-Venue Entry keeps screening separate from measurement. SportRX records only
-minimal routing metadata from a configured external screening pathway; it does
-not reproduce, translate, score, or store screening answers. Only an explicit
-`eligible_for_benchmark` route can open Benchmark. The default Chinese
-deployment is `research_required`, so it is internal/demo-only until a lawful,
-locally applicable pathway, consent process, retention window, deletion route,
-and staff escalation process are documented.
+v0.1 covers aerobic exercise only, for adults aged 18-64. It blocks automated
+prescription when a warning symptom, a relevant condition, or uncertainty is
+reported. It does not provide medical clearance, diagnosis, emergency advice,
+injury-risk estimates, race prediction, nutrition advice, or athlete percentiles.
 
 ## Internal Knowledge RAG
 
@@ -52,8 +49,9 @@ python3 scripts/smoke_check.py
 bash scripts/run_local.sh
 ```
 
-The primary early-testing interface is Chinese. Select `中文版` in the local
-demo. English Lab Edition is available for copy review.
+The primary early-testing interface is Chinese. The default runtime launches
+the v0.1 aerobic prescription flow. Set `SPORT_RX_PRODUCT_MODE=labs` only to
+open the retained internal measurement-lab prototype.
 
 ## Chinese documentation
 

@@ -178,6 +178,45 @@ DEFAULT_PROFILE = {
     "known_conditions": [],
 }
 
+
+V01_DEFAULT_PROFILE = {
+    "age": 30,
+    "resting_hr": 0,
+    "exercise_days_last_4w": 0,
+    "mvpa_minutes_per_week": 0,
+    "available_days_per_week": 3,
+    "max_minutes_per_session": 30,
+    "preferred_activity": "brisk walking",
+    "goal": "Improve aerobic fitness / general health",
+    "symptoms": [],
+    "known_conditions": [],
+}
+
+V01_ACTIVITY_LABELS = {
+    "brisk walking": "快走",
+    "easy jogging": "轻松慢跑",
+    "cycling": "骑行",
+    "elliptical": "椭圆机",
+}
+
+V01_INTENSITY_LABELS = {
+    "light": "轻松",
+    "light_to_moderate": "轻松到中等",
+    "moderate": "中等",
+}
+
+V01_FITNESS_LABELS = {
+    "inactive": "目前运动不足",
+    "low_active": "已有一些运动基础",
+    "active": "已较规律运动",
+}
+
+V01_TALK_TESTS = {
+    "light": "可以轻松完整对话。",
+    "light_to_moderate": "可以较舒适地说话；接近上限时唱歌会变得困难。",
+    "moderate": "可以说话，但唱歌会比较困难。",
+}
+
 SYMPTOM_LABELS = {
     "chest_pain": "运动时胸痛、胸闷或压迫感",
     "unexplained_shortness_of_breath": "不明原因气短",
@@ -809,6 +848,46 @@ def _state_defaults() -> None:
     st.session_state.setdefault("demo_claim_boundary", "")
     st.session_state.setdefault("public_demo_mode", False)
     st.session_state.setdefault("plan", generate_prescription(_prescription_profile(st.session_state.profile)))
+
+
+def _product_mode() -> str:
+    """Return the active product surface without removing the Labs prototype."""
+
+    return os.environ.get("SPORT_RX_PRODUCT_MODE", "aerobic_v01").strip().lower()
+
+
+def _v01_state_defaults() -> None:
+    st.session_state.setdefault("v01_page", "设置")
+    st.session_state.setdefault("v01_profile", V01_DEFAULT_PROFILE.copy())
+    st.session_state.setdefault("v01_feedback_by_week", {})
+    st.session_state.setdefault("v01_plan", None)
+
+
+def _v01_refresh_plan() -> None:
+    st.session_state.v01_plan = generate_prescription(
+        st.session_state.v01_profile,
+        feedback_by_week=st.session_state.v01_feedback_by_week,
+    )
+
+
+def _v01_set_page(page: str) -> None:
+    st.session_state.v01_page = page
+
+
+def _v01_activity(activity: object) -> str:
+    return V01_ACTIVITY_LABELS.get(str(activity), str(activity))
+
+
+def _v01_intensity(level: object) -> str:
+    return V01_INTENSITY_LABELS.get(str(level), str(level))
+
+
+def _v01_fitness_class(value: object) -> str:
+    return V01_FITNESS_LABELS.get(str(value), str(value))
+
+
+def _v01_talk_test(level: object) -> str:
+    return V01_TALK_TESTS.get(str(level), "以能够完成整段训练为优先。")
 
 
 def _refresh_outputs() -> None:
@@ -12163,8 +12242,322 @@ def pilot_feedback_page() -> None:
         )
 
 
+def _v01_page_header(title: str, subtitle: str) -> None:
+    st.markdown(
+        (
+            '<div class="rx-public-card rx-public-card-ready">'
+            '<div class="rx-public-kicker">SportRX v0.1</div>'
+            f'<div class="rx-public-title">{escape(title)}</div>'
+            f'<div class="rx-public-copy">{escape(subtitle)}</div>'
+            '</div>'
+        ),
+        unsafe_allow_html=True,
+    )
+
+
+def _v01_nav() -> None:
+    pages = [("设置", "设置"), ("计划", "计划"), ("今天", "今天"), ("进度", "进度")]
+    cols = st.columns(len(pages), gap="small")
+    for col, (page_id, label) in zip(cols, pages):
+        with col:
+            st.button(
+                label,
+                type="primary" if st.session_state.v01_page == page_id else "secondary",
+                width="stretch",
+                on_click=_v01_set_page,
+                args=(page_id,),
+                key=f"v01_nav_{page_id}",
+            )
+
+
+def _v01_setup_page() -> None:
+    _v01_page_header(
+        "先告诉我你的运动起点",
+        "只询问会影响 4 周有氧计划的内容。约 3 分钟完成。",
+    )
+    current = st.session_state.v01_profile
+    with st.form("v01_profile_form"):
+        st.subheader("最近 4 周")
+        age = st.number_input("年龄", min_value=18, max_value=64, value=int(current.get("age", 30)), step=1)
+        activity_days = st.number_input(
+            "平均每周运动几天",
+            min_value=0,
+            max_value=7,
+            value=int(current.get("exercise_days_last_4w", 0)),
+            step=1,
+            help="包含快走、慢跑、骑行等中等或更高强度活动。",
+        )
+        mvpa_minutes = st.number_input(
+            "平均每周中等或较高强度运动分钟数",
+            min_value=0,
+            max_value=600,
+            value=int(current.get("mvpa_minutes_per_week", 0)),
+            step=5,
+        )
+        st.subheader("你能安排的时间")
+        available_days = st.number_input(
+            "未来每周能运动几天",
+            min_value=1,
+            max_value=7,
+            value=int(current.get("available_days_per_week", 3)),
+            step=1,
+        )
+        max_minutes = st.number_input(
+            "每次最多能运动多少分钟",
+            min_value=10,
+            max_value=120,
+            value=int(current.get("max_minutes_per_session", 30)),
+            step=5,
+        )
+        activity_options = list(V01_ACTIVITY_LABELS)
+        current_activity = str(current.get("preferred_activity", "brisk walking"))
+        preferred_activity = st.selectbox(
+            "你更愿意用哪种方式完成有氧训练",
+            activity_options,
+            index=activity_options.index(current_activity) if current_activity in activity_options else 0,
+            format_func=_v01_activity,
+        )
+        with st.expander("可选：使用心率辅助控制强度", expanded=False):
+            resting_hr = st.number_input(
+                "静息心率（知道时再填）",
+                min_value=0,
+                max_value=120,
+                value=int(current.get("resting_hr", 0) or 0),
+                step=1,
+                help="留空时，计划只使用 RPE 和说话测试。",
+            )
+        st.subheader("开始前确认")
+        has_warning_symptoms = st.radio(
+            "运动时是否出现过胸痛、异常气短、头晕或晕厥等警示情况？",
+            ["没有", "有或不确定"],
+            horizontal=True,
+        )
+        has_relevant_condition = st.radio(
+            "目前是否有心血管、代谢、肾脏或肺部疾病需要专业人员管理？",
+            ["没有", "有或不确定"],
+            horizontal=True,
+        )
+        submitted = st.form_submit_button("生成我的 4 周有氧计划", type="primary", width="stretch")
+
+    if submitted:
+        st.session_state.v01_profile = {
+            "age": int(age),
+            "resting_hr": int(resting_hr),
+            "exercise_days_last_4w": int(activity_days),
+            "mvpa_minutes_per_week": int(mvpa_minutes),
+            "available_days_per_week": int(available_days),
+            "max_minutes_per_session": int(max_minutes),
+            "preferred_activity": preferred_activity,
+            "goal": "Improve aerobic fitness / general health",
+            "symptoms": ["reported_warning_symptom"] if has_warning_symptoms != "没有" else [],
+            "known_conditions": ["reported_relevant_condition"] if has_relevant_condition != "没有" else [],
+        }
+        st.session_state.v01_feedback_by_week = {}
+        _v01_refresh_plan()
+        _v01_set_page("计划")
+        st.rerun()
+
+    st.caption(
+        "SportRX v0.1 仅面向 18-64 岁、表观健康成年人，且只生成有氧训练起点。"
+        "它不提供疾病诊断、医疗许可或紧急建议。"
+    )
+
+
+def _v01_plan_page() -> None:
+    plan = st.session_state.v01_plan
+    if not isinstance(plan, dict):
+        _v01_page_header("你的 4 周计划", "先完成基础设置，SportRX 才能计算可执行的起点。")
+        st.button("去填写基本信息", type="primary", width="stretch", on_click=_v01_set_page, args=("设置",))
+        return
+
+    safety = plan["safety"]
+    if not safety.get("auto_prescription"):
+        _v01_page_header("暂不自动生成计划", "当前信息不适合继续自动处方。")
+        for reason in safety.get("reasons", []):
+            st.warning(zh(reason))
+        st.info("SportRX 不判断原因，也不替代专业评估。确认适合开始或调整运动后，再回来重新设置。")
+        st.button("返回设置", type="primary", width="stretch", on_click=_v01_set_page, args=("设置",))
+        return
+
+    assessment = plan["assessment"]
+    intensity = plan["intensity"]
+    _v01_page_header(
+        "你的 4 周有氧计划",
+        "从现在可做到的训练量开始，再根据完成情况和 RPE 调整下一周。",
+    )
+    st.markdown(
+        (
+            '<div class="rx-public-home">'
+            f'<div class="rx-public-card"><div class="rx-public-kicker">当前运动状态</div><div class="rx-public-title">{escape(_v01_fitness_class(assessment["fitness_class"]))}</div><div class="rx-public-copy">基于最近 4 周的运动天数和分钟数。</div></div>'
+            f'<div class="rx-public-card"><div class="rx-public-kicker">本周强度</div><div class="rx-public-title">{escape(_v01_intensity(intensity["level"]))}</div><div class="rx-public-copy">RPE {intensity["rpe_0_10"][0]}–{intensity["rpe_0_10"][1]}；{escape(_v01_talk_test(intensity["level"]))}</div></div>'
+            '</div>'
+        ),
+        unsafe_allow_html=True,
+    )
+    if intensity.get("hrr_target_zone_bpm"):
+        zone = intensity["hrr_target_zone_bpm"]
+        st.caption(f"若静息心率记录可靠，可参考目标心率：{zone[0]}–{zone[1]} 次/分。RPE 仍是主要执行依据。")
+
+    for week in plan["weeks"]:
+        weekly_status = (
+            "起始计划"
+            if week["week"] == 1
+            else ("等待第 %s 周反馈" % (week["week"] - 1) if week["week"] - 1 not in st.session_state.v01_feedback_by_week else "已按反馈更新")
+        )
+        with st.expander(f"第 {week['week']} 周 · {week['weekly_minutes']} 分钟", expanded=week["week"] == 1):
+            st.caption(weekly_status)
+            st.markdown(
+                (
+                    '<div class="rx-public-card">'
+                    f'<div class="rx-public-title">每周 {week["frequency_per_week"]} 次，每次约 {week["duration_min"]} 分钟</div>'
+                    f'<div class="rx-public-copy">方式：{escape(_v01_activity(week["fitt_vp"]["type"]))}；强度：{escape(_v01_intensity(week["fitt_vp"]["intensity"]))}；总量：{week["weekly_minutes"]} 分钟。</div>'
+                    '</div>'
+                ),
+                unsafe_allow_html=True,
+            )
+            for session in week["sessions"]:
+                st.write(
+                    f"{zh(session['day'])}：{_v01_activity(session['activity'])} {session['duration_min']} 分钟，"
+                    f"RPE {session['rpe_0_10'][0]}–{session['rpe_0_10'][1]}。"
+                )
+
+    with st.expander("为什么是这个计划？", expanded=False):
+        st.write(f"- 你的近期运动状态：{zh(assessment['summary'])}")
+        st.write(f"- 第 1 周总量：{plan['weeks'][0]['weekly_minutes']} 分钟，受你的可训练天数与单次时间限制。")
+        st.write("- 第 2–4 周不会被视为固定处方；填写完成率和 RPE 后，系统才会更新相应周次。")
+    st.button("查看今天练什么", type="primary", width="stretch", on_click=_v01_set_page, args=("今天",))
+
+
+def _v01_today_page() -> None:
+    plan = st.session_state.v01_plan
+    if not isinstance(plan, dict) or not plan.get("weeks") or not plan.get("safety", {}).get("auto_prescription"):
+        _v01_page_header("今天练什么", "先生成一份 4 周计划。")
+        st.button("去设置", type="primary", width="stretch", on_click=_v01_set_page, args=("设置",))
+        return
+    _v01_page_header("今天的训练", "从第 1 周开始；完成后在「进度」记录本周完成情况和平均 RPE。")
+    week_numbers = [week["week"] for week in plan["weeks"] if week.get("sessions")]
+    selected_week = st.selectbox("选择训练周", week_numbers, format_func=lambda value: f"第 {value} 周")
+    week = next(item for item in plan["weeks"] if item["week"] == selected_week)
+    session = week["sessions"][0]
+    st.markdown(
+        (
+            '<div class="rx-public-card rx-public-card-ready">'
+            f'<div class="rx-public-kicker">第 {selected_week} 周 · {escape(zh(session["day"]))}</div>'
+            f'<div class="rx-public-title">{escape(_v01_activity(session["activity"]))} {session["duration_min"]} 分钟</div>'
+            f'<div class="rx-public-copy">目标强度：{escape(_v01_intensity(session["intensity"]))}，RPE {session["rpe_0_10"][0]}–{session["rpe_0_10"][1]}。{escape(_v01_talk_test(session["intensity"]))}</div>'
+            '</div>'
+        ),
+        unsafe_allow_html=True,
+    )
+    st.markdown("**开始前**：用轻松走或轻松骑行热身 5–10 分钟。")
+    st.markdown("**过程中**：以能完成整段训练为优先；任何异常不适都应停止。")
+    st.markdown("**结束后**：在本周结束时记录实际完成次数和平均 RPE。")
+    st.button("记录本周反馈", type="primary", width="stretch", on_click=_v01_set_page, args=("进度",))
+
+
+def _v01_progress_page() -> None:
+    plan = st.session_state.v01_plan
+    if not isinstance(plan, dict) or not plan.get("weeks") or not plan.get("safety", {}).get("auto_prescription"):
+        _v01_page_header("本周反馈", "先生成一份 4 周计划。")
+        st.button("去设置", type="primary", width="stretch", on_click=_v01_set_page, args=("设置",))
+        return
+    _v01_page_header("根据反馈调整下一周", "每周只记录四项：完成次数、平均 RPE、是否明显偏难、是否出现异常。")
+    feedback_weeks = [week["week"] for week in plan["weeks"] if week["week"] < 4 and week["frequency_per_week"] > 0]
+    if not feedback_weeks:
+        st.info("当前没有可继续调整的周次。")
+        return
+    feedback_week = st.selectbox("本周", feedback_weeks, format_func=lambda value: f"第 {value} 周")
+    planned_sessions = next(item for item in plan["weeks"] if item["week"] == feedback_week)["frequency_per_week"]
+    existing = st.session_state.v01_feedback_by_week.get(int(feedback_week), {})
+    with st.form("v01_weekly_feedback"):
+        completed_sessions = st.number_input(
+            "实际完成了几次训练",
+            min_value=0,
+            max_value=int(planned_sessions),
+            value=int(existing.get("completed_sessions", planned_sessions)),
+            step=1,
+        )
+        average_rpe = st.slider(
+            "这一周的平均 RPE",
+            min_value=0.0,
+            max_value=10.0,
+            value=float(existing.get("average_rpe", 5.0)),
+            step=0.5,
+        )
+        felt_too_hard = st.checkbox("这一周明显偏难", value=bool(existing.get("felt_too_hard", False)))
+        adverse_event = st.checkbox("训练中出现异常不适或不良事件", value=bool(existing.get("adverse_event", False)))
+        submitted = st.form_submit_button("保存并更新下一周", type="primary", width="stretch")
+    if submitted:
+        st.session_state.v01_feedback_by_week[int(feedback_week)] = {
+            "completed_sessions": int(completed_sessions),
+            "average_rpe": float(average_rpe),
+            "felt_too_hard": bool(felt_too_hard),
+            "adverse_event": bool(adverse_event),
+        }
+        _v01_refresh_plan()
+        if adverse_event:
+            st.error("已暂停自动调整。SportRX 不判断原因，也不提供继续训练建议。")
+        else:
+            st.success("周反馈已保存，下一周已按规则重新计算。")
+        plan = st.session_state.v01_plan
+
+    decisions = {item["after_week"]: item["decision"] for item in plan.get("progression_log", [])}
+    if int(feedback_week) in decisions:
+        decision = decisions[int(feedback_week)]
+        action_labels = {"increase": "增加训练量", "small_increase": "小幅进阶", "hold": "维持", "decrease": "降低训练量", "pause": "暂停自动调整"}
+        st.markdown(
+            (
+                '<div class="rx-public-card rx-public-card-ready">'
+                '<div class="rx-public-kicker">下一周建议</div>'
+                f'<div class="rx-public-title">{escape(action_labels.get(decision["action"], decision["action"]))}</div>'
+                f'<div class="rx-public-copy">完成率 {round(float(decision["completion_rate"]) * 100)}%；平均 RPE {decision["average_rpe"]}。{escape(zh(decision["rationale"]))}</div>'
+                '</div>'
+            ),
+            unsafe_allow_html=True,
+        )
+    else:
+        st.info("保存这一周反馈后，这里会显示下一周的规则解释。")
+
+    if st.session_state.v01_feedback_by_week:
+        st.subheader("已记录的周反馈")
+        rows = []
+        for week, feedback in sorted(st.session_state.v01_feedback_by_week.items()):
+            rows.append(
+                {
+                    "周次": f"第 {week} 周",
+                    "完成次数": feedback["completed_sessions"],
+                    "平均 RPE": feedback["average_rpe"],
+                    "明显偏难": "是" if feedback["felt_too_hard"] else "否",
+                }
+            )
+        st.dataframe(rows, hide_index=True, width="stretch")
+
+
+def aerobic_v01_app() -> None:
+    """Render the original, aerobic-prescription-first SportRX product flow."""
+
+    _v01_state_defaults()
+    _apply_theme()
+    st.markdown('<div class="rx-public-kicker">SportRX</div>', unsafe_allow_html=True)
+    st.title("4 周有氧运动处方")
+    st.caption("循证、可解释、可调整。只面向表观健康成年人，只做有氧。")
+    _v01_nav()
+    page = st.session_state.v01_page
+    if page == "设置":
+        _v01_setup_page()
+    elif page == "计划":
+        _v01_plan_page()
+    elif page == "今天":
+        _v01_today_page()
+    else:
+        _v01_progress_page()
+
+
 def main() -> None:
-    st.set_page_config(page_title="SportRX Labs", layout="wide")
+    st.set_page_config(page_title="SportRX", layout="wide")
+    if _product_mode() == "aerobic_v01":
+        aerobic_v01_app()
+        return
     _state_defaults()
     _apply_theme()
 

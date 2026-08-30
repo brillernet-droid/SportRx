@@ -5,6 +5,7 @@ def test_streamlit_app_imports():
     module = importlib.import_module("app.streamlit_app")
 
     assert hasattr(module, "main")
+    assert hasattr(module, "aerobic_v01_app")
     assert hasattr(module, "_hero_status_console")
     assert hasattr(module, "_demo_experience_console")
     assert hasattr(module, "_demo_experience_sequence_rows")
@@ -107,3 +108,6 @@ def test_streamlit_app_imports():
     assert module._feedback_percent_label(0.82) == "82%"
     assert module._feedback_percent_label(None) == "未填写"
     assert module._quick_match_reason_label("120 total training min/week reported") == "120 分钟/周训练总量（自报）"
+    assert module._v01_activity("cycling") == "骑行"
+    assert module._v01_intensity("light_to_moderate") == "轻松到中等"
+    assert module._v01_fitness_class("inactive") == "目前运动不足"
