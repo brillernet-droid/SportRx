@@ -857,8 +857,10 @@ def _product_mode() -> str:
 
 
 def _v01_state_defaults() -> None:
-    st.session_state.setdefault("v01_page", "设置")
+    st.session_state.setdefault("v01_page", "今天")
     st.session_state.setdefault("v01_profile", V01_DEFAULT_PROFILE.copy())
+    st.session_state.setdefault("v01_draft", V01_DEFAULT_PROFILE.copy())
+    st.session_state.setdefault("v01_setup_step", 1)
     st.session_state.setdefault("v01_feedback_by_week", {})
     st.session_state.setdefault("v01_plan", None)
 
@@ -872,6 +874,10 @@ def _v01_refresh_plan() -> None:
 
 def _v01_set_page(page: str) -> None:
     st.session_state.v01_page = page
+
+
+def _v01_set_setup_step(step: int) -> None:
+    st.session_state.v01_setup_step = max(1, min(3, int(step)))
 
 
 def _v01_activity(activity: object) -> str:
@@ -12242,14 +12248,94 @@ def pilot_feedback_page() -> None:
         )
 
 
+def _apply_v01_theme() -> None:
+    """Override legacy Labs styles for the focused mobile prescription product."""
+
+    st.markdown(
+        """
+        <style>
+        :root {
+            --v01-ink: #14261f;
+            --v01-muted: #617169;
+            --v01-line: #d5ddd7;
+            --v01-canvas: #f4f6f2;
+            --v01-panel: #ffffff;
+            --v01-green: #0c5a40;
+            --v01-lime: #b9e639;
+            --v01-blue: #2a6b9f;
+            --v01-alert: #b54c2e;
+        }
+        [data-testid="stAppViewContainer"] { background: var(--v01-canvas) !important; color: var(--v01-ink) !important; }
+        [data-testid="stHeader"] { background: rgba(244, 246, 242, 0.92) !important; }
+        .block-container { width: min(100%, 430px) !important; max-width: 430px !important; padding: 1.15rem 1rem 2.4rem !important; }
+        [data-testid="stMainBlockContainer"] { padding-left: 0 !important; padding-right: 0 !important; }
+        h1, h2, h3, p, li, label, [data-testid="stCaptionContainer"], [data-testid="stMarkdownContainer"] { color: var(--v01-ink) !important; }
+        h1 { font-size: 1.86rem !important; line-height: 1.08 !important; font-weight: 820 !important; margin: 0.28rem 0 0.35rem !important; }
+        h2 { font-size: 1.22rem !important; margin-top: 1.55rem !important; }
+        h3 { font-size: 1rem !important; margin-top: 1.35rem !important; }
+        [data-testid="stCaptionContainer"] p { color: var(--v01-muted) !important; font-size: 0.82rem !important; line-height: 1.45 !important; }
+        [data-testid="stNumberInput"] label, [data-testid="stSelectbox"] label, [data-testid="stRadio"] label, [data-testid="stSlider"] label, [data-testid="stCheckbox"] label { color: var(--v01-ink) !important; font-size: 0.88rem !important; font-weight: 720 !important; }
+        [data-testid="stNumberInput"] input, [data-testid="stSelectbox"] input { color: var(--v01-ink) !important; background: var(--v01-panel) !important; border: 1px solid var(--v01-line) !important; border-radius: 8px !important; min-height: 48px !important; font-size: 1rem !important; }
+        [data-testid="stNumberInput"] button { color: var(--v01-green) !important; background: #edf5ef !important; border-color: var(--v01-line) !important; }
+        [data-testid="stRadio"] [role="radiogroup"] { gap: 0.6rem !important; }
+        [data-testid="stRadio"] label { background: var(--v01-panel) !important; border: 1px solid var(--v01-line) !important; border-radius: 8px !important; padding: 0.68rem 0.72rem !important; min-height: 46px !important; align-items: center !important; }
+        [data-testid="stRadio"] label:has(input:checked) { border-color: var(--v01-green) !important; background: #eef7f1 !important; }
+        [data-testid="stCheckbox"] label { font-weight: 600 !important; }
+        [data-testid="stSlider"] [data-baseweb="slider"] { padding: 0.75rem 0.25rem 0.35rem !important; }
+        [data-testid="stButton"] > button, [data-testid="stFormSubmitButton"] > button { min-height: 48px !important; border-radius: 8px !important; font-size: 0.94rem !important; font-weight: 780 !important; letter-spacing: 0 !important; border: 1px solid var(--v01-line) !important; color: var(--v01-ink) !important; background: var(--v01-panel) !important; box-shadow: none !important; }
+        [data-testid="stButton"] > button[kind="primary"], [data-testid="stFormSubmitButton"] > button[kind="primary"] { color: #ffffff !important; background: var(--v01-green) !important; border-color: var(--v01-green) !important; }
+        [data-testid="stButton"] > button[kind="primary"] p, [data-testid="stFormSubmitButton"] > button[kind="primary"] p { color: #ffffff !important; }
+        [data-testid="stExpander"] { border: 1px solid var(--v01-line) !important; border-radius: 8px !important; background: var(--v01-panel) !important; box-shadow: none !important; }
+        [data-testid="stExpander"] details, [data-testid="stExpander"] summary { background: var(--v01-panel) !important; color: var(--v01-ink) !important; }
+        [data-testid="stExpander"] summary { min-height: 48px !important; padding: 0.76rem 0.88rem !important; }
+        [data-testid="stExpander"] summary *, [data-testid="stExpander"] summary [data-testid="stMarkdownContainer"] p { color: var(--v01-ink) !important; font-weight: 760 !important; }
+        [data-testid="stExpanderDetails"] { background: var(--v01-panel) !important; padding: 0 0.9rem 0.35rem !important; }
+        [data-testid="stAlert"] { border-radius: 8px !important; }
+        [data-testid="stRadioGroup"][aria-label="页面导航"] { display: grid !important; grid-template-columns: repeat(4, minmax(0, 1fr)) !important; gap: 0.45rem !important; width: 100% !important; }
+        [data-testid="stRadioGroup"][aria-label="页面导航"] [data-testid="stRadioOption"] { display: flex !important; justify-content: center !important; min-width: 0 !important; margin: 0 !important; padding: 0.66rem 0.35rem !important; background: var(--v01-panel) !important; border: 1px solid var(--v01-line) !important; border-radius: 8px !important; }
+        [data-testid="stRadioGroup"][aria-label="页面导航"] [data-testid="stRadioOption"][data-selected="true"] { background: #eef7f1 !important; border-color: var(--v01-green) !important; }
+        [data-testid="stRadioGroup"][aria-label="页面导航"] [data-testid="stRadioOption"] > div > div > div:first-child { display: none !important; }
+        [data-testid="stRadioGroup"][aria-label="页面导航"] [data-testid="stMarkdownContainer"] p { color: var(--v01-ink) !important; font-size: 0.8rem !important; font-weight: 760 !important; white-space: nowrap !important; }
+        .v01-brand { color: var(--v01-green); font-size: 0.76rem; font-weight: 850; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0.75rem; }
+        .v01-page-head { background: var(--v01-ink); color: #ffffff; padding: 1.3rem 1.2rem 1.25rem; border-radius: 8px; margin: 1rem 0 1.15rem; border: 1px solid #14261f; }
+        .v01-page-head .v01-eyebrow { color: var(--v01-lime); font-size: 0.68rem; font-weight: 830; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.55rem; }
+        .v01-page-head .v01-title { color: #ffffff; font-size: 1.38rem; font-weight: 800; line-height: 1.2; }
+        .v01-page-head .v01-copy { color: #dce7e0; font-size: 0.84rem; line-height: 1.48; margin-top: 0.55rem; }
+        .v01-nav-label { color: var(--v01-muted); font-size: 0.72rem; font-weight: 700; margin: 0.8rem 0 0.42rem; }
+        .v01-stepper { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.4rem; margin: 0.65rem 0 1.2rem; }
+        .v01-step { border-top: 3px solid #d7e0da; color: var(--v01-muted); font-size: 0.72rem; padding-top: 0.42rem; }
+        .v01-step-active { border-top-color: var(--v01-green); color: var(--v01-green); font-weight: 800; }
+        .v01-section-note { color: var(--v01-muted); font-size: 0.8rem; line-height: 1.45; margin: -0.25rem 0 0.82rem; }
+        .v01-stat-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.65rem; margin: 0.9rem 0 1.1rem; }
+        .v01-stat { background: var(--v01-panel); border-top: 3px solid var(--v01-green); padding: 0.9rem; }
+        .v01-stat-label { color: var(--v01-muted); font-size: 0.72rem; }
+        .v01-stat-value { color: var(--v01-ink); font-size: 1.05rem; font-weight: 820; line-height: 1.22; margin-top: 0.3rem; }
+        .v01-stat-copy { color: var(--v01-muted); font-size: 0.76rem; line-height: 1.35; margin-top: 0.38rem; }
+        .v01-week { background: var(--v01-panel); border: 1px solid var(--v01-line); border-left: 4px solid var(--v01-green); padding: 0.9rem 0.92rem 0.25rem; margin: 0.78rem 0 0; }
+        .v01-week-title { color: var(--v01-ink); font-size: 1rem; font-weight: 830; }
+        .v01-week-meta { color: var(--v01-muted); font-size: 0.76rem; line-height: 1.4; margin-top: 0.28rem; }
+        .v01-today-session { border: 1px solid #aac8b7; border-left: 6px solid var(--v01-green); background: #ffffff; padding: 1.05rem 1rem; margin: 0.95rem 0; }
+        .v01-session-kicker { color: var(--v01-green); font-size: 0.72rem; font-weight: 820; letter-spacing: 0.04em; }
+        .v01-session-title { color: var(--v01-ink); font-size: 1.36rem; font-weight: 830; line-height: 1.18; margin-top: 0.32rem; }
+        .v01-session-detail { color: var(--v01-muted); font-size: 0.86rem; line-height: 1.5; margin-top: 0.45rem; }
+        .v01-rule-list { border-top: 1px solid var(--v01-line); margin: 1rem 0; }
+        .v01-rule { display: grid; grid-template-columns: 70px minmax(0, 1fr); gap: 0.55rem; padding: 0.75rem 0; border-bottom: 1px solid var(--v01-line); }
+        .v01-rule-label { color: var(--v01-green); font-size: 0.76rem; font-weight: 800; }
+        .v01-rule-copy { color: var(--v01-muted); font-size: 0.82rem; line-height: 1.42; }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
 def _v01_page_header(title: str, subtitle: str) -> None:
     st.markdown(
         (
-            '<div class="rx-public-card rx-public-card-ready">'
-            '<div class="rx-public-kicker">SportRX v0.1</div>'
-            f'<div class="rx-public-title">{escape(title)}</div>'
-            f'<div class="rx-public-copy">{escape(subtitle)}</div>'
-            '</div>'
+            '<section class="v01-page-head">'
+            '<div class="v01-eyebrow">SportRX / 有氧 v0.1</div>'
+            f'<div class="v01-title">{escape(title)}</div>'
+            f'<div class="v01-copy">{escape(subtitle)}</div>'
+            '</section>'
         ),
         unsafe_allow_html=True,
     )
@@ -12257,76 +12343,117 @@ def _v01_page_header(title: str, subtitle: str) -> None:
 
 def _v01_nav() -> None:
     pages = [("设置", "设置"), ("计划", "计划"), ("今天", "今天"), ("进度", "进度")]
-    cols = st.columns(len(pages), gap="small")
-    for col, (page_id, label) in zip(cols, pages):
-        with col:
-            st.button(
-                label,
-                type="primary" if st.session_state.v01_page == page_id else "secondary",
-                width="stretch",
-                on_click=_v01_set_page,
-                args=(page_id,),
-                key=f"v01_nav_{page_id}",
-            )
+    st.markdown('<div class="v01-nav-label">你的训练</div>', unsafe_allow_html=True)
+    page_ids = [page_id for page_id, _label in pages]
+    selected = st.radio(
+        "页面导航",
+        page_ids,
+        index=page_ids.index(st.session_state.v01_page),
+        format_func=lambda page_id: dict(pages)[page_id],
+        horizontal=True,
+        label_visibility="collapsed",
+        key=f"v01_nav_{st.session_state.v01_page}",
+    )
+    if selected != st.session_state.v01_page:
+        st.session_state.v01_page = selected
+        st.rerun()
 
 
 def _v01_setup_page() -> None:
-    _v01_page_header(
-        "先告诉我你的运动起点",
-        "只询问会影响 4 周有氧计划的内容。约 3 分钟完成。",
+    step = int(st.session_state.v01_setup_step)
+    draft = st.session_state.v01_draft
+    headers = {
+        1: ("你的运动起点", "先从最近 4 周开始。我们不会用模糊的“基础好不好”来猜。"),
+        2: ("把计划装进你的日程", "训练必须先适合你的真实时间，才有可能坚持。"),
+        3: ("最后做一次开始前确认", "这一步只决定能否继续自动生成计划，不提供医疗判断。"),
+    }
+    _v01_page_header(*headers[step])
+    step_names = ["运动近况", "时间与偏好", "开始前确认"]
+    st.markdown(
+        '<div class="v01-stepper">'
+        + "".join(
+            f'<div class="v01-step {"v01-step-active" if index == step else ""}">{index}. {escape(name)}</div>'
+            for index, name in enumerate(step_names, start=1)
+        )
+        + '</div>',
+        unsafe_allow_html=True,
     )
-    current = st.session_state.v01_profile
-    with st.form("v01_profile_form"):
-        st.subheader("最近 4 周")
-        age = st.number_input("年龄", min_value=18, max_value=64, value=int(current.get("age", 30)), step=1)
-        activity_days = st.number_input(
-            "平均每周运动几天",
-            min_value=0,
-            max_value=7,
-            value=int(current.get("exercise_days_last_4w", 0)),
-            step=1,
-            help="包含快走、慢跑、骑行等中等或更高强度活动。",
-        )
-        mvpa_minutes = st.number_input(
-            "平均每周中等或较高强度运动分钟数",
-            min_value=0,
-            max_value=600,
-            value=int(current.get("mvpa_minutes_per_week", 0)),
-            step=5,
-        )
-        st.subheader("你能安排的时间")
-        available_days = st.number_input(
-            "未来每周能运动几天",
-            min_value=1,
-            max_value=7,
-            value=int(current.get("available_days_per_week", 3)),
-            step=1,
-        )
-        max_minutes = st.number_input(
-            "每次最多能运动多少分钟",
-            min_value=10,
-            max_value=120,
-            value=int(current.get("max_minutes_per_session", 30)),
-            step=5,
-        )
-        activity_options = list(V01_ACTIVITY_LABELS)
-        current_activity = str(current.get("preferred_activity", "brisk walking"))
-        preferred_activity = st.selectbox(
-            "你更愿意用哪种方式完成有氧训练",
-            activity_options,
-            index=activity_options.index(current_activity) if current_activity in activity_options else 0,
-            format_func=_v01_activity,
-        )
-        with st.expander("可选：使用心率辅助控制强度", expanded=False):
+
+    if step == 1:
+        st.markdown('<div class="v01-section-note">这些数字决定第 1 周从多大总量开始。</div>', unsafe_allow_html=True)
+        with st.form("v01_profile_step_one"):
+            age = st.number_input("年龄", min_value=18, max_value=64, value=int(draft.get("age", 30)), step=1)
+            activity_days = st.number_input(
+                "最近 4 周，平均每周运动几天",
+                min_value=0,
+                max_value=7,
+                value=int(draft.get("exercise_days_last_4w", 0)),
+                step=1,
+                help="包含快走、慢跑、骑行等中等或更高强度活动。",
+            )
+            mvpa_minutes = st.number_input(
+                "最近 4 周，平均每周中高强度运动分钟数",
+                min_value=0,
+                max_value=600,
+                value=int(draft.get("mvpa_minutes_per_week", 0)),
+                step=5,
+            )
+            next_step = st.form_submit_button("下一步：安排时间", type="primary", width="stretch")
+        if next_step:
+            draft.update({"age": int(age), "exercise_days_last_4w": int(activity_days), "mvpa_minutes_per_week": int(mvpa_minutes)})
+            _v01_set_setup_step(2)
+            st.rerun()
+        return
+
+    if step == 2:
+        st.markdown('<div class="v01-section-note">这些限制会决定每周练几次、每次多长。</div>', unsafe_allow_html=True)
+        with st.form("v01_profile_step_two"):
+            available_days = st.number_input(
+                "未来每周能安排几天",
+                min_value=1,
+                max_value=7,
+                value=int(draft.get("available_days_per_week", 3)),
+                step=1,
+            )
+            max_minutes = st.number_input(
+                "每次最多能安排多少分钟",
+                min_value=10,
+                max_value=120,
+                value=int(draft.get("max_minutes_per_session", 30)),
+                step=5,
+            )
+            activity_options = list(V01_ACTIVITY_LABELS)
+            current_activity = str(draft.get("preferred_activity", "brisk walking"))
+            preferred_activity = st.selectbox(
+                "你更愿意用哪种方式完成有氧训练",
+                activity_options,
+                index=activity_options.index(current_activity) if current_activity in activity_options else 0,
+                format_func=_v01_activity,
+            )
             resting_hr = st.number_input(
-                "静息心率（知道时再填）",
+                "静息心率（可选，知道时再填）",
                 min_value=0,
                 max_value=120,
-                value=int(current.get("resting_hr", 0) or 0),
+                value=int(draft.get("resting_hr", 0) or 0),
                 step=1,
                 help="留空时，计划只使用 RPE 和说话测试。",
             )
-        st.subheader("开始前确认")
+            back, next_step = st.columns(2)
+            with back:
+                previous = st.form_submit_button("上一步", width="stretch")
+            with next_step:
+                continue_to_safety = st.form_submit_button("下一步：开始前确认", type="primary", width="stretch")
+        if previous:
+            _v01_set_setup_step(1)
+            st.rerun()
+        if continue_to_safety:
+            draft.update({"available_days_per_week": int(available_days), "max_minutes_per_session": int(max_minutes), "preferred_activity": preferred_activity, "resting_hr": int(resting_hr)})
+            _v01_set_setup_step(3)
+            st.rerun()
+        return
+
+    st.markdown('<div class="v01-section-note">遇到需要进一步确认的情况，SportRX 会停在这里，不会猜测或继续加量。</div>', unsafe_allow_html=True)
+    with st.form("v01_profile_step_three"):
         has_warning_symptoms = st.radio(
             "运动时是否出现过胸痛、异常气短、头晕或晕厥等警示情况？",
             ["没有", "有或不确定"],
@@ -12337,17 +12464,17 @@ def _v01_setup_page() -> None:
             ["没有", "有或不确定"],
             horizontal=True,
         )
-        submitted = st.form_submit_button("生成我的 4 周有氧计划", type="primary", width="stretch")
-
+        back, generate = st.columns(2)
+        with back:
+            previous = st.form_submit_button("上一步", width="stretch")
+        with generate:
+            submitted = st.form_submit_button("生成 4 周计划", type="primary", width="stretch")
+    if previous:
+        _v01_set_setup_step(2)
+        st.rerun()
     if submitted:
         st.session_state.v01_profile = {
-            "age": int(age),
-            "resting_hr": int(resting_hr),
-            "exercise_days_last_4w": int(activity_days),
-            "mvpa_minutes_per_week": int(mvpa_minutes),
-            "available_days_per_week": int(available_days),
-            "max_minutes_per_session": int(max_minutes),
-            "preferred_activity": preferred_activity,
+            **draft,
             "goal": "Improve aerobic fitness / general health",
             "symptoms": ["reported_warning_symptom"] if has_warning_symptoms != "没有" else [],
             "known_conditions": ["reported_relevant_condition"] if has_relevant_condition != "没有" else [],
@@ -12355,12 +12482,10 @@ def _v01_setup_page() -> None:
         st.session_state.v01_feedback_by_week = {}
         _v01_refresh_plan()
         _v01_set_page("计划")
+        _v01_set_setup_step(1)
         st.rerun()
 
-    st.caption(
-        "SportRX v0.1 仅面向 18-64 岁、表观健康成年人，且只生成有氧训练起点。"
-        "它不提供疾病诊断、医疗许可或紧急建议。"
-    )
+    st.caption("v0.1 只面向 18-64 岁、表观健康成年人，只生成有氧训练起点。它不提供疾病诊断、医疗许可或紧急建议。")
 
 
 def _v01_plan_page() -> None:
@@ -12387,9 +12512,9 @@ def _v01_plan_page() -> None:
     )
     st.markdown(
         (
-            '<div class="rx-public-home">'
-            f'<div class="rx-public-card"><div class="rx-public-kicker">当前运动状态</div><div class="rx-public-title">{escape(_v01_fitness_class(assessment["fitness_class"]))}</div><div class="rx-public-copy">基于最近 4 周的运动天数和分钟数。</div></div>'
-            f'<div class="rx-public-card"><div class="rx-public-kicker">本周强度</div><div class="rx-public-title">{escape(_v01_intensity(intensity["level"]))}</div><div class="rx-public-copy">RPE {intensity["rpe_0_10"][0]}–{intensity["rpe_0_10"][1]}；{escape(_v01_talk_test(intensity["level"]))}</div></div>'
+            '<div class="v01-stat-grid">'
+            f'<section class="v01-stat"><div class="v01-stat-label">当前运动状态</div><div class="v01-stat-value">{escape(_v01_fitness_class(assessment["fitness_class"]))}</div><div class="v01-stat-copy">基于最近 4 周的运动天数和分钟数。</div></section>'
+            f'<section class="v01-stat"><div class="v01-stat-label">本周强度</div><div class="v01-stat-value">{escape(_v01_intensity(intensity["level"]))}</div><div class="v01-stat-copy">RPE {intensity["rpe_0_10"][0]}–{intensity["rpe_0_10"][1]}；{escape(_v01_talk_test(intensity["level"]))}</div></section>'
             '</div>'
         ),
         unsafe_allow_html=True,
@@ -12404,35 +12529,59 @@ def _v01_plan_page() -> None:
             if week["week"] == 1
             else ("等待第 %s 周反馈" % (week["week"] - 1) if week["week"] - 1 not in st.session_state.v01_feedback_by_week else "已按反馈更新")
         )
-        with st.expander(f"第 {week['week']} 周 · {week['weekly_minutes']} 分钟", expanded=week["week"] == 1):
-            st.caption(weekly_status)
-            st.markdown(
-                (
-                    '<div class="rx-public-card">'
-                    f'<div class="rx-public-title">每周 {week["frequency_per_week"]} 次，每次约 {week["duration_min"]} 分钟</div>'
-                    f'<div class="rx-public-copy">方式：{escape(_v01_activity(week["fitt_vp"]["type"]))}；强度：{escape(_v01_intensity(week["fitt_vp"]["intensity"]))}；总量：{week["weekly_minutes"]} 分钟。</div>'
-                    '</div>'
-                ),
-                unsafe_allow_html=True,
+        st.markdown(
+            (
+                '<section class="v01-week">'
+                f'<div class="v01-week-title">第 {week["week"]} 周 · {week["weekly_minutes"]} 分钟</div>'
+                f'<div class="v01-week-meta">{escape(weekly_status)}</div>'
+                '</section>'
+            ),
+            unsafe_allow_html=True,
+        )
+        st.markdown(
+            (
+                '<div class="v01-rule-list">'
+                f'<div class="v01-rule"><div class="v01-rule-label">训练量</div><div class="v01-rule-copy">每周 {week["frequency_per_week"]} 次，每次约 {week["duration_min"]} 分钟，总计 {week["weekly_minutes"]} 分钟。</div></div>'
+                f'<div class="v01-rule"><div class="v01-rule-label">执行方式</div><div class="v01-rule-copy">{escape(_v01_activity(week["fitt_vp"]["type"]))} · {escape(_v01_intensity(week["fitt_vp"]["intensity"]))}</div></div>'
+                '</div>'
+            ),
+            unsafe_allow_html=True,
+        )
+        for session in week["sessions"]:
+            st.write(
+                f"{zh(session['day'])}：{_v01_activity(session['activity'])} {session['duration_min']} 分钟，"
+                f"RPE {session['rpe_0_10'][0]}–{session['rpe_0_10'][1]}。"
             )
-            for session in week["sessions"]:
-                st.write(
-                    f"{zh(session['day'])}：{_v01_activity(session['activity'])} {session['duration_min']} 分钟，"
-                    f"RPE {session['rpe_0_10'][0]}–{session['rpe_0_10'][1]}。"
-                )
 
-    with st.expander("为什么是这个计划？", expanded=False):
-        st.write(f"- 你的近期运动状态：{zh(assessment['summary'])}")
-        st.write(f"- 第 1 周总量：{plan['weeks'][0]['weekly_minutes']} 分钟，受你的可训练天数与单次时间限制。")
-        st.write("- 第 2–4 周不会被视为固定处方；填写完成率和 RPE 后，系统才会更新相应周次。")
+    st.subheader("为什么是这个计划？")
+    st.markdown(
+        (
+            '<div class="v01-rule-list">'
+            f'<div class="v01-rule"><div class="v01-rule-label">起点</div><div class="v01-rule-copy">你的近期运动状态：{escape(zh(assessment["summary"]))}</div></div>'
+            f'<div class="v01-rule"><div class="v01-rule-label">限制</div><div class="v01-rule-copy">第 1 周总量为 {plan["weeks"][0]["weekly_minutes"]} 分钟，受你的可训练天数与单次时间限制。</div></div>'
+            '<div class="v01-rule"><div class="v01-rule-label">调整</div><div class="v01-rule-copy">第 2–4 周不是固定处方；填写完成率和 RPE 后，系统才会更新相应周次。</div></div>'
+            '</div>'
+        ),
+        unsafe_allow_html=True,
+    )
     st.button("查看今天练什么", type="primary", width="stretch", on_click=_v01_set_page, args=("今天",))
 
 
 def _v01_today_page() -> None:
     plan = st.session_state.v01_plan
     if not isinstance(plan, dict) or not plan.get("weeks") or not plan.get("safety", {}).get("auto_prescription"):
-        _v01_page_header("今天练什么", "先生成一份 4 周计划。")
-        st.button("去设置", type="primary", width="stretch", on_click=_v01_set_page, args=("设置",))
+        _v01_page_header("今天，先把起点找准", "用最近 4 周的活动和你真正拥有的时间，生成第一份有氧训练安排。")
+        st.markdown(
+            """
+            <div class="v01-rule-list">
+              <div class="v01-rule"><div class="v01-rule-label">第 1 步</div><div class="v01-rule-copy">填写近期运动量。SportRX 不会猜测你的体能基础。</div></div>
+              <div class="v01-rule"><div class="v01-rule-label">第 2 步</div><div class="v01-rule-copy">计划会匹配你的可训练天数和每次时间。</div></div>
+              <div class="v01-rule"><div class="v01-rule-label">第 3 步</div><div class="v01-rule-copy">训练后记录 RPE 与完成情况，下一周才会调整。</div></div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+        st.button("开始创建我的计划", type="primary", width="stretch", on_click=_v01_set_page, args=("设置",))
         return
     _v01_page_header("今天的训练", "从第 1 周开始；完成后在「进度」记录本周完成情况和平均 RPE。")
     week_numbers = [week["week"] for week in plan["weeks"] if week.get("sessions")]
@@ -12441,17 +12590,24 @@ def _v01_today_page() -> None:
     session = week["sessions"][0]
     st.markdown(
         (
-            '<div class="rx-public-card rx-public-card-ready">'
-            f'<div class="rx-public-kicker">第 {selected_week} 周 · {escape(zh(session["day"]))}</div>'
-            f'<div class="rx-public-title">{escape(_v01_activity(session["activity"]))} {session["duration_min"]} 分钟</div>'
-            f'<div class="rx-public-copy">目标强度：{escape(_v01_intensity(session["intensity"]))}，RPE {session["rpe_0_10"][0]}–{session["rpe_0_10"][1]}。{escape(_v01_talk_test(session["intensity"]))}</div>'
-            '</div>'
+            '<section class="v01-today-session">'
+            f'<div class="v01-session-kicker">第 {selected_week} 周 · {escape(zh(session["day"]))}</div>'
+            f'<div class="v01-session-title">{escape(_v01_activity(session["activity"]))} · {session["duration_min"]} 分钟</div>'
+            f'<div class="v01-session-detail">目标强度：{escape(_v01_intensity(session["intensity"]))}<br>RPE {session["rpe_0_10"][0]}–{session["rpe_0_10"][1]} · {escape(_v01_talk_test(session["intensity"]))}</div>'
+            '</section>'
         ),
         unsafe_allow_html=True,
     )
-    st.markdown("**开始前**：用轻松走或轻松骑行热身 5–10 分钟。")
-    st.markdown("**过程中**：以能完成整段训练为优先；任何异常不适都应停止。")
-    st.markdown("**结束后**：在本周结束时记录实际完成次数和平均 RPE。")
+    st.markdown(
+        """
+        <div class="v01-rule-list">
+          <div class="v01-rule"><div class="v01-rule-label">开始前</div><div class="v01-rule-copy">用轻松走或轻松骑行热身 5–10 分钟。</div></div>
+          <div class="v01-rule"><div class="v01-rule-label">过程中</div><div class="v01-rule-copy">以完成整段训练为优先；任何异常不适都应停止。</div></div>
+          <div class="v01-rule"><div class="v01-rule-label">结束后</div><div class="v01-rule-copy">周末记录实际完成次数和平均 RPE，决定下一周如何调整。</div></div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
     st.button("记录本周反馈", type="primary", width="stretch", on_click=_v01_set_page, args=("进度",))
 
 
@@ -12502,16 +12658,16 @@ def _v01_progress_page() -> None:
         plan = st.session_state.v01_plan
 
     decisions = {item["after_week"]: item["decision"] for item in plan.get("progression_log", [])}
-    if int(feedback_week) in decisions:
-        decision = decisions[int(feedback_week)]
+    decision = decisions.get(int(feedback_week))
+    if decision and decision.get("completion_rate") is not None and decision.get("average_rpe") is not None:
         action_labels = {"increase": "增加训练量", "small_increase": "小幅进阶", "hold": "维持", "decrease": "降低训练量", "pause": "暂停自动调整"}
         st.markdown(
             (
-                '<div class="rx-public-card rx-public-card-ready">'
-                '<div class="rx-public-kicker">下一周建议</div>'
-                f'<div class="rx-public-title">{escape(action_labels.get(decision["action"], decision["action"]))}</div>'
-                f'<div class="rx-public-copy">完成率 {round(float(decision["completion_rate"]) * 100)}%；平均 RPE {decision["average_rpe"]}。{escape(zh(decision["rationale"]))}</div>'
-                '</div>'
+                '<section class="v01-today-session">'
+                '<div class="v01-session-kicker">下一周建议</div>'
+                f'<div class="v01-session-title">{escape(action_labels.get(decision["action"], decision["action"]))}</div>'
+                f'<div class="v01-session-detail">完成率 {round(float(decision["completion_rate"]) * 100)}%；平均 RPE {decision["average_rpe"]}。<br>{escape(zh(decision["rationale"]))}</div>'
+                '</section>'
             ),
             unsafe_allow_html=True,
         )
@@ -12538,7 +12694,8 @@ def aerobic_v01_app() -> None:
 
     _v01_state_defaults()
     _apply_theme()
-    st.markdown('<div class="rx-public-kicker">SportRX</div>', unsafe_allow_html=True)
+    _apply_v01_theme()
+    st.markdown('<div class="v01-brand">SportRX</div>', unsafe_allow_html=True)
     st.title("4 周有氧运动处方")
     st.caption("循证、可解释、可调整。只面向表观健康成年人，只做有氧。")
     _v01_nav()
