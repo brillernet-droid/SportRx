@@ -24,7 +24,7 @@ def test_language_edition_page_labels_stay_separate():
     assert page_label("Workbench", "zh_user") == "工作台"
     assert page_label("Workbench", "en_user") == "Workbench"
     assert page_label("Training Profile", "zh_user") == "训练画像"
-    assert page_label("Venue Entry", "zh_user") == "入会分流"
+    assert page_label("Venue Entry", "zh_user") == "测试前确认"
     assert page_label("Venue Entry", "en_user") == "Venue Entry"
     assert page_label("训练", "en_user") == "Training"
     assert page_label("复测", "en_user") == "Retest"

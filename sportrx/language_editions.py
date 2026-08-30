@@ -70,7 +70,7 @@ LANGUAGE_EDITIONS = [
 
 PAGE_LABELS = {
     "Venue Entry": {
-        "zh_user": "入会分流",
+        "zh_user": "测试前确认",
         "en_user": "Venue Entry",
         "internal_mixed": "Venue Entry",
     },

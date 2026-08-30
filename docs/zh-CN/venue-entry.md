@@ -1,6 +1,6 @@
-# 场馆入会分流 v0.1
+# 场馆测试前确认 v0.1
 
-SportRX 的场馆入口不是一份自行评分的健康问卷，而是一条成员手机端的最小分流流程：
+SportRX 的场馆入口不是一份自行评分的健康问卷，而是一条成员手机端的最小测试前确认流程：
 
 ```text
 成员手机 → 已配置的外部筛查路径 → Safety Gate → Benchmark → Training Profile
@@ -9,17 +9,17 @@ SportRX 的场馆入口不是一份自行评分的健康问卷，而是一条成
 SportRX 不复制、翻译、评分或保存外部筛查工具的题目与答案。成员只在本地确认：
 
 - 年龄是否处于成年范围；
-- 是否同意使用本地分流结果；
+- 是否同意使用本地确认结果；
 - 使用的是哪一条已登记的外部路径和版本；
 - 外部路径的自报结果；以及
 - 自完成该路径后是否出现需要重新确认的状态变化。
 
-## 三种分流结果
+## 三种确认结果
 
 | 路由 | 可以做什么 | 不会做什么 |
 | --- | --- | --- |
 | `eligible_for_benchmark` | 进入 SportRX Hybrid Benchmark | 不表示医疗许可或能力评估。 |
-| `screening_follow_up_needed` | 查看本地分流结果和外部路径的下一步 | 不进入 Benchmark、Training Profile 或 Starter Path。 |
+| `screening_follow_up_needed` | 查看本地确认结果和外部路径的下一步 | 不进入 Benchmark、Training Profile 或 Starter Path。 |
 | `stop_automation` | 停止 SportRX 自动流程 | 不生成自动运动建议。 |
 
 Safety Gate 只决定产品是否继续，绝不提高、降低或替换任何已测表现数据。

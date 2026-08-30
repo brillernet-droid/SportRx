@@ -8465,16 +8465,23 @@ def _mobile_nav() -> None:
     is_en = _is_english_edition()
     nav_items = [
         ("Workbench", "Home" if is_en else "首页"),
-        ("Venue Entry", "Entry" if is_en else "入会"),
         ("Benchmark Protocol", "Test" if is_en else "测试"),
         ("Training Profile", "Profile" if is_en else "画像"),
         ("训练", "Plan" if is_en else "训练"),
+        ("复测", "Retest" if is_en else "复测"),
     ]
+    if not _public_preview_enabled():
+        nav_items.insert(1, ("Venue Entry", "Entry" if is_en else "确认"))
+    flow_copy = (
+        "查看示例 Benchmark、训练画像与复测。"
+        if _public_preview_enabled()
+        else "先完成测试前确认，再测试，再看训练画像。"
+    )
     st.markdown(
         (
             '<div class="rx-mobile-nav">'
             f'<div class="rx-mobile-nav-title">{"Mobile trial flow" if is_en else "手机试用入口"}</div>'
-            f'<div class="rx-mobile-nav-copy">{"Start with Venue Entry, measure, then review the training profile." if is_en else "先完成入会分流，再测试，再看训练画像。"}'
+            f'<div class="rx-mobile-nav-copy">{flow_copy}'
             "</div></div>"
         ),
         unsafe_allow_html=True,
@@ -8497,9 +8504,9 @@ def _public_status_strip() -> None:
     passport = st.session_state.passport
     summary = summarize_benchmark_sessions(st.session_state.benchmark_sessions)
     venue_eligible = _public_venue_entry_eligible()
-    safety = passport["safety_gate"]["status"] if venue_eligible else "待完成入会分流"
+    safety = passport["safety_gate"]["status"] if venue_eligible else "待完成测试前确认"
     measured_count = int(passport["areas_assessed"]["assessed"])
-    next_action = "先完成入会分流" if not venue_eligible else ("先完成测试" if measured_count < 2 else "查看训练画像")
+    next_action = "先完成测试前确认" if not venue_eligible else ("先完成测试" if measured_count < 2 else "查看训练画像")
     html = [
         '<div class="rx-public-home">',
         '<div class="rx-public-card">',
@@ -8538,7 +8545,20 @@ def public_home_page() -> None:
             "这是公开示例站，只使用合成数据演示测量、训练画像与复测逻辑。请勿输入姓名、联系方式、健康信息或真实测试成绩。"
         )
         st.button("用合成示例数据体验完整流程", type="primary", width="stretch", on_click=_load_public_sample)
-    _public_status_strip()
+        if not st.session_state.get("public_demo_mode"):
+            st.markdown(
+                """
+                <div class="rx-public-card rx-public-card-ready">
+                  <div class="rx-public-kicker">你会看到什么</div>
+                  <div class="rx-public-title">Benchmark → 训练画像 → 复测</div>
+                  <div class="rx-public-copy">从一组虚拟测试记录开始，查看系统如何保留 Not tested、识别已测表现，并在复测时只比较一致条件下的记录。</div>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
+            return
+    if not (_public_preview_enabled() and not st.session_state.get("public_demo_mode")):
+        _public_status_strip()
 
     venue_screening = st.session_state.profile.get("venue_screening")
     venue_eligible = bool(st.session_state.get("public_demo_mode")) or (
@@ -8546,10 +8566,10 @@ def public_home_page() -> None:
         and passport["safety_gate"].get("route") == "eligible_for_benchmark"
     )
     if not venue_eligible:
-        next_title = "下一步：完成入会分流"
+        next_title = "下一步：完成测试前确认"
         next_copy = "先通过已配置的外部筛查路径确认能否进入 Benchmark。SportRX 不收集筛查题目或健康细节。"
         button_target = "Venue Entry"
-        button_label = "开始入会分流"
+        button_label = "开始测试前确认"
     elif measured_count < 2:
         next_title = "下一步：完成基础测试"
         next_copy = "至少完成两个测试维度后，SportRx 才会比较相对优势和主要短板。"
@@ -8580,8 +8600,8 @@ def public_home_page() -> None:
 
     cards = [
         (
-            "入会分流",
-            "只记录外部筛查是否完成、是否需跟进和是否有状态变化，不保存筛查答案。",
+            "测试前确认",
+            "只确认你是否可以开始 Benchmark，不保存筛查题目或健康细节。",
             "Venue Entry",
         ),
         (
@@ -8645,18 +8665,18 @@ def venue_entry_page() -> None:
         }
         if is_en
         else {
-            "title": "入会分流",
-            "subtitle": "先完成已配置的外部筛查路径。SportRX 只记录分流结果，再判断能否进入 Benchmark。",
+            "title": "测试前确认",
+            "subtitle": "先完成已配置的外部筛查路径。SportRX 只记录是否可开始测试的结果，再判断能否进入 Benchmark。",
             "age": "年龄",
-            "consent": "我理解本地结果不构成医疗许可，并同意使用此分流步骤。",
+            "consent": "我理解本地结果不构成医疗许可，并同意使用此测试前确认步骤。",
             "provider": "外部筛查路径",
             "outcome": "我在外部筛查路径中的自报结果",
             "changed": "完成该路径后，是否出现需要重新确认的健康状态变化？",
-            "submit": "查看我的分流结果",
-            "saved": "已更新本地分流结果。",
+            "submit": "查看我是否可开始测试",
+            "saved": "已更新本地测试前确认结果。",
             "demo": "该路径尚未获准用于场馆部署。当前仅为内部 / 演示流程，不能开启 Benchmark。",
             "continue": "进入 Benchmark",
-            "export": "下载本地分流结果",
+            "export": "下载本地确认结果",
             "boundary": "SportRX 不复制、翻译、评分或保存外部筛查工具的答案。本页不提供医疗许可、诊断或运动建议。",
         }
     )
@@ -8726,7 +8746,7 @@ def venue_entry_page() -> None:
 
     assessment = build_venue_entry_assessment(profile, root=ROOT) if isinstance(profile.get("venue_screening"), dict) else None
     if assessment is None:
-        st.info("Complete the form to see the local route." if is_en else "完成表单后可查看本地分流结果。")
+        st.info("Complete the form to see the local route." if is_en else "完成表单后可查看本地确认结果。")
         return
 
     if assessment["deployment_status"] != "venue_ready":
@@ -8831,8 +8851,8 @@ def public_benchmark_page() -> None:
         "公开示例站只展示合成测试记录，不引导你进行实际测试。" if _public_preview_enabled() else "选择你能使用的器械，然后按同一套流程记录结果。至少完成两个维度后，再查看训练画像。",
     )
     if not _public_venue_entry_eligible():
-        st.warning("请先完成入会分流。未确认可进入 Benchmark 时，SportRX 不会开启测试。" if not _is_english_edition() else "Complete Venue Entry first. SportRX does not open Benchmark until eligibility is explicitly confirmed.")
-        st.button("去入会分流" if not _is_english_edition() else "Open Venue Entry", type="primary", width="stretch", on_click=_set_page, args=("Venue Entry",))
+        st.warning("请先完成测试前确认。未确认可进入 Benchmark 时，SportRX 不会开启测试。" if not _is_english_edition() else "Complete Venue Entry first. SportRX does not open Benchmark until eligibility is explicitly confirmed.")
+        st.button("去测试前确认" if not _is_english_edition() else "Open Venue Entry", type="primary", width="stretch", on_click=_set_page, args=("Venue Entry",))
         return
     profile = st.session_state.profile
     equipment_access = list(profile.get("equipment_access", []))
@@ -8889,8 +8909,8 @@ def public_profile_page() -> None:
         "这里只总结已经知道的信息和还缺的测试。它不是综合评分，也不是运动能力标签。",
     )
     if not _public_venue_entry_eligible():
-        st.warning("当前仅提供分流结果，不能进入训练画像或 Starter Path。" if not _is_english_edition() else "This route is assessment-only. Training Profile and Starter Path are unavailable.")
-        st.button("返回入会分流" if not _is_english_edition() else "Return to Venue Entry", type="primary", width="stretch", on_click=_set_page, args=("Venue Entry",))
+        st.warning("当前只能查看测试前确认结果，不能进入训练画像或 Starter Path。" if not _is_english_edition() else "This route is assessment-only. Training Profile and Starter Path are unavailable.")
+        st.button("返回测试前确认" if not _is_english_edition() else "Return to Venue Entry", type="primary", width="stretch", on_click=_set_page, args=("Venue Entry",))
         return
     _public_status_strip()
     st.markdown(
@@ -10009,7 +10029,7 @@ def training_page() -> None:
     )
     if not _is_internal_edition() and not _public_venue_entry_eligible():
         st.warning("当前分流不能进入自动训练内容。请先完成外部筛查路径的下一步。" if not _is_english_edition() else "This route cannot enter automated training content. Complete the required external screening follow-up first.")
-        st.button("返回入会分流" if not _is_english_edition() else "Return to Venue Entry", type="primary", width="stretch", on_click=_set_page, args=("Venue Entry",))
+        st.button("返回测试前确认" if not _is_english_edition() else "Return to Venue Entry", type="primary", width="stretch", on_click=_set_page, args=("Venue Entry",))
         return
     passport = st.session_state.passport
     block = build_training_block(passport, st.session_state.plan, st.session_state.feedback_by_week)
@@ -11197,7 +11217,7 @@ def progress_page() -> None:
     )
     if not _is_internal_edition() and not _public_venue_entry_eligible():
         st.warning("当前分流仅提供评估结果，不能进入周反馈、自动进阶或复测解释。" if not _is_english_edition() else "This assessment-only route cannot enter weekly feedback, automated progression, or retest interpretation.")
-        st.button("返回入会分流" if not _is_english_edition() else "Return to Venue Entry", type="primary", width="stretch", on_click=_set_page, args=("Venue Entry",))
+        st.button("返回测试前确认" if not _is_english_edition() else "Return to Venue Entry", type="primary", width="stretch", on_click=_set_page, args=("Venue Entry",))
         return
     automation_guard = build_automation_guard(st.session_state.feedback_by_week)
     if not automation_guard["automated_outputs_allowed"]:

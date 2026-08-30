@@ -9,7 +9,7 @@ SportRX 是面向健身房、跑团与训练营的运动表现测量与训练决
 
 **测得准，开得稳，讲得清，能复测。**
 
-[English](README.en.md) · [3 分钟开始体验](docs/zh-CN/quickstart.md) · [公开示例站边界](docs/zh-CN/public-preview.md) · [场馆入会分流](docs/zh-CN/venue-entry.md) · [产品说明](docs/zh-CN/product-guide.md) · [术语说明](docs/zh-CN/terminology.md) · [产品边界](docs/zh-CN/claim-boundaries.md) · [数据治理](evidence/data_governance.md)
+[English](README.en.md) · [3 分钟开始体验](docs/zh-CN/quickstart.md) · [公开示例站边界](docs/zh-CN/public-preview.md) · [场馆测试前确认](docs/zh-CN/venue-entry.md) · [产品说明](docs/zh-CN/product-guide.md) · [术语说明](docs/zh-CN/terminology.md) · [产品边界](docs/zh-CN/claim-boundaries.md) · [数据治理](evidence/data_governance.md)
 
 ## SportRX 解决什么问题
 
@@ -48,7 +48,7 @@ bash scripts/run_local.sh
 打开终端显示的本地地址后，选择 **中文版**。第一次体验推荐从工作台的
 “完整示例”开始，按下面的顺序浏览：
 
-1. 从 **入会分流** 开始：它只记录外部筛查的最小路由元数据，不收集筛查题目或健康细节。
+1. 从 **测试前确认** 开始：它只记录外部筛查的最小路由元数据，不收集筛查题目或健康细节。
 2. 只有 Safety Gate 明确允许时，进入 **Benchmark 流程**；否则结果仅用于分流，不打开自动测试或训练内容。
 3. 查看 **Training Profile**：理解当前测量画像和下一步测量动作。
 4. 在满足数据门槛时查看 **Starter Path** 与 4 周训练交接。
