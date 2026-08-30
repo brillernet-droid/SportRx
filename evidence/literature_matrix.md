@@ -14,6 +14,7 @@ See also: `source_notes/001_physical_activity_guidelines.md`.
 | PA-ACSM-GETP12 | ACSM's Guidelines for Exercise Testing and Prescription, 12th edition. https://acsm.org/education-resources/books/guidelines-exercise-testing-prescription/ | A | FITT-VP structure, exercise testing/prescription framing, applied settings | Full details require the ACSM text; public page is only a summary |
 | PA-ACSM-CDC | ACSM Physical Activity Guidelines resource. https://acsm.org/education-resources/trending-topics-resources/physical-activity-guidelines/ | A | Minimum aerobic and muscular fitness guidance for healthy adults | General guideline, not event-specific |
 | PA-AHA | American Heart Association adult physical activity recommendations. https://www.heart.org/en/healthy-living/exercise-and-physical-activity/fitness-basics/aha-recs-for-physical-activity-in-adults | A | Convergent support for aerobic + strengthening recommendations | General cardiovascular-health framing |
+| PA-CHINA-2021 | 《中国人群身体活动指南》编写委员会. 中国人群身体活动指南（2021）. 国家卫生健康委公开解读：https://www.nhc.gov.cn/wjw/ftsp/202112/44e8325ad5934eb0b42b2987e3148315.shtml | A | 中文用户版的中国本地身体活动指南语境 | 版权保护的全文不存入仓库；不是 SportRX Benchmark 或赛事结果依据 |
 
 ## Safety And Preparticipation Screening
 
@@ -39,6 +40,11 @@ See also:
 | TEST-FIELD-ADULT | Criterion-related validity of field-based fitness tests in adults. https://pmc.ncbi.nlm.nih.gov/articles/PMC8397016/ | B | Supports field-test framing and need to document validity/reliability | Does not validate SportRx's exact benchmark battery |
 | TEST-FIELD-SAFETY | Feasibility and safety of field-based physical fitness tests. https://link.springer.com/article/10.1186/s40798-024-00799-1 | B | Supports caution: adult field-test evidence is limited when validity, reliability, feasibility, and safety are considered together | Reinforces need for SportRx pilot data before norms |
 | TEST-FIELD-RELIABILITY | Reliability of field-based fitness tests in adults. https://pubmed.ncbi.nlm.nih.gov/35064915/ | B | Supports test-retest thinking and reliability as a benchmark requirement | PubMed may be access-limited; use with source note rather than overclaiming |
+| TEST-1000M-ADULT-2000 | Diaz et al. 1,000 m walk-run adult validation/reliability. https://pubmed.ncbi.nlm.nih.gov/10818810/ | C | Partial support for preserving a 1 km test type and retest context | One healthy-adult sample and walk-run protocol; not a SportRX hard-run norm or score |
+| TEST-6MRT-ADULT-2023 | Leuschner et al. 6-minute run test in adults. https://pmc.ncbi.nlm.nih.gov/articles/PMC10907109/ | C | Partial support for a standardized 6-minute continuous-run record | SportRX run/walk and reference equations are not validated/imported |
+| ERG-SKIERG-1000M-2025 | Concept2 SkiErg 1,000 m reliability/criterion-validity case study. https://pmc.ncbi.nlm.nih.gov/articles/PMC12575247/ | C | Supports same-device personal retest context only | Ten national-level skiers; no recreational norm or RowErg equivalence |
+| ERG-ROWERG-ACCURACY-2022 | Concept2 RowErg monitor accuracy under motorized test-rig conditions. https://pubmed.ncbi.nlm.nih.gov/35146423/ | C | Supports capture of device conditions and short-test caution | Not human-performance validation or a SportRX interpretation rule |
+| CN-NPFS-2023 | 国民体质测定标准（2023年修订） official notice. https://www.sport.gov.cn/n315/n20001395/c25880704/content.html | D | China-local measurement terminology and method boundary | No national grades, norms or composite scores are mapped into SportRX |
 | MON-RPE-ACSM | ACSM article on RPE during exercise testing. https://acsm.org/normal-rating-perceived-exertion-maximal-exercise/ | B | Supports RPE as low-cost, interpretable, and linked to exercise intensity | Mainly discusses exercise testing and Borg 6-20 scale |
 | MON-SRPE-FOSTER | Foster et al. session-RPE method. https://pubmed.ncbi.nlm.nih.gov/11708692/ | B | Supports session RPE as a practical training-load measure | Needs user education and consistent timing |
 | MON-SRPE-REVIEW | Haddad et al. Session-RPE Method for Training Load Monitoring. https://www.frontiersin.org/journals/neuroscience/articles/10.3389/fnins.2017.00612/full | B | Supports session RPE validity/reliability across sports and practical monitoring | RPE is subjective and influenced by context |
@@ -72,4 +78,4 @@ See also: `source_notes/005_hyrox_hift_hybrid_evidence.md`.
 - Whether main-gap routing improves adherence or retest outcomes.
 - Recreational HYROX first-timer data, not elite-only or race-result-only data.
 - Chinese recreational athlete usability data.
-- China-local physical activity guideline layer.
+- China-local recreational athlete usability data.

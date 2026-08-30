@@ -246,6 +246,41 @@ def test_retest_comparison_uses_raw_direction_not_prediction():
     assert "not a prediction" in comparisons[0]["claim_boundary"]
 
 
+def test_retest_comparison_marks_changed_test_context_as_not_directly_comparable():
+    first = create_benchmark_session(
+        {"equipment_access": []},
+        [
+            build_component_result(
+                "run_1km_or_6min",
+                value=1000,
+                value_unit="meters",
+                rpe_0_10=6,
+                protocol_context={"test_variant": "6min_run", "surface": "track"},
+            )
+        ],
+        session_date="2026-08-01",
+    )
+    second = create_benchmark_session(
+        {"equipment_access": []},
+        [
+            build_component_result(
+                "run_1km_or_6min",
+                value=1000,
+                value_unit="meters",
+                rpe_0_10=6,
+                protocol_context={"test_variant": "1km_run", "surface": "track"},
+            )
+        ],
+        session_date="2026-08-29",
+    )
+
+    comparison = compare_retest_sessions([first, second])[0]
+
+    assert comparison["direction"] == "context_changed"
+    assert "test_variant" in comparison["context_changes"]
+    assert "not directly comparable" in comparison["claim_boundary"]
+
+
 def test_session_quality_blocks_empty_measurement_log():
     quality = evaluate_benchmark_session_quality(
         [

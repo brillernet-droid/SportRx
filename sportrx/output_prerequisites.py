@@ -8,6 +8,8 @@ from __future__ import annotations
 
 from typing import Any
 
+from .safety_gate import automated_handoff_allowed
+
 
 CLAIM_BOUNDARY = (
     "Output prerequisites explain product gates only. They do not validate "
@@ -84,7 +86,7 @@ def build_output_prerequisites(
             "starter_path",
             "Starter Path",
             "active" if starter_available else "blocked",
-            ["Safety Gate is not RED.", "At least two measured performance dimensions.", "A usable main gap exists."],
+            ["Safety Gate permits automated handoff.", "At least two measured performance dimensions.", "A usable main gap exists."],
             _starter_path_met(passport, has_two_measured),
             _starter_path_missing(passport, has_two_measured),
             "Controls whether SportRx creates a tailored 4-week starter path.",
@@ -139,8 +141,8 @@ def build_output_prerequisites(
 
 def _starter_path_met(passport: dict[str, Any], has_two_measured: bool) -> list[str]:
     met = []
-    if passport.get("safety_gate", {}).get("status") != "RED":
-        met.append("Safety Gate is not RED.")
+    if automated_handoff_allowed(passport.get("safety_gate", {})):
+        met.append("Safety Gate permits automated handoff.")
     if has_two_measured:
         met.append("At least two measured performance dimensions.")
     if passport.get("main_gap") not in {"Not enough measured data", "Not enough data"}:
@@ -150,8 +152,8 @@ def _starter_path_met(passport: dict[str, Any], has_two_measured: bool) -> list[
 
 def _starter_path_missing(passport: dict[str, Any], has_two_measured: bool) -> list[str]:
     missing = []
-    if passport.get("safety_gate", {}).get("status") == "RED":
-        missing.append("RED Safety Gate blocks automated handoff.")
+    if not automated_handoff_allowed(passport.get("safety_gate", {})):
+        missing.append("Safety Gate routing blocks automated handoff.")
     if not has_two_measured:
         missing.append("Need at least two measured performance dimensions.")
     if passport.get("main_gap") in {"Not enough measured data", "Not enough data"}:

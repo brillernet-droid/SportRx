@@ -10,7 +10,7 @@ from __future__ import annotations
 from typing import Any
 
 from .assessment import classify_fitness
-from .safety_gate import evaluate_safety_gate
+from .safety_gate import automated_handoff_allowed, evaluate_safety_gate
 
 
 def _clamp(value: float, lower: float, upper: float) -> float:
@@ -31,7 +31,7 @@ def calculate_readiness(profile: dict[str, Any]) -> dict[str, Any]:
     safety = evaluate_safety_gate(profile)
     assessment = classify_fitness(profile)
 
-    if safety["status"] == "RED":
+    if not automated_handoff_allowed(safety):
         return {
             "score": None,
             "band": "needs_review",

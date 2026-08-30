@@ -1,5 +1,40 @@
 # Changelog
 
+## 2.3.0 - Venue Entry Assessment v0.1
+
+- Added a member-owned Venue Entry workflow: external screening-pathway handoff,
+  deterministic Safety Gate routing, then Benchmark only for an explicit
+  `eligible_for_benchmark` result.
+- Added a screening-provider registry with a Chinese default of
+  `research_required`; the default route is demo-only, not a venue-pilot claim.
+- Restricted non-GREEN venue routes to assessment-only results and whitelisted
+  their exports to minimal routing metadata.
+- Added public Venue Entry documentation and Venue Entry data-governance rules.
+
+## Knowledge RAG Foundation - Unreleased
+
+- Added an internal Knowledge RAG foundation separate from deterministic
+  SportRX product rules.
+- Added 31 reviewed bilingual knowledge cards derived from existing reviewed
+  sources, a ten-lane discovery-query map, and metadata-only candidate intake.
+- Added local FTS5 retrieval, optional local multilingual embedding compilation,
+  DeepSeek citation-bound synthesis guards, and an internal-only Knowledge Lab.
+- DeepSeek synthesis remains disabled until 60 reviewed cards and required
+  retrieval/citation/boundary gates are met; the corpus target remains 300.
+
+## 2.2.1 - Unreleased
+
+- Added a component evidence ledger for 1 km, 6-minute, RowErg/SkiErg,
+  station-circuit and compromised-run records.
+- Labels 1 km, 6-minute and ergometer protocols as `partial_evidence`; station
+  and compromised-run records remain explicitly `experimental`.
+- Captures retest context: route, surface, incline, timing, warm-up,
+  familiarization, device setting, test order and deviations.
+- Adds China-local method/terminology reference without importing national
+  grades, norms or composite scores.
+- Adds Phase 0 / Alpha consent, retention, deletion and de-identification
+  preparation. This repository still collects no participant data.
+
 ## 0.1.0 - Unreleased
 
 - Initial SportRx Engine scaffold.
@@ -35,6 +70,11 @@
 
 ## 2.2.0 - Unreleased
 
+- Added SportRX Evidence Store v0.1: structured source, claim, rule, and
+  protocol records; local SQLite FTS5 internal retrieval; rule tracing; and
+  curated normal/unsafe retrieval evaluation sets. Added a China-local public
+  activity-guideline metadata record while keeping copyrighted full text and
+  all user data outside the public repository.
 - Reworked Quick Match inputs from subjective background/adaptability sliders to concrete recent training behavior.
 - Added a Quick Match Intake Contract console and Review Pack export so the
   first intake screen explains its direct numeric fields, excluded subjective

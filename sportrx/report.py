@@ -10,6 +10,7 @@ from datetime import date
 from typing import Any
 
 from .output_prerequisites import build_output_prerequisites
+from .safety_gate import automated_handoff_allowed
 
 CLAIM_BOUNDARY = (
     "SportRx reports summarize current measured and reported information only. "
@@ -19,7 +20,7 @@ CLAIM_BOUNDARY = (
 
 
 def _status_label(passport: dict[str, Any]) -> str:
-    if passport["safety_gate"]["status"] == "RED":
+    if not automated_handoff_allowed(passport["safety_gate"]):
         return "Training handoff blocked"
     if not passport["starter_path"]["available"]:
         return "Benchmark needed before tailored training"

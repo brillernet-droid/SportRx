@@ -6,7 +6,7 @@ def test_standard_protocol_includes_stop_rules_and_components():
 
     assert protocol["path"] == "standard"
     assert protocol["global_stop_rules"]
-    assert any("Safety Gate is RED" in rule for rule in protocol["global_stop_rules"])
+    assert any("explicitly allowed Benchmark entry" in rule for rule in protocol["global_stop_rules"])
     assert {component["component_id"] for component in protocol["component_protocols"]} >= {
         "run_1km",
         "station_circuit",
@@ -40,3 +40,12 @@ def test_protocol_markdown_exports_components_and_recording_principles():
     assert "1 km run" in exported
     assert "Missing components stay Not tested" in exported
     assert "percentile" in exported
+
+
+def test_every_displayed_component_has_a_protocol_evidence_status_and_context_contract():
+    for equipment_access in ([], ["row", "kettlebell"]):
+        protocol = get_benchmark_protocol(equipment_access)
+        for component in protocol["component_protocols"]:
+            assert component["protocol_evidence_id"].startswith("PROTO-COMPONENT-")
+            assert component["protocol_evidence_status"] in {"partial_evidence", "experimental", "supported"}
+            assert component["standardization_fields"]

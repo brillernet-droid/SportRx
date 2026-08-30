@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from .safety_gate import evaluate_safety_gate
+from .safety_gate import automated_handoff_allowed, evaluate_safety_gate
 
 
 PACKS = {
@@ -387,7 +387,7 @@ def build_quick_match_intake_quality(
         for field_id in ["available_days_per_week", "max_minutes_per_session"]
     )
 
-    if safety_gate.get("status") == "RED":
+    if not automated_handoff_allowed(safety_gate):
         status = "blocked_by_safety_gate"
         next_action = "Resolve Safety Gate before Quick Match routing or training handoff."
     elif missing_behavior:
@@ -405,7 +405,7 @@ def build_quick_match_intake_quality(
             "Safety Gate",
             safety_gate.get("status", "not_reviewed"),
             "Safety can block routing, but never changes performance scores.",
-            "blocked" if safety_gate.get("status") == "RED" else "ready",
+            "blocked" if not automated_handoff_allowed(safety_gate) else "ready",
         ),
         _intake_card(
             "Behavior Snapshot",

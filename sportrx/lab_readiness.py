@@ -8,6 +8,8 @@ from __future__ import annotations
 
 from typing import Any
 
+from .safety_gate import automated_handoff_allowed, benchmark_allowed
+
 
 CLAIM_BOUNDARY = (
     "Lab Readiness Console summarizes product state and measurement readiness "
@@ -46,9 +48,9 @@ def build_lab_readiness_console(
         _status_card(
             "safety_gate",
             "Safety Gate",
-            "blocked" if safety_status == "RED" else "ready",
+            "blocked" if not benchmark_allowed(safety) else "ready",
             f"Current gate: {safety_status}. Safety can block training handoff, but does not change measured performance.",
-            "Resolve Safety Gate before training handoff." if safety_status == "RED" else "Continue measurement with normal stop rules.",
+            "Resolve Safety Gate before Benchmark or training handoff." if not benchmark_allowed(safety) else "Continue measurement with normal stop rules.",
         ),
         _status_card(
             "equipment_path",

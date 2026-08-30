@@ -19,6 +19,17 @@ from .benchmark import get_hybrid_benchmark
 SCHEMA_VERSION = "0.1"
 
 
+PROTOCOL_CONTEXT_FIELDS = {
+    "run_1km": ["route_or_treadmill", "surface", "gradient_or_incline", "timing_method", "warmup_minutes", "familiarization_level", "test_order"],
+    "run_1km_or_6min": ["test_variant", "route_or_treadmill", "surface", "gradient_or_incline", "timing_method", "warmup_minutes", "familiarization_level", "test_order"],
+    "row_or_ski_1km": ["erg_type", "erg_model", "drag_factor", "timing_method", "warmup_minutes", "familiarization_level", "test_order"],
+    "station_circuit": ["movement_standard", "loads_used", "rest_rule", "warmup_minutes", "familiarization_level", "test_order"],
+    "bodyweight_circuit": ["movement_standard", "rest_rule", "warmup_minutes", "familiarization_level", "test_order"],
+    "compromised_run": ["route_or_treadmill", "surface", "gradient_or_incline", "timing_method", "preceding_station_circuit", "warmup_minutes", "familiarization_level", "test_order"],
+    "transition_practice": ["movement_standard", "rest_rule", "route_or_treadmill", "warmup_minutes", "familiarization_level", "test_order"],
+}
+
+
 def _clean_optional_number(value: Any) -> float | None:
     if value is None or value == "":
         return None
@@ -48,6 +59,9 @@ def _entry_contract_for_component(component: dict[str, Any]) -> dict[str, Any]:
         "companion_fields": [field for field in fields if field != "rpe_0_10"],
         "rpe_required": "rpe_0_10" in fields,
         "equipment_hint": ", ".join(component.get("required_equipment", [])),
+        "protocol_context_fields": PROTOCOL_CONTEXT_FIELDS.get(component_id, ["warmup_minutes", "test_order"]),
+        "protocol_evidence_id": component.get("protocol_evidence_id", "not_mapped"),
+        "protocol_evidence_status": component.get("protocol_evidence_status", "experimental"),
         "import_policy": "raw_only",
         "ui_hint": "Record the raw result exactly as tested.",
         "not_allowed": [
@@ -191,6 +205,8 @@ def benchmark_log_entry_contract_markdown(contract: dict[str, Any]) -> str:
                 f"- Required fields: {', '.join(component['required_fields'])}",
                 f"- Companion fields: {', '.join(component['companion_fields']) or 'None'}",
                 f"- Import policy: {component['import_policy']}",
+                f"- Protocol evidence: {component['protocol_evidence_status']} ({component['protocol_evidence_id']})",
+                f"- Protocol context: {', '.join(component['protocol_context_fields'])}",
                 f"- UI hint: {component['ui_hint']}",
                 f"- Equipment hint: {component['equipment_hint']}",
                 "- Not allowed:",
@@ -210,6 +226,7 @@ def build_component_result(
     equipment: list[str] | None = None,
     substitution: str | None = None,
     result_fields: dict[str, Any] | None = None,
+    protocol_context: dict[str, Any] | None = None,
     completed: bool = True,
     notes: str = "",
 ) -> dict[str, Any]:
@@ -224,6 +241,7 @@ def build_component_result(
         "equipment": list(equipment or []),
         "substitution": substitution or None,
         "result_fields": dict(result_fields or {}),
+        "protocol_context": dict(protocol_context or {}),
         "notes": notes.strip(),
     }
 
@@ -269,6 +287,7 @@ def evaluate_benchmark_session_quality(
         and result.get("value_unit") not in contract_lookup[result["component_id"]].get("allowed_value_units", [])
     ]
     missing_required_context = []
+    missing_protocol_context = []
     for result in completed_with_value:
         contract = contract_lookup.get(result["component_id"], {})
         result_fields = result.get("result_fields", {}) or {}
@@ -277,6 +296,12 @@ def evaluate_benchmark_session_quality(
                 continue
             if result_fields.get(field) in {None, ""}:
                 missing_required_context.append(f"{result['component_id']}:{field}")
+        protocol_context = result.get("protocol_context", {}) or {}
+        for field in contract.get("protocol_context_fields", []):
+            if field == "test_order":
+                continue
+            if protocol_context.get(field) in {None, ""}:
+                missing_protocol_context.append(f"{result['component_id']}:{field}")
     measured_areas = sorted(
         {
             result.get("area", result.get("component_id", "unknown"))
@@ -300,6 +325,8 @@ def evaluate_benchmark_session_quality(
         warnings.append("RPE is missing for completed components: " + ", ".join(missing_rpe))
     if missing_required_context:
         warnings.append("Some completed components are missing companion context fields: " + ", ".join(missing_required_context))
+    if missing_protocol_context:
+        warnings.append("Some completed components are missing protocol-context fields: " + ", ".join(missing_protocol_context))
     if len(measured_areas) < 2:
         warnings.append("At least two measured areas are recommended before interpreting strongest area vs main gap.")
 
@@ -440,6 +467,7 @@ def create_benchmark_session(
     session_date: str | None = None,
     protocol_version: str | None = None,
     global_notes: str = "",
+    session_context: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Create a user-owned benchmark session record."""
 
@@ -448,11 +476,13 @@ def create_benchmark_session(
     path = benchmark_path or benchmark["path"]
     spec = benchmark["spec"]
     component_lookup = _component_map(path, equipment_access)
+    session_context = dict(session_context or {})
 
     normalized_results = []
-    for result in component_results:
+    for index, result in enumerate(component_results, start=1):
         component_id = result["component_id"]
         component = component_lookup.get(component_id, {"area": "unknown", "test": component_id, "fields": []})
+        component_context = dict(result.get("protocol_context", {}) or {})
         normalized_results.append(
             {
                 **build_component_result(
@@ -463,6 +493,11 @@ def create_benchmark_session(
                     equipment=result.get("equipment", []),
                     substitution=result.get("substitution"),
                     result_fields=result.get("result_fields", {}),
+                    protocol_context={
+                        **session_context,
+                        **component_context,
+                        "test_order": component_context.get("test_order", index),
+                    },
                     completed=result.get("completed", True),
                     notes=result.get("notes", ""),
                 ),
@@ -501,6 +536,7 @@ def create_benchmark_session(
         },
         "session_quality": quality,
         "import_compatibility": import_compatibility,
+        "session_context": session_context,
         "notes": global_notes.strip(),
         "claim_boundary": "Raw benchmark log only. Not a validated score, percentile, race prediction, or medical clearance.",
     }
@@ -619,6 +655,13 @@ def compare_retest_sessions(sessions: list[dict[str, Any]]) -> list[dict[str, An
             continue
         first = results[0]
         latest = results[-1]
+        first_context = {key: value for key, value in (first.get("protocol_context", {}) or {}).items() if value is not None and value != ""}
+        latest_context = {key: value for key, value in (latest.get("protocol_context", {}) or {}).items() if value is not None and value != ""}
+        context_changes = sorted(
+            key
+            for key in set(first_context) | set(latest_context)
+            if first_context.get(key) != latest_context.get(key)
+        )
         delta = float(latest["value"]) - float(first["value"])
         unit = latest.get("value_unit") or first.get("value_unit") or ""
         lower_is_better = unit == "seconds"
@@ -633,8 +676,9 @@ def compare_retest_sessions(sessions: list[dict[str, Any]]) -> list[dict[str, An
                 "latest_value": latest.get("value"),
                 "value_unit": unit,
                 "delta": round(delta, 2),
-                "direction": "improved" if improved else "not_improved_or_unclear",
-                "claim_boundary": "Retest comparison only; not a prediction or validated minimal detectable change.",
+                "direction": "context_changed" if context_changes else ("improved" if improved else "not_improved_or_unclear"),
+                "context_changes": context_changes,
+                "claim_boundary": "Retest comparison only; changed protocol context is not directly comparable and is not a prediction or validated minimal detectable change.",
             }
         )
     return comparisons
@@ -675,6 +719,8 @@ def export_sessions_csv(sessions: list[dict[str, Any]]) -> str:
         "substitution",
         "notes",
         "result_fields",
+        "protocol_context",
+        "session_context",
     ]
     writer = csv.DictWriter(output, fieldnames=fieldnames)
     writer.writeheader()
@@ -697,6 +743,8 @@ def export_sessions_csv(sessions: list[dict[str, Any]]) -> str:
                     "substitution": result.get("substitution") or "",
                     "notes": result.get("notes") or "",
                     "result_fields": json.dumps(result.get("result_fields", {}), ensure_ascii=False, sort_keys=True),
+                    "protocol_context": json.dumps(result.get("protocol_context", {}), ensure_ascii=False, sort_keys=True),
+                    "session_context": json.dumps(session.get("session_context", {}), ensure_ascii=False, sort_keys=True),
                 }
             )
     return output.getvalue()

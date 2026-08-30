@@ -20,7 +20,7 @@ matrix.
 | HYROX race-result datasets | Event performance norms | candidate | Only use if source, sampling, and consent are clear |
 | Recreational HYROX first-timer studies | First-event preparation | candidate | Search periodically; evidence is emerging |
 | RowErg/SkiErg test reliability literature | Station-specific measurement | candidate | Add if field-test reliability is directly relevant |
-| Chinese adult physical activity guideline sources | China-local context | candidate | Add Chinese guideline layer if SportRx targets Chinese users |
+| Chinese adult physical activity guideline sources | China-local context | included | `PA-CHINA-2021` records the public official interpretation; retain only metadata because the guideline text is copyrighted |
 | Station circuit test-retest pilot data | SportRx-specific validation | not started | Collect internally before claiming cutoffs |
 
 ## Intake Checklist

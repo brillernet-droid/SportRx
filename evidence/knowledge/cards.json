@@ -1,0 +1,962 @@
+{
+  "schema": "sportrx.knowledge_cards",
+  "schema_version": "0.1",
+  "records": [
+    {
+      "id": "K-CARD-001",
+      "topic": "training_principles",
+      "subtopic": "physical_activity",
+      "title_en": "Physical activity guidance as training context",
+      "title_zh": "身体活动指南如何用于训练语境",
+      "keywords_en": [
+        "training principles",
+        "FITT-VP",
+        "physical activity"
+      ],
+      "keywords_zh": [
+        "训练原则",
+        "身体活动",
+        "运动处方"
+      ],
+      "source_ids": [
+        "PA-WHO-2020"
+      ],
+      "evidence_tier": "A",
+      "population": "General population; adult guidance is relevant to SportRX v0.1.",
+      "summary_zh": "身体活动指南可提供总体健康活动背景，但不能替代个人表现测试或赛事准备判断。",
+      "technical_summary_en": "Public-health activity guidance is contextual, not a performance or event-readiness threshold.",
+      "limitations": "Public-health guidance is not a sport-performance prescription.",
+      "review_status": "reviewed",
+      "reviewed_by": "SportRX knowledge review",
+      "reviewed_at": "2026-08-28",
+      "access_tier": "public_metadata",
+      "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-002",
+      "topic": "training_principles",
+      "subtopic": "adult_activity",
+      "title_en": "Adult activity guidance boundaries",
+      "title_zh": "成年人身体活动建议的边界",
+      "keywords_en": [
+        "training principles",
+        "FITT-VP",
+        "physical activity"
+      ],
+      "keywords_zh": [
+        "训练原则",
+        "身体活动",
+        "运动处方"
+      ],
+      "source_ids": [
+        "PA-CDC-ADULT"
+      ],
+      "evidence_tier": "A",
+      "population": "Adults in a public-health context.",
+      "summary_zh": "成年人活动建议适合用于理解一般健康活动量，不应用来给个人贴上运动能力标签。",
+      "technical_summary_en": "Population guidance does not determine an individual's sport performance or dose.",
+      "limitations": "United States public-health summary; not an individualized training-load rule.",
+      "review_status": "reviewed",
+      "reviewed_by": "SportRX knowledge review",
+      "reviewed_at": "2026-08-28",
+      "access_tier": "public_metadata",
+      "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-003",
+      "topic": "training_principles",
+      "subtopic": "fitt_vp",
+      "title_en": "FITT-VP framework",
+      "title_zh": "FITT-VP 是什么",
+      "keywords_en": [
+        "training principles",
+        "FITT-VP",
+        "physical activity"
+      ],
+      "keywords_zh": [
+        "训练原则",
+        "身体活动",
+        "运动处方"
+      ],
+      "source_ids": [
+        "PA-ACSM-GETP12"
+      ],
+      "evidence_tier": "A",
+      "population": "Exercise testing and prescription settings; SportRX uses the apparently healthy adult scope only.",
+      "summary_zh": "FITT-VP 用频率、强度、时间、类型、总量与进阶组织训练思路；在 SportRX 中它仍需受 Safety Gate 和实际测量约束。",
+      "technical_summary_en": "FITT-VP is a prescription framework, not validation of a SportRX-specific outcome.",
+      "limitations": "The full text is licensed; the public page is bibliographic context, not a reproduced protocol.",
+      "review_status": "reviewed",
+      "reviewed_by": "SportRX knowledge review",
+      "reviewed_at": "2026-08-28",
+      "access_tier": "public_metadata",
+      "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-004",
+      "topic": "training_principles",
+      "subtopic": "activity_context",
+      "title_en": "Why activity guidance is not a fitness score",
+      "title_zh": "为什么活动建议不是能力评分",
+      "keywords_en": [
+        "training principles",
+        "FITT-VP",
+        "physical activity"
+      ],
+      "keywords_zh": [
+        "训练原则",
+        "身体活动",
+        "运动处方"
+      ],
+      "source_ids": [
+        "PA-ACSM-CDC"
+      ],
+      "evidence_tier": "A",
+      "population": "Healthy adults in a public-health context.",
+      "summary_zh": "满足一般活动建议不等于已具备 HYROX、跑步或其他赛事能力。",
+      "technical_summary_en": "Public-health guidance is not a validated readiness score.",
+      "limitations": "General activity guidance, not an event-specific benchmark or prediction source.",
+      "review_status": "reviewed",
+      "reviewed_by": "SportRX knowledge review",
+      "reviewed_at": "2026-08-28",
+      "access_tier": "public_metadata",
+      "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-005",
+      "topic": "training_principles",
+      "subtopic": "cardiovascular_context",
+      "title_en": "Cardiovascular guidance versus performance",
+      "title_zh": "心血管健康建议与运动表现的区别",
+      "keywords_en": [
+        "training principles",
+        "FITT-VP",
+        "physical activity"
+      ],
+      "keywords_zh": [
+        "训练原则",
+        "身体活动",
+        "运动处方"
+      ],
+      "source_ids": [
+        "PA-AHA"
+      ],
+      "evidence_tier": "A",
+      "population": "Adults in a cardiovascular-health context.",
+      "summary_zh": "面向心血管健康的活动建议可以解释健康背景，但不预测个人比赛表现。",
+      "technical_summary_en": "Health recommendations cannot be converted into race predictions.",
+      "limitations": "General cardiovascular-health framing; it does not establish training dose for a specific sport.",
+      "review_status": "reviewed",
+      "reviewed_by": "SportRX knowledge review",
+      "reviewed_at": "2026-08-28",
+      "access_tier": "public_metadata",
+      "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-006",
+      "topic": "training_principles",
+      "subtopic": "china_local_context",
+      "title_en": "Chinese physical activity guidance context",
+      "title_zh": "中国身体活动指南如何在 SportRX 中使用",
+      "keywords_en": [
+        "training principles",
+        "FITT-VP",
+        "physical activity"
+      ],
+      "keywords_zh": [
+        "训练原则",
+        "身体活动",
+        "运动处方"
+      ],
+      "source_ids": [
+        "PA-CHINA-2021"
+      ],
+      "evidence_tier": "A",
+      "population": "Chinese population across the life course; SportRX uses the adult guidance context only.",
+      "summary_zh": "中国人群身体活动指南在 SportRX 中只提供成年人的健康活动语境，不用于生成官方体质等级。",
+      "technical_summary_en": "No Chinese national grade, norm, or composite score is mapped into SportRX.",
+      "limitations": "The full guideline is copyrighted and is not stored here; it does not validate SportRX benchmark cutoffs or HYROX outcomes.",
+      "review_status": "reviewed",
+      "reviewed_by": "SportRX knowledge review",
+      "reviewed_at": "2026-08-28",
+      "access_tier": "public_metadata",
+      "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-007",
+      "topic": "sports_medicine_injury_rehab",
+      "subtopic": "preparticipation_screening",
+      "title_en": "Why screening is separate from performance",
+      "title_zh": "运动前筛查为什么独立于表现",
+      "keywords_en": [
+        "screening",
+        "injury",
+        "sports medicine"
+      ],
+      "keywords_zh": [
+        "筛查",
+        "伤病",
+        "运动医学"
+      ],
+      "source_ids": [
+        "SAFE-EIM"
+      ],
+      "evidence_tier": "A",
+      "population": "Adults considering physical activity, with referral principles where appropriate.",
+      "summary_zh": "运动前筛查用于决定是否需要进一步专业评估；它不提高或降低任何已测表现。",
+      "technical_summary_en": "Research-only safety context; it is not medical clearance.",
+      "limitations": "Does not provide SportRX-specific medical-clearance rules.",
+      "review_status": "reviewed",
+      "reviewed_by": "SportRX knowledge review",
+      "reviewed_at": "2026-08-28",
+      "access_tier": "public_metadata",
+      "question_policy": "research_only"
+    },
+    {
+      "id": "K-CARD-008",
+      "topic": "sports_medicine_injury_rehab",
+      "subtopic": "screening_questionnaire",
+      "title_en": "What screening questionnaires can and cannot show",
+      "title_zh": "筛查问卷能说明什么",
+      "keywords_en": [
+        "screening",
+        "injury",
+        "sports medicine"
+      ],
+      "keywords_zh": [
+        "筛查",
+        "伤病",
+        "运动医学"
+      ],
+      "source_ids": [
+        "SAFE-EIM-SCREEN"
+      ],
+      "evidence_tier": "A",
+      "population": "Adults beginning or increasing exercise.",
+      "summary_zh": "筛查问卷帮助识别是否需要暂停自动训练交接，但不能替代临床诊断或医疗许可。",
+      "technical_summary_en": "Research-only clinical boundary; no diagnostic interpretation is enabled.",
+      "limitations": "SportRX does not reproduce the instrument or interpret it as medical clearance.",
+      "review_status": "reviewed",
+      "reviewed_by": "SportRX knowledge review",
+      "reviewed_at": "2026-08-28",
+      "access_tier": "public_metadata",
+      "question_policy": "research_only"
+    },
+    {
+      "id": "K-CARD-009",
+      "topic": "sports_medicine_injury_rehab",
+      "subtopic": "readiness_screening",
+      "title_en": "PAR-Q style tool boundary",
+      "title_zh": "PAR-Q 类工具的用途边界",
+      "keywords_en": [
+        "screening",
+        "injury",
+        "sports medicine"
+      ],
+      "keywords_zh": [
+        "筛查",
+        "伤病",
+        "运动医学"
+      ],
+      "source_ids": [
+        "SAFE-PARQ"
+      ],
+      "evidence_tier": "A",
+      "population": "Adults considering participation in physical activity.",
+      "summary_zh": "运动准备筛查工具用于提示进一步评估，不应用于判定个人医疗风险百分比。",
+      "technical_summary_en": "Research-only clinical context; no personal risk estimate is supported.",
+      "limitations": "SportRX links to the referral concept; it does not copy the questionnaire or diagnose conditions.",
+      "review_status": "reviewed",
+      "reviewed_by": "SportRX knowledge review",
+      "reviewed_at": "2026-08-28",
+      "access_tier": "public_metadata",
+      "question_policy": "research_only"
+    },
+    {
+      "id": "K-CARD-010",
+      "topic": "sports_medicine_injury_rehab",
+      "subtopic": "screening_algorithm",
+      "title_en": "Screening algorithms are not automated clearance",
+      "title_zh": "运动筛查算法不能变成自动医疗结论",
+      "keywords_en": [
+        "screening",
+        "injury",
+        "sports medicine"
+      ],
+      "keywords_zh": [
+        "筛查",
+        "伤病",
+        "运动医学"
+      ],
+      "source_ids": [
+        "SAFE-ACSM-ALGO"
+      ],
+      "evidence_tier": "B",
+      "population": "United States adults in preparticipation screening research.",
+      "summary_zh": "即使有筛查算法，SportRX 也只将其用于分流边界，而不输出医疗清除结论。",
+      "technical_summary_en": "The study population and clinical context do not validate automated SportRX clearance.",
+      "limitations": "Supporting literature only; it is not the sole source for SportRX safety decisions.",
+      "review_status": "reviewed",
+      "reviewed_by": "SportRX knowledge review",
+      "reviewed_at": "2026-08-28",
+      "access_tier": "public_metadata",
+      "question_policy": "research_only"
+    },
+    {
+      "id": "K-CARD-011",
+      "topic": "testing",
+      "subtopic": "six_minute_protocol",
+      "title_en": "Why six-minute tests require a fixed protocol",
+      "title_zh": "六分钟测试为什么需要固定流程",
+      "keywords_en": [
+        "testing",
+        "retest",
+        "field test",
+        "ergometer"
+      ],
+      "keywords_zh": [
+        "测试",
+        "复测",
+        "场地测试",
+        "测量"
+      ],
+      "source_ids": [
+        "TEST-6MWT-ATS"
+      ],
+      "evidence_tier": "B",
+      "population": "Clinical and functional-capacity test settings.",
+      "summary_zh": "六分钟测试的解释依赖固定流程和一致记录；SportRX 不把临床六分钟步行测试直接等同于跑步或跑走表现。",
+      "technical_summary_en": "Clinical walk-test guidance is not a HYROX or SportRX validation study.",
+      "limitations": "A clinical functional test; it is not a HYROX-specific performance benchmark.",
+      "review_status": "reviewed",
+      "reviewed_by": "SportRX knowledge review",
+      "reviewed_at": "2026-08-28",
+      "access_tier": "public_metadata",
+      "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-012",
+      "topic": "testing",
+      "subtopic": "field_test_validity",
+      "title_en": "Field-test validity",
+      "title_zh": "场地测试的效度问题",
+      "keywords_en": [
+        "testing",
+        "retest",
+        "field test",
+        "ergometer"
+      ],
+      "keywords_zh": [
+        "测试",
+        "复测",
+        "场地测试",
+        "测量"
+      ],
+      "source_ids": [
+        "TEST-FIELD-ADULT"
+      ],
+      "evidence_tier": "B",
+      "population": "Adults completing field-based fitness tests.",
+      "summary_zh": "场地测试需要明确自己测量的是什么，并区分“可记录”与“已经验证可解释”。",
+      "technical_summary_en": "The review does not validate the SportRX benchmark battery.",
+      "limitations": "Does not validate the exact SportRX Hybrid Benchmark battery.",
+      "review_status": "reviewed",
+      "reviewed_by": "SportRX knowledge review",
+      "reviewed_at": "2026-08-28",
+      "access_tier": "public_metadata",
+      "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-013",
+      "topic": "testing",
+      "subtopic": "field_test_feasibility",
+      "title_en": "Field-test feasibility and safety",
+      "title_zh": "场地测试的可行性与安全性",
+      "keywords_en": [
+        "testing",
+        "retest",
+        "field test",
+        "ergometer"
+      ],
+      "keywords_zh": [
+        "测试",
+        "复测",
+        "场地测试",
+        "测量"
+      ],
+      "source_ids": [
+        "TEST-FIELD-SAFETY"
+      ],
+      "evidence_tier": "B",
+      "population": "Adults in field-based physical fitness testing research.",
+      "summary_zh": "场地测试应记录停止条件、偏离和完成情况；有限证据意味着产品需要自己的试用数据。",
+      "technical_summary_en": "This does not establish safety or reliability for every SportRX component.",
+      "limitations": "Highlights limits in adult field-test evidence and reinforces need for SportRX pilot data.",
+      "review_status": "reviewed",
+      "reviewed_by": "SportRX knowledge review",
+      "reviewed_at": "2026-08-28",
+      "access_tier": "public_metadata",
+      "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-014",
+      "topic": "testing",
+      "subtopic": "retest_reliability",
+      "title_en": "Why retest conditions must match",
+      "title_zh": "为什么复测必须保持条件一致",
+      "keywords_en": [
+        "testing",
+        "retest",
+        "field test",
+        "ergometer"
+      ],
+      "keywords_zh": [
+        "测试",
+        "复测",
+        "场地测试",
+        "测量"
+      ],
+      "source_ids": [
+        "TEST-FIELD-RELIABILITY"
+      ],
+      "evidence_tier": "B",
+      "population": "Adults completing repeat field fitness tests.",
+      "summary_zh": "复测时路线、设备、流程、单位和测试顺序变化，会削弱数值变化的解释意义。",
+      "technical_summary_en": "Reliability principles do not create a SportRX minimal meaningful-change threshold.",
+      "limitations": "Supports repeatability principles; it does not establish SportRX minimal detectable change.",
+      "review_status": "reviewed",
+      "reviewed_by": "SportRX knowledge review",
+      "reviewed_at": "2026-08-28",
+      "access_tier": "public_metadata",
+      "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-015",
+      "topic": "monitoring_recovery",
+      "subtopic": "rpe",
+      "title_en": "Rating of perceived exertion",
+      "title_zh": "RPE 是什么",
+      "keywords_en": [
+        "RPE",
+        "session-RPE",
+        "monitoring"
+      ],
+      "keywords_zh": [
+        "RPE",
+        "主观用力感",
+        "训练监测"
+      ],
+      "source_ids": [
+        "MON-RPE-ACSM"
+      ],
+      "evidence_tier": "B",
+      "population": "People completing exercise testing or training.",
+      "summary_zh": "RPE 是主观用力感，可帮助描述一次训练或测试有多难，但不能独立证明体能变化或安全。",
+      "technical_summary_en": "RPE is subjective and should not be used as an injury-risk estimate.",
+      "limitations": "Primarily addresses exercise testing and Borg-scale concepts; RPE remains subjective.",
+      "review_status": "reviewed",
+      "reviewed_by": "SportRX knowledge review",
+      "reviewed_at": "2026-08-28",
+      "access_tier": "public_metadata",
+      "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-016",
+      "topic": "monitoring_recovery",
+      "subtopic": "session_rpe",
+      "title_en": "Session-RPE for training monitoring",
+      "title_zh": "session-RPE 如何记录训练负荷",
+      "keywords_en": [
+        "RPE",
+        "session-RPE",
+        "monitoring"
+      ],
+      "keywords_zh": [
+        "RPE",
+        "主观用力感",
+        "训练监测"
+      ],
+      "source_ids": [
+        "MON-SRPE-FOSTER"
+      ],
+      "evidence_tier": "B",
+      "population": "Sport and exercise participants monitored across sessions.",
+      "summary_zh": "session-RPE 将一次训练的主观强度与训练时长结合，用于回顾训练负荷，而不是预测伤病。",
+      "technical_summary_en": "Consistent timing and participant understanding are needed; it is not an injury-prediction method.",
+      "limitations": "Requires consistent timing and participant understanding; it is not an injury-prediction method.",
+      "review_status": "reviewed",
+      "reviewed_by": "SportRX knowledge review",
+      "reviewed_at": "2026-08-28",
+      "access_tier": "public_metadata",
+      "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-017",
+      "topic": "monitoring_recovery",
+      "subtopic": "monitoring_limits",
+      "title_en": "Limits of subjective training monitoring",
+      "title_zh": "主观训练监测的局限",
+      "keywords_en": [
+        "RPE",
+        "session-RPE",
+        "monitoring"
+      ],
+      "keywords_zh": [
+        "RPE",
+        "主观用力感",
+        "训练监测"
+      ],
+      "source_ids": [
+        "MON-SRPE-REVIEW"
+      ],
+      "evidence_tier": "B",
+      "population": "Athletes and exercise participants across sports.",
+      "summary_zh": "主观训练监测应与完成情况、症状记录和复测一起看，不能单独成为训练剂量或恢复结论。",
+      "technical_summary_en": "Context sensitivity prevents session-RPE from independently validating physiological change.",
+      "limitations": "RPE is context-sensitive and cannot independently validate training dose or physiological change.",
+      "review_status": "reviewed",
+      "reviewed_by": "SportRX knowledge review",
+      "reviewed_at": "2026-08-28",
+      "access_tier": "public_metadata",
+      "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-018",
+      "topic": "hiit_hift_hybrid",
+      "subtopic": "hyrox_physiology",
+      "title_en": "What early HYROX physiology research can show",
+      "title_zh": "HYROX 生理研究目前能说明什么",
+      "keywords_en": [
+        "HIIT",
+        "HIFT",
+        "HYROX",
+        "hybrid"
+      ],
+      "keywords_zh": [
+        "高强度功能训练",
+        "混合赛事",
+        "HYROX"
+      ],
+      "source_ids": [
+        "HYROX-PHYS-2025"
+      ],
+      "evidence_tier": "C",
+      "population": "HYROX participants in an early event-specific evidence base.",
+      "summary_zh": "早期 HYROX 研究支持关注跑步、站点与工作能力，但不足以预测个人完赛、成绩或制定阈值。",
+      "technical_summary_en": "Early, sample-specific evidence cannot validate SportRX cutoffs or race prediction.",
+      "limitations": "Early and sample-specific evidence; it cannot support finish prediction or SportRX cutoffs.",
+      "review_status": "reviewed",
+      "reviewed_by": "SportRX knowledge review",
+      "reviewed_at": "2026-08-28",
+      "access_tier": "public_metadata",
+      "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-019",
+      "topic": "hiit_hift_hybrid",
+      "subtopic": "hybrid_training",
+      "title_en": "Hybrid competition training evidence",
+      "title_zh": "混合赛事训练研究的边界",
+      "keywords_en": [
+        "HIIT",
+        "HIFT",
+        "HYROX",
+        "hybrid"
+      ],
+      "keywords_zh": [
+        "高强度功能训练",
+        "混合赛事",
+        "HYROX"
+      ],
+      "source_ids": [
+        "HIFT-HYBRID-REVIEW"
+      ],
+      "evidence_tier": "C",
+      "population": "Hybrid competition and high-intensity functional training literature.",
+      "summary_zh": "HIFT 与混合赛事文献可帮助理解训练组成，但不能直接变成某个人的保证性方案。",
+      "technical_summary_en": "Scoping or narrative evidence is not SportRX validation.",
+      "limitations": "Scoping or narrative evidence; it is not SportRX validation.",
+      "review_status": "reviewed",
+      "reviewed_by": "SportRX knowledge review",
+      "reviewed_at": "2026-08-28",
+      "access_tier": "public_metadata",
+      "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-020",
+      "topic": "hiit_hift_hybrid",
+      "subtopic": "hif_definition",
+      "title_en": "What high-intensity functional training means",
+      "title_zh": "HIFT 是什么",
+      "keywords_en": [
+        "HIIT",
+        "HIFT",
+        "HYROX",
+        "hybrid"
+      ],
+      "keywords_zh": [
+        "高强度功能训练",
+        "混合赛事",
+        "HYROX"
+      ],
+      "source_ids": [
+        "HIFT-DEFINITION"
+      ],
+      "evidence_tier": "C",
+      "population": "High-intensity functional training research.",
+      "summary_zh": "HIFT 是广义训练概念，不等同于 HYROX，也不能自动生成赛事专项阈值。",
+      "technical_summary_en": "The definition is broader than any single hybrid event.",
+      "limitations": "HIFT is broader than HYROX and does not create event-specific thresholds.",
+      "review_status": "reviewed",
+      "reviewed_by": "SportRX knowledge review",
+      "reviewed_at": "2026-08-28",
+      "access_tier": "public_metadata",
+      "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-021",
+      "topic": "hiit_hift_hybrid",
+      "subtopic": "hif_fitness",
+      "title_en": "HIFT and physical fitness",
+      "title_zh": "HIFT 与体适能变化",
+      "keywords_en": [
+        "HIIT",
+        "HIFT",
+        "HYROX",
+        "hybrid"
+      ],
+      "keywords_zh": [
+        "高强度功能训练",
+        "混合赛事",
+        "HYROX"
+      ],
+      "source_ids": [
+        "HIFT-FITNESS"
+      ],
+      "evidence_tier": "C",
+      "population": "Participants in HIFT interventions.",
+      "summary_zh": "HIFT 干预研究可以提示多维体适能可能变化，但不同人群和训练方案差异较大。",
+      "technical_summary_en": "Intervention heterogeneity prevents individual outcome or event-readiness claims.",
+      "limitations": "Intervention heterogeneity prevents direct SPORT RX outcome or event-readiness claims.",
+      "review_status": "reviewed",
+      "reviewed_by": "SportRX knowledge review",
+      "reviewed_at": "2026-08-28",
+      "access_tier": "public_metadata",
+      "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-022",
+      "topic": "strength_power",
+      "subtopic": "concurrent_training",
+      "title_en": "Concurrent strength and endurance training",
+      "title_zh": "力量与耐力并行训练",
+      "keywords_en": [
+        "strength",
+        "power",
+        "concurrent training"
+      ],
+      "keywords_zh": [
+        "力量",
+        "爆发力",
+        "并行训练"
+      ],
+      "source_ids": [
+        "CONCURRENT-TRAINING"
+      ],
+      "evidence_tier": "B/C",
+      "population": "People undertaking concurrent strength and endurance training.",
+      "summary_zh": "力量与耐力并行训练是混合训练的重要背景，但不自动确定个人训练频率、顺序或总量。",
+      "technical_summary_en": "The review is not HYROX-specific and does not determine an individual dose.",
+      "limitations": "Not HYROX-specific and does not determine an individual SportRX dose.",
+      "review_status": "reviewed",
+      "reviewed_by": "SportRX knowledge review",
+      "reviewed_at": "2026-08-28",
+      "access_tier": "public_metadata",
+      "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-023",
+      "topic": "sports_medicine_injury_rehab",
+      "subtopic": "injury_research",
+      "title_en": "How to read CrossFit injury literature",
+      "title_zh": "CrossFit 伤病文献如何谨慎阅读",
+      "keywords_en": [
+        "screening",
+        "injury",
+        "sports medicine"
+      ],
+      "keywords_zh": [
+        "筛查",
+        "伤病",
+        "运动医学"
+      ],
+      "source_ids": [
+        "INJ-CROSSFIT-SR"
+      ],
+      "evidence_tier": "C",
+      "population": "CrossFit participants and studies.",
+      "summary_zh": "CrossFit 相关伤病研究的定义与报告不一，不能被转换为某个人的伤病风险百分比。",
+      "technical_summary_en": "CrossFit is not HYROX and heterogeneous estimates are not imported into SportRX.",
+      "limitations": "CrossFit is not HYROX; reported injury estimates are heterogeneous and are not imported into SportRX.",
+      "review_status": "reviewed",
+      "reviewed_by": "SportRX knowledge review",
+      "reviewed_at": "2026-08-28",
+      "access_tier": "public_metadata",
+      "question_policy": "research_only"
+    },
+    {
+      "id": "K-CARD-024",
+      "topic": "sports_medicine_injury_rehab",
+      "subtopic": "injury_research",
+      "title_en": "How to read HIFT injury literature",
+      "title_zh": "HIFT 伤病研究如何谨慎阅读",
+      "keywords_en": [
+        "screening",
+        "injury",
+        "sports medicine"
+      ],
+      "keywords_zh": [
+        "筛查",
+        "伤病",
+        "运动医学"
+      ],
+      "source_ids": [
+        "INJ-HIFT-SR"
+      ],
+      "evidence_tier": "C",
+      "population": "CrossFit, cross-training, and HIFT participants.",
+      "summary_zh": "HIFT 伤病研究可用于识别研究不确定性，但不支持对个人做概率化伤病预测。",
+      "technical_summary_en": "Definitions and reporting vary; this is research-only context.",
+      "limitations": "Definitions and reporting vary; the review cannot produce personal risk percentages.",
+      "review_status": "reviewed",
+      "reviewed_by": "SportRX knowledge review",
+      "reviewed_at": "2026-08-28",
+      "access_tier": "public_metadata",
+      "question_policy": "research_only"
+    },
+    {
+      "id": "K-CARD-025",
+      "topic": "testing",
+      "subtopic": "one_km_walk_run",
+      "title_en": "Evidence scope for a 1,000 m test",
+      "title_zh": "1,000 米测试的证据范围",
+      "keywords_en": [
+        "testing",
+        "retest",
+        "field test",
+        "ergometer"
+      ],
+      "keywords_zh": [
+        "测试",
+        "复测",
+        "场地测试",
+        "测量"
+      ],
+      "source_ids": [
+        "TEST-1000M-ADULT-2000"
+      ],
+      "evidence_tier": "C",
+      "population": "51 healthy Mexican adults completing a 1,000 m walk-run field test and treadmill VO2max tests.",
+      "summary_zh": "成人 1,000 米 walk-run 研究可支持保留测试类型和复测条件；它不验证 SportRX 的硬跑条件、常模或评分。",
+      "technical_summary_en": "One healthy-adult walk-run study does not validate a SportRX hard-run score.",
+      "limitations": "A 1,000 m walk-run study in one adult sample. It does not validate a hard 1 km run, SportRX routes, treadmill conditions, norms, or a SportRX score.",
+      "review_status": "reviewed",
+      "reviewed_by": "SportRX knowledge review",
+      "reviewed_at": "2026-08-28",
+      "access_tier": "public_metadata",
+      "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-026",
+      "topic": "testing",
+      "subtopic": "six_minute_run",
+      "title_en": "Six-minute running versus run/walk",
+      "title_zh": "六分钟跑与跑走不可混同",
+      "keywords_en": [
+        "testing",
+        "retest",
+        "field test",
+        "ergometer"
+      ],
+      "keywords_zh": [
+        "测试",
+        "复测",
+        "场地测试",
+        "测量"
+      ],
+      "source_ids": [
+        "TEST-6MRT-ADULT-2023"
+      ],
+      "evidence_tier": "C",
+      "population": "Healthy adults aged 18-65 years completing a standardized 6-minute run test.",
+      "summary_zh": "标准化六分钟跑研究不能自动覆盖自由跑走；SportRX 必须记录测试类型，且不能把六分钟距离换算成 1 km 时间。",
+      "technical_summary_en": "SportRX does not import reference equations or validate unrestricted run/walk.",
+      "limitations": "The study evaluates a run, not an unrestricted run/walk. SportRX does not use its reference equations, norms, or validation claims.",
+      "review_status": "reviewed",
+      "reviewed_by": "SportRX knowledge review",
+      "reviewed_at": "2026-08-28",
+      "access_tier": "public_metadata",
+      "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-027",
+      "topic": "testing",
+      "subtopic": "skierg",
+      "title_en": "SkiErg 1 km as a personal retest",
+      "title_zh": "SkiErg 1 km 的个人复测价值",
+      "keywords_en": [
+        "testing",
+        "retest",
+        "field test",
+        "ergometer"
+      ],
+      "keywords_zh": [
+        "测试",
+        "复测",
+        "场地测试",
+        "测量"
+      ],
+      "source_ids": [
+        "ERG-SKIERG-1000M-2025"
+      ],
+      "evidence_tier": "C",
+      "population": "Ten national-level cross-country skiers completing Concept2 SkiErg and on-snow tests.",
+      "summary_zh": "SkiErg 1 km 可作为同设备、同设置下的个人复测记录；不能据此给大众使用者生成常模。",
+      "technical_summary_en": "The study is a small national-level skier case study.",
+      "limitations": "Small expert-athlete case study. It does not validate SportRX SkiErg norms, recreational users, HYROX performance, or RowErg equivalence.",
+      "review_status": "reviewed",
+      "reviewed_by": "SportRX knowledge review",
+      "reviewed_at": "2026-08-28",
+      "access_tier": "public_metadata",
+      "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-028",
+      "topic": "testing",
+      "subtopic": "rowerg_measurement",
+      "title_en": "RowErg measurement context",
+      "title_zh": "RowErg 设备测量的注意点",
+      "keywords_en": [
+        "testing",
+        "retest",
+        "field test",
+        "ergometer"
+      ],
+      "keywords_zh": [
+        "测试",
+        "复测",
+        "场地测试",
+        "测量"
+      ],
+      "source_ids": [
+        "ERG-ROWERG-ACCURACY-2022"
+      ],
+      "evidence_tier": "C",
+      "population": "Motorized test-rig evaluation of Concept2 rowing-ergometer measurements.",
+      "summary_zh": "RowErg 设备研究提示起始划桨和不稳定划法会影响测量；应记录设备与测试条件，而不是夸大为人体表现验证。",
+      "technical_summary_en": "A motorized rig study is not human performance validation.",
+      "limitations": "Device-accuracy study without human performance validation. Short tests and start strokes have specific measurement limitations; it cannot establish SportRX performance interpretation.",
+      "review_status": "reviewed",
+      "reviewed_by": "SportRX knowledge review",
+      "reviewed_at": "2026-08-28",
+      "access_tier": "public_metadata",
+      "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-029",
+      "topic": "testing",
+      "subtopic": "rowerg_retest",
+      "title_en": "RowErg retest evidence scope",
+      "title_zh": "RowErg 复测证据的适用范围",
+      "keywords_en": [
+        "testing",
+        "retest",
+        "field test",
+        "ergometer"
+      ],
+      "keywords_zh": [
+        "测试",
+        "复测",
+        "场地测试",
+        "测量"
+      ],
+      "source_ids": [
+        "ERG-ROWERG-RELIABILITY-1999"
+      ],
+      "evidence_tier": "C",
+      "population": "Well-trained rowers completing 2,000 m Concept2 ergometer tests.",
+      "summary_zh": "训练有素划船者的 2,000 米可靠性研究支持同条件复测思路，但不能直接代表 1,000 米大众测试。",
+      "technical_summary_en": "Distance and population differ from SportRX 1 km recreational use.",
+      "limitations": "Well-trained rowers and 2,000 m distance only. It does not validate 1,000 m RowErg, recreational users, SportRX norms, or meaningful-change thresholds.",
+      "review_status": "reviewed",
+      "reviewed_by": "SportRX knowledge review",
+      "reviewed_at": "2026-08-28",
+      "access_tier": "public_metadata",
+      "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-030",
+      "topic": "testing",
+      "subtopic": "erg_settings",
+      "title_en": "Why record ergometer settings",
+      "title_zh": "为什么记录 Erg 设置",
+      "keywords_en": [
+        "testing",
+        "retest",
+        "field test",
+        "ergometer"
+      ],
+      "keywords_zh": [
+        "测试",
+        "复测",
+        "场地测试",
+        "测量"
+      ],
+      "source_ids": [
+        "ERG-CONCEPT2-PM5"
+      ],
+      "evidence_tier": "D",
+      "population": "Concept2 PM5 monitor users.",
+      "summary_zh": "设备型号和阻尼等设置有助于个人复测保持条件一致，但厂商资料不构成独立的表现验证或常模依据。",
+      "technical_summary_en": "Manufacturer documentation supports context capture only.",
+      "limitations": "Manufacturer documentation supports device-context capture only. It is not independent validation and does not provide performance norms.",
+      "review_status": "reviewed",
+      "reviewed_by": "SportRX knowledge review",
+      "reviewed_at": "2026-08-28",
+      "access_tier": "public_metadata",
+      "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-031",
+      "topic": "testing",
+      "subtopic": "china_measurement_boundary",
+      "title_en": "China national measurement boundary",
+      "title_zh": "中国体质测定标准与 SportRX 的边界",
+      "keywords_en": [
+        "testing",
+        "retest",
+        "field test",
+        "ergometer"
+      ],
+      "keywords_zh": [
+        "测试",
+        "复测",
+        "场地测试",
+        "测量"
+      ],
+      "source_ids": [
+        "CN-NPFS-2023"
+      ],
+      "evidence_tier": "D",
+      "population": "Chinese national physical-fitness measurement standard reference.",
+      "summary_zh": "中国本地官方材料可作为测量术语与方法边界参考；SportRX 不导入官方等级、综合评分或人群常模。",
+      "technical_summary_en": "SportRX Hybrid Benchmark differs in purpose and protocol from the national standard.",
+      "limitations": "SportRX uses this only as a Chinese method and terminology boundary reference. It does not import official grades, composite scores, norms, or population comparisons.",
+      "review_status": "reviewed",
+      "reviewed_by": "SportRX knowledge review",
+      "reviewed_at": "2026-08-28",
+      "access_tier": "public_metadata",
+      "question_policy": "education"
+    }
+  ]
+}

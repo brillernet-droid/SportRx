@@ -9,6 +9,8 @@ from __future__ import annotations
 
 from typing import Any
 
+from .automation_guard import build_automation_guard
+
 
 CLAIM_BOUNDARY = (
     "Training blocks are rule-based starter prescriptions. They are not medical "
@@ -45,8 +47,25 @@ def _session_from_core(session: dict[str, Any], focus: str, index: int) -> dict[
     }
 
 
-def build_training_block(passport: dict[str, Any], core_plan: dict[str, Any]) -> dict[str, Any]:
+def build_training_block(
+    passport: dict[str, Any],
+    core_plan: dict[str, Any],
+    feedback_by_week: dict[int, dict[str, Any]] | None = None,
+) -> dict[str, Any]:
     """Build a reportable 4-week starter training block."""
+
+    automation_guard = build_automation_guard(feedback_by_week)
+    if not automation_guard["automated_outputs_allowed"]:
+        return {
+            "schema": "sportrx.training_block",
+            "schema_version": "0.1",
+            "available": False,
+            "reason": automation_guard["reason"],
+            "next_action": automation_guard["next_action"],
+            "weeks": [],
+            "automation_guard": automation_guard,
+            "claim_boundary": CLAIM_BOUNDARY,
+        }
 
     starter_path = passport.get("starter_path", {})
     if not starter_path.get("available"):
@@ -57,6 +76,7 @@ def build_training_block(passport: dict[str, Any], core_plan: dict[str, Any]) ->
             "reason": starter_path.get("reason", "Starter Path is not available."),
             "next_action": starter_path.get("next_action", passport.get("next_action", "Complete benchmark first.")),
             "weeks": [],
+            "automation_guard": automation_guard,
             "claim_boundary": CLAIM_BOUNDARY,
         }
 
@@ -91,6 +111,7 @@ def build_training_block(passport: dict[str, Any], core_plan: dict[str, Any]) ->
         "based_on_gap": starter_path.get("based_on_gap"),
         "training_profile": passport.get("training_profile"),
         "safety_gate_status": passport.get("safety_gate", {}).get("status"),
+        "automation_guard": automation_guard,
         "weeks": week_blocks,
         "progression_policy": [
             "Progress weekly from completion and RPE feedback.",

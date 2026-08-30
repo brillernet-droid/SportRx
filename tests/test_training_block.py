@@ -80,3 +80,38 @@ def test_training_block_markdown_exports_block_or_reason():
 
     assert "# SportRx 4-Week Starter Path" in markdown
     assert "Complete benchmark first." in markdown
+
+
+def test_training_block_hard_stops_after_an_adverse_event():
+    passport = build_readiness_passport(
+        {
+            "age": 35,
+            "training_days": 4,
+            "weekly_training_minutes": 180,
+            "running_minutes_per_week": 90,
+            "one_km_run_seconds": 300,
+            "station_test_score": 70,
+            "station_test_protocol": "SportRx Hybrid Benchmark v1",
+            "available_days_per_week": 4,
+            "max_minutes_per_session": 45,
+            "symptoms": [],
+            "known_conditions": [],
+        }
+    )
+    core_plan = generate_prescription(
+        {
+            "age": 35,
+            "exercise_days_last_4w": 4,
+            "mvpa_minutes_per_week": 180,
+            "available_days_per_week": 4,
+            "max_minutes_per_session": 45,
+            "symptoms": [],
+            "known_conditions": [],
+        }
+    )
+
+    block = build_training_block(passport, core_plan, {1: {"adverse_event": True}})
+
+    assert block["available"] is False
+    assert block["automation_guard"]["status"] == "automation_hard_stop"
+    assert block["weeks"] == []

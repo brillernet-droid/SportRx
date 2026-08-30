@@ -57,7 +57,7 @@ def build_test_day_brief(equipment_access: list[str] | None = None) -> dict[str,
         "path": protocol["path"],
         "equipment_access": protocol["equipment_access"],
         "pre_test_checks": [
-            "Confirm Safety Gate is not RED.",
+            "Confirm Safety Gate has explicitly allowed Benchmark entry.",
             "Choose the same route, machine, load, substitutions, and component order before starting.",
             "Prepare a timer and a place to record raw values immediately.",
             "Use 8-12 minutes of warm-up before the first component.",

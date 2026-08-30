@@ -29,6 +29,7 @@ def test_streamlit_app_imports():
     assert hasattr(module, "_evidence_source_cards")
     assert hasattr(module, "_evidence_claim_boundary_board")
     assert hasattr(module, "_evidence_library_rows")
+    assert hasattr(module, "knowledge_lab_page")
     assert hasattr(module, "_page_health_rows")
     assert hasattr(module, "_validation_readiness_console")
     assert hasattr(module, "_validation_phase_rows")

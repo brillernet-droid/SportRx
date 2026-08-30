@@ -23,8 +23,18 @@ dist/
 build/
 *.egg-info/
 *.zip
+outputs/
+screenshots/
+SPORT_RX_APPLICATION_EVALUATION_*.md
+DESIGN_REVIEW.md
+.tmp_sportrx_bp/
+docs/internal/
 
 # Streamlit local config and temporary exports
 .streamlit/secrets.toml
 exports/
 tmp/
+
+# Generated local evidence-search index and non-public source material
+.cache/
+evidence/private/

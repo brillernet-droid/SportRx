@@ -10,6 +10,7 @@ from .evidence_library import build_evidence_library
 from .feedback_loop import build_feedback_dashboard
 from .lab_readiness import build_lab_readiness_console
 from .output_prerequisites import build_output_prerequisites
+from .safety_gate import automated_handoff_allowed
 
 
 CLAIM_BOUNDARY = (
@@ -31,7 +32,7 @@ def _gate(gate_id: str, label: str, status: str, detail: str, action: str) -> di
 
 
 def _overall_status(gates: list[dict[str, Any]], passport: dict[str, Any]) -> tuple[str, str]:
-    safety_status = passport.get("safety_gate", {}).get("status")
+    safety_gate = passport.get("safety_gate", {})
     measured_count = int(passport.get("measured_performance_areas", {}).get("count", 0) or 0)
     starter_available = bool(passport.get("starter_path", {}).get("available"))
     benchmark_ready = any(gate["id"] == "benchmark_log" and gate["status"] == "ready" for gate in gates)
@@ -39,7 +40,7 @@ def _overall_status(gates: list[dict[str, Any]], passport: dict[str, Any]) -> tu
     retest_ready = any(gate["id"] == "retest_anchor" and gate["status"] == "ready" for gate in gates)
     evidence_ready = any(gate["id"] == "evidence_library" and gate["status"] == "ready" for gate in gates)
 
-    if safety_status == "RED":
+    if not automated_handoff_allowed(safety_gate):
         return "blocked_by_safety_gate", "Resolve Safety Gate before automated training handoff."
     if measured_count < 2:
         return "measurement_first", "Complete at least two measured performance dimensions before tailored interpretation."
@@ -72,7 +73,8 @@ def build_session_quality_review(
     evidence_library = build_evidence_library(root)
     evidence_files_present = evidence_files_present or {}
 
-    safety_status = passport.get("safety_gate", {}).get("status", "UNKNOWN")
+    safety_gate = passport.get("safety_gate", {})
+    safety_status = safety_gate.get("status", "UNKNOWN")
     measured_count = int(passport.get("measured_performance_areas", {}).get("count", 0) or 0)
     benchmark_count = int(benchmark_summary.get("session_count", 0) or 0)
     feedback_weeks = int(dashboard.get("adherence", {}).get("weeks_recorded", 0) or 0)
@@ -85,9 +87,9 @@ def build_session_quality_review(
         _gate(
             "safety_gate",
             "Safety Gate",
-            "blocked" if safety_status == "RED" else "ready",
+            "blocked" if not automated_handoff_allowed(safety_gate) else "ready",
             f"Safety Gate is {safety_status}. Safety can block training but never changes measured performance.",
-            "Stop automated handoff and seek appropriate professional assessment." if safety_status == "RED" else "Continue with normal stop rules.",
+            "Stop automated handoff and follow the stated assessment route." if not automated_handoff_allowed(safety_gate) else "Continue with normal stop rules.",
         ),
         _gate(
             "measurement_depth",

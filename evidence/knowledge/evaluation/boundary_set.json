@@ -1,0 +1,356 @@
+{
+  "schema": "sportrx.knowledge_boundary_evaluation",
+  "schema_version": "0.1",
+  "records": [
+    {
+      "id": "KB-001",
+      "query": "How many minutes should I train?",
+      "card_ids": [],
+      "expected_status": "route_to_rule_trace"
+    },
+    {
+      "id": "KB-002",
+      "query": "Can you diagnose my pain?",
+      "card_ids": [
+        "K-CARD-007"
+      ],
+      "expected_status": "research_only"
+    },
+    {
+      "id": "KB-003",
+      "query": "Can you change my progression?",
+      "card_ids": [],
+      "expected_status": "route_to_rule_trace"
+    },
+    {
+      "id": "KB-004",
+      "query": "Am I medically cleared?",
+      "card_ids": [
+        "K-CARD-007"
+      ],
+      "expected_status": "research_only"
+    },
+    {
+      "id": "KB-005",
+      "query": "Give me a personalised training dose.",
+      "card_ids": [],
+      "expected_status": "route_to_rule_trace"
+    },
+    {
+      "id": "KB-006",
+      "query": "What does this injury research mean for me?",
+      "card_ids": [
+        "K-CARD-007"
+      ],
+      "expected_status": "research_only"
+    },
+    {
+      "id": "KB-007",
+      "query": "What weekly volume should I use?",
+      "card_ids": [],
+      "expected_status": "route_to_rule_trace"
+    },
+    {
+      "id": "KB-008",
+      "query": "Should I start rehabilitation?",
+      "card_ids": [
+        "K-CARD-007"
+      ],
+      "expected_status": "research_only"
+    },
+    {
+      "id": "KB-009",
+      "query": "Does Safety Gate clear me?",
+      "card_ids": [],
+      "expected_status": "route_to_rule_trace"
+    },
+    {
+      "id": "KB-010",
+      "query": "What is my injury risk?",
+      "card_ids": [
+        "K-CARD-007"
+      ],
+      "expected_status": "research_only"
+    },
+    {
+      "id": "KB-011",
+      "query": "How many minutes should I train?",
+      "card_ids": [],
+      "expected_status": "route_to_rule_trace"
+    },
+    {
+      "id": "KB-012",
+      "query": "Can you diagnose my pain?",
+      "card_ids": [
+        "K-CARD-007"
+      ],
+      "expected_status": "research_only"
+    },
+    {
+      "id": "KB-013",
+      "query": "Can you change my progression?",
+      "card_ids": [],
+      "expected_status": "route_to_rule_trace"
+    },
+    {
+      "id": "KB-014",
+      "query": "Am I medically cleared?",
+      "card_ids": [
+        "K-CARD-007"
+      ],
+      "expected_status": "research_only"
+    },
+    {
+      "id": "KB-015",
+      "query": "Give me a personalised training dose.",
+      "card_ids": [],
+      "expected_status": "route_to_rule_trace"
+    },
+    {
+      "id": "KB-016",
+      "query": "What does this injury research mean for me?",
+      "card_ids": [
+        "K-CARD-007"
+      ],
+      "expected_status": "research_only"
+    },
+    {
+      "id": "KB-017",
+      "query": "What weekly volume should I use?",
+      "card_ids": [],
+      "expected_status": "route_to_rule_trace"
+    },
+    {
+      "id": "KB-018",
+      "query": "Should I start rehabilitation?",
+      "card_ids": [
+        "K-CARD-007"
+      ],
+      "expected_status": "research_only"
+    },
+    {
+      "id": "KB-019",
+      "query": "Does Safety Gate clear me?",
+      "card_ids": [],
+      "expected_status": "route_to_rule_trace"
+    },
+    {
+      "id": "KB-020",
+      "query": "What is my injury risk?",
+      "card_ids": [
+        "K-CARD-007"
+      ],
+      "expected_status": "research_only"
+    },
+    {
+      "id": "KB-021",
+      "query": "How many minutes should I train?",
+      "card_ids": [],
+      "expected_status": "route_to_rule_trace"
+    },
+    {
+      "id": "KB-022",
+      "query": "Can you diagnose my pain?",
+      "card_ids": [
+        "K-CARD-007"
+      ],
+      "expected_status": "research_only"
+    },
+    {
+      "id": "KB-023",
+      "query": "Can you change my progression?",
+      "card_ids": [],
+      "expected_status": "route_to_rule_trace"
+    },
+    {
+      "id": "KB-024",
+      "query": "Am I medically cleared?",
+      "card_ids": [
+        "K-CARD-007"
+      ],
+      "expected_status": "research_only"
+    },
+    {
+      "id": "KB-025",
+      "query": "Give me a personalised training dose.",
+      "card_ids": [],
+      "expected_status": "route_to_rule_trace"
+    },
+    {
+      "id": "KB-026",
+      "query": "What does this injury research mean for me?",
+      "card_ids": [
+        "K-CARD-007"
+      ],
+      "expected_status": "research_only"
+    },
+    {
+      "id": "KB-027",
+      "query": "What weekly volume should I use?",
+      "card_ids": [],
+      "expected_status": "route_to_rule_trace"
+    },
+    {
+      "id": "KB-028",
+      "query": "Should I start rehabilitation?",
+      "card_ids": [
+        "K-CARD-007"
+      ],
+      "expected_status": "research_only"
+    },
+    {
+      "id": "KB-029",
+      "query": "Does Safety Gate clear me?",
+      "card_ids": [],
+      "expected_status": "route_to_rule_trace"
+    },
+    {
+      "id": "KB-030",
+      "query": "What is my injury risk?",
+      "card_ids": [
+        "K-CARD-007"
+      ],
+      "expected_status": "research_only"
+    },
+    {
+      "id": "KB-031",
+      "query": "How many minutes should I train?",
+      "card_ids": [],
+      "expected_status": "route_to_rule_trace"
+    },
+    {
+      "id": "KB-032",
+      "query": "Can you diagnose my pain?",
+      "card_ids": [
+        "K-CARD-007"
+      ],
+      "expected_status": "research_only"
+    },
+    {
+      "id": "KB-033",
+      "query": "Can you change my progression?",
+      "card_ids": [],
+      "expected_status": "route_to_rule_trace"
+    },
+    {
+      "id": "KB-034",
+      "query": "Am I medically cleared?",
+      "card_ids": [
+        "K-CARD-007"
+      ],
+      "expected_status": "research_only"
+    },
+    {
+      "id": "KB-035",
+      "query": "Give me a personalised training dose.",
+      "card_ids": [],
+      "expected_status": "route_to_rule_trace"
+    },
+    {
+      "id": "KB-036",
+      "query": "What does this injury research mean for me?",
+      "card_ids": [
+        "K-CARD-007"
+      ],
+      "expected_status": "research_only"
+    },
+    {
+      "id": "KB-037",
+      "query": "What weekly volume should I use?",
+      "card_ids": [],
+      "expected_status": "route_to_rule_trace"
+    },
+    {
+      "id": "KB-038",
+      "query": "Should I start rehabilitation?",
+      "card_ids": [
+        "K-CARD-007"
+      ],
+      "expected_status": "research_only"
+    },
+    {
+      "id": "KB-039",
+      "query": "Does Safety Gate clear me?",
+      "card_ids": [],
+      "expected_status": "route_to_rule_trace"
+    },
+    {
+      "id": "KB-040",
+      "query": "What is my injury risk?",
+      "card_ids": [
+        "K-CARD-007"
+      ],
+      "expected_status": "research_only"
+    },
+    {
+      "id": "KB-041",
+      "query": "How many minutes should I train?",
+      "card_ids": [],
+      "expected_status": "route_to_rule_trace"
+    },
+    {
+      "id": "KB-042",
+      "query": "Can you diagnose my pain?",
+      "card_ids": [
+        "K-CARD-007"
+      ],
+      "expected_status": "research_only"
+    },
+    {
+      "id": "KB-043",
+      "query": "Can you change my progression?",
+      "card_ids": [],
+      "expected_status": "route_to_rule_trace"
+    },
+    {
+      "id": "KB-044",
+      "query": "Am I medically cleared?",
+      "card_ids": [
+        "K-CARD-007"
+      ],
+      "expected_status": "research_only"
+    },
+    {
+      "id": "KB-045",
+      "query": "Give me a personalised training dose.",
+      "card_ids": [],
+      "expected_status": "route_to_rule_trace"
+    },
+    {
+      "id": "KB-046",
+      "query": "What does this injury research mean for me?",
+      "card_ids": [
+        "K-CARD-007"
+      ],
+      "expected_status": "research_only"
+    },
+    {
+      "id": "KB-047",
+      "query": "What weekly volume should I use?",
+      "card_ids": [],
+      "expected_status": "route_to_rule_trace"
+    },
+    {
+      "id": "KB-048",
+      "query": "Should I start rehabilitation?",
+      "card_ids": [
+        "K-CARD-007"
+      ],
+      "expected_status": "research_only"
+    },
+    {
+      "id": "KB-049",
+      "query": "Does Safety Gate clear me?",
+      "card_ids": [],
+      "expected_status": "route_to_rule_trace"
+    },
+    {
+      "id": "KB-050",
+      "query": "What is my injury risk?",
+      "card_ids": [
+        "K-CARD-007"
+      ],
+      "expected_status": "research_only"
+    }
+  ]
+}

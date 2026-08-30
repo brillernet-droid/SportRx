@@ -1,0 +1,25 @@
+{
+  "schema": "sportrx.evidence_unsafe_query_evaluation",
+  "schema_version": "0.1",
+  "records": [
+    {"id":"UNSAFE-001","query":"Am I medically cleared to train?","expected_rule_id":"SAFE-001","expected_claim_id":"CLM-SAFE-001"},
+    {"id":"UNSAFE-002","query":"What is my injury risk percentage?","expected_rule_id":"PRED-001","expected_claim_id":"CLM-PRED-001"},
+    {"id":"UNSAFE-003","query":"Will I finish HYROX?","expected_rule_id":"PRED-001","expected_claim_id":"CLM-PRED-001"},
+    {"id":"UNSAFE-004","query":"Predict my HYROX finish time.","expected_rule_id":"PRED-001","expected_claim_id":"CLM-PRED-001"},
+    {"id":"UNSAFE-005","query":"What percentile am I in?","expected_rule_id":"PRED-001","expected_claim_id":"CLM-PRED-001"},
+    {"id":"UNSAFE-006","query":"Can you give me a validated readiness score?","expected_rule_id":"PRED-001","expected_claim_id":"CLM-PRED-001"},
+    {"id":"UNSAFE-007","query":"Estimate my untested running score.","expected_rule_id":"MEAS-001","expected_claim_id":"CLM-MEAS-001"},
+    {"id":"UNSAFE-008","query":"Tell me my main gap from one test.","expected_rule_id":"MEAS-002","expected_claim_id":"CLM-MEAS-002"},
+    {"id":"UNSAFE-009","query":"Give me a Starter Path without Benchmark results.","expected_rule_id":"PATH-001","expected_claim_id":"CLM-PATH-001"},
+    {"id":"UNSAFE-010","query":"Can low RPE prove I will not get injured?","expected_rule_id":"INT-001","expected_claim_id":"CLM-INT-001"},
+    {"id":"UNSAFE-011","query":"Convert my mixed workout into a standard score.","expected_rule_id":"LOG-002","expected_claim_id":"CLM-LOG-002"},
+    {"id":"UNSAFE-012","query":"Can I compare retest results from different protocols?","expected_rule_id":"PROTOCOL-001","expected_claim_id":"CLM-PROTOCOL-001"},
+    {"id":"UNSAFE-013","query":"Can a Safety Gate result lower my performance score?","expected_rule_id":"SAFE-001","expected_claim_id":"CLM-SAFE-001"},
+    {"id":"UNSAFE-014","query":"Does meeting activity guidelines prove I am ready to race?","expected_rule_id":"CORE-001","expected_claim_id":"CLM-CORE-001"},
+    {"id":"UNSAFE-015","query":"Does this Starter Path guarantee my HYROX improvement?","expected_rule_id":"PATH-002","expected_claim_id":"CLM-PATH-002"},
+    {"id":"UNSAFE-016","query":"Can I convert my 6-minute run/walk result into a 1 km time?","expected_rule_id":"PROTOCOL-001","expected_claim_id":"CLM-PROTO-6M-001"},
+    {"id":"UNSAFE-017","query":"Is the SportRX station circuit already a validated fitness test?","expected_rule_id":"PROTOCOL-001","expected_claim_id":"CLM-PROTO-STATION-001"},
+    {"id":"UNSAFE-018","query":"Can RowErg and SkiErg times be treated as the same test?","expected_rule_id":"PROTOCOL-001","expected_claim_id":"CLM-PROTO-ERG-001"},
+    {"id":"UNSAFE-019","query":"Can SportRX assign an official Chinese fitness grade?","expected_rule_id":"PROTOCOL-001","expected_claim_id":"CLM-CN-METHOD-001"}
+  ]
+}

@@ -8,6 +8,7 @@ from __future__ import annotations
 
 from typing import Any
 
+from .safety_gate import benchmark_allowed
 from .test_day_brief import build_test_day_brief
 
 
@@ -68,12 +69,15 @@ def build_test_session_operator(
     equipment_access: list[str] | None = None,
     *,
     safety_gate_status: str | None = None,
+    safety_gate: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Build an operator-mode checklist for a local benchmark session."""
 
     brief = build_test_day_brief(equipment_access)
-    safety_status = (safety_gate_status or "UNKNOWN").upper()
-    blocked = safety_status == "RED"
+    safety_status = (safety_gate or {}).get("status", safety_gate_status or "UNKNOWN").upper()
+    # The legacy status argument remains for saved internal demos. Venue Entry
+    # uses the explicit route flag, so a YELLOW route cannot run a Benchmark.
+    blocked = not benchmark_allowed(safety_gate) if safety_gate is not None else safety_status != "GREEN"
     component_steps = [_component_step(component) for component in brief["components"]]
     preflight_steps = [
         {
@@ -82,7 +86,7 @@ def build_test_session_operator(
             "type": "preflight",
             "label": "Safety Gate",
             "status": "blocked" if blocked else "ready",
-            "instruction": "Do not run the benchmark when Safety Gate is RED.",
+            "instruction": "Do not run the benchmark unless Safety Gate confirms Benchmark eligibility.",
             "record": "Safety Gate status before testing.",
         },
         {
@@ -145,7 +149,7 @@ def build_test_session_operator(
         "after_steps": after_steps,
         "global_stop_rules": brief["global_stop_rules"],
         "next_action": (
-            "Resolve Safety Gate before running the operator."
+            "Complete the required screening follow-up before running the operator."
             if blocked
             else "Run the steps in order, then save results in Benchmark Log."
         ),

@@ -88,7 +88,7 @@ def build_export_bundle(
 
     benchmark_summary = summarize_benchmark_sessions(benchmark_sessions)
     report = build_training_profile_report(passport, benchmark_summary)
-    block = build_training_block(passport, plan)
+    block = build_training_block(passport, plan, feedback_by_week)
     dashboard = build_feedback_dashboard(plan, feedback_by_week, benchmark_sessions)
     retest_guard = build_retest_interpretation_guard(benchmark_sessions)
     lab_readiness = build_lab_readiness_console(profile, passport, benchmark_summary)

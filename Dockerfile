@@ -6,13 +6,8 @@ ENV PORT=8501
 
 WORKDIR /app
 
-COPY pyproject.toml README.md ./
-COPY app ./app
-COPY sportrx ./sportrx
-COPY evidence ./evidence
-COPY docs/research ./docs/research
-COPY examples ./examples
-COPY scripts ./scripts
+# .dockerignore limits this to the public runtime and evidence metadata.
+COPY . .
 
 RUN pip install --no-cache-dir --upgrade pip \
     && pip install --no-cache-dir ".[app]"

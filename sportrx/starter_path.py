@@ -4,14 +4,16 @@ from __future__ import annotations
 
 from typing import Any
 
+from .safety_gate import automated_handoff_allowed
+
 
 def build_starter_path(lab_result: dict[str, Any]) -> dict[str, Any]:
     """Return a conservative 4-week starter path for the lab result."""
 
-    if lab_result["safety_gate"]["status"] == "RED":
+    if not automated_handoff_allowed(lab_result["safety_gate"]):
         return {
             "available": False,
-            "reason": "RED safety gate blocks automated training generation.",
+            "reason": "Safety Gate routing blocks automated training generation.",
             "weeks": [],
         }
 

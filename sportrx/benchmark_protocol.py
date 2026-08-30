@@ -18,7 +18,7 @@ CLAIM_BOUNDARY = (
 
 
 GLOBAL_STOP_RULES = [
-    "Do not test when Safety Gate is RED.",
+    "Do not test unless Safety Gate has explicitly allowed Benchmark entry.",
     "Stop if chest pain, unexplained shortness of breath, dizziness, faintness, or unusual palpitations occur.",
     "Stop if pain changes your movement pattern or feels sharp, worsening, or unusual.",
     "Keep the first attempt controlled if you are new to HYROX or hybrid-style training.",
@@ -34,6 +34,8 @@ def _component_protocol(component: dict[str, Any], benchmark_path: str) -> dict[
         "required_equipment": component.get("required_equipment", []),
         "fields": component.get("fields", []),
         "optional": bool(component.get("optional", False)),
+        "protocol_evidence_id": component.get("protocol_evidence_id", "not_mapped"),
+        "protocol_evidence_status": component.get("protocol_evidence_status", "experimental"),
         "record": [
             "Completion status",
             "Raw result in the listed unit",
@@ -139,7 +141,21 @@ def _component_protocol(component: dict[str, Any], benchmark_path: str) -> dict[
         "execution": ["Complete the component according to the listed test description."],
         "stop_if": GLOBAL_STOP_RULES[1:],
     }
-    return {**common, **details.get(component_id, fallback), "benchmark_path": benchmark_path}
+    context_fields = {
+        "run_1km": ["route_or_treadmill", "surface", "gradient_or_incline", "timing_method", "warmup_minutes", "familiarization_level", "test_order"],
+        "run_1km_or_6min": ["test_variant", "route_or_treadmill", "surface", "gradient_or_incline", "timing_method", "warmup_minutes", "familiarization_level", "test_order"],
+        "row_or_ski_1km": ["erg_type", "erg_model", "drag_factor", "timing_method", "warmup_minutes", "familiarization_level", "test_order"],
+        "station_circuit": ["movement_standard", "loads_used", "rest_rule", "warmup_minutes", "familiarization_level", "test_order"],
+        "bodyweight_circuit": ["movement_standard", "rest_rule", "warmup_minutes", "familiarization_level", "test_order"],
+        "compromised_run": ["route_or_treadmill", "surface", "gradient_or_incline", "timing_method", "preceding_station_circuit", "warmup_minutes", "familiarization_level", "test_order"],
+        "transition_practice": ["movement_standard", "rest_rule", "route_or_treadmill", "warmup_minutes", "familiarization_level", "test_order"],
+    }
+    return {
+        **common,
+        **details.get(component_id, fallback),
+        "benchmark_path": benchmark_path,
+        "standardization_fields": context_fields.get(component_id, ["warmup_minutes", "test_order"]),
+    }
 
 
 def get_benchmark_protocol(equipment_access: list[str] | None = None) -> dict[str, Any]:
@@ -159,7 +175,7 @@ def get_benchmark_protocol(equipment_access: list[str] | None = None) -> dict[st
         "test_day_flow": [
             {
                 "step": "1. Safety Gate",
-                "instruction": "Confirm no RED safety gate and no warning symptoms before testing.",
+                "instruction": "Confirm Safety Gate Benchmark eligibility and no warning symptoms before testing.",
             },
             {
                 "step": "2. Same-Protocol Setup",
@@ -185,6 +201,7 @@ def get_benchmark_protocol(equipment_access: list[str] | None = None) -> dict[st
             "Do not convert rounds, distance, or mixed station work into a score without a documented rule.",
             "At least two measured dimensions are needed before SportRx compares strongest area and main gap.",
             "Safety Gate can block training handoff, but it does not raise or lower performance results.",
+            "Each component states whether its protocol has partial evidence or remains experimental.",
         ],
     }
 
@@ -216,6 +233,7 @@ def protocol_markdown(protocol: dict[str, Any]) -> str:
                 f"### {component['test']}",
                 f"- Area: {component['area']}",
                 f"- Purpose: {component['purpose']}",
+                f"- Protocol evidence: {component['protocol_evidence_status']} ({component['protocol_evidence_id']})",
                 f"- Required equipment: {', '.join(component['required_equipment'])}",
                 f"- Fields: {', '.join(component['fields'])}",
                 "- Setup:",
@@ -229,6 +247,7 @@ def protocol_markdown(protocol: dict[str, Any]) -> str:
         lines.append("- Record:")
         for record in component["record"]:
             lines.append(f"  - {record}")
+        lines.append(f"- Standardization fields: {', '.join(component['standardization_fields'])}")
 
     lines.extend(["", "## Recording Principles"])
     for principle in protocol["recording_principles"]:

@@ -1,0 +1,16 @@
+{
+  "schema": "sportrx.knowledge_discovery_queries",
+  "schema_version": "0.1",
+  "records": [
+    {"id":"DQ-001","topic":"endurance","query":"(endurance training OR aerobic training) AND (systematic review OR meta-analysis)","priority_journals":["British Journal of Sports Medicine","Sports Medicine","Nature Medicine","Nature Communications"]},
+    {"id":"DQ-002","topic":"strength_power","query":"(resistance training OR strength training OR power training) AND (systematic review OR meta-analysis)","priority_journals":["British Journal of Sports Medicine","Sports Medicine","Nature Medicine","Nature Communications"]},
+    {"id":"DQ-003","topic":"biomechanics_motor_control","query":"(biomechanics OR motor control OR movement quality) AND (systematic review OR meta-analysis)","priority_journals":["British Journal of Sports Medicine","Sports Medicine","Nature Medicine","Nature Communications"]},
+    {"id":"DQ-004","topic":"environmental_physiology","query":"(heat OR altitude OR environmental physiology) AND exercise AND (systematic review OR meta-analysis)","priority_journals":["British Journal of Sports Medicine","Sports Medicine","Nature Medicine","Nature Communications"]},
+    {"id":"DQ-005","topic":"nutrition_supplements","query":"(sports nutrition OR dietary supplement) AND exercise AND (systematic review OR meta-analysis)","priority_journals":["British Journal of Sports Medicine","Sports Medicine","Nature Medicine","Nature Communications"]},
+    {"id":"DQ-006","topic":"sports_medicine_injury_rehab","query":"(sports injury OR rehabilitation OR return to sport) AND (systematic review OR meta-analysis)","priority_journals":["British Journal of Sports Medicine","Sports Medicine","Nature Medicine","Nature Communications"]},
+    {"id":"DQ-007","topic":"sports_medicine_injury_rehab","query":"(exercise preparticipation screening OR pre-exercise screening) AND (guideline OR systematic review)","priority_journals":["British Journal of Sports Medicine","Medicine & Science in Sports & Exercise","Sports Medicine"]},
+    {"id":"DQ-008","topic":"testing","query":"(exercise field test OR exercise testing) AND (safety OR adverse events OR stop criteria) AND (guideline OR systematic review)","priority_journals":["British Journal of Sports Medicine","Medicine & Science in Sports & Exercise","Sports Medicine"]},
+    {"id":"DQ-009","topic":"sports_medicine_injury_rehab","query":"(preparticipation screening) AND (accuracy OR implementation OR referral) AND exercise","priority_journals":["British Journal of Sports Medicine","Sports Medicine","Medicine & Science in Sports & Exercise"]},
+    {"id":"DQ-010","topic":"testing","query":"中国 成人 运动前 筛查 体质 测试 指南","priority_journals":["Chinese official guidance","Chinese Journal of Sports Medicine"]}
+  ]
+}

@@ -326,7 +326,7 @@ def build_release_qa(
                     {item["term"] for item in terminology["terms"]}
                 )
                 and any(item["phrase"] == "medical clearance" for item in terminology["blocked_language"])
-                and "does not validate SportRx" in terminology["claim_boundary"]
+                and "does not validate SportRX" in terminology["claim_boundary"]
             ),
             (
                 f"{terminology['term_count']} terms; "

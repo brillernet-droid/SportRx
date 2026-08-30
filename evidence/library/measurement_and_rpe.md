@@ -45,6 +45,13 @@
 - Limit:
   - source access may be limited; do not overclaim without full review.
 
+## Component-Specific Additions
+
+See `../source_notes/006_benchmark_component_evidence.md` for the reviewed
+component ledger and source limits. It keeps 1 km, 6-minute and ergometer
+records at `partial_evidence`, while the SportRX station circuit and
+compromised-run sequence remain `experimental`.
+
 ## MON-RPE-ACSM
 
 - Title: What Is a Normal Rating of Perceived Exertion During Maximal Exercise Testing?

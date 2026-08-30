@@ -71,6 +71,10 @@ Data to collect:
 - Weekly adherence.
 - Retest results.
 - User confusion points.
+- Consent status/version, anonymous ID, retention review date and deletion
+  request status before any real participant record is stored.
+- Protocol context: test variant, route or machine, surface, incline, timing,
+  warm-up, familiarization, order, equipment setting and deviations.
 
 Do not collect:
 
@@ -80,6 +84,10 @@ Do not collect:
 - GPS.
 - Nutrition.
 - Sleep.
+
+Data-governance requirements are defined in `data_governance.md`. The
+repository ships only header-only templates; it does not itself recruit or
+collect participant data.
 
 Success criteria:
 

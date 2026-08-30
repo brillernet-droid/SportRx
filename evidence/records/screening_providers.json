@@ -1,0 +1,20 @@
+{
+  "schema": "sportrx.screening_provider_registry",
+  "schema_version": "0.1",
+  "records": [
+    {
+      "id": "CN-VENUE-SCREENING-PENDING",
+      "label": "中国场馆运动前筛查路径（待确认）",
+      "deployment_status": "research_required",
+      "applicability": "Chinese-language gym, running-club, and training-camp member entry assessment.",
+      "permitted_use": "Internal workflow research only. Not approved for member deployment.",
+      "source_url": "https://eparmedx.com/par-q/",
+      "language": "Chinese pathway not yet confirmed",
+      "version": "pending-local-review",
+      "reviewed_at": "2026-08-28",
+      "limitations": "PAR-Q+ is reference material only. SportRX must not reproduce, translate, score, or present it as a validated Chinese screening tool until lawful local use and applicability are documented.",
+      "member_message": "本路径仅用于本地分流，不构成医疗许可、诊断或风险百分比。",
+      "source_ids": ["SAFE-PARQ", "SAFE-EIM-SCREEN", "SAFE-ACSM-ALGO"]
+    }
+  ]
+}

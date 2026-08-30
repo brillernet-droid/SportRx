@@ -10,7 +10,7 @@ def test_test_day_brief_builds_standard_operator_checklist():
     assert len(brief["components"]) >= 3
     assert brief["components"][0]["order"] == 1
     assert "RPE_0_10" in brief["components"][0]["record_fields"]
-    assert any("Safety Gate is not RED" in item for item in brief["pre_test_checks"])
+    assert any("explicitly allowed Benchmark entry" in item for item in brief["pre_test_checks"])
 
 
 def test_test_day_brief_keeps_low_equipment_path():

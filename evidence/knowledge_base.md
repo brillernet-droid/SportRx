@@ -63,6 +63,7 @@ Rules without this mapping should stay out of product output.
 - `evidence_questions.md`: unanswered evidence questions.
 - `rule_evidence_map.md`: rule-to-evidence traceability.
 - `validation_plan.md`: self-use, alpha, and pilot evidence plan.
+- `data_governance.md`: future participant-data boundary; the repository does not collect real participant data.
 - `source_notes/`: topic-level notes that translate literature into product
   constraints.
 - `intake_queue.md`: sources to review before inclusion.
@@ -81,16 +82,20 @@ Each source note should state:
 This prevents citation inflation: a source only matters if it changes or
 constrains a product rule.
 
-## RAG Status
+## Retrieval Status
 
-Do not build RAG in the next milestone.
+SportRX now has a structured evidence-record layer and local internal SQLite
+FTS5 retrieval. It indexes reviewed source metadata, claims, rules, and
+protocols; it does not index copyrighted full text or generate answers.
 
-RAG should wait until SportRx has:
+The retrieval layer may support internal rule review and a future bounded
+"Why this result?" explanation surface. It must not decide:
 
-- at least 50-100 curated evidence notes,
-- stable document schemas,
-- rule IDs linked to citations,
-- a retrieval evaluation set,
-- and clear boundaries preventing generated text from changing exercise dose.
+- Safety Gate status,
+- exercise intensity, weekly volume, or progression,
+- medical clearance,
+- race prediction, injury risk, or athlete percentiles.
 
-Until then, use this repository as a structured knowledge base.
+LLM-backed RAG remains deferred until SportRX has 50-100 curated evidence notes,
+real measurement/retest data, a larger retrieval evaluation set, and a written
+policy proving generated text cannot change exercise dose.

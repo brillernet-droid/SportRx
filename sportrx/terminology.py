@@ -1,4 +1,4 @@
-"""Terminology guide for SportRx language editions.
+"""Terminology guide for SportRX language editions.
 
 This module standardizes product language only. It does not create or validate
 any sport-science rule.
@@ -12,8 +12,8 @@ from .language_editions import ALLOWED_SHARED_TERMS, LANGUAGE_EDITIONS
 
 
 CLAIM_BOUNDARY = (
-    "Terminology Guide standardizes SportRx product language only. It does not "
-    "validate SportRx, score performance, create athlete norms, predict outcomes, "
+    "Terminology Guide standardizes SportRX product language only. It does not "
+    "validate SportRX, score performance, create athlete norms, predict outcomes, "
     "or provide medical clearance."
 )
 
@@ -22,14 +22,14 @@ TERMS = [
     {
         "term": "HYROX",
         "display": "HYROX",
-        "zh_explanation": "保留英文。用于描述混合耐力/功能性体能赛事语境；SportRx 当前只做 HYROX-style benchmark，不声称官方认证或赛事完赛预测。",
+        "zh_explanation": "保留英文。用于描述混合耐力/功能性体能赛事语境；SportRX 当前只做 HYROX-style benchmark，不声称官方认证或赛事完赛预测。",
         "use_in_ui": "Event context, benchmark naming, user-facing examples.",
         "do_not_say": "官方 HYROX readiness、完赛概率、官方赛事认证。",
     },
     {
         "term": "RPE",
         "display": "RPE",
-        "zh_explanation": "保留英文。主观用力程度，SportRx 使用 0-10 记录训练或测试后的体感强度。",
+        "zh_explanation": "保留英文。主观用力程度，SportRX 使用 0-10 记录训练或测试后的体感强度。",
         "use_in_ui": "Benchmark Log, Feedback Loop, Starter Path review.",
         "do_not_say": "把 RPE 当成客观生理负荷或医疗指标。",
     },
@@ -37,7 +37,7 @@ TERMS = [
         "term": "Benchmark",
         "display": "Benchmark",
         "zh_explanation": "保留英文。指可复测的测试记录，重点是 protocol、原始数值、单位、RPE、器械和日期。",
-        "use_in_ui": "SportRx Hybrid Benchmark v1, Benchmark Log, retest review.",
+        "use_in_ui": "SportRX Hybrid Benchmark v1, Benchmark Log, retest review.",
         "do_not_say": "人群百分位、已验证等级、运动员标准。",
     },
     {
@@ -111,7 +111,7 @@ BLOCKED_LANGUAGE = [
     },
     {
         "phrase": "risk percentage",
-        "reason": "SportRx does not estimate medical, injury, or event-risk percentages.",
+        "reason": "SportRX does not estimate medical, injury, or event-risk percentages.",
     },
     {
         "phrase": "medical clearance",
@@ -119,7 +119,7 @@ BLOCKED_LANGUAGE = [
     },
     {
         "phrase": "validated performance",
-        "reason": "SportRx is still a prototype without formal validation data.",
+        "reason": "SportRX is still a prototype without formal validation data.",
     },
     {
         "phrase": "athlete norm",
@@ -127,11 +127,11 @@ BLOCKED_LANGUAGE = [
     },
     {
         "phrase": "AI coach",
-        "reason": "SportRx is positioned as measurement and prescription intelligence, not a chat coach.",
+        "reason": "SportRX is positioned as measurement and prescription intelligence, not a chat coach.",
     },
     {
         "phrase": "official HYROX readiness",
-        "reason": "SportRx is not affiliated with or certified by HYROX.",
+        "reason": "SportRX is not affiliated with or certified by HYROX.",
     },
 ]
 
@@ -155,7 +155,7 @@ def build_terminology_guide() -> dict[str, Any]:
         "terms": TERMS,
         "preferred_language_rules": PREFERRED_LANGUAGE_RULES,
         "blocked_language": BLOCKED_LANGUAGE,
-        "primary_message": "SportRx separates Chinese, English, and internal mixed-language editions while keeping shared sport-science terms stable.",
+        "primary_message": "SportRX separates Chinese, English, and internal mixed-language editions while keeping shared sport-science terms stable.",
         "next_action": "Use this guide when editing UI copy, README text, export labels, reviewer handoff, and public beta notes.",
         "claim_boundary": CLAIM_BOUNDARY,
     }
@@ -165,7 +165,7 @@ def terminology_markdown(guide: dict[str, Any]) -> str:
     """Export the terminology guide as Markdown."""
 
     lines = [
-        "# SportRx Terminology Guide",
+        "# SportRX Terminology Guide",
         "",
         f"- Status: {guide['status']}",
         f"- Terms: {guide['term_count']}",

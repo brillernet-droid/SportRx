@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from html import escape
 import json
+import os
 import sys
 from pathlib import Path
 from typing import Any
@@ -18,6 +19,7 @@ from sportrx import (
     alpha_dataset_csv_templates,
     alpha_dataset_dictionary_markdown,
     build_artifact_catalog,
+    build_automation_guard,
     build_alpha_dataset_template,
     build_benchmark_import_compatibility,
     build_benchmark_log_entry_contract,
@@ -45,6 +47,7 @@ from sportrx import (
     build_input_ledger,
     build_intake_precision_audit,
     build_lab_readiness_console,
+    knowledge_corpus_summary,
     build_open_source_integration_console,
     build_output_prerequisites,
     build_page_health_matrix,
@@ -74,6 +77,7 @@ from sportrx import (
     build_training_profile_report,
     build_training_block,
     build_validation_readiness_matrix,
+    build_venue_entry_assessment,
     build_walkthrough,
     build_test_day_command_board,
     benchmark_profile_patch,
@@ -95,6 +99,7 @@ from sportrx import (
     language_edition_label,
     language_edition_markdown,
     language_edition_options,
+    load_screening_providers,
     generate_prescription,
     get_benchmark_protocol,
     get_hybrid_benchmark,
@@ -107,6 +112,8 @@ from sportrx import (
     quick_match_intake_contract_markdown,
     quick_match_lab_intake_sheet_markdown,
     quick_match,
+    search_knowledge,
+    synthesize_knowledge,
     launch_readiness_markdown,
     measurement_timeline_markdown,
     measurement_schema_registry_markdown,
@@ -141,6 +148,7 @@ from sportrx import (
     training_block_markdown,
     ui_text,
     validation_readiness_markdown,
+    validate_knowledge_records,
 )
 from sportrx.benchmark_log import build_component_result
 from sportrx.performance_lab import assess_hybrid_performance, measurement_intake_matrix_csv, measurement_intake_matrix_markdown
@@ -703,7 +711,19 @@ def _t(key: str) -> str:
 
 
 def _is_internal_edition() -> bool:
-    return _language_id() == "internal_mixed"
+    return _internal_review_enabled() and _language_id() == "internal_mixed"
+
+
+def _internal_review_enabled() -> bool:
+    """Keep review-only controls off public hosts unless explicitly enabled."""
+
+    return os.getenv("SPORT_RX_ENABLE_INTERNAL_REVIEW", "1") == "1"
+
+
+def _public_preview_enabled() -> bool:
+    """Identify the hosted sample-only experience."""
+
+    return os.getenv("SPORT_RX_PUBLIC_PREVIEW", "0") == "1"
 
 
 def _page_display_label(page_id: str) -> str:
@@ -787,6 +807,7 @@ def _state_defaults() -> None:
     st.session_state.setdefault("pilot_feedback_entries", [])
     st.session_state.setdefault("demo_scenario_id", "custom")
     st.session_state.setdefault("demo_claim_boundary", "")
+    st.session_state.setdefault("public_demo_mode", False)
     st.session_state.setdefault("plan", generate_prescription(_prescription_profile(st.session_state.profile)))
 
 
@@ -805,6 +826,21 @@ def _load_demo_state() -> None:
     _load_demo_scenario("complete_loop")
 
 
+def _load_public_sample() -> None:
+    """Load synthetic data for the public preview without collecting member data."""
+
+    demo = build_demo_scenario_state("complete_loop")
+    st.session_state.profile = demo["profile"]
+    st.session_state.benchmark_sessions = demo["benchmark_sessions"]
+    st.session_state.feedback_by_week = demo["feedback_by_week"]
+    st.session_state.pilot_feedback_entries = []
+    st.session_state.demo_scenario_id = "public_sample"
+    st.session_state.public_demo_mode = True
+    st.session_state.demo_claim_boundary = "Public preview uses synthetic sample data only. Do not enter personal, health, or performance data."
+    st.session_state.page = "Benchmark Protocol"
+    _refresh_outputs()
+
+
 def _load_demo_scenario(scenario_id: str) -> None:
     demo = build_demo_scenario_state(scenario_id)
     st.session_state.profile = demo["profile"]
@@ -812,6 +848,7 @@ def _load_demo_scenario(scenario_id: str) -> None:
     st.session_state.feedback_by_week = demo["feedback_by_week"]
     st.session_state.pilot_feedback_entries = []
     st.session_state.demo_scenario_id = scenario_id
+    st.session_state.public_demo_mode = False
     st.session_state.demo_claim_boundary = demo["claim_boundary"]
     st.session_state.page = "Workbench"
     _refresh_outputs()
@@ -824,6 +861,7 @@ def _reset_prototype_state() -> None:
     st.session_state.feedback_by_week = {}
     st.session_state.demo_scenario_id = "custom"
     st.session_state.demo_claim_boundary = ""
+    st.session_state.public_demo_mode = False
     st.session_state.page = "Workbench"
     _refresh_outputs()
 
@@ -8427,7 +8465,7 @@ def _mobile_nav() -> None:
     is_en = _is_english_edition()
     nav_items = [
         ("Workbench", "Home" if is_en else "首页"),
-        ("Quick Match", "Match" if is_en else "快筛"),
+        ("Venue Entry", "Entry" if is_en else "入会"),
         ("Benchmark Protocol", "Test" if is_en else "测试"),
         ("Training Profile", "Profile" if is_en else "画像"),
         ("训练", "Plan" if is_en else "训练"),
@@ -8436,7 +8474,7 @@ def _mobile_nav() -> None:
         (
             '<div class="rx-mobile-nav">'
             f'<div class="rx-mobile-nav-title">{"Mobile trial flow" if is_en else "手机试用入口"}</div>'
-            f'<div class="rx-mobile-nav-copy">{"Start with intake, measure, then review the training profile." if is_en else "先快筛，再测试，再看训练画像。"}'
+            f'<div class="rx-mobile-nav-copy">{"Start with Venue Entry, measure, then review the training profile." if is_en else "先完成入会分流，再测试，再看训练画像。"}'
             "</div></div>"
         ),
         unsafe_allow_html=True,
@@ -8458,9 +8496,10 @@ def _mobile_nav() -> None:
 def _public_status_strip() -> None:
     passport = st.session_state.passport
     summary = summarize_benchmark_sessions(st.session_state.benchmark_sessions)
-    safety = passport["safety_gate"]["status"]
+    venue_eligible = _public_venue_entry_eligible()
+    safety = passport["safety_gate"]["status"] if venue_eligible else "待完成入会分流"
     measured_count = int(passport["areas_assessed"]["assessed"])
-    next_action = "先完成测试" if measured_count < 2 else "查看训练画像"
+    next_action = "先完成入会分流" if not venue_eligible else ("先完成测试" if measured_count < 2 else "查看训练画像")
     html = [
         '<div class="rx-public-home">',
         '<div class="rx-public-card">',
@@ -8494,13 +8533,23 @@ def public_home_page() -> None:
         "运动测试与训练画像",
         "先记录真实情况，再完成基础测试。SportRx 不猜测缺失数据，也不把安全筛查混进表现判断。",
     )
+    if _public_preview_enabled():
+        st.info(
+            "这是公开示例站，只使用合成数据演示测量、训练画像与复测逻辑。请勿输入姓名、联系方式、健康信息或真实测试成绩。"
+        )
+        st.button("用合成示例数据体验完整流程", type="primary", width="stretch", on_click=_load_public_sample)
     _public_status_strip()
 
-    if passport["safety_gate"]["status"] == "RED":
-        next_title = "先处理安全边界"
-        next_copy = "当前信息不适合自动进入训练建议。请先寻求专业评估，再回来记录测试。"
-        button_target = "Quick Match"
-        button_label = "回到快筛"
+    venue_screening = st.session_state.profile.get("venue_screening")
+    venue_eligible = bool(st.session_state.get("public_demo_mode")) or (
+        isinstance(venue_screening, dict)
+        and passport["safety_gate"].get("route") == "eligible_for_benchmark"
+    )
+    if not venue_eligible:
+        next_title = "下一步：完成入会分流"
+        next_copy = "先通过已配置的外部筛查路径确认能否进入 Benchmark。SportRX 不收集筛查题目或健康细节。"
+        button_target = "Venue Entry"
+        button_label = "开始入会分流"
     elif measured_count < 2:
         next_title = "下一步：完成基础测试"
         next_copy = "至少完成两个测试维度后，SportRx 才会比较相对优势和主要短板。"
@@ -8531,9 +8580,9 @@ def public_home_page() -> None:
 
     cards = [
         (
-            "快筛",
-            "填写年龄、近期训练天数、训练分钟数和每周可训练时间。这里不是表现测试。",
-            "Quick Match",
+            "入会分流",
+            "只记录外部筛查是否完成、是否需跟进和是否有状态变化，不保存筛查答案。",
+            "Venue Entry",
         ),
         (
             "测试",
@@ -8563,6 +8612,157 @@ def public_home_page() -> None:
         st.caption("还没有 Benchmark 记录。没有记录的测试会显示为 Not tested。")
     else:
         st.caption(f"已经保存 {summary['session_count']} 次 Benchmark 记录。")
+
+
+def _public_venue_entry_eligible() -> bool:
+    profile = st.session_state.profile
+    safety = st.session_state.passport.get("safety_gate", {})
+    return bool(st.session_state.get("public_demo_mode")) or (
+        isinstance(profile.get("venue_screening"), dict)
+        and safety.get("route") == "eligible_for_benchmark"
+    )
+
+
+def venue_entry_page() -> None:
+    """Render a member-owned external-screening handoff without health details."""
+
+    is_en = _is_english_edition()
+    copy = (
+        {
+            "title": "Venue Entry",
+            "subtitle": "Complete the approved external screening path first. SportRX records only the routing result, then decides whether Benchmark can begin.",
+            "age": "Age",
+            "consent": "I understand this local result is not medical clearance and I agree to use this routing step.",
+            "provider": "External screening pathway",
+            "outcome": "My reported outcome from the external pathway",
+            "changed": "Since completing that pathway, has there been a relevant health-status change?",
+            "submit": "Check my route",
+            "saved": "Local routing result updated.",
+            "demo": "This pathway is not approved for venue deployment. The page is an internal/demo workflow only; it cannot open Benchmark.",
+            "continue": "Continue to Benchmark",
+            "export": "Download local routing result",
+            "boundary": "SportRX does not copy, translate, score, or store answers from the external screening tool. It does not provide medical clearance, diagnosis, or exercise advice here.",
+        }
+        if is_en
+        else {
+            "title": "入会分流",
+            "subtitle": "先完成已配置的外部筛查路径。SportRX 只记录分流结果，再判断能否进入 Benchmark。",
+            "age": "年龄",
+            "consent": "我理解本地结果不构成医疗许可，并同意使用此分流步骤。",
+            "provider": "外部筛查路径",
+            "outcome": "我在外部筛查路径中的自报结果",
+            "changed": "完成该路径后，是否出现需要重新确认的健康状态变化？",
+            "submit": "查看我的分流结果",
+            "saved": "已更新本地分流结果。",
+            "demo": "该路径尚未获准用于场馆部署。当前仅为内部 / 演示流程，不能开启 Benchmark。",
+            "continue": "进入 Benchmark",
+            "export": "下载本地分流结果",
+            "boundary": "SportRX 不复制、翻译、评分或保存外部筛查工具的答案。本页不提供医疗许可、诊断或运动建议。",
+        }
+    )
+    _page_header("SportRX", copy["title"], copy["subtitle"])
+    profile = st.session_state.profile
+    current = profile.get("venue_screening") if isinstance(profile.get("venue_screening"), dict) else {}
+    providers = load_screening_providers(ROOT)
+    provider_by_id = {item["id"]: item for item in providers}
+    provider_ids = list(provider_by_id)
+    if not provider_ids:
+        st.error("No screening-provider registry is available." if is_en else "未找到筛查路径登记表。")
+        return
+
+    outcome_labels = (
+        {
+            "not_completed": "Not completed",
+            "completed_continue": "Completed: continue permitted by the external pathway",
+            "follow_up_needed": "Follow-up requested by the external pathway",
+        }
+        if is_en
+        else {
+            "not_completed": "尚未完成外部筛查",
+            "completed_continue": "外部路径提示可继续参加",
+            "follow_up_needed": "外部路径提示需要进一步跟进",
+        }
+    )
+    default_provider = current.get("provider_id") if current.get("provider_id") in provider_by_id else provider_ids[0]
+    with st.form("venue_entry_form"):
+        age = st.number_input(copy["age"], 16, 100, int(profile.get("age", 30)))
+        provider_id = st.selectbox(
+            copy["provider"],
+            provider_ids,
+            index=provider_ids.index(default_provider),
+            format_func=lambda item: (
+                "Chinese venue screening pathway (pending local review)"
+                if is_en and item == "CN-VENUE-SCREENING-PENDING"
+                else provider_by_id[item]["label"]
+            ),
+        )
+        consent = st.checkbox(copy["consent"], value=current.get("consent") is True)
+        outcome = st.selectbox(
+            copy["outcome"],
+            list(outcome_labels),
+            index=list(outcome_labels).index(current.get("member_reported_outcome", "not_completed")),
+            format_func=lambda item: outcome_labels[item],
+        )
+        changed = st.checkbox(copy["changed"], value=current.get("health_changed_since_screening") is True)
+        submitted = st.form_submit_button(copy["submit"], type="primary", width="stretch")
+
+    if submitted:
+        selected = provider_by_id[provider_id]
+        st.session_state.profile.update(
+            {
+                "age": int(age),
+                "venue_screening": {
+                    "provider_id": provider_id,
+                    "provider_version": selected["version"],
+                    "consent": bool(consent),
+                    "member_reported_outcome": outcome,
+                    "health_changed_since_screening": bool(changed),
+                },
+            }
+        )
+        _refresh_outputs()
+        profile = st.session_state.profile
+        st.success(copy["saved"])
+
+    assessment = build_venue_entry_assessment(profile, root=ROOT) if isinstance(profile.get("venue_screening"), dict) else None
+    if assessment is None:
+        st.info("Complete the form to see the local route." if is_en else "完成表单后可查看本地分流结果。")
+        return
+
+    if assessment["deployment_status"] != "venue_ready":
+        st.warning(copy["demo"])
+    titles = {
+        "eligible_for_benchmark": "Benchmark entry available" if is_en else "可继续进入 Benchmark",
+        "screening_follow_up_needed": "Screening completion or follow-up needed" if is_en else "需要完成筛查或进一步确认",
+        "stop_automation": "Stop the SportRX automated flow" if is_en else "停止 SportRX 自动流程",
+    }
+    next_actions = {
+        "eligible_for_benchmark": "Enter SportRX Hybrid Benchmark and complete at least two measured dimensions." if is_en else "进入 SportRX Hybrid Benchmark，先完成至少两个测试维度。",
+        "screening_follow_up_needed": "Do not enter Benchmark or training. Complete the next step required by the external pathway." if is_en else "暂不进入 Benchmark 或训练路径；请按外部筛查路径的建议完成下一步。",
+        "stop_automation": "Do not continue with SportRX Benchmark or training. Seek appropriate professional support." if is_en else "不要继续使用 SportRX 的 Benchmark 或训练功能；请寻求适当的专业支持。",
+    }
+    st.markdown(
+        (
+            '<div class="rx-public-card rx-public-card-waiting">'
+            f'<div class="rx-public-kicker">{"Current route" if is_en else "当前分流"}</div>'
+            f'<div class="rx-public-title">{escape(titles[assessment["route"]])}</div>'
+            f'<div class="rx-public-copy">{escape(next_actions[assessment["route"]])}</div>'
+            "</div>"
+        ),
+        unsafe_allow_html=True,
+    )
+    st.caption(copy["boundary"])
+    if assessment.get("provider_member_message") and not is_en:
+        st.caption(assessment["provider_member_message"])
+    st.download_button(
+        copy["export"],
+        json.dumps(assessment["member_export"], ensure_ascii=False, indent=2),
+        file_name="sportrx_venue_entry_result.json",
+        mime="application/json",
+        width="stretch",
+    )
+    if assessment["benchmark_allowed"]:
+        st.button(copy["continue"], type="primary", width="stretch", on_click=_set_page, args=("Benchmark Protocol",))
 
 
 def public_quick_match_page() -> None:
@@ -8627,18 +8827,26 @@ def public_quick_match_page() -> None:
 def public_benchmark_page() -> None:
     _page_header(
         "SportRx",
-        "完成基础测试",
-        "选择你能使用的器械，然后按同一套流程记录结果。至少完成两个维度后，再查看训练画像。",
+        "Benchmark 流程预览" if _public_preview_enabled() else "完成基础测试",
+        "公开示例站只展示合成测试记录，不引导你进行实际测试。" if _public_preview_enabled() else "选择你能使用的器械，然后按同一套流程记录结果。至少完成两个维度后，再查看训练画像。",
     )
+    if not _public_venue_entry_eligible():
+        st.warning("请先完成入会分流。未确认可进入 Benchmark 时，SportRX 不会开启测试。" if not _is_english_edition() else "Complete Venue Entry first. SportRX does not open Benchmark until eligibility is explicitly confirmed.")
+        st.button("去入会分流" if not _is_english_edition() else "Open Venue Entry", type="primary", width="stretch", on_click=_set_page, args=("Venue Entry",))
+        return
     profile = st.session_state.profile
-    equipment_access = st.multiselect(
-        "今天能使用的器械",
-        ["row", "ski", "sled", "kettlebell", "dumbbell", "track"],
-        default=profile.get("equipment_access", []),
-    )
-    if equipment_access != profile.get("equipment_access", []):
-        st.session_state.profile["equipment_access"] = equipment_access
-        _refresh_outputs()
+    equipment_access = list(profile.get("equipment_access", []))
+    if _public_preview_enabled():
+        st.warning("当前为合成示例数据。请勿把本页作为现场测试指引，也不要输入真实测试成绩。")
+    else:
+        equipment_access = st.multiselect(
+            "今天能使用的器械",
+            ["row", "ski", "sled", "kettlebell", "dumbbell", "track"],
+            default=equipment_access,
+        )
+        if equipment_access != profile.get("equipment_access", []):
+            st.session_state.profile["equipment_access"] = equipment_access
+            _refresh_outputs()
     protocol = get_benchmark_protocol(equipment_access)
     st.markdown(
         (
@@ -8650,6 +8858,11 @@ def public_benchmark_page() -> None:
         ),
         unsafe_allow_html=True,
     )
+    with st.expander("测试前安全说明", expanded=not _public_preview_enabled()):
+        st.write("在真实测试前，需要完成外部筛查路径并确认 Benchmark 资格。")
+        st.write("测试前先进行 8-12 分钟轻松活动和短促练习；测试中任何异常都应停止。")
+        for rule in protocol["global_stop_rules"]:
+            st.write(f"- {zh(rule)}")
     html = ['<div class="rx-public-home">']
     for component in protocol["component_protocols"][:5]:
         required = "可选" if component["optional"] else "建议完成"
@@ -8664,8 +8877,8 @@ def public_benchmark_page() -> None:
         )
     html.append("</div>")
     st.markdown("".join(html), unsafe_allow_html=True)
-    st.button("测完后查看训练画像", type="primary", width="stretch", on_click=_set_page, args=("Training Profile",))
-    st.caption("当前手机版先展示测试流程。详细原始记录和导出请切到 Internal Mixed Review。")
+    st.button("查看合成训练画像" if _public_preview_enabled() else "测完后查看训练画像", type="primary", width="stretch", on_click=_set_page, args=("Training Profile",))
+    st.caption(_t("public_measurement_scope_caption"))
 
 
 def public_profile_page() -> None:
@@ -8675,6 +8888,10 @@ def public_profile_page() -> None:
         "当前训练画像",
         "这里只总结已经知道的信息和还缺的测试。它不是综合评分，也不是运动能力标签。",
     )
+    if not _public_venue_entry_eligible():
+        st.warning("当前仅提供分流结果，不能进入训练画像或 Starter Path。" if not _is_english_edition() else "This route is assessment-only. Training Profile and Starter Path are unavailable.")
+        st.button("返回入会分流" if not _is_english_edition() else "Return to Venue Entry", type="primary", width="stretch", on_click=_set_page, args=("Venue Entry",))
+        return
     _public_status_strip()
     st.markdown(
         (
@@ -9790,8 +10007,12 @@ def training_page() -> None:
         "4 周 Training Block",
         "把已测短板、FITT-VP 有氧处方和每周 RPE 反馈合成一个可执行的起步训练 block。",
     )
+    if not _is_internal_edition() and not _public_venue_entry_eligible():
+        st.warning("当前分流不能进入自动训练内容。请先完成外部筛查路径的下一步。" if not _is_english_edition() else "This route cannot enter automated training content. Complete the required external screening follow-up first.")
+        st.button("返回入会分流" if not _is_english_edition() else "Return to Venue Entry", type="primary", width="stretch", on_click=_set_page, args=("Venue Entry",))
+        return
     passport = st.session_state.passport
-    block = build_training_block(passport, st.session_state.plan)
+    block = build_training_block(passport, st.session_state.plan, st.session_state.feedback_by_week)
 
     if not block["available"]:
         _training_block_console(block)
@@ -10159,6 +10380,38 @@ def _benchmark_log_extra_field_input(field: str, component_id: str, completed: b
     return st.text_input(field, key=key).strip()
 
 
+def _benchmark_protocol_context_input(field: str, component_id: str) -> Any:
+    """Collect only the context needed to keep a later retest honest."""
+
+    key = f"log_context_{component_id}_{field}"
+    labels = {
+        "test_variant": "测试类型",
+        "route_or_treadmill": "路线 / 跑台",
+        "surface": "表面",
+        "gradient_or_incline": "坡度 / 坡度设置",
+        "timing_method": "计时方式",
+        "erg_type": "Erg 类型",
+        "erg_model": "设备型号",
+        "drag_factor": "阻尼 / drag factor",
+        "movement_standard": "动作标准",
+        "loads_used": "负重",
+        "rest_rule": "休息规则",
+        "preceding_station_circuit": "前置 station circuit",
+    }
+    if field == "test_variant":
+        return st.selectbox(labels[field], ["", "1km_run", "6min_run", "6min_run_walk"], key=key)
+    if field == "surface":
+        return st.selectbox(labels[field], ["", "track", "road", "treadmill", "indoor_court", "other"], key=key)
+    if field == "timing_method":
+        return st.selectbox(labels[field], ["", "manual_timer", "treadmill_console", "erg_monitor"], key=key)
+    if field == "erg_type":
+        return st.selectbox(labels[field], ["", "row", "ski"], key=key)
+    if field == "drag_factor":
+        value = st.number_input(labels[field], min_value=0.0, value=0.0, step=1.0, key=key)
+        return float(value) if value > 0 else None
+    return st.text_input(labels.get(field, field), key=key).strip()
+
+
 def _benchmark_import_compatibility_panel(compatibility: dict) -> None:
     ready = bool(compatibility["hyrox_import_ready"])
     cards = [
@@ -10430,7 +10683,7 @@ def benchmark_protocol_page() -> None:
     brief = build_test_day_brief(equipment_access)
     operator = build_test_session_operator(
         equipment_access,
-        safety_gate_status=st.session_state.passport.get("safety_gate", {}).get("status"),
+        safety_gate=st.session_state.passport.get("safety_gate", {}),
     )
     command_board = build_test_day_command_board(operator)
     protocol_profile = {**profile, "equipment_access": equipment_access}
@@ -10701,6 +10954,10 @@ def benchmark_log_page() -> None:
             session_date = col1.date_input("测试日期")
             followed_protocol = col2.checkbox("我已按当前 Protocol 完成或记录偏离原因", value=True)
             global_notes = st.text_area("本次测试备注", placeholder="例如：跑道、天气、器械型号、身体状态、是否中断、是否偏离 protocol。")
+            context_col1, context_col2, context_col3 = st.columns(3)
+            warmup_minutes = context_col1.number_input("热身时长（分钟）", min_value=0.0, value=0.0, step=1.0)
+            familiarization_level = context_col2.selectbox("动作 / 器械熟悉度", ["", "first_use", "limited", "familiar"])
+            session_timing_method = context_col3.selectbox("主要计时方式", ["", "manual_timer", "treadmill_console", "erg_monitor"])
             st.caption("建议写清楚路线、器械型号、负重、替代动作和身体状态。未来复测时这些信息比一个总分更有价值。")
 
         component_results = []
@@ -10742,6 +10999,24 @@ def benchmark_log_page() -> None:
                             result_fields[field] = _benchmark_log_extra_field_input(field, component["id"], completed)
                 if component_contract:
                     st.caption(component_contract["ui_hint"])
+                    status_label = {
+                        "supported": "已有直接依据",
+                        "partial_evidence": "部分依据",
+                        "experimental": "实验性协议",
+                    }.get(component_contract["protocol_evidence_status"], "实验性协议")
+                    st.caption(f"协议证据状态：{status_label}。{component_contract['protocol_evidence_id']}")
+                protocol_context = {}
+                context_fields = [
+                    field
+                    for field in component_contract.get("protocol_context_fields", [])
+                    if field not in {"warmup_minutes", "familiarization_level", "test_order", "loads_used"}
+                ]
+                if context_fields:
+                    with st.expander("复测所需的测试条件", expanded=completed):
+                        for field in context_fields:
+                            protocol_context[field] = _benchmark_protocol_context_input(field, component["id"])
+                if component["id"] == "station_circuit":
+                    protocol_context["loads_used"] = result_fields.get("loads_used", "")
                 if component_protocol:
                     with st.expander("Protocol notes", expanded=False):
                         st.write("Setup")
@@ -10759,6 +11034,7 @@ def benchmark_log_page() -> None:
                         equipment=sorted(set(equipment_access + ([result_fields["modality"]] if result_fields.get("modality") else []))),
                         substitution=substitution,
                         result_fields=result_fields,
+                        protocol_context=protocol_context,
                         completed=completed,
                         notes=notes,
                     )
@@ -10769,6 +11045,11 @@ def benchmark_log_page() -> None:
             component_results,
             session_date=session_date.isoformat(),
             global_notes=global_notes,
+            session_context={
+                "warmup_minutes": float(warmup_minutes) if warmup_minutes > 0 else None,
+                "familiarization_level": familiarization_level,
+                "timing_method": session_timing_method,
+            },
         )
         if not followed_protocol:
             preview_session["session_quality"]["warnings"].append("Protocol was not fully followed; keep this as a contextual raw record.")
@@ -10914,6 +11195,15 @@ def progress_page() -> None:
         "复测与周反馈 Dashboard",
         "把每周完成率、平均 RPE、自动进阶决策和 Benchmark 复测变化放在同一个闭环里。SportRx 只总结已经记录的数据，不做预测。",
     )
+    if not _is_internal_edition() and not _public_venue_entry_eligible():
+        st.warning("当前分流仅提供评估结果，不能进入周反馈、自动进阶或复测解释。" if not _is_english_edition() else "This assessment-only route cannot enter weekly feedback, automated progression, or retest interpretation.")
+        st.button("返回入会分流" if not _is_english_edition() else "Return to Venue Entry", type="primary", width="stretch", on_click=_set_page, args=("Venue Entry",))
+        return
+    automation_guard = build_automation_guard(st.session_state.feedback_by_week)
+    if not automation_guard["automated_outputs_allowed"]:
+        st.error(zh(automation_guard["reason"]))
+        st.caption(automation_guard["claim_boundary"])
+        return
     plan = st.session_state.plan
     dashboard = build_feedback_dashboard(plan, st.session_state.feedback_by_week, st.session_state.benchmark_sessions)
     retest_guard = build_retest_interpretation_guard(st.session_state.benchmark_sessions)
@@ -11341,6 +11631,69 @@ def evidence_library_page() -> None:
                 for item in library["required_files"]
             ]
         )
+
+
+def knowledge_lab_page() -> None:
+    _page_header(
+        "Knowledge Lab",
+        "SportRX Knowledge Lab",
+        "内部循证知识检索与中文综合。它解释研究，不改变 Safety Gate、测试解释或训练剂量。",
+    )
+    summary = knowledge_corpus_summary(ROOT)
+    validation = validate_knowledge_records(ROOT)
+    _metric_row(
+        [
+            ("已审核卡片", f"{summary['reviewed_card_count']} / {summary['target_card_count']}"),
+            ("可综合门槛", str(summary["minimum_synthesis_card_count"])),
+            ("已覆盖主题", len(validation["covered_topics"])),
+            ("状态", summary["status"]),
+        ]
+    )
+    st.caption(summary["claim_boundary"])
+    if not summary["synthesis_enabled"]:
+        st.warning("知识检索可用；中文模型综合在达到 60 张审核卡并完成评测前保持关闭。")
+    if validation["warnings"]:
+        for warning in validation["warnings"]:
+            st.caption(f"- {warning}")
+
+    search_tab, corpus_tab, discovery_tab = st.tabs(["检索", "语料库状态", "发现与审核"])
+    with search_tab:
+        topics = ["全部"] + list(summary["topic_counts"])
+        query = st.text_input("研究问题", placeholder="例如：为什么六分钟跑和跑走不能直接换算？")
+        selected_topic = st.selectbox("主题筛选", topics)
+        if query.strip():
+            filters = {} if selected_topic == "全部" else {"topic": selected_topic}
+            result = search_knowledge(query, filters, ROOT)
+            st.caption(result["retrieval_mode"])
+            if not result["results"]:
+                st.info("没有找到足够的已审核知识卡。请加入发现队列，而不是让模型补写答案。")
+            else:
+                selected_ids = []
+                for item in result["results"]:
+                    with st.expander(f"{item['title_zh']} · {item['evidence_tier']}", expanded=True):
+                        st.write(item["summary_zh"])
+                        st.caption(f"英文题名：{item['title_en']}")
+                        st.caption(f"来源：{', '.join(item['source_ids'])}")
+                        st.caption(f"限制：{item['limitations']}")
+                        selected_ids.append(item["id"])
+                if st.button("用已检索证据生成中文综合", disabled=not summary["synthesis_enabled"], type="primary"):
+                    synthesis = synthesize_knowledge(query, selected_ids, ROOT)
+                    st.write(synthesis.get("answer_zh", ""))
+                    st.caption(synthesis.get("boundary", synthesis["claim_boundary"]))
+                    st.caption("引用卡：" + ", ".join(synthesis.get("cited_card_ids", [])))
+    with corpus_tab:
+        st.dataframe(
+            [{"主题": topic, "已审核卡片": count} for topic, count in summary["topic_counts"].items()],
+            hide_index=True,
+            width="stretch",
+        )
+        st.write("当前基础卡仅来自已审核的 SportRX 证据记录；它们不等于 300-card v1 已完成。")
+        st.json({"errors": validation["errors"], "warnings": validation["warnings"]})
+    with discovery_tab:
+        discovery_path = ROOT / "evidence/knowledge/discovery_queries.json"
+        discovery = json.loads(discovery_path.read_text(encoding="utf-8"))["records"]
+        st.write("自动发现只生成候选来源；候选不会进入检索或模型上下文。")
+        st.dataframe(discovery, hide_index=True, width="stretch")
 
 
 def release_qa_page() -> None:
@@ -11791,12 +12144,14 @@ def pilot_feedback_page() -> None:
 
 
 def main() -> None:
-    st.set_page_config(page_title="SportRx Labs", layout="wide")
+    st.set_page_config(page_title="SportRX Labs", layout="wide")
     _state_defaults()
     _apply_theme()
 
-    st.sidebar.title("SportRx Labs")
-    language_options = language_edition_options()
+    st.sidebar.title("SportRX Labs")
+    language_options = language_edition_options(include_internal=_internal_review_enabled())
+    if _public_preview_enabled():
+        language_options = ["zh_user"]
     current_language = _language_id()
     if current_language not in language_options:
         current_language = "zh_user"
@@ -11879,17 +12234,20 @@ def main() -> None:
         "复测",
         "Pilot Feedback",
         "Evidence Library",
+        "Knowledge Lab",
         "Export Center",
         "Release QA",
     ]
     public_page_options = [
         "Workbench",
-        "Quick Match",
+        "Venue Entry",
         "Benchmark Protocol",
         "Training Profile",
         "训练",
         "复测",
     ]
+    if _public_preview_enabled():
+        public_page_options = ["Workbench", "Benchmark Protocol", "Training Profile", "训练", "复测"]
     page_options = internal_page_options if _is_internal_edition() else public_page_options
     if st.session_state.page not in page_options:
         st.session_state.page = "Workbench"
@@ -11908,6 +12266,8 @@ def main() -> None:
             workbench_page()
         else:
             public_home_page()
+    elif page == "Venue Entry":
+        venue_entry_page()
     elif page == "Quick Match":
         if _is_internal_edition():
             discover_page()
@@ -11935,6 +12295,8 @@ def main() -> None:
         pilot_feedback_page()
     elif page == "Evidence Library":
         evidence_library_page()
+    elif page == "Knowledge Lab":
+        knowledge_lab_page()
     elif page == "Export Center":
         export_center_page()
     else:

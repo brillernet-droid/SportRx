@@ -11,6 +11,7 @@ This is the master list of sources currently saved for SportRx.
 | `PA-ACSM-GETP12` | ACSM Guidelines for Exercise Testing and Prescription, 12th edition | `guidelines.md` | FITT-VP and exercise testing/prescription frame |
 | `PA-ACSM-CDC` | ACSM Physical Activity Guidelines resource | `guidelines.md` | Convergent guideline support |
 | `PA-AHA` | AHA adult physical activity recommendations | `guidelines.md` | Convergent activity guideline support |
+| `PA-CHINA-2021` | 中国人群身体活动指南（2021） | `guidelines.md` | 中文用户版的中国本地身体活动指南语境 |
 
 ## Safety And Preparticipation Screening
 
@@ -29,6 +30,11 @@ This is the master list of sources currently saved for SportRx.
 | `TEST-FIELD-ADULT` | Criterion-related validity of field-based fitness tests in adults | `measurement_and_rpe.md` | Field-test validity and caution |
 | `TEST-FIELD-SAFETY` | Feasibility and safety of field-based physical fitness tests | `measurement_and_rpe.md` | Field-test caution and need for SportRx pilot data |
 | `TEST-FIELD-RELIABILITY` | Reliability of field-based fitness tests in adults | `measurement_and_rpe.md` | Test-retest requirement |
+| `TEST-1000M-ADULT-2000` | 1,000 m adult walk-run validation/reliability | `../source_notes/006_benchmark_component_evidence.md` | Partial 1 km protocol support only |
+| `TEST-6MRT-ADULT-2023` | 6-minute run validation in adults | `../source_notes/006_benchmark_component_evidence.md` | Continuous-run evidence; run/walk remains partial |
+| `ERG-SKIERG-1000M-2025` | Concept2 SkiErg 1,000 m case study | `../source_notes/006_benchmark_component_evidence.md` | Device-specific personal retest only |
+| `ERG-ROWERG-ACCURACY-2022` | Concept2 RowErg monitor accuracy | `../source_notes/006_benchmark_component_evidence.md` | Device context, not human validation |
+| `CN-NPFS-2023` | Chinese national physical-fitness standard notice | `../source_notes/006_benchmark_component_evidence.md` | Method and terminology boundary only |
 | `MON-RPE-ACSM` | ACSM RPE article | `measurement_and_rpe.md` | RPE interpretation |
 | `MON-SRPE-FOSTER` | Foster et al. session-RPE | `measurement_and_rpe.md` | Training-load monitoring |
 | `MON-SRPE-REVIEW` | Haddad et al. session-RPE review | `measurement_and_rpe.md` | Session-RPE validity/reliability context |

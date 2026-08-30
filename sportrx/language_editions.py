@@ -1,4 +1,4 @@
-"""Language edition contract for SportRx.
+"""Language edition contract for SportRX.
 
 The contract separates user-facing language versions from the internal mixed
 review surface. It governs product copy only; it does not affect measurement,
@@ -18,7 +18,7 @@ CLAIM_BOUNDARY = (
 
 
 ALLOWED_SHARED_TERMS = [
-    "SportRx",
+    "SportRX",
     "HYROX",
     "RPE",
     "Benchmark",
@@ -40,7 +40,7 @@ LANGUAGE_EDITIONS = [
         "status": "primary_user_edition",
         "user_facing": True,
         "description": "面向早期试用者的中文用户版；除专有名词外，按钮、说明和页面标题应使用中文。",
-        "copy_rule": "中文句子不夹英文解释；只保留 SportRx、HYROX、RPE、Benchmark 等专有术语。",
+        "copy_rule": "中文句子不夹英文解释；只保留 SportRX、HYROX、RPE、Benchmark 等专有术语。",
         "review_rule": "任何新增中文界面文案都必须先判断是否可以完整中文表达。",
     },
     {
@@ -69,6 +69,11 @@ LANGUAGE_EDITIONS = [
 
 
 PAGE_LABELS = {
+    "Venue Entry": {
+        "zh_user": "入会分流",
+        "en_user": "Venue Entry",
+        "internal_mixed": "Venue Entry",
+    },
     "Workbench": {
         "zh_user": "工作台",
         "en_user": "Workbench",
@@ -118,6 +123,11 @@ PAGE_LABELS = {
         "zh_user": "循证库",
         "en_user": "Evidence Library",
         "internal_mixed": "Evidence Library",
+    },
+    "Knowledge Lab": {
+        "zh_user": "知识实验室",
+        "en_user": "Knowledge Lab",
+        "internal_mixed": "Knowledge Lab",
     },
     "Export Center": {
         "zh_user": "导出中心",
@@ -218,6 +228,11 @@ UI_TEXT = {
         "en_user": "Navigation",
         "internal_mixed": "导航",
     },
+    "public_measurement_scope_caption": {
+        "zh_user": "当前手机版展示完整测试流程；详细原始记录与导出暂不在此试用路径开放。",
+        "en_user": "This mobile path shows the full test flow; detailed raw records and exports are not part of this trial path.",
+        "internal_mixed": "Detailed raw records and exports are available in the internal review surface.",
+    },
 }
 
 
@@ -228,10 +243,14 @@ def get_language_edition(edition_id: str | None = None) -> dict[str, Any]:
     return next((item for item in LANGUAGE_EDITIONS if item["id"] == target), LANGUAGE_EDITIONS[0])
 
 
-def language_edition_options() -> list[str]:
-    """Return edition ids in display order."""
+def language_edition_options(include_internal: bool = True) -> list[str]:
+    """Return selectable edition ids, excluding internal review when requested."""
 
-    return [item["id"] for item in LANGUAGE_EDITIONS]
+    return [
+        item["id"]
+        for item in LANGUAGE_EDITIONS
+        if include_internal or item["user_facing"]
+    ]
 
 
 def language_edition_label(edition_id: str | None = None) -> str:
@@ -276,7 +295,7 @@ def build_language_edition_contract(current_edition_id: str | None = None) -> di
             }
             for page_id in PAGE_LABELS
         },
-        "primary_message": "SportRx separates Chinese, English, and internal mixed-language editions before public testing.",
+        "primary_message": "SportRX separates Chinese, English, and internal mixed-language editions before public testing.",
         "claim_boundary": CLAIM_BOUNDARY,
     }
 
@@ -285,7 +304,7 @@ def language_edition_markdown(contract: dict[str, Any]) -> str:
     """Export the language edition contract as Markdown."""
 
     lines = [
-        "# SportRx Language Edition Contract",
+        "# SportRX Language Edition Contract",
         "",
         f"- Status: {contract['status']}",
         f"- Editions: {contract['edition_count']}",

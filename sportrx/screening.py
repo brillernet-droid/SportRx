@@ -9,7 +9,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from .safety_gate import evaluate_safety_gate
+from .safety_gate import automated_handoff_allowed, evaluate_safety_gate
 
 
 BLOCKING_SYMPTOMS = {
@@ -42,6 +42,20 @@ def screen_user(profile: dict[str, Any]) -> dict[str, Any]:
     """Return whether automated prescription is allowed for this profile."""
 
     safety_gate = evaluate_safety_gate(profile)
+    if isinstance(profile.get("venue_screening"), dict):
+        allowed = automated_handoff_allowed(safety_gate)
+        return {
+            "auto_prescription": allowed,
+            "safety_gate": safety_gate,
+            "flags": list(safety_gate["flags"]),
+            "reasons": list(safety_gate["reasons"]),
+            "next_step": (
+                "Continue to Benchmark."
+                if allowed
+                else "SportRX will not generate an automatic plan from Venue Entry. Follow the external screening pathway."
+            ),
+            "disclaimer": "SportRX is a non-diagnostic routing prototype and is not a medical diagnosis or emergency service.",
+        }
     reasons: list[str] = []
     flags: list[str] = []
     age = int(profile.get("age", 0) or 0)
@@ -73,7 +87,7 @@ def screen_user(profile: dict[str, Any]) -> dict[str, Any]:
         reasons.extend(safety_gate["reasons"])
         flags.extend(safety_gate["flags"])
 
-    auto_prescription = not reasons
+    auto_prescription = not reasons and safety_gate["automated_handoff_allowed"]
     return {
         "auto_prescription": auto_prescription,
         "safety_gate": safety_gate,

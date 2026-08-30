@@ -3,7 +3,7 @@
 ## Source Cluster
 
 - Evidence IDs: `PA-WHO-2020`, `PA-CDC-ADULT`, `PA-ACSM-GETP12`,
-  `PA-ACSM-CDC`, `PA-AHA`
+  `PA-ACSM-CDC`, `PA-AHA`, `PA-CHINA-2021`
 - Topic: general adult aerobic and muscle-strengthening activity targets
 - Evidence tier: A
 - Product area: SportRx Core, aerobic prescription, public-health explanation
@@ -19,6 +19,8 @@ adult activity targets around:
 - Frequency, intensity, and duration as central variables for health-oriented
   physical activity guidance.
 - FITT-VP as a professional structure for exercise prescription.
+- A China-local, adult physical-activity guideline context for Chinese-language
+  public-health explanation.
 
 ## What It Does Not Support
 
@@ -53,7 +55,7 @@ These sources do not validate:
 
 ## Review Notes
 
-- Reviewed by: SportRx
-- Date: 2026-08-15
-- Open question: add China-local adult physical activity guideline references
-  before broader Chinese public testing.
+- Reviewed by: SportRX evidence review
+- Date: 2026-08-28
+- Open question: collect Chinese recreational-athlete usability data before
+  making stronger Chinese market claims.

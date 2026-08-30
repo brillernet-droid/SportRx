@@ -8,6 +8,7 @@ from .output_prerequisites import build_output_prerequisites
 from .performance_lab import assess_hybrid_performance
 from .quick_match import quick_match
 from .starter_path import build_starter_path
+from .safety_gate import automated_handoff_allowed
 
 
 def build_readiness_passport(profile: dict[str, Any], event_pack: str = "hybrid_race") -> dict[str, Any]:
@@ -66,7 +67,7 @@ def build_readiness_passport(profile: dict[str, Any], event_pack: str = "hybrid_
     starter_path = build_starter_path(lab)
     if starter_path["available"]:
         next_action = "Build 4-week Starter Path"
-    elif lab["safety_gate"]["status"] == "RED":
+    elif not automated_handoff_allowed(lab["safety_gate"]):
         next_action = "Resolve safety gate before training"
     else:
         next_action = "Complete SportRx Hybrid Benchmark v1"

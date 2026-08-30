@@ -30,16 +30,22 @@
     "Recent training: 120 min/week"
   ],
   "what_we_do_not_know": [
-    "No recent 1 km or 5 km run test",
+    "No recent 1 km or 6-minute run/walk test",
     "No station or strength-endurance test",
     "No RowErg, SkiErg, or station-specific test",
     "No compromised running or mixed-work test"
   ],
   "what_to_measure_next": [
-    "1 km or 5 km run benchmark",
+    "1 km run or 6-minute run/walk Benchmark",
     "Station strength-endurance circuit",
     "Row/Ski or low-equipment station substitute",
     "Compromised running or mixed-work test"
   ],
-  "next_action": "Complete SportRx Hybrid Benchmark v1"
+  "next_action": "Complete SportRx Hybrid Benchmark v1",
+  "evidence_trace": {
+    "available_for_internal_review": true,
+    "rule_ids": ["MEAS-001", "MEAS-002", "HYB-002", "PATH-001"],
+    "source_ids": ["TEST-1000M-ADULT-2000", "TEST-6MRT-ADULT-2023", "TEST-FIELD-RELIABILITY"],
+    "boundary": "The trace explains measurement and routing rules. It does not provide medical clearance, prediction, population norms, or a validated readiness score."
+  }
 }

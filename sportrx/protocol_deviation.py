@@ -20,6 +20,16 @@ def _substitution_key(result: dict[str, Any]) -> str:
     return str(result.get("substitution") or "").strip().lower()
 
 
+def _protocol_context(result: dict[str, Any]) -> dict[str, Any]:
+    """Return non-empty protocol context without changing legacy records."""
+
+    return {
+        str(key): value
+        for key, value in dict(result.get("protocol_context", {}) or {}).items()
+        if value is not None and value != ""
+    }
+
+
 def _completed_results(sessions: list[dict[str, Any]]) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
     for session in sessions:
@@ -66,6 +76,7 @@ def _component_record_review(result: dict[str, Any]) -> dict[str, Any]:
         "rpe_0_10": result.get("rpe_0_10"),
         "equipment": list(result.get("equipment", []) or []),
         "substitution": result.get("substitution"),
+        "protocol_context": _protocol_context(result),
         "notes": result.get("notes", ""),
     }
 
@@ -87,6 +98,15 @@ def _retest_comparability(component_id: str, records: list[dict[str, Any]]) -> d
     if _substitution_key(baseline) != _substitution_key(latest):
         changes.append("substitution_changed")
 
+    baseline_context = _protocol_context(baseline)
+    latest_context = _protocol_context(latest)
+    for field in sorted(set(baseline_context) | set(latest_context)):
+        baseline_value = baseline_context.get(field)
+        latest_value = latest_context.get(field)
+        if baseline_value != latest_value:
+            suffix = "missing" if baseline_value in {None, ""} or latest_value in {None, ""} else "changed"
+            changes.append(f"protocol_context:{field}_{suffix}")
+
     return {
         "component_id": component_id,
         "test": latest.get("test", component_id),
@@ -99,6 +119,8 @@ def _retest_comparability(component_id: str, records: list[dict[str, Any]]) -> d
         "latest_protocol": f"{latest.get('benchmark_path')} / {latest.get('protocol_version')}",
         "baseline_equipment": list(baseline.get("equipment", []) or []),
         "latest_equipment": list(latest.get("equipment", []) or []),
+        "baseline_protocol_context": baseline_context,
+        "latest_protocol_context": latest_context,
         "baseline_substitution": baseline.get("substitution"),
         "latest_substitution": latest.get("substitution"),
     }

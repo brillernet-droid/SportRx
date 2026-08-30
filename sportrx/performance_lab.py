@@ -12,7 +12,7 @@ from io import StringIO
 from typing import Any
 
 from .metric_sources import build_metric_source_register
-from .safety_gate import evaluate_safety_gate
+from .safety_gate import automated_handoff_allowed, benchmark_allowed, evaluate_safety_gate
 
 
 PERFORMANCE_DIMENSIONS = {
@@ -362,7 +362,7 @@ def build_lab_measurement_review(
     measured_area_count = int(measured_performance.get("count", 0) or 0)
     comparison_ready = measured_area_count >= 2
     safety_status = safety_gate.get("status", "UNKNOWN")
-    if safety_status == "RED":
+    if not automated_handoff_allowed(safety_gate):
         next_action = "Resolve Safety Gate before automated training handoff."
         gate_status = "blocked"
     elif not comparison_ready:
@@ -406,7 +406,7 @@ def build_lab_measurement_review(
             "label": "Safety Boundary",
             "value": safety_status,
             "detail": "Safety can block handoff, but never raises or lowers measured performance.",
-            "status": "blocked" if safety_status == "RED" else "ready",
+            "status": "blocked" if not automated_handoff_allowed(safety_gate) else "ready",
         },
     ]
 
@@ -460,7 +460,7 @@ def build_lab_test_quality(
     ]
     comparison_ready = bool(measurement_review.get("comparison_ready"))
 
-    if safety_gate.get("status") == "RED":
+    if not benchmark_allowed(safety_gate):
         status = "blocked_by_safety_gate"
         next_action = "Resolve Safety Gate before interpreting lab test quality."
     elif not entered_tests:
@@ -521,7 +521,7 @@ def build_lab_test_quality(
                 "label": "Safety Boundary",
                 "value": safety_gate.get("status", "UNKNOWN"),
                 "detail": "Safety can block interpretation, but never raises or lowers measured performance.",
-                "status": "blocked" if safety_gate.get("status") == "RED" else "ready",
+                "status": "blocked" if not benchmark_allowed(safety_gate) else "ready",
             },
         ],
         "claim_boundary": (

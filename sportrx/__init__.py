@@ -11,6 +11,7 @@ from .alpha_dataset_template import (
     build_alpha_dataset_template,
 )
 from .artifact_catalog import artifact_catalog_markdown, build_artifact_catalog
+from .automation_guard import build_automation_guard
 from .events import match_events
 from .benchmark import empty_benchmark_result, get_hybrid_benchmark
 from .benchmark_log import (
@@ -42,6 +43,17 @@ from .guided_review import build_guided_review_console, guided_review_markdown
 from .input_ledger import build_input_ledger, input_ledger_markdown
 from .intake_precision import build_intake_precision_audit, intake_precision_markdown
 from .lab_readiness import build_lab_readiness_console, lab_readiness_markdown
+from .knowledge_rag import (
+    build_knowledge_index,
+    compile_knowledge_embeddings,
+    ingest_candidates,
+    knowledge_corpus_summary,
+    review_knowledge_card,
+    search_knowledge,
+    synthesize_knowledge,
+    validate_knowledge_records,
+)
+from .knowledge_discovery import discover_knowledge_candidates
 from .launch_command_center import build_launch_command_center
 from .launch_readiness import build_launch_readiness, launch_readiness_markdown
 from .language_editions import (
@@ -101,6 +113,8 @@ from .review_pack_integrity import build_review_pack_integrity, review_pack_inte
 from .runtime_doctor import build_runtime_doctor, runtime_doctor_markdown
 from .schema_registry import build_measurement_schema_registry, measurement_schema_registry_markdown
 from .safety_gate import evaluate_safety_gate
+from .screening_provider_registry import load_screening_providers, validate_screening_provider_registry
+from .venue_entry import build_venue_entry_assessment
 from .self_use_protocol import build_self_use_protocol, self_use_protocol_markdown
 from .session_snapshot import (
     build_session_snapshot,
@@ -128,6 +142,7 @@ __all__ = [
     "build_sport_match_card",
     "build_alpha_dataset_template",
     "build_artifact_catalog",
+    "build_automation_guard",
     "build_benchmark_worksheet",
     "build_benchmark_import_compatibility",
     "build_benchmark_log_entry_contract",
@@ -139,6 +154,15 @@ __all__ = [
     "build_input_ledger",
     "build_intake_precision_audit",
     "build_lab_readiness_console",
+    "build_knowledge_index",
+    "compile_knowledge_embeddings",
+    "ingest_candidates",
+    "knowledge_corpus_summary",
+    "review_knowledge_card",
+    "search_knowledge",
+    "synthesize_knowledge",
+    "validate_knowledge_records",
+    "discover_knowledge_candidates",
     "build_launch_readiness",
     "build_launch_command_center",
     "build_language_edition_contract",
@@ -202,6 +226,9 @@ __all__ = [
     "demo_scenario_matrix_markdown",
     "empty_benchmark_result",
     "evaluate_safety_gate",
+    "build_venue_entry_assessment",
+    "load_screening_providers",
+    "validate_screening_provider_registry",
     "evaluate_benchmark_session_quality",
     "artifact_catalog_markdown",
     "benchmark_worksheet_markdown",

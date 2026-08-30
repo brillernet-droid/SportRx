@@ -20,6 +20,8 @@ STANDARD_BENCHMARK = {
             "test": "1 km run",
             "fields": ["time_seconds", "rpe_0_10"],
             "required_equipment": ["measured route or treadmill", "timer"],
+            "protocol_evidence_id": "PROTO-COMPONENT-1KM-RUN-V1",
+            "protocol_evidence_status": "partial_evidence",
         },
         {
             "id": "station_circuit",
@@ -27,6 +29,8 @@ STANDARD_BENCHMARK = {
             "test": "3-round station circuit",
             "fields": ["rounds_completed", "time_seconds", "rpe_0_10", "loads_used"],
             "required_equipment": ["kettlebell or dumbbell", "space for carries or lunges"],
+            "protocol_evidence_id": "PROTO-COMPONENT-STATION-CIRCUIT-V1",
+            "protocol_evidence_status": "experimental",
         },
         {
             "id": "row_or_ski_1km",
@@ -35,6 +39,8 @@ STANDARD_BENCHMARK = {
             "fields": ["modality", "time_seconds", "rpe_0_10"],
             "required_equipment": ["RowErg or SkiErg"],
             "optional": True,
+            "protocol_evidence_id": "PROTO-COMPONENT-ERG-1KM-V1",
+            "protocol_evidence_status": "partial_evidence",
         },
         {
             "id": "compromised_run",
@@ -43,6 +49,8 @@ STANDARD_BENCHMARK = {
             "fields": ["time_seconds", "rpe_0_10"],
             "required_equipment": ["measured route or treadmill", "timer"],
             "optional": True,
+            "protocol_evidence_id": "PROTO-COMPONENT-COMPROMISED-RUN-V1",
+            "protocol_evidence_status": "experimental",
         },
     ],
     "safety_notes": [
@@ -66,6 +74,8 @@ LOW_EQUIPMENT_BENCHMARK = {
             "test": "1 km run or 6-minute run/walk",
             "fields": ["distance_meters", "time_seconds", "rpe_0_10"],
             "required_equipment": ["safe route", "timer"],
+            "protocol_evidence_id": "PROTO-COMPONENT-6MIN-RUN-WALK-V1",
+            "protocol_evidence_status": "partial_evidence",
         },
         {
             "id": "bodyweight_circuit",
@@ -74,6 +84,8 @@ LOW_EQUIPMENT_BENCHMARK = {
             "fields": ["rounds_completed", "time_seconds", "rpe_0_10"],
             "required_equipment": ["floor space"],
             "substitutions": ["step-ups instead of sled push", "loaded backpack carry if safe"],
+            "protocol_evidence_id": "PROTO-COMPONENT-STATION-CIRCUIT-V1",
+            "protocol_evidence_status": "experimental",
         },
         {
             "id": "transition_practice",
@@ -82,6 +94,8 @@ LOW_EQUIPMENT_BENCHMARK = {
             "fields": ["rounds_completed", "rpe_0_10", "notes"],
             "required_equipment": ["safe route", "floor space"],
             "optional": True,
+            "protocol_evidence_id": "PROTO-COMPONENT-COMPROMISED-RUN-V1",
+            "protocol_evidence_status": "experimental",
         },
     ],
     "safety_notes": STANDARD_BENCHMARK["safety_notes"],

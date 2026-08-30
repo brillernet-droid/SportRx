@@ -19,15 +19,18 @@ PACKAGE_CLAIM_BOUNDARY = (
 
 
 PUBLIC_TOP_LEVEL_FILES = {
+    ".dockerignore",
     ".gitignore",
     "CHANGELOG.md",
     "DEPLOY_TENCENT.md",
     "Dockerfile",
     "LICENSE",
     "README.md",
+    "README.en.md",
     "ROADMAP.md",
     "pyproject.toml",
     "requirements.txt",
+    "render.yaml",
 }
 
 
@@ -38,7 +41,7 @@ PUBLIC_PREFIXES = (
     "tests/",
     "examples/",
     "evidence/",
-    "docs/research/",
+    "docs/",
 )
 
 
@@ -48,6 +51,7 @@ EXCLUDED_PARTS = {
     ".mypy_cache",
     ".pytest_cache",
     ".ruff_cache",
+    ".cache",
     "__pycache__",
     "dist",
     "venv",
@@ -57,6 +61,7 @@ EXCLUDED_PARTS = {
 
 EXCLUDED_PREFIXES = (
     "docs/internal/",
+    "evidence/private/",
 )
 
 
@@ -69,10 +74,13 @@ EXCLUDED_SUFFIXES = (
 
 REQUIRED_PUBLIC_FILES = [
     ".gitignore",
+    ".dockerignore",
     "README.md",
+    "README.en.md",
     "CHANGELOG.md",
     "DEPLOY_TENCENT.md",
     "Dockerfile",
+    "render.yaml",
     "ROADMAP.md",
     "LICENSE",
     "pyproject.toml",
@@ -80,8 +88,11 @@ REQUIRED_PUBLIC_FILES = [
     "app/streamlit_app.py",
     "scripts/run_local.sh",
     "scripts/smoke_check.py",
+    "scripts/build_knowledge_seed.py",
+    "scripts/build_knowledge_evaluation_seed.py",
     "sportrx/alpha_dataset_template.py",
     "sportrx/artifact_catalog.py",
+    "sportrx/automation_guard.py",
     "sportrx/benchmark_worksheet.py",
     "sportrx/demo_experience.py",
     "sportrx/demo_runbook.py",
@@ -89,6 +100,9 @@ REQUIRED_PUBLIC_FILES = [
     "sportrx/demo_scenarios.py",
     "sportrx/evidence_coverage.py",
     "sportrx/evidence_library.py",
+    "sportrx/evidence_store.py",
+    "sportrx/knowledge_discovery.py",
+    "sportrx/knowledge_rag.py",
     "sportrx/launch_command_center.py",
     "sportrx/launch_readiness.py",
     "sportrx/measurement_timeline.py",
@@ -116,6 +130,7 @@ REQUIRED_PUBLIC_FILES = [
     "sportrx/lab_readiness.py",
     "sportrx/runtime_doctor.py",
     "sportrx/schema_registry.py",
+    "sportrx/screening_provider_registry.py",
     "sportrx/self_use_protocol.py",
     "sportrx/session_snapshot.py",
     "sportrx/session_quality_review.py",
@@ -123,8 +138,32 @@ REQUIRED_PUBLIC_FILES = [
     "sportrx/test_session_operator.py",
     "sportrx/terminology.py",
     "sportrx/validation_readiness.py",
+    "sportrx/venue_entry.py",
     "evidence/claim_policy.md",
+    "evidence/data_governance.md",
+    "evidence/knowledge/README.md",
+    "evidence/knowledge/cards.json",
+    "evidence/knowledge/candidates.json",
+    "evidence/knowledge/discovery_queries.json",
+    "evidence/knowledge/safety_curation_backlog.md",
+    "evidence/knowledge/evaluation/retrieval_set.json",
+    "evidence/knowledge/evaluation/boundary_set.json",
+    "evidence/knowledge/evaluation/answer_quality_set.json",
     "evidence/rule_evidence_map.md",
+    "evidence/records/README.md",
+    "evidence/records/sources.json",
+    "evidence/records/claims.json",
+    "evidence/records/rules.json",
+    "evidence/records/protocols.json",
+    "evidence/records/screening_providers.json",
+    "evidence/evaluation/retrieval_set.json",
+    "evidence/evaluation/unsafe_queries.json",
+    "docs/zh-CN/quickstart.md",
+    "docs/zh-CN/product-guide.md",
+    "docs/zh-CN/claim-boundaries.md",
+    "docs/zh-CN/terminology.md",
+    "docs/zh-CN/venue-entry.md",
+    "docs/zh-CN/public-preview.md",
     "docs/research/open_source_landscape.md",
     "docs/research/github_comparable_products_2026.md",
     "tests/test_alpha_dataset_template.py",
@@ -134,13 +173,17 @@ REQUIRED_PUBLIC_FILES = [
     "tests/test_demo_runbook.py",
     "tests/test_demo_scenario_matrix.py",
     "tests/test_demo_scenarios.py",
+    "tests/test_data_governance.py",
     "tests/test_evidence_coverage.py",
     "tests/test_evidence_library.py",
+    "tests/test_evidence_store.py",
     "tests/test_export_archive.py",
     "tests/test_first_run_guide.py",
     "tests/test_guided_review.py",
     "tests/test_input_ledger.py",
     "tests/test_intake_precision.py",
+    "tests/test_knowledge_discovery.py",
+    "tests/test_knowledge_rag.py",
     "tests/test_lab_readiness.py",
     "tests/test_launch_command_center.py",
     "tests/test_launch_readiness.py",
@@ -239,7 +282,7 @@ def build_release_package_manifest(root: str | Path) -> dict[str, Any]:
     hidden_leaks = [
         path
         for path in included_files
-        if path != ".gitignore" and any(part.startswith(".") for part in PurePosixPath(path).parts)
+        if path not in {".gitignore", ".dockerignore"} and any(part.startswith(".") for part in PurePosixPath(path).parts)
     ]
 
     checks = [

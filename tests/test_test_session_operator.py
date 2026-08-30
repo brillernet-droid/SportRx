@@ -69,7 +69,7 @@ def test_test_day_command_board_preserves_red_safety_block():
     assert board["status"] == "blocked_by_safety_gate"
     assert cards["preflight"]["status"] == "blocked"
     assert cards["component_sequence"]["status"] == "ready"
-    assert "Resolve Safety Gate" in board["next_action"]
+    assert "screening follow-up" in board["next_action"]
 
 
 def test_test_day_command_board_markdown_exports_phases_and_fields():

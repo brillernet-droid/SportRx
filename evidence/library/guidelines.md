@@ -62,3 +62,16 @@
   - convergent public-health guidance for aerobic and strengthening activity.
 - Limit:
   - cardiovascular-health framing, not HYROX preparation validation.
+
+## PA-CHINA-2021
+
+- Title: 中国人群身体活动指南（2021）
+- Organization: 国家卫生健康委疾病预防控制局指导；中国疾病预防控制中心和国家体育总局体育科学研究所牵头
+- Public interpretation: https://www.nhc.gov.cn/wjw/ftsp/202112/44e8325ad5934eb0b42b2987e3148315.shtml
+- Evidence tier: A
+- SportRX use:
+  - Chinese-language public-health activity-guidance context for adults,
+  - local source provenance for Chinese-facing explanation.
+- Limit:
+  - the full guideline is copyrighted and not saved in this repository;
+  - it does not validate SportRX Benchmark cutoffs, athlete norms, or HYROX outcomes.

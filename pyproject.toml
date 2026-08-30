@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "sportrx"
-version = "0.1.0"
+version = "2.3.0"
 description = "Evidence-informed adaptive aerobic exercise prescription prototype"
 requires-python = ">=3.10"
 readme = "README.md"
@@ -15,6 +15,7 @@ dependencies = []
 [project.optional-dependencies]
 app = ["streamlit>=1.36"]
 dev = ["pytest>=8.0"]
+knowledge = ["openai>=1.0", "sentence-transformers>=3.0"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

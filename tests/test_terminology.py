@@ -15,9 +15,9 @@ def test_terminology_guide_keeps_chinese_first_terms_stable():
     assert "Benchmark" in terms
     assert "Not tested" in terms
     assert "Safety Gate" in terms
-    assert "SportRx" in guide["allowed_shared_terms"]
+    assert "SportRX" in guide["allowed_shared_terms"]
     assert "current measured picture" in " ".join(guide["preferred_language_rules"])
-    assert "does not validate SportRx" in guide["claim_boundary"]
+    assert "does not validate SportRX" in guide["claim_boundary"]
 
 
 def test_terminology_guide_blocks_unvalidated_product_language():
@@ -35,11 +35,11 @@ def test_terminology_markdown_exports_rules_terms_and_boundaries():
     guide = build_terminology_guide()
     markdown = terminology_markdown(guide)
 
-    assert "# SportRx Terminology Guide" in markdown
+    assert "# SportRX Terminology Guide" in markdown
     assert "HYROX" in markdown
     assert "RPE" in markdown
     assert "Not tested" in markdown
     assert "## Blocked Language" in markdown
     assert "Language editions: 3" in markdown
     assert "medical clearance" in markdown
-    assert "does not validate SportRx" in markdown
+    assert "does not validate SportRX" in markdown

@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: sportrx-public-preview
+    runtime: docker
+    plan: free
+    healthCheckPath: /
+    envVars:
+      - key: SPORT_RX_PUBLIC_PREVIEW
+        value: "1"
+      - key: SPORT_RX_ENABLE_INTERNAL_REVIEW
+        value: "0"

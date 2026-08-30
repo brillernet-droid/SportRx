@@ -41,3 +41,5 @@ def test_alpha_dataset_dictionary_lists_tables_and_rules():
     assert "weekly_feedback" in markdown
     assert "pilot_review" in markdown
     assert "not_tested_reason" in markdown
+    assert "consent_status" in markdown
+    assert "protocol_context_json" in markdown
