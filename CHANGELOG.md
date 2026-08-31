@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.1.2 - Training Content Foundation
+
+- Added a local, text-only exercise catalogue derived from the reviewed
+  `hasaneyldrm/exercises-dataset` GitHub source: 1,324 movements with body
+  part, equipment, target muscles and Chinese/English instructions.
+- Excluded all upstream images, GIFs, media IDs and media paths because their
+  rights are separate from the upstream MIT license.
+- Added a synchronisation script, source/third-party notices, validation and
+  search APIs, plus a Chinese mobile `动作库` page.
+- Reframed the product as a prescription engine plus a movement-content layer.
+  The only currently active automatic prescription remains the aerobic 4-week
+  FITT-VP module; a movement record alone never creates a dose or progression.
+
 ## 0.1.1 - Aerobic Prescription Reset
 
 - Restored the default SportRX product flow to the original aerobic v0.1

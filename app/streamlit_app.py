@@ -18,6 +18,7 @@ from sportrx import (
     PROTOCOL_SOURCE_OPTIONS,
     alpha_dataset_csv_templates,
     alpha_dataset_dictionary_markdown,
+    body_part_label,
     build_artifact_catalog,
     build_automation_guard,
     build_alpha_dataset_template,
@@ -79,6 +80,7 @@ from sportrx import (
     build_validation_readiness_matrix,
     build_venue_entry_assessment,
     build_walkthrough,
+    catalogue_summary,
     build_test_day_command_board,
     benchmark_profile_patch,
     benchmark_log_entry_contract_markdown,
@@ -102,6 +104,7 @@ from sportrx import (
     load_screening_providers,
     generate_prescription,
     get_benchmark_protocol,
+    get_exercise,
     get_hybrid_benchmark,
     pilot_feedback_markdown,
     pilot_feedback_prompt_markdown,
@@ -113,6 +116,7 @@ from sportrx import (
     quick_match_lab_intake_sheet_markdown,
     quick_match,
     search_knowledge,
+    search_exercises,
     synthesize_knowledge,
     launch_readiness_markdown,
     measurement_timeline_markdown,
@@ -12291,11 +12295,11 @@ def _apply_v01_theme() -> None:
         [data-testid="stExpander"] summary *, [data-testid="stExpander"] summary [data-testid="stMarkdownContainer"] p { color: var(--v01-ink) !important; font-weight: 760 !important; }
         [data-testid="stExpanderDetails"] { background: var(--v01-panel) !important; padding: 0 0.9rem 0.35rem !important; }
         [data-testid="stAlert"] { border-radius: 8px !important; }
-        [data-testid="stRadioGroup"][aria-label="页面导航"] { display: grid !important; grid-template-columns: repeat(4, minmax(0, 1fr)) !important; gap: 0.45rem !important; width: 100% !important; }
-        [data-testid="stRadioGroup"][aria-label="页面导航"] [data-testid="stRadioOption"] { display: flex !important; justify-content: center !important; min-width: 0 !important; margin: 0 !important; padding: 0.66rem 0.35rem !important; background: var(--v01-panel) !important; border: 1px solid var(--v01-line) !important; border-radius: 8px !important; }
+        [data-testid="stRadioGroup"][aria-label="页面导航"] { display: grid !important; grid-template-columns: repeat(5, minmax(0, 1fr)) !important; gap: 0.36rem !important; width: 100% !important; }
+        [data-testid="stRadioGroup"][aria-label="页面导航"] [data-testid="stRadioOption"] { display: flex !important; justify-content: center !important; min-width: 0 !important; margin: 0 !important; padding: 0.66rem 0.18rem !important; background: var(--v01-panel) !important; border: 1px solid var(--v01-line) !important; border-radius: 8px !important; }
         [data-testid="stRadioGroup"][aria-label="页面导航"] [data-testid="stRadioOption"][data-selected="true"] { background: #eef7f1 !important; border-color: var(--v01-green) !important; }
         [data-testid="stRadioGroup"][aria-label="页面导航"] [data-testid="stRadioOption"] > div > div > div:first-child { display: none !important; }
-        [data-testid="stRadioGroup"][aria-label="页面导航"] [data-testid="stMarkdownContainer"] p { color: var(--v01-ink) !important; font-size: 0.8rem !important; font-weight: 760 !important; white-space: nowrap !important; }
+        [data-testid="stRadioGroup"][aria-label="页面导航"] [data-testid="stMarkdownContainer"] p { color: var(--v01-ink) !important; font-size: 0.74rem !important; font-weight: 760 !important; white-space: nowrap !important; }
         .v01-brand { color: var(--v01-green); font-size: 0.76rem; font-weight: 850; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0.75rem; }
         .v01-page-head { background: var(--v01-ink); color: #ffffff; padding: 1.3rem 1.2rem 1.25rem; border-radius: 8px; margin: 1rem 0 1.15rem; border: 1px solid #14261f; }
         .v01-page-head .v01-eyebrow { color: var(--v01-lime); font-size: 0.68rem; font-weight: 830; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.55rem; }
@@ -12342,7 +12346,7 @@ def _v01_page_header(title: str, subtitle: str) -> None:
 
 
 def _v01_nav() -> None:
-    pages = [("设置", "设置"), ("计划", "计划"), ("今天", "今天"), ("进度", "进度")]
+    pages = [("设置", "设置"), ("计划", "计划"), ("今天", "今天"), ("进度", "进度"), ("动作库", "动作库")]
     st.markdown('<div class="v01-nav-label">你的训练</div>', unsafe_allow_html=True)
     page_ids = [page_id for page_id, _label in pages]
     selected = st.radio(
@@ -12567,6 +12571,99 @@ def _v01_plan_page() -> None:
     st.button("查看今天练什么", type="primary", width="stretch", on_click=_v01_set_page, args=("今天",))
 
 
+def _v01_exercise_catalogue_page() -> None:
+    """Render the movement-content layer without implying an automatic prescription."""
+
+    _v01_page_header(
+        "训练动作库",
+        "按部位、器械或关键词查找动作。动作库服务所有训练模块，自动处方仍由各模块的规则决定。",
+    )
+    try:
+        summary = catalogue_summary()
+    except (FileNotFoundError, ValueError) as exc:
+        st.error(f"动作库当前不可用：{exc}")
+        return
+
+    st.markdown(
+        (
+            '<div class="v01-stat-grid">'
+            f'<section class="v01-stat"><div class="v01-stat-label">已收录动作</div><div class="v01-stat-value">{summary["count"]}</div><div class="v01-stat-copy">覆盖心肺、力量、核心与功能性动作。</div></section>'
+            '<section class="v01-stat"><div class="v01-stat-label">当前自动处方</div><div class="v01-stat-value">有氧</div><div class="v01-stat-copy">4 周 FITT-VP 计划可根据 RPE 和完成情况调整。</div></section>'
+            '</div>'
+        ),
+        unsafe_allow_html=True,
+    )
+    st.markdown(
+        '<div class="v01-section-note">力量、混合体能和专项训练的动作已经可以浏览和选用；它们的自动训练量、强度与进阶规则会作为独立模块逐项开放。</div>',
+        unsafe_allow_html=True,
+    )
+
+    query = st.text_input("搜索动作", placeholder="例如：squat、push-up、row、跑步")
+    filters = st.columns(2)
+    with filters[0]:
+        body_part_options = ["全部部位", *summary["body_parts"]]
+        selected_body_part = st.selectbox(
+            "训练部位",
+            body_part_options,
+            format_func=lambda item: item if item == "全部部位" else body_part_label(item),
+        )
+    with filters[1]:
+        equipment_options = ["全部器械", *summary["equipment"]]
+        selected_equipment = st.selectbox("所需器械", equipment_options)
+
+    matches = search_exercises(
+        query,
+        body_part=None if selected_body_part == "全部部位" else selected_body_part,
+        equipment=None if selected_equipment == "全部器械" else selected_equipment,
+        limit=30,
+    )
+    if not matches:
+        st.info("没有匹配动作。可以减少关键词，或取消部位和器械筛选。")
+        return
+
+    selected_id = st.selectbox(
+        f"匹配到 {len(matches)} 个动作，选择一个查看",
+        [item["id"] for item in matches],
+        format_func=lambda item_id: next(
+            f"{item['name']} · {body_part_label(item['body_part'])}" for item in matches if item["id"] == item_id
+        ),
+    )
+    exercise = get_exercise(selected_id)
+    if exercise is None:
+        st.error("未找到所选动作，请重新搜索。")
+        return
+
+    st.markdown(
+        (
+            '<section class="v01-today-session">'
+            '<div class="v01-session-kicker">动作说明</div>'
+            f'<div class="v01-session-title">{escape(exercise["name"])}</div>'
+            f'<div class="v01-session-detail">目标：{escape(exercise["target"])} · 部位：{escape(body_part_label(exercise["body_part"]))} · 器械：{escape(exercise["equipment"])}</div>'
+            '</section>'
+        ),
+        unsafe_allow_html=True,
+    )
+    st.markdown(
+        (
+            '<div class="v01-rule-list">'
+            f'<div class="v01-rule"><div class="v01-rule-label">主要肌群</div><div class="v01-rule-copy">{escape(exercise["muscle_group"])}</div></div>'
+            f'<div class="v01-rule"><div class="v01-rule-label">辅助肌群</div><div class="v01-rule-copy">{escape("、".join(exercise["secondary_muscles"]) or "未提供")}</div></div>'
+            '</div>'
+        ),
+        unsafe_allow_html=True,
+    )
+    st.subheader("操作步骤")
+    steps = exercise["instruction_steps"].get("zh") or [exercise["instructions"]["zh"]]
+    for index, step in enumerate(steps, start=1):
+        st.markdown(f"{index}. {escape(step)}")
+
+    source = summary["source"]
+    st.caption(
+        "内容来源：hasaneyldrm/exercises-dataset（文字与数据结构）。SportRX 未使用该来源的图片或 GIF；动作说明不替代个人风险判断或训练剂量。"
+    )
+    st.link_button("查看动作库来源与许可", source["repository_url"], width="stretch")
+
+
 def _v01_today_page() -> None:
     plan = st.session_state.v01_plan
     if not isinstance(plan, dict) or not plan.get("weeks") or not plan.get("safety", {}).get("auto_prescription"):
@@ -12696,8 +12793,8 @@ def aerobic_v01_app() -> None:
     _apply_theme()
     _apply_v01_theme()
     st.markdown('<div class="v01-brand">SportRX</div>', unsafe_allow_html=True)
-    st.title("4 周有氧运动处方")
-    st.caption("循证、可解释、可调整。只面向表观健康成年人，只做有氧。")
+    st.title("你的训练处方")
+    st.caption("从有氧 4 周计划开始；动作库已覆盖多种训练内容。自动处方只在具备独立规则与边界的模块中开启。")
     _v01_nav()
     page = st.session_state.v01_page
     if page == "设置":
@@ -12706,6 +12803,8 @@ def aerobic_v01_app() -> None:
         _v01_plan_page()
     elif page == "今天":
         _v01_today_page()
+    elif page == "动作库":
+        _v01_exercise_catalogue_page()
     else:
         _v01_progress_page()
 

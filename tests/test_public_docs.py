@@ -30,9 +30,11 @@ def test_chinese_readme_leads_with_product_value_and_trial_path():
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
 
     assert readme.startswith("# SportRX")
-    assert "用有限时间条件，生成一份可解释、可调整的 4 周有氧运动处方。" in readme
+    assert "用可解释规则生成训练处方，用动作内容库支撑训练执行。" in readme
     assert "开得稳，讲得清，能调整。" in readme
     assert "基础信息 → 基础筛查 → 当前运动状态 → 可用时间 → 4 周 FITT-VP 计划" in readme
+    assert "自动处方模块是**有氧运动处方原型**" in readme
+    assert "hasaneyldrm/exercises-dataset" in readme
     assert "python3 -m pip install -e \".[dev,app]\"" in readme
     assert "docs/zh-CN/quickstart.md" in readme
 

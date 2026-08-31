@@ -13,6 +13,15 @@ from .alpha_dataset_template import (
 from .artifact_catalog import artifact_catalog_markdown, build_artifact_catalog
 from .automation_guard import build_automation_guard
 from .events import match_events
+from .exercise_catalogue import (
+    BODY_PART_LABELS,
+    body_part_label,
+    catalogue_summary,
+    get_exercise,
+    load_exercise_catalogue,
+    search_exercises,
+    validate_exercise_catalogue,
+)
 from .benchmark import empty_benchmark_result, get_hybrid_benchmark
 from .benchmark_log import (
     benchmark_profile_patch,
@@ -144,6 +153,9 @@ __all__ = [
     "build_artifact_catalog",
     "build_automation_guard",
     "build_benchmark_worksheet",
+    "BODY_PART_LABELS",
+    "body_part_label",
+    "catalogue_summary",
     "build_benchmark_import_compatibility",
     "build_benchmark_log_entry_contract",
     "build_feedback_dashboard",
@@ -244,6 +256,7 @@ __all__ = [
     "evidence_coverage_markdown",
     "evidence_library_markdown",
     "generate_prescription",
+    "get_exercise",
     "get_benchmark_protocol",
     "get_hybrid_benchmark",
     "get_language_edition",
@@ -251,6 +264,7 @@ __all__ = [
     "language_edition_markdown",
     "language_edition_options",
     "launch_readiness_markdown",
+    "load_exercise_catalogue",
     "measurement_timeline_markdown",
     "measurement_schema_registry_markdown",
     "open_source_integration_markdown",
@@ -279,6 +293,7 @@ __all__ = [
     "runtime_doctor_markdown",
     "restore_session_snapshot",
     "self_use_protocol_markdown",
+    "search_exercises",
     "summarize_benchmark_sessions",
     "summarize_pilot_feedback",
     "session_snapshot_json",
@@ -292,6 +307,7 @@ __all__ = [
     "training_block_markdown",
     "ui_text",
     "validation_readiness_markdown",
+    "validate_exercise_catalogue",
     "write_release_package",
     "PROTOCOL_SOURCE_HELP",
     "PROTOCOL_SOURCE_OPTIONS",
