@@ -109,5 +109,13 @@ def test_streamlit_app_imports():
     assert module._feedback_percent_label(None) == "未填写"
     assert module._quick_match_reason_label("120 total training min/week reported") == "120 分钟/周训练总量（自报）"
     assert module._v01_activity("cycling") == "骑行"
+    assert module._v01_exercise_label({"name": "stationary bike walk"}) == "立式单车轻松骑"
+    cycling_suggestions = module._v01_discovery_exercises("cycling")
+    assert len(cycling_suggestions) == 3
+    assert {item["name"] for item in cycling_suggestions} == {
+        "stationary bike run v. 3",
+        "cycle cross trainer",
+        "stationary bike walk",
+    }
     assert module._v01_intensity("light_to_moderate") == "轻松到中等"
     assert module._v01_fitness_class("inactive") == "目前运动不足"

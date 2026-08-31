@@ -203,6 +203,42 @@ V01_ACTIVITY_LABELS = {
     "elliptical": "椭圆机",
 }
 
+V01_DISCOVERY_EXERCISE_NAMES = {
+    "brisk walking": (
+        "walking on incline treadmill",
+        "walking on stepmill",
+        "back and forth step",
+    ),
+    "easy jogging": (
+        "run",
+        "run (equipment)",
+        "short stride run",
+    ),
+    "cycling": (
+        "stationary bike run v. 3",
+        "cycle cross trainer",
+        "stationary bike walk",
+    ),
+    "elliptical": (
+        "walk elliptical cross trainer",
+        "cycle cross trainer",
+        "stationary bike run v. 3",
+    ),
+}
+
+V01_DISCOVERY_EXERCISE_LABELS = {
+    "walking on incline treadmill": "跑步机坡度快走",
+    "walking on stepmill": "踏步机行走",
+    "back and forth step": "往返踏步",
+    "run": "自由跑",
+    "run (equipment)": "器械跑步",
+    "short stride run": "小步跑",
+    "stationary bike run v. 3": "动感单车骑行",
+    "cycle cross trainer": "交叉训练机骑行",
+    "stationary bike walk": "立式单车轻松骑",
+    "walk elliptical cross trainer": "椭圆机步行",
+}
+
 V01_INTENSITY_LABELS = {
     "light": "轻松",
     "light_to_moderate": "轻松到中等",
@@ -867,6 +903,7 @@ def _v01_state_defaults() -> None:
     st.session_state.setdefault("v01_setup_step", 1)
     st.session_state.setdefault("v01_feedback_by_week", {})
     st.session_state.setdefault("v01_plan", None)
+    st.session_state.setdefault("v01_exercise_selection", None)
 
 
 def _v01_refresh_plan() -> None:
@@ -886,6 +923,41 @@ def _v01_set_setup_step(step: int) -> None:
 
 def _v01_activity(activity: object) -> str:
     return V01_ACTIVITY_LABELS.get(str(activity), str(activity))
+
+
+def _v01_exercise_label(exercise: dict[str, Any]) -> str:
+    """Use concise Chinese labels for curated discovery cards where available."""
+
+    name = str(exercise["name"])
+    return V01_DISCOVERY_EXERCISE_LABELS.get(name, name)
+
+
+def _v01_select_exercise(exercise_id: str) -> None:
+    """Select a catalogue item without changing the current prescription."""
+
+    st.session_state.v01_exercise_selection = exercise_id
+
+
+def _v01_discovery_exercises(activity: object, limit: int = 3) -> list[dict[str, Any]]:
+    """Surface local movement content for exploration without changing a prescription."""
+
+    suggestions: list[dict[str, Any]] = []
+    seen_ids: set[str] = set()
+    for exercise_name in V01_DISCOVERY_EXERCISE_NAMES.get(str(activity), ()):
+        matches = search_exercises(exercise_name, limit=8)
+        exact_match = next(
+            (item for item in matches if item["name"].casefold() == exercise_name.casefold()),
+            None,
+        )
+        if exact_match and exact_match["id"] not in seen_ids:
+            suggestions.append(exact_match)
+            seen_ids.add(exact_match["id"])
+        if len(suggestions) >= limit:
+            return suggestions
+
+    if not suggestions:
+        return search_exercises(body_part="cardio", limit=limit)
+    return suggestions
 
 
 def _v01_intensity(level: object) -> str:
@@ -12253,79 +12325,85 @@ def pilot_feedback_page() -> None:
 
 
 def _apply_v01_theme() -> None:
-    """Override legacy Labs styles for the focused mobile prescription product."""
+    """Apply the compact, Chinese-first mobile product surface."""
 
     st.markdown(
         """
         <style>
-        :root {
-            --v01-ink: #14261f;
-            --v01-muted: #617169;
-            --v01-line: #d5ddd7;
-            --v01-canvas: #f4f6f2;
-            --v01-panel: #ffffff;
-            --v01-green: #0c5a40;
-            --v01-lime: #b9e639;
-            --v01-blue: #2a6b9f;
-            --v01-alert: #b54c2e;
-        }
-        [data-testid="stAppViewContainer"] { background: var(--v01-canvas) !important; color: var(--v01-ink) !important; }
-        [data-testid="stHeader"] { background: rgba(244, 246, 242, 0.92) !important; }
-        .block-container { width: min(100%, 430px) !important; max-width: 430px !important; padding: 1.15rem 1rem 2.4rem !important; }
+        :root { --v01-ink: #15211a; --v01-muted: #5f7064; --v01-line: #d6e1d8; --v01-canvas: #f3f7f4; --v01-panel: #ffffff; --v01-green: #176b45; --v01-green-soft: #e9f4ed; --v01-blue: #286c9f; }
+        html, body, [data-testid="stAppViewContainer"], [data-testid="stMain"] { background: var(--v01-canvas) !important; color: var(--v01-ink) !important; }
+        [data-testid="stHeader"] { background: rgba(243, 247, 244, 0.92) !important; backdrop-filter: blur(10px); }
+        [data-testid="stToolbar"] { right: 0.25rem; }
+        .block-container { width: min(100%, 440px) !important; max-width: 440px !important; padding: 3.85rem 0.8rem 4.25rem !important; }
         [data-testid="stMainBlockContainer"] { padding-left: 0 !important; padding-right: 0 !important; }
-        h1, h2, h3, p, li, label, [data-testid="stCaptionContainer"], [data-testid="stMarkdownContainer"] { color: var(--v01-ink) !important; }
-        h1 { font-size: 1.86rem !important; line-height: 1.08 !important; font-weight: 820 !important; margin: 0.28rem 0 0.35rem !important; }
-        h2 { font-size: 1.22rem !important; margin-top: 1.55rem !important; }
-        h3 { font-size: 1rem !important; margin-top: 1.35rem !important; }
+        h1, h2, h3, p, li, label, [data-testid="stCaptionContainer"], [data-testid="stMarkdownContainer"] { color: var(--v01-ink) !important; letter-spacing: 0 !important; }
+        h1 { font-size: 1.65rem !important; line-height: 1.2 !important; font-weight: 780 !important; margin: 0.25rem 0 0.35rem !important; }
+        h2 { font-size: 1.18rem !important; margin-top: 1.5rem !important; }
+        h3 { font-size: 1rem !important; margin-top: 1.15rem !important; }
         [data-testid="stCaptionContainer"] p { color: var(--v01-muted) !important; font-size: 0.82rem !important; line-height: 1.45 !important; }
-        [data-testid="stNumberInput"] label, [data-testid="stSelectbox"] label, [data-testid="stRadio"] label, [data-testid="stSlider"] label, [data-testid="stCheckbox"] label { color: var(--v01-ink) !important; font-size: 0.88rem !important; font-weight: 720 !important; }
-        [data-testid="stNumberInput"] input, [data-testid="stSelectbox"] input { color: var(--v01-ink) !important; background: var(--v01-panel) !important; border: 1px solid var(--v01-line) !important; border-radius: 8px !important; min-height: 48px !important; font-size: 1rem !important; }
-        [data-testid="stNumberInput"] button { color: var(--v01-green) !important; background: #edf5ef !important; border-color: var(--v01-line) !important; }
-        [data-testid="stRadio"] [role="radiogroup"] { gap: 0.6rem !important; }
-        [data-testid="stRadio"] label { background: var(--v01-panel) !important; border: 1px solid var(--v01-line) !important; border-radius: 8px !important; padding: 0.68rem 0.72rem !important; min-height: 46px !important; align-items: center !important; }
-        [data-testid="stRadio"] label:has(input:checked) { border-color: var(--v01-green) !important; background: #eef7f1 !important; }
-        [data-testid="stCheckbox"] label { font-weight: 600 !important; }
-        [data-testid="stSlider"] [data-baseweb="slider"] { padding: 0.75rem 0.25rem 0.35rem !important; }
-        [data-testid="stButton"] > button, [data-testid="stFormSubmitButton"] > button { min-height: 48px !important; border-radius: 8px !important; font-size: 0.94rem !important; font-weight: 780 !important; letter-spacing: 0 !important; border: 1px solid var(--v01-line) !important; color: var(--v01-ink) !important; background: var(--v01-panel) !important; box-shadow: none !important; }
+        [data-testid="stForm"] { background: var(--v01-panel); border: 1px solid var(--v01-line); border-radius: 8px; padding: 1rem 0.9rem 0.85rem; box-shadow: 0 8px 20px rgba(20, 42, 30, 0.045); }
+        [data-testid="stNumberInput"] label, [data-testid="stSelectbox"] label, [data-testid="stRadio"] label, [data-testid="stSlider"] label, [data-testid="stCheckbox"] label { color: var(--v01-ink) !important; font-size: 0.9rem !important; font-weight: 680 !important; }
+        [data-testid="stNumberInput"] input, [data-testid="stSelectbox"] input { color: var(--v01-ink) !important; background: #ffffff !important; border: 1px solid #bdcfc0 !important; border-radius: 6px !important; min-height: 46px !important; font-size: 1rem !important; }
+        [data-testid="stNumberInput"] button { color: var(--v01-green) !important; background: #f4f8f5 !important; border-color: #bdcfc0 !important; }
+        [data-testid="stNumberInput"] input:focus, [data-testid="stSelectbox"] input:focus { border-color: var(--v01-green) !important; box-shadow: 0 0 0 3px rgba(23, 107, 69, 0.13) !important; }
+        [data-testid="stRadio"] [role="radiogroup"] { gap: 0.45rem !important; }
+        [data-testid="stRadio"] label { background: #ffffff !important; border: 1px solid #bdcfc0 !important; border-radius: 6px !important; padding: 0.6rem 0.65rem !important; min-height: 44px !important; align-items: center !important; }
+        [data-testid="stRadio"] label:has(input:checked) { border-color: var(--v01-green) !important; background: var(--v01-green-soft) !important; }
+        [data-testid="stButton"] > button, [data-testid="stFormSubmitButton"] > button { min-height: 46px !important; border-radius: 7px !important; font-size: 0.94rem !important; font-weight: 720 !important; letter-spacing: 0 !important; border: 1px solid #b7c9bb !important; color: var(--v01-ink) !important; background: #ffffff !important; box-shadow: none !important; }
+        [data-testid="stButton"] > button:hover, [data-testid="stFormSubmitButton"] > button:hover { border-color: var(--v01-green) !important; background: #f7fbf8 !important; }
+        [data-testid="stButton"] > button:focus-visible, [data-testid="stFormSubmitButton"] > button:focus-visible { outline: 3px solid rgba(23, 107, 69, 0.28) !important; outline-offset: 2px !important; }
         [data-testid="stButton"] > button[kind="primary"], [data-testid="stFormSubmitButton"] > button[kind="primary"] { color: #ffffff !important; background: var(--v01-green) !important; border-color: var(--v01-green) !important; }
         [data-testid="stButton"] > button[kind="primary"] p, [data-testid="stFormSubmitButton"] > button[kind="primary"] p { color: #ffffff !important; }
         [data-testid="stExpander"] { border: 1px solid var(--v01-line) !important; border-radius: 8px !important; background: var(--v01-panel) !important; box-shadow: none !important; }
-        [data-testid="stExpander"] details, [data-testid="stExpander"] summary { background: var(--v01-panel) !important; color: var(--v01-ink) !important; }
-        [data-testid="stExpander"] summary { min-height: 48px !important; padding: 0.76rem 0.88rem !important; }
-        [data-testid="stExpander"] summary *, [data-testid="stExpander"] summary [data-testid="stMarkdownContainer"] p { color: var(--v01-ink) !important; font-weight: 760 !important; }
-        [data-testid="stExpanderDetails"] { background: var(--v01-panel) !important; padding: 0 0.9rem 0.35rem !important; }
         [data-testid="stAlert"] { border-radius: 8px !important; }
-        [data-testid="stRadioGroup"][aria-label="页面导航"] { display: grid !important; grid-template-columns: repeat(4, minmax(0, 1fr)) !important; gap: 0.42rem !important; width: 100% !important; }
-        [data-testid="stRadioGroup"][aria-label="页面导航"] [data-testid="stRadioOption"] { display: flex !important; justify-content: center !important; min-width: 0 !important; margin: 0 !important; padding: 0.66rem 0.18rem !important; background: var(--v01-panel) !important; border: 1px solid var(--v01-line) !important; border-radius: 8px !important; }
-        [data-testid="stRadioGroup"][aria-label="页面导航"] [data-testid="stRadioOption"][data-selected="true"] { background: #eef7f1 !important; border-color: var(--v01-green) !important; }
+        [data-testid="stRadioGroup"][aria-label="页面导航"] { display: grid !important; grid-template-columns: repeat(4, minmax(0, 1fr)) !important; gap: 0.35rem !important; width: 100% !important; }
+        [data-testid="stRadioGroup"][aria-label="页面导航"] [data-testid="stRadioOption"] { display: flex !important; justify-content: center !important; min-width: 0 !important; margin: 0 !important; padding: 0.58rem 0.12rem !important; background: #ffffff !important; border: 1px solid var(--v01-line) !important; border-radius: 7px !important; }
+        [data-testid="stRadioGroup"][aria-label="页面导航"] [data-testid="stRadioOption"][data-selected="true"] { background: var(--v01-green-soft) !important; border-color: var(--v01-green) !important; }
         [data-testid="stRadioGroup"][aria-label="页面导航"] [data-testid="stRadioOption"] > div > div > div:first-child { display: none !important; }
-        [data-testid="stRadioGroup"][aria-label="页面导航"] [data-testid="stMarkdownContainer"] p { color: var(--v01-ink) !important; font-size: 0.74rem !important; font-weight: 760 !important; white-space: nowrap !important; }
-        .v01-brand { color: var(--v01-green); font-size: 0.76rem; font-weight: 850; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 0.75rem; }
-        .v01-page-head { background: var(--v01-ink); color: #ffffff; padding: 1.3rem 1.2rem 1.25rem; border-radius: 8px; margin: 1rem 0 1.15rem; border: 1px solid #14261f; }
-        .v01-page-head .v01-eyebrow { color: var(--v01-lime); font-size: 0.68rem; font-weight: 830; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.55rem; }
-        .v01-page-head .v01-title { color: #ffffff; font-size: 1.38rem; font-weight: 800; line-height: 1.2; }
-        .v01-page-head .v01-copy { color: #dce7e0; font-size: 0.84rem; line-height: 1.48; margin-top: 0.55rem; }
-        .v01-nav-label { color: var(--v01-muted); font-size: 0.72rem; font-weight: 700; margin: 0.8rem 0 0.42rem; }
-        .v01-stepper { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.4rem; margin: 0.65rem 0 1.2rem; }
-        .v01-step { border-top: 3px solid #d7e0da; color: var(--v01-muted); font-size: 0.72rem; padding-top: 0.42rem; }
-        .v01-step-active { border-top-color: var(--v01-green); color: var(--v01-green); font-weight: 800; }
-        .v01-section-note { color: var(--v01-muted); font-size: 0.8rem; line-height: 1.45; margin: -0.25rem 0 0.82rem; }
-        .v01-stat-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.65rem; margin: 0.9rem 0 1.1rem; }
-        .v01-stat { background: var(--v01-panel); border-top: 3px solid var(--v01-green); padding: 0.9rem; }
+        [data-testid="stRadioGroup"][aria-label="页面导航"] [data-testid="stMarkdownContainer"] p { color: var(--v01-ink) !important; font-size: 0.78rem !important; font-weight: 720 !important; white-space: nowrap !important; }
+        .v01-app-brand { color: var(--v01-green); font-size: 0.9rem; font-weight: 820; margin: 0.1rem 0 0.5rem; }
+        .v01-app-subtitle { color: var(--v01-muted); font-size: 0.8rem; line-height: 1.4; margin-bottom: 1rem; }
+        .v01-nav-label { color: var(--v01-muted); font-size: 0.75rem; font-weight: 650; margin: 0.2rem 0 0.45rem; }
+        .v01-page-head { background: transparent; margin: 1.2rem 0 0.8rem; }
+        .v01-page-head .v01-eyebrow { color: var(--v01-green); font-size: 0.72rem; font-weight: 720; margin-bottom: 0.36rem; }
+        .v01-page-head .v01-title { color: var(--v01-ink); font-size: 1.45rem; font-weight: 780; line-height: 1.2; }
+        .v01-page-head .v01-copy { color: var(--v01-muted); font-size: 0.88rem; line-height: 1.46; margin-top: 0.42rem; }
+        .v01-stepper { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.4rem; margin: 0.75rem 0 1rem; }
+        .v01-step { border-top: 3px solid #cbd9ce; color: var(--v01-muted); font-size: 0.76rem; padding-top: 0.42rem; }
+        .v01-step-active { border-top-color: var(--v01-green); color: var(--v01-green); font-weight: 720; }
+        .v01-section-note { color: var(--v01-muted); font-size: 0.82rem; line-height: 1.45; margin: 0 0 0.75rem; }
+        .v01-stat-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.55rem; margin: 0.75rem 0 1rem; }
+        .v01-stat { background: var(--v01-panel); border: 1px solid var(--v01-line); border-radius: 8px; padding: 0.8rem; }
         .v01-stat-label { color: var(--v01-muted); font-size: 0.72rem; }
-        .v01-stat-value { color: var(--v01-ink); font-size: 1.05rem; font-weight: 820; line-height: 1.22; margin-top: 0.3rem; }
-        .v01-stat-copy { color: var(--v01-muted); font-size: 0.76rem; line-height: 1.35; margin-top: 0.38rem; }
-        .v01-week { background: var(--v01-panel); border: 1px solid var(--v01-line); border-left: 4px solid var(--v01-green); padding: 0.9rem 0.92rem 0.25rem; margin: 0.78rem 0 0; }
-        .v01-week-title { color: var(--v01-ink); font-size: 1rem; font-weight: 830; }
-        .v01-week-meta { color: var(--v01-muted); font-size: 0.76rem; line-height: 1.4; margin-top: 0.28rem; }
-        .v01-today-session { border: 1px solid #aac8b7; border-left: 6px solid var(--v01-green); background: #ffffff; padding: 1.05rem 1rem; margin: 0.95rem 0; }
-        .v01-session-kicker { color: var(--v01-green); font-size: 0.72rem; font-weight: 820; letter-spacing: 0.04em; }
-        .v01-session-title { color: var(--v01-ink); font-size: 1.36rem; font-weight: 830; line-height: 1.18; margin-top: 0.32rem; }
-        .v01-session-detail { color: var(--v01-muted); font-size: 0.86rem; line-height: 1.5; margin-top: 0.45rem; }
-        .v01-rule-list { border-top: 1px solid var(--v01-line); margin: 1rem 0; }
-        .v01-rule { display: grid; grid-template-columns: 70px minmax(0, 1fr); gap: 0.55rem; padding: 0.75rem 0; border-bottom: 1px solid var(--v01-line); }
-        .v01-rule-label { color: var(--v01-green); font-size: 0.76rem; font-weight: 800; }
+        .v01-stat-value { color: var(--v01-ink); font-size: 1rem; font-weight: 760; line-height: 1.25; margin-top: 0.25rem; }
+        .v01-stat-copy { color: var(--v01-muted); font-size: 0.74rem; line-height: 1.36; margin-top: 0.3rem; }
+        .v01-discovery-context, .v01-discovery-card { background: var(--v01-panel); border: 1px solid var(--v01-line); border-radius: 8px; }
+        .v01-discovery-context { margin: 0.8rem 0 0.55rem; padding: 0.85rem; }
+        .v01-discovery-kicker { color: var(--v01-green); font-size: 0.72rem; font-weight: 720; }
+        .v01-discovery-title { color: var(--v01-ink); font-size: 1.02rem; font-weight: 760; margin-top: 0.28rem; }
+        .v01-discovery-copy, .v01-discovery-card-meta { color: var(--v01-muted); font-size: 0.76rem; line-height: 1.42; margin-top: 0.28rem; }
+        .v01-discovery-grid { display: grid; gap: 0.45rem; margin: 0 0 0.8rem; }
+        .v01-discovery-card { padding: 0.72rem 0.78rem; }
+        .v01-discovery-card-name { color: var(--v01-ink); font-size: 0.88rem; font-weight: 700; line-height: 1.28; }
+        .v01-week { background: var(--v01-panel); border: 1px solid var(--v01-line); border-left: 3px solid var(--v01-green); border-radius: 0 8px 8px 0; padding: 0.85rem 0.85rem 0.2rem; margin: 0.7rem 0 0; }
+        .v01-week-title { color: var(--v01-ink); font-size: 1rem; font-weight: 760; }
+        .v01-week-meta { color: var(--v01-muted); font-size: 0.78rem; line-height: 1.4; margin-top: 0.28rem; }
+        .v01-today-session { border: 1px solid #a9cdb5; border-left: 5px solid var(--v01-green); border-radius: 0 8px 8px 0; background: #ffffff; padding: 1rem; margin: 0.85rem 0; }
+        .v01-session-kicker { color: var(--v01-green); font-size: 0.72rem; font-weight: 720; }
+        .v01-session-title { color: var(--v01-ink); font-size: 1.28rem; font-weight: 780; line-height: 1.22; margin-top: 0.3rem; }
+        .v01-session-detail { color: var(--v01-muted); font-size: 0.86rem; line-height: 1.48; margin-top: 0.42rem; }
+        .v01-rule-list { border-top: 1px solid var(--v01-line); margin: 0.85rem 0; }
+        .v01-rule { display: grid; grid-template-columns: 68px minmax(0, 1fr); gap: 0.55rem; padding: 0.72rem 0; border-bottom: 1px solid var(--v01-line); }
+        .v01-rule-label { color: var(--v01-green); font-size: 0.78rem; font-weight: 720; }
         .v01-rule-copy { color: var(--v01-muted); font-size: 0.82rem; line-height: 1.42; }
+        .v01-launch-steps { border: 1px solid var(--v01-line); border-radius: 8px; background: var(--v01-panel); overflow: hidden; margin: 0.85rem 0 0.9rem; }
+        .v01-launch-step { display: grid; grid-template-columns: 28px 1fr; gap: 0.65rem; align-items: start; padding: 0.8rem; border-bottom: 1px solid var(--v01-line); }
+        .v01-launch-step:last-child { border-bottom: 0; }
+        .v01-launch-index { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; color: #ffffff; background: var(--v01-green); font-size: 0.72rem; font-weight: 760; }
+        .v01-launch-label { color: var(--v01-ink); display: block; font-size: 0.88rem; font-weight: 720; }
+        .v01-launch-copy { color: var(--v01-muted); display: block; font-size: 0.78rem; line-height: 1.4; margin-top: 0.16rem; }
+        @media (max-width: 460px) { .block-container { width: 100% !important; max-width: 100% !important; padding: 3.85rem 0.75rem 4rem !important; } }
+        @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
         </style>
         """,
         unsafe_allow_html=True,
@@ -12336,7 +12414,7 @@ def _v01_page_header(title: str, subtitle: str) -> None:
     st.markdown(
         (
             '<section class="v01-page-head">'
-            '<div class="v01-eyebrow">SportRX / 有氧 v0.1</div>'
+            '<div class="v01-eyebrow">SPORT RX</div>'
             f'<div class="v01-title">{escape(title)}</div>'
             f'<div class="v01-copy">{escape(subtitle)}</div>'
             '</section>'
@@ -12349,7 +12427,7 @@ def _v01_nav() -> None:
     pages = [("首页", "首页"), ("处方", "处方"), ("记录", "记录"), ("动作", "动作")]
     if st.session_state.v01_page not in {page_id for page_id, _label in pages}:
         st.session_state.v01_page = "首页"
-    st.markdown('<div class="v01-nav-label">SportRX</div>', unsafe_allow_html=True)
+    st.markdown('<div class="v01-nav-label">选择要做的事</div>', unsafe_allow_html=True)
     page_ids = [page_id for page_id, _label in pages]
     selected = st.radio(
         "页面导航",
@@ -12591,7 +12669,50 @@ def _v01_exercise_catalogue_page() -> None:
         unsafe_allow_html=True,
     )
 
-    query = st.text_input("搜索动作", placeholder="例如：squat、push-up、row、跑步")
+    plan = st.session_state.v01_plan
+    if isinstance(plan, dict) and plan.get("weeks") and plan.get("safety", {}).get("auto_prescription"):
+        active_week = next((week for week in plan["weeks"] if week.get("sessions")), None)
+        activity = str(active_week["sessions"][0].get("activity", "brisk walking")) if active_week else "brisk walking"
+        discovery_context = "这些动作说明与你当前处方的运动方式相关；它们不改变今天的时长或强度。"
+    else:
+        activity = str(st.session_state.v01_draft.get("preferred_activity", "brisk walking"))
+        discovery_context = "根据你目前选择的运动方式，先从这些动作说明开始探索；完成处方后会以处方为准。"
+    suggestions = _v01_discovery_exercises(activity)
+    if suggestions:
+        cards = []
+        for item in suggestions:
+            cards.append(
+                (
+                    '<article class="v01-discovery-card">'
+                    f'<div class="v01-discovery-card-name">{escape(_v01_exercise_label(item))}</div>'
+                    f'<div class="v01-discovery-card-meta">{escape(body_part_label(item["body_part"]))} · '
+                    f'{escape(item["equipment"])} · {escape(item["target"])}</div>'
+                    '</article>'
+                )
+            )
+        st.markdown(
+            (
+                '<section class="v01-discovery-context">'
+                '<div class="v01-discovery-kicker">为你优先展示</div>'
+                f'<div class="v01-discovery-title">{escape(_v01_activity(activity))}相关动作</div>'
+                f'<div class="v01-discovery-copy">{escape(discovery_context)}</div>'
+                '</section>'
+                '<section class="v01-discovery-grid">'
+                + "".join(cards)
+                + '</section>'
+            ),
+            unsafe_allow_html=True,
+        )
+        for item in suggestions:
+            st.button(
+                f"查看 {_v01_exercise_label(item)} 的动作说明",
+                key=f"v01_suggestion_{item['id']}",
+                width="stretch",
+                on_click=_v01_select_exercise,
+                args=(item["id"],),
+            )
+
+    query = st.text_input("搜索更多动作", placeholder="例如：squat、push-up、row、跑步")
     filters = st.columns(2)
     with filters[0]:
         body_part_options = ["全部部位", *summary["body_parts"]]
@@ -12604,28 +12725,39 @@ def _v01_exercise_catalogue_page() -> None:
         equipment_options = ["全部器械", *summary["equipment"]]
         selected_equipment = st.selectbox("所需器械", equipment_options)
 
-    matches = search_exercises(
-        query,
-        body_part=None if selected_body_part == "全部部位" else selected_body_part,
-        equipment=None if selected_equipment == "全部器械" else selected_equipment,
-        limit=30,
+    using_suggestions = bool(suggestions) and not query.strip() and selected_body_part == "全部部位" and selected_equipment == "全部器械"
+    matches = (
+        suggestions
+        if using_suggestions
+        else search_exercises(
+            query,
+            body_part=None if selected_body_part == "全部部位" else selected_body_part,
+            equipment=None if selected_equipment == "全部器械" else selected_equipment,
+            limit=30,
+        )
     )
     if not matches:
         st.info("没有匹配动作。可以减少关键词，或取消部位和器械筛选。")
         return
 
+    selection_label = "从优先展示中选择一个查看" if using_suggestions else f"匹配到 {len(matches)} 个动作，选择一个查看"
+    match_ids = [item["id"] for item in matches]
+    if st.session_state.get("v01_exercise_selection") not in match_ids:
+        st.session_state.v01_exercise_selection = match_ids[0]
     selected_id = st.selectbox(
-        f"匹配到 {len(matches)} 个动作，选择一个查看",
-        [item["id"] for item in matches],
+        selection_label,
+        match_ids,
         format_func=lambda item_id: next(
-            f"{item['name']} · {body_part_label(item['body_part'])}" for item in matches if item["id"] == item_id
+            f"{_v01_exercise_label(item)} · {body_part_label(item['body_part'])}" for item in matches if item["id"] == item_id
         ),
+        key="v01_exercise_selection",
     )
     exercise = get_exercise(selected_id)
     if exercise is None:
         st.error("未找到所选动作，请重新搜索。")
         return
 
+    st.subheader(f"{_v01_exercise_label(exercise)} · 动作说明")
     st.markdown(
         (
             '<section class="v01-today-session">'
@@ -12660,14 +12792,14 @@ def _v01_exercise_catalogue_page() -> None:
 def _v01_today_page() -> None:
     plan = st.session_state.v01_plan
     if not isinstance(plan, dict) or not plan.get("weeks") or not plan.get("safety", {}).get("auto_prescription"):
-        _v01_page_header("从今天开始运动", "花两分钟创建一份适合你时间的运动处方。")
+        _v01_page_header("从今天开始", "用近期运动和可用时间，生成一份能执行的 4 周有氧计划。")
         st.markdown(
             """
-            <div class="v01-rule-list">
-              <div class="v01-rule"><div class="v01-rule-label">运动情况</div><div class="v01-rule-copy">告诉我你最近实际运动了多少。</div></div>
-              <div class="v01-rule"><div class="v01-rule-label">现实时间</div><div class="v01-rule-copy">告诉我一周能练几次、每次有多久。</div></div>
-              <div class="v01-rule"><div class="v01-rule-label">持续调整</div><div class="v01-rule-copy">完成训练后记录 RPE，处方会随你的反馈变化。</div></div>
-            </div>
+            <section class="v01-launch-steps">
+              <div class="v01-launch-step"><span class="v01-launch-index">1</span><div><span class="v01-launch-label">填写最近运动</span><span class="v01-launch-copy">只记录近期实际完成的天数和时间。</span></div></div>
+              <div class="v01-launch-step"><span class="v01-launch-index">2</span><div><span class="v01-launch-label">安排可用时间</span><span class="v01-launch-copy">计划不会超过你每周能安排的天数和单次时长。</span></div></div>
+              <div class="v01-launch-step"><span class="v01-launch-index">3</span><div><span class="v01-launch-label">记录 RPE 与完成情况</span><span class="v01-launch-copy">下一周会按照明确规则调整，不是随机变化。</span></div></div>
+            </section>
             """,
             unsafe_allow_html=True,
         )
@@ -12695,6 +12827,12 @@ def _v01_today_page() -> None:
         </div>
         """,
         unsafe_allow_html=True,
+    )
+    st.button(
+        f"查看{_v01_activity(session['activity'])}相关动作",
+        width="stretch",
+        on_click=_v01_set_page,
+        args=("动作",),
     )
     st.button("记录训练反馈", type="primary", width="stretch", on_click=_v01_set_page, args=("记录",))
 
@@ -12783,9 +12921,11 @@ def aerobic_v01_app() -> None:
     _v01_state_defaults()
     _apply_theme()
     _apply_v01_theme()
-    st.markdown('<div class="v01-brand">SportRX</div>', unsafe_allow_html=True)
-    st.title("运动处方")
-    st.caption("简单、清楚、能坚持。先解决今天该怎么练。")
+    st.markdown('<div class="v01-app-brand">SportRX</div>', unsafe_allow_html=True)
+    st.markdown(
+        '<div class="v01-app-subtitle">从今天能完成的运动开始，逐周根据完成情况与 RPE 调整。</div>',
+        unsafe_allow_html=True,
+    )
     _v01_nav()
     page = st.session_state.v01_page
     if page == "处方":
