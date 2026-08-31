@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.1.3 - Adaptive Session Loop
+
+- Replaced the fixed future-dose preview with an adaptive horizon: SportRX
+  commits only the current week and waits for prior-week feedback before
+  generating the next dose.
+- Added session-level completion, RPE, difficulty and stop-event records, with
+  deterministic weekly aggregation into the existing progression rules.
+- Updated the Chinese mobile flow to show today's training first, connect
+  relevant movement instructions to that session, and place the four-week view
+  behind an explicit adaptive-plan screen.
+
 ## 0.1.2 - Training Content Foundation
 
 - Added a local, text-only exercise catalogue derived from the reviewed

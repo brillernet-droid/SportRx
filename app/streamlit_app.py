@@ -117,6 +117,8 @@ from sportrx import (
     quick_match,
     search_knowledge,
     search_exercises,
+    create_session_feedback,
+    summarize_session_feedback,
     synthesize_knowledge,
     launch_readiness_markdown,
     measurement_timeline_markdown,
@@ -237,6 +239,18 @@ V01_DISCOVERY_EXERCISE_LABELS = {
     "cycle cross trainer": "交叉训练机骑行",
     "stationary bike walk": "立式单车轻松骑",
     "walk elliptical cross trainer": "椭圆机步行",
+}
+
+V01_CATALOGUE_VALUE_LABELS = {
+    "body weight": "自重",
+    "cable": "绳索器械",
+    "dumbbell": "哑铃",
+    "elliptical machine": "椭圆机",
+    "leverage machine": "固定器械",
+    "stationary bike": "固定单车",
+    "stepmill machine": "踏步机",
+    "treadmill": "跑步机",
+    "cardiovascular system": "心肺训练",
 }
 
 V01_INTENSITY_LABELS = {
@@ -902,6 +916,8 @@ def _v01_state_defaults() -> None:
     st.session_state.setdefault("v01_draft", V01_DEFAULT_PROFILE.copy())
     st.session_state.setdefault("v01_setup_step", 1)
     st.session_state.setdefault("v01_feedback_by_week", {})
+    st.session_state.setdefault("v01_session_feedback", {})
+    st.session_state.setdefault("v01_feedback_notice", None)
     st.session_state.setdefault("v01_plan", None)
     st.session_state.setdefault("v01_exercise_selection", None)
 
@@ -911,6 +927,65 @@ def _v01_refresh_plan() -> None:
         st.session_state.v01_profile,
         feedback_by_week=st.session_state.v01_feedback_by_week,
     )
+
+
+def _v01_session_records(week_number: int) -> list[dict[str, Any]]:
+    """Return local, session-level records for one week."""
+
+    records = st.session_state.v01_session_feedback.get(int(week_number), [])
+    return [record for record in records if isinstance(record, dict)]
+
+
+def _v01_session_summary(week: dict[str, Any]) -> dict[str, Any]:
+    return summarize_session_feedback(
+        int(week.get("frequency_per_week", 0) or 1),
+        _v01_session_records(int(week["week"])),
+    )
+
+
+def _v01_active_week(plan: dict[str, Any]) -> dict[str, Any] | None:
+    """Return the first ready week that still has an unrecorded session."""
+
+    for week in plan.get("weeks", []):
+        if week.get("status") != "ready" or not week.get("sessions"):
+            continue
+        summary = _v01_session_summary(week)
+        if not summary["week_complete"] and not summary["adverse_event"]:
+            return week
+    return None
+
+
+def _v01_sync_weekly_feedback(plan: dict[str, Any]) -> None:
+    """Promote complete session records into the existing weekly rule input."""
+
+    feedback_by_week = st.session_state.v01_feedback_by_week
+    for week in plan.get("weeks", []):
+        week_number = int(week["week"])
+        summary = _v01_session_summary(week)
+        if summary["ready_for_progression"]:
+            feedback_by_week[week_number] = summary["weekly_feedback"]
+        else:
+            feedback_by_week.pop(week_number, None)
+
+
+def _v01_open_exercise(exercise_id: str) -> None:
+    _v01_select_exercise(exercise_id)
+    _v01_set_page("动作")
+
+
+def _v01_return_to_today() -> None:
+    st.session_state.v01_feedback_notice = None
+    _v01_set_page("首页")
+
+
+def _v01_week_status_label(week: dict[str, Any]) -> str:
+    status = str(week.get("status", "awaiting_feedback"))
+    if status == "ready":
+        return "本周已生成"
+    if status == "paused":
+        return "自动调整已暂停"
+    required_week = week.get("requires_feedback_after_week")
+    return f"等待第 {required_week} 周训练反馈" if required_week else "等待反馈"
 
 
 def _v01_set_page(page: str) -> None:
@@ -930,6 +1005,10 @@ def _v01_exercise_label(exercise: dict[str, Any]) -> str:
 
     name = str(exercise["name"])
     return V01_DISCOVERY_EXERCISE_LABELS.get(name, name)
+
+
+def _v01_catalogue_value_label(value: object) -> str:
+    return V01_CATALOGUE_VALUE_LABELS.get(str(value), str(value))
 
 
 def _v01_select_exercise(exercise_id: str) -> None:
@@ -12356,11 +12435,11 @@ def _apply_v01_theme() -> None:
         [data-testid="stButton"] > button[kind="primary"] p, [data-testid="stFormSubmitButton"] > button[kind="primary"] p { color: #ffffff !important; }
         [data-testid="stExpander"] { border: 1px solid var(--v01-line) !important; border-radius: 8px !important; background: var(--v01-panel) !important; box-shadow: none !important; }
         [data-testid="stAlert"] { border-radius: 8px !important; }
-        [data-testid="stRadioGroup"][aria-label="页面导航"] { display: grid !important; grid-template-columns: repeat(4, minmax(0, 1fr)) !important; gap: 0.35rem !important; width: 100% !important; }
+        [data-testid="stRadioGroup"][aria-label="页面导航"] { display: grid !important; grid-template-columns: repeat(5, minmax(0, 1fr)) !important; gap: 0.3rem !important; width: 100% !important; }
         [data-testid="stRadioGroup"][aria-label="页面导航"] [data-testid="stRadioOption"] { display: flex !important; justify-content: center !important; min-width: 0 !important; margin: 0 !important; padding: 0.58rem 0.12rem !important; background: #ffffff !important; border: 1px solid var(--v01-line) !important; border-radius: 7px !important; }
         [data-testid="stRadioGroup"][aria-label="页面导航"] [data-testid="stRadioOption"][data-selected="true"] { background: var(--v01-green-soft) !important; border-color: var(--v01-green) !important; }
         [data-testid="stRadioGroup"][aria-label="页面导航"] [data-testid="stRadioOption"] > div > div > div:first-child { display: none !important; }
-        [data-testid="stRadioGroup"][aria-label="页面导航"] [data-testid="stMarkdownContainer"] p { color: var(--v01-ink) !important; font-size: 0.78rem !important; font-weight: 720 !important; white-space: nowrap !important; }
+        [data-testid="stRadioGroup"][aria-label="页面导航"] [data-testid="stMarkdownContainer"] p { color: var(--v01-ink) !important; font-size: 0.74rem !important; font-weight: 720 !important; white-space: nowrap !important; }
         .v01-app-brand { color: var(--v01-green); font-size: 0.9rem; font-weight: 820; margin: 0.1rem 0 0.5rem; }
         .v01-app-subtitle { color: var(--v01-muted); font-size: 0.8rem; line-height: 1.4; margin-bottom: 1rem; }
         .v01-nav-label { color: var(--v01-muted); font-size: 0.75rem; font-weight: 650; margin: 0.2rem 0 0.45rem; }
@@ -12424,7 +12503,7 @@ def _v01_page_header(title: str, subtitle: str) -> None:
 
 
 def _v01_nav() -> None:
-    pages = [("首页", "首页"), ("处方", "处方"), ("记录", "记录"), ("动作", "动作")]
+    pages = [("首页", "首页"), ("计划", "计划"), ("设置", "设置"), ("记录", "记录"), ("动作", "动作")]
     if st.session_state.v01_page not in {page_id for page_id, _label in pages}:
         st.session_state.v01_page = "首页"
     st.markdown('<div class="v01-nav-label">选择要做的事</div>', unsafe_allow_html=True)
@@ -12555,6 +12634,8 @@ def _v01_setup_page() -> None:
                 "known_conditions": ["reported_relevant_condition"] if has_relevant_condition != "没有" else [],
             }
             st.session_state.v01_feedback_by_week = {}
+            st.session_state.v01_session_feedback = {}
+            st.session_state.v01_feedback_notice = None
             _v01_refresh_plan()
             _v01_set_page("首页")
             _v01_set_setup_step(1)
@@ -12566,7 +12647,7 @@ def _v01_setup_page() -> None:
 def _v01_plan_page() -> None:
     plan = st.session_state.v01_plan
     if not isinstance(plan, dict):
-        _v01_page_header("你的 4 周计划", "先完成基础设置，SportRX 才能计算可执行的起点。")
+        _v01_page_header("你的训练计划", "先完成基础设置，SportRX 才能计算可执行的起点。")
         st.button("去填写基本信息", type="primary", width="stretch", on_click=_v01_set_page, args=("设置",))
         return
 
@@ -12582,8 +12663,8 @@ def _v01_plan_page() -> None:
     assessment = plan["assessment"]
     intensity = plan["intensity"]
     _v01_page_header(
-        "你的 4 周有氧计划",
-        "从现在可做到的训练量开始，再根据完成情况和 RPE 调整下一周。",
+        "你的适应性计划",
+        "现在只承诺当前周；下一周会根据完成情况和 RPE 再生成。",
     )
     st.markdown(
         (
@@ -12594,38 +12675,43 @@ def _v01_plan_page() -> None:
         ),
         unsafe_allow_html=True,
     )
-    if intensity.get("hrr_target_zone_bpm"):
-        zone = intensity["hrr_target_zone_bpm"]
-        st.caption(f"若静息心率记录可靠，可参考目标心率：{zone[0]}–{zone[1]} 次/分。RPE 仍是主要执行依据。")
-
-    for week in plan["weeks"]:
-        weekly_status = (
-            "起始计划"
-            if week["week"] == 1
-            else ("等待第 %s 周反馈" % (week["week"] - 1) if week["week"] - 1 not in st.session_state.v01_feedback_by_week else "已按反馈更新")
-        )
+    active_week = _v01_active_week(plan)
+    if active_week:
         st.markdown(
             (
-                '<section class="v01-week">'
-                f'<div class="v01-week-title">第 {week["week"]} 周 · {week["weekly_minutes"]} 分钟</div>'
-                f'<div class="v01-week-meta">{escape(weekly_status)}</div>'
+                '<section class="v01-today-session">'
+                f'<div class="v01-session-kicker">第 {active_week["week"]} 周 · 当前训练量</div>'
+                f'<div class="v01-session-title">每周 {active_week["frequency_per_week"]} 次，每次约 {active_week["duration_min"]} 分钟</div>'
+                f'<div class="v01-session-detail">本周总计 {active_week["weekly_minutes"]} 分钟。完成每次训练后记录 RPE，才能更新下一周。</div>'
                 '</section>'
             ),
             unsafe_allow_html=True,
         )
-        st.markdown(
-            (
-                '<div class="v01-rule-list">'
-                f'<div class="v01-rule"><div class="v01-rule-label">训练量</div><div class="v01-rule-copy">每周 {week["frequency_per_week"]} 次，每次约 {week["duration_min"]} 分钟，总计 {week["weekly_minutes"]} 分钟。</div></div>'
-                f'<div class="v01-rule"><div class="v01-rule-label">执行方式</div><div class="v01-rule-copy">{escape(_v01_activity(week["fitt_vp"]["type"]))} · {escape(_v01_intensity(week["fitt_vp"]["intensity"]))}</div></div>'
-                '</div>'
-            ),
-            unsafe_allow_html=True,
-        )
-        for session in week["sessions"]:
-            st.write(
-                f"{zh(session['day'])}：{_v01_activity(session['activity'])} {session['duration_min']} 分钟，"
-                f"RPE {session['rpe_0_10'][0]}–{session['rpe_0_10'][1]}。"
+        st.button("查看今天练什么", type="primary", width="stretch", on_click=_v01_set_page, args=("首页",))
+    elif any(week.get("status") == "paused" for week in plan["weeks"]):
+        st.warning("训练中已记录异常不适或不良事件，自动调整已暂停。SportRX 不判断原因，也不提供继续训练建议。")
+    else:
+        st.info("当前周训练记录已完成。进入首页查看下一周的第一节训练。")
+
+    if intensity.get("hrr_target_zone_bpm"):
+        zone = intensity["hrr_target_zone_bpm"]
+        st.caption(f"若静息心率记录可靠，可参考目标心率：{zone[0]}–{zone[1]} 次/分。RPE 仍是主要执行依据。")
+
+    with st.expander("查看 4 周适应性路线", expanded=False):
+        for week in plan["weeks"]:
+            st.markdown(
+                (
+                    '<section class="v01-week">'
+                    f'<div class="v01-week-title">第 {week["week"]} 周 · {_v01_week_status_label(week)}</div>'
+                    f'<div class="v01-week-meta">'
+                    + (
+                        f'每周 {week["frequency_per_week"]} 次，每次约 {week["duration_min"]} 分钟，总计 {week["weekly_minutes"]} 分钟。'
+                        if week.get("status") == "ready"
+                        else "这一周不预先承诺训练量；待上一周完成情况与 RPE 进入后再生成。"
+                    )
+                    + '</div></section>'
+                ),
+                unsafe_allow_html=True,
             )
 
     st.subheader("为什么是这个计划？")
@@ -12634,12 +12720,11 @@ def _v01_plan_page() -> None:
             '<div class="v01-rule-list">'
             f'<div class="v01-rule"><div class="v01-rule-label">起点</div><div class="v01-rule-copy">你的近期运动状态：{escape(zh(assessment["summary"]))}</div></div>'
             f'<div class="v01-rule"><div class="v01-rule-label">限制</div><div class="v01-rule-copy">第 1 周总量为 {plan["weeks"][0]["weekly_minutes"]} 分钟，受你的可训练天数与单次时间限制。</div></div>'
-            '<div class="v01-rule"><div class="v01-rule-label">调整</div><div class="v01-rule-copy">第 2–4 周不是固定处方；填写完成率和 RPE 后，系统才会更新相应周次。</div></div>'
+            '<div class="v01-rule"><div class="v01-rule-label">调整</div><div class="v01-rule-copy">未来训练不预先增加；本周每次完成情况和 RPE 汇总后，才会按规则决定保持、小幅增加或降低。</div></div>'
             '</div>'
         ),
         unsafe_allow_html=True,
     )
-    st.button("查看今天练什么", type="primary", width="stretch", on_click=_v01_set_page, args=("今天",))
 
 
 def _v01_exercise_catalogue_page() -> None:
@@ -12671,7 +12756,7 @@ def _v01_exercise_catalogue_page() -> None:
 
     plan = st.session_state.v01_plan
     if isinstance(plan, dict) and plan.get("weeks") and plan.get("safety", {}).get("auto_prescription"):
-        active_week = next((week for week in plan["weeks"] if week.get("sessions")), None)
+        active_week = _v01_active_week(plan)
         activity = str(active_week["sessions"][0].get("activity", "brisk walking")) if active_week else "brisk walking"
         discovery_context = "这些动作说明与你当前处方的运动方式相关；它们不改变今天的时长或强度。"
     else:
@@ -12792,7 +12877,7 @@ def _v01_exercise_catalogue_page() -> None:
 def _v01_today_page() -> None:
     plan = st.session_state.v01_plan
     if not isinstance(plan, dict) or not plan.get("weeks") or not plan.get("safety", {}).get("auto_prescription"):
-        _v01_page_header("从今天开始", "用近期运动和可用时间，生成一份能执行的 4 周有氧计划。")
+        _v01_page_header("从今天开始", "用近期运动和可用时间，生成一份先能完成、再逐周调整的有氧处方。")
         st.markdown(
             """
             <section class="v01-launch-steps">
@@ -12803,15 +12888,27 @@ def _v01_today_page() -> None:
             """,
             unsafe_allow_html=True,
         )
-        st.button("创建运动处方", type="primary", width="stretch", on_click=_v01_set_page, args=("处方",))
+        st.button("创建运动处方", type="primary", width="stretch", on_click=_v01_set_page, args=("设置",))
         return
-    _v01_page_header("今天的处方", "只专注这一节训练；完成后再回来记录感受。")
-    week = next(item for item in plan["weeks"] if item.get("sessions"))
-    session = week["sessions"][0]
+
+    active_week = _v01_active_week(plan)
+    if active_week is None:
+        if any(week.get("status") == "paused" for week in plan["weeks"]):
+            _v01_page_header("自动调整已暂停", "你已记录异常不适或不良事件。SportRX 不判断原因，也不提供继续训练建议。")
+            st.button("查看训练计划", width="stretch", on_click=_v01_set_page, args=("计划",))
+            return
+        _v01_page_header("本周记录已完成", "下一周的训练已根据你本周的完成情况与 RPE 更新。")
+        st.button("查看训练计划", type="primary", width="stretch", on_click=_v01_set_page, args=("计划",))
+        return
+
+    summary = _v01_session_summary(active_week)
+    session_index = summary["missing_session_indexes"][0]
+    session = active_week["sessions"][session_index]
+    _v01_page_header("今天的训练", "一次只完成一节。训练结束后花 20 秒记录完成情况和 RPE。")
     st.markdown(
         (
             '<section class="v01-today-session">'
-            f'<div class="v01-session-kicker">{escape(zh(session["day"]))}</div>'
+            f'<div class="v01-session-kicker">第 {active_week["week"]} 周 · 第 {session_index + 1} / {active_week["frequency_per_week"]} 次 · {escape(zh(session["day"]))}</div>'
             f'<div class="v01-session-title">{escape(_v01_activity(session["activity"]))} · {session["duration_min"]} 分钟</div>'
             f'<div class="v01-session-detail">目标强度：{escape(_v01_intensity(session["intensity"]))}<br>RPE {session["rpe_0_10"][0]}–{session["rpe_0_10"][1]} · {escape(_v01_talk_test(session["intensity"]))}</div>'
             '</section>'
@@ -12823,96 +12920,114 @@ def _v01_today_page() -> None:
         <div class="v01-rule-list">
           <div class="v01-rule"><div class="v01-rule-label">开始前</div><div class="v01-rule-copy">用轻松走或轻松骑行热身 5–10 分钟。</div></div>
           <div class="v01-rule"><div class="v01-rule-label">过程中</div><div class="v01-rule-copy">以完成整段训练为优先；任何异常不适都应停止。</div></div>
-          <div class="v01-rule"><div class="v01-rule-label">结束后</div><div class="v01-rule-copy">训练结束后记录完成情况和平均 RPE。</div></div>
+          <div class="v01-rule"><div class="v01-rule-label">结束后</div><div class="v01-rule-copy">回到 SportRX，记录这一次是否完成和本次 RPE。</div></div>
         </div>
         """,
         unsafe_allow_html=True,
     )
-    st.button(
-        f"查看{_v01_activity(session['activity'])}相关动作",
-        width="stretch",
-        on_click=_v01_set_page,
-        args=("动作",),
-    )
-    st.button("记录训练反馈", type="primary", width="stretch", on_click=_v01_set_page, args=("记录",))
+
+    suggestions = _v01_discovery_exercises(session["activity"])
+    if suggestions:
+        st.subheader("你可以这样完成")
+        st.caption("以下是与本次训练方式相关的动作说明。任选一种方式完成，不改变今天的时长或强度。")
+        for item in suggestions:
+            st.markdown(
+                (
+                    '<article class="v01-discovery-card">'
+                    f'<div class="v01-discovery-card-name">{escape(_v01_exercise_label(item))}</div>'
+                    f'<div class="v01-discovery-card-meta">{escape(_v01_catalogue_value_label(item["equipment"]))} · {escape(_v01_catalogue_value_label(item["target"]))}</div>'
+                    '</article>'
+                ),
+                unsafe_allow_html=True,
+            )
+            st.button(
+                f"查看 {_v01_exercise_label(item)} 的动作说明",
+                key=f"v01_today_exercise_{active_week['week']}_{session_index}_{item['id']}",
+                width="stretch",
+                on_click=_v01_open_exercise,
+                args=(item["id"],),
+            )
+
+    st.button("记录本次训练", type="primary", width="stretch", on_click=_v01_set_page, args=("记录",))
+    st.button("查看 4 周适应性路线", width="stretch", on_click=_v01_set_page, args=("计划",))
 
 
 def _v01_progress_page() -> None:
     plan = st.session_state.v01_plan
     if not isinstance(plan, dict) or not plan.get("weeks") or not plan.get("safety", {}).get("auto_prescription"):
         _v01_page_header("记录训练", "先创建一份运动处方。")
-        st.button("去开处方", type="primary", width="stretch", on_click=_v01_set_page, args=("处方",))
+        st.button("去创建处方", type="primary", width="stretch", on_click=_v01_set_page, args=("设置",))
         return
-    _v01_page_header("记录训练", "只记录完成情况和感受，下一次训练会据此调整。")
-    feedback_weeks = [week["week"] for week in plan["weeks"] if week["week"] < 4 and week["frequency_per_week"] > 0]
-    if not feedback_weeks:
-        st.info("当前没有可继续调整的周次。")
-        return
-    feedback_week = st.selectbox("本周", feedback_weeks, format_func=lambda value: f"第 {value} 周")
-    planned_sessions = next(item for item in plan["weeks"] if item["week"] == feedback_week)["frequency_per_week"]
-    existing = st.session_state.v01_feedback_by_week.get(int(feedback_week), {})
-    with st.form("v01_weekly_feedback"):
-        completed_sessions = st.number_input(
-            "实际完成了几次训练",
-            min_value=0,
-            max_value=int(planned_sessions),
-            value=int(existing.get("completed_sessions", planned_sessions)),
-            step=1,
-        )
-        average_rpe = st.slider(
-            "这一周的平均 RPE",
-            min_value=0.0,
-            max_value=10.0,
-            value=float(existing.get("average_rpe", 5.0)),
-            step=0.5,
-        )
-        felt_too_hard = st.checkbox("这一周明显偏难", value=bool(existing.get("felt_too_hard", False)))
-        adverse_event = st.checkbox("训练中出现异常不适或不良事件", value=bool(existing.get("adverse_event", False)))
-        submitted = st.form_submit_button("保存训练记录", type="primary", width="stretch")
-    if submitted:
-        st.session_state.v01_feedback_by_week[int(feedback_week)] = {
-            "completed_sessions": int(completed_sessions),
-            "average_rpe": float(average_rpe),
-            "felt_too_hard": bool(felt_too_hard),
-            "adverse_event": bool(adverse_event),
-        }
-        _v01_refresh_plan()
-        if adverse_event:
-            st.error("已暂停自动调整。SportRX 不判断原因，也不提供继续训练建议。")
-        else:
-            st.success("训练记录已保存，接下来的处方已按规则调整。")
-        plan = st.session_state.v01_plan
-
-    decisions = {item["after_week"]: item["decision"] for item in plan.get("progression_log", [])}
-    decision = decisions.get(int(feedback_week))
-    if decision and decision.get("completion_rate") is not None and decision.get("average_rpe") is not None:
-        action_labels = {"increase": "增加训练量", "small_increase": "小幅进阶", "hold": "维持", "decrease": "降低训练量", "pause": "暂停自动调整"}
-        st.markdown(
-            (
-                '<section class="v01-today-session">'
-                '<div class="v01-session-kicker">下一周建议</div>'
-                f'<div class="v01-session-title">{escape(action_labels.get(decision["action"], decision["action"]))}</div>'
-                f'<div class="v01-session-detail">完成率 {round(float(decision["completion_rate"]) * 100)}%；平均 RPE {decision["average_rpe"]}。<br>{escape(zh(decision["rationale"]))}</div>'
-                '</section>'
-            ),
-            unsafe_allow_html=True,
-        )
-    else:
-        st.info("保存这一周反馈后，这里会显示下一周的规则解释。")
-
-    if st.session_state.v01_feedback_by_week:
-        st.subheader("已记录的周反馈")
-        rows = []
-        for week, feedback in sorted(st.session_state.v01_feedback_by_week.items()):
-            rows.append(
-                {
-                    "周次": f"第 {week} 周",
-                    "完成次数": feedback["completed_sessions"],
-                    "平均 RPE": feedback["average_rpe"],
-                    "明显偏难": "是" if feedback["felt_too_hard"] else "否",
-                }
+    notice_week = st.session_state.v01_feedback_notice
+    if notice_week is not None:
+        decisions = {item["after_week"]: item["decision"] for item in plan.get("progression_log", [])}
+        decision = decisions.get(int(notice_week))
+        if decision:
+            action_labels = {"increase": "增加训练量", "small_increase": "小幅增加", "hold": "维持当前训练量", "decrease": "降低训练量", "pause": "暂停自动调整"}
+            _v01_page_header("本周记录已完成", "下一周已经按你的完成情况和 RPE 更新。")
+            st.markdown(
+                (
+                    '<section class="v01-today-session">'
+                    '<div class="v01-session-kicker">下一周建议</div>'
+                    f'<div class="v01-session-title">{escape(action_labels.get(decision["action"], decision["action"]))}</div>'
+                    f'<div class="v01-session-detail">完成率 {round(float(decision["completion_rate"]) * 100)}%；平均 RPE {decision["average_rpe"] if decision["average_rpe"] is not None else "未记录"}。<br>{escape(zh(decision["rationale"]))}</div>'
+                    '</section>'
+                ),
+                unsafe_allow_html=True,
             )
-        st.dataframe(rows, hide_index=True, width="stretch")
+            st.button("查看下一次训练", type="primary", width="stretch", on_click=_v01_return_to_today)
+            st.button("查看训练计划", width="stretch", on_click=_v01_set_page, args=("计划",))
+            return
+
+    active_week = _v01_active_week(plan)
+    if active_week is None:
+        _v01_page_header("当前没有可记录的训练", "请先在首页开始一节训练，或查看已完成周的调整结果。")
+        st.button("返回首页", type="primary", width="stretch", on_click=_v01_return_to_today)
+        return
+
+    summary = _v01_session_summary(active_week)
+    session_index = summary["missing_session_indexes"][0]
+    session = active_week["sessions"][session_index]
+    _v01_page_header("记录这次训练", "只记录是否完成、RPE 和异常情况。系统会自动汇总本周。")
+    st.markdown(
+        (
+            '<section class="v01-today-session">'
+            f'<div class="v01-session-kicker">第 {active_week["week"]} 周 · 第 {session_index + 1} / {active_week["frequency_per_week"]} 次</div>'
+            f'<div class="v01-session-title">{escape(_v01_activity(session["activity"]))} · {session["duration_min"]} 分钟</div>'
+            f'<div class="v01-session-detail">已记录 {summary["recorded_sessions"]} / {summary["planned_sessions"]} 次；已完成 {summary["completed_sessions"]} 次。</div>'
+            '</section>'
+        ),
+        unsafe_allow_html=True,
+    )
+    with st.form(f"v01_session_feedback_{active_week['week']}_{session_index}"):
+        completion = st.radio("这次训练完成了吗？", ["完成了", "没有完成"], horizontal=True)
+        rpe = None
+        felt_too_hard = False
+        if completion == "完成了":
+            rpe = st.slider("这次训练的 RPE", min_value=0.0, max_value=10.0, value=5.0, step=0.5)
+            felt_too_hard = st.checkbox("这次训练明显偏难")
+        adverse_event = st.checkbox("训练中出现异常不适或不良事件")
+        submitted = st.form_submit_button("保存本次训练", type="primary", width="stretch")
+    if submitted:
+        record = create_session_feedback(
+            week=int(active_week["week"]),
+            session_index=session_index,
+            completed=completion == "完成了",
+            rpe=rpe,
+            felt_too_hard=felt_too_hard,
+            adverse_event=adverse_event,
+        )
+        records_by_index = {int(item["session_index"]): item for item in _v01_session_records(int(active_week["week"]))}
+        records_by_index[session_index] = record
+        st.session_state.v01_session_feedback[int(active_week["week"])] = [records_by_index[index] for index in sorted(records_by_index)]
+        _v01_sync_weekly_feedback(plan)
+        updated_summary = _v01_session_summary(active_week)
+        _v01_refresh_plan()
+        if updated_summary["ready_for_progression"]:
+            st.session_state.v01_feedback_notice = int(active_week["week"])
+        st.rerun()
+
+    st.caption("本周所有训练都记录完成后，SportRX 才会根据完成率和平均 RPE 调整下一周。")
 
 
 def aerobic_v01_app() -> None:
@@ -12928,8 +13043,10 @@ def aerobic_v01_app() -> None:
     )
     _v01_nav()
     page = st.session_state.v01_page
-    if page == "处方":
+    if page == "设置":
         _v01_setup_page()
+    elif page == "计划":
+        _v01_plan_page()
     elif page == "首页":
         _v01_today_page()
     elif page == "动作":

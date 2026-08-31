@@ -131,6 +131,7 @@ from .session_snapshot import (
     session_snapshot_json,
     session_snapshot_markdown,
 )
+from .session_feedback import create_session_feedback, summarize_session_feedback
 from .session_quality_review import build_session_quality_review, session_quality_review_markdown
 from .share_card import build_readiness_passport_card, build_sport_match_card
 from .test_day_brief import build_test_day_brief, test_day_brief_markdown
@@ -298,6 +299,8 @@ __all__ = [
     "summarize_pilot_feedback",
     "session_snapshot_json",
     "session_snapshot_markdown",
+    "create_session_feedback",
+    "summarize_session_feedback",
     "session_quality_review_markdown",
     "should_include_release_path",
     "test_day_brief_markdown",

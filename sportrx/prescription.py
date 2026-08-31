@@ -6,7 +6,6 @@ from typing import Any
 
 from .assessment import classify_fitness
 from .intensity import calculate_intensity
-from .plan_actual import provisional_plan_actual
 from .progression import apply_progression, evaluate_week
 from .readiness import calculate_readiness
 from .screening import screen_user
@@ -32,7 +31,14 @@ def _default_activity(profile: dict[str, Any]) -> str:
     return common or "brisk walking"
 
 
-def _week_sessions(week: int, volume: dict[str, Any], profile: dict[str, Any], intensity: dict[str, Any]) -> list[dict[str, Any]]:
+def _week_sessions(
+    week: int,
+    volume: dict[str, Any],
+    profile: dict[str, Any],
+    intensity: dict[str, Any],
+    *,
+    status: str,
+) -> list[dict[str, Any]]:
     frequency = int(volume.get("frequency_per_week", 0))
     if frequency <= 0:
         return []
@@ -49,7 +55,7 @@ def _week_sessions(week: int, volume: dict[str, Any], profile: dict[str, Any], i
             "hrr_target_zone_bpm": intensity["hrr_target_zone_bpm"],
             "rpe_0_10": intensity["rpe_0_10"],
             "talk_test": intensity["talk_test"],
-            "status": "provisional" if week > 1 else "ready",
+            "status": status,
         }
         for day in days
     ]
@@ -58,15 +64,21 @@ def _week_sessions(week: int, volume: dict[str, Any], profile: dict[str, Any], i
 def generate_prescription(
     profile: dict[str, Any],
     feedback_by_week: dict[int, dict[str, Any]] | None = None,
+    plan_window_weeks: int = 4,
 ) -> dict[str, Any]:
-    """Generate a 4-week aerobic FITT-VP prescription."""
+    """Generate an adaptive aerobic prescription with a configurable horizon.
+
+    SportRX commits only the current week. Later weeks remain visible as an
+    adaptive horizon, but their dose is not progressed until the prior week's
+    completion and RPE feedback have been entered.
+    """
 
     feedback_by_week = feedback_by_week or {}
     safety = screen_user(profile)
     if not safety["auto_prescription"]:
         return {
             "product": "SportRx",
-            "version": "0.1.0",
+            "version": "0.1.1",
             "safety": safety,
             "readiness": calculate_readiness(profile),
             "weeks": [],
@@ -83,38 +95,36 @@ def generate_prescription(
     weeks: list[dict[str, Any]] = []
     progression_log: list[dict[str, Any]] = []
 
-    for week in range(1, 5):
+    plan_window_weeks = max(1, min(int(plan_window_weeks or 4), 12))
+    for week in range(1, plan_window_weeks + 1):
+        week_status = "ready"
+        progression_decision: dict[str, Any] | None = None
         if week > 1:
             feedback = feedback_by_week.get(week - 1)
             if feedback:
-                decision = evaluate_week(
+                progression_decision = evaluate_week(
                     planned_sessions=int(current_volume["frequency_per_week"]),
                     completed_sessions=int(feedback.get("completed_sessions", 0) or 0),
                     average_rpe=feedback.get("average_rpe"),
                     felt_too_hard=bool(feedback.get("felt_too_hard", False)),
                     adverse_event=bool(feedback.get("adverse_event", False)),
                 )
+                next_volume = apply_progression(current_volume, progression_decision, available_days, max_session)
+                progression_log.append(
+                    {"after_week": week - 1, "decision": progression_decision, "next_volume": next_volume}
+                )
+                current_volume = next_volume
+                if current_volume.get("paused"):
+                    week_status = "paused"
             else:
-                decision = {
-                    "action": "small_increase",
-                    "change_pct": 0.10,
-                    "completion_rate": None,
-                    "average_rpe": None,
-                    "felt_too_hard": False,
-                    "adverse_event": False,
-                    "rationale": "No feedback entered; this is a provisional 10% progression preview.",
-                    "plan_actual": provisional_plan_actual(int(current_volume["frequency_per_week"])),
-                    "reason_codes": ["PROVISIONAL_NO_FEEDBACK"],
-                    "flags": [],
-                }
-
-            next_volume = apply_progression(current_volume, decision, available_days, max_session)
-            progression_log.append({"after_week": week - 1, "decision": decision, "next_volume": next_volume})
-            current_volume = next_volume
+                week_status = "awaiting_feedback"
 
         weeks.append(
             {
                 "week": week,
+                "status": week_status,
+                "requires_feedback_after_week": None if week == 1 else week - 1,
+                "is_committed": week_status == "ready",
                 "frequency_per_week": int(current_volume.get("frequency_per_week", 0)),
                 "duration_min": int(current_volume.get("duration_min", 0)),
                 "weekly_minutes": int(current_volume.get("weekly_minutes", 0)),
@@ -126,7 +136,7 @@ def generate_prescription(
                     "volume": f"{current_volume.get('weekly_minutes', 0)} min/week",
                     "progression": "Adjusted weekly from completion and RPE feedback.",
                 },
-                "sessions": _week_sessions(week, current_volume, profile, intensity),
+                "sessions": _week_sessions(week, current_volume, profile, intensity, status=week_status),
             }
         )
 
@@ -135,7 +145,7 @@ def generate_prescription(
 
     return {
         "product": "SportRx",
-        "version": "0.1.0",
+        "version": "0.1.1",
         "goal": profile.get("goal", "Improve aerobic fitness / general health"),
         "safety": safety,
         "assessment": assessment,
@@ -144,5 +154,9 @@ def generate_prescription(
         "initial_volume": weeks[0] if weeks else None,
         "weeks": weeks,
         "progression_log": progression_log,
+        "adaptive_horizon_weeks": plan_window_weeks,
+        "commitment_boundary": (
+            "Only ready weeks are current prescriptions. Later weeks require prior-week completion and RPE feedback."
+        ),
         "scope": "Apparently healthy adults, aerobic exercise only.",
     }

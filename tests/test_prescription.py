@@ -1,7 +1,7 @@
 from sportrx import generate_prescription
 
 
-def test_prescription_generates_four_week_aerobic_plan():
+def test_prescription_generates_adaptive_horizon_with_only_week_one_committed():
     profile = {
         "age": 40,
         "resting_hr": 68,
@@ -19,7 +19,31 @@ def test_prescription_generates_four_week_aerobic_plan():
     assert result["safety"]["auto_prescription"] is True
     assert len(result["weeks"]) == 4
     assert result["weeks"][0]["fitt_vp"]["type"] == "brisk walking"
-    assert result["weeks"][0]["weekly_minutes"] < result["weeks"][-1]["weekly_minutes"]
+    assert result["weeks"][0]["status"] == "ready"
+    assert result["weeks"][1]["status"] == "awaiting_feedback"
+    assert result["weeks"][0]["weekly_minutes"] == result["weeks"][-1]["weekly_minutes"]
+
+
+def test_prescription_commits_next_week_only_after_feedback():
+    profile = {
+        "age": 40,
+        "exercise_days_last_4w": 0,
+        "mvpa_minutes_per_week": 0,
+        "available_days_per_week": 3,
+        "max_minutes_per_session": 30,
+        "preferred_activity": "brisk walking",
+        "symptoms": [],
+        "known_conditions": [],
+    }
+
+    result = generate_prescription(
+        profile,
+        feedback_by_week={1: {"completed_sessions": 3, "average_rpe": 5, "felt_too_hard": False, "adverse_event": False}},
+    )
+
+    assert result["weeks"][1]["status"] == "ready"
+    assert result["weeks"][2]["status"] == "awaiting_feedback"
+    assert result["weeks"][1]["weekly_minutes"] > result["weeks"][0]["weekly_minutes"]
 
 
 def test_prescription_blocks_unsafe_profile():
