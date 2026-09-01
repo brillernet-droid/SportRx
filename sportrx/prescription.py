@@ -78,7 +78,7 @@ def generate_prescription(
     if not safety["auto_prescription"]:
         return {
             "product": "SportRx",
-            "version": "0.1.1",
+            "version": "0.1.3",
             "safety": safety,
             "readiness": calculate_readiness(profile),
             "weeks": [],
@@ -145,7 +145,7 @@ def generate_prescription(
 
     return {
         "product": "SportRx",
-        "version": "0.1.1",
+        "version": "0.1.3",
         "goal": profile.get("goal", "Improve aerobic fitness / general health"),
         "safety": safety,
         "assessment": assessment,
