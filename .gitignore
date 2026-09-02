@@ -34,6 +34,7 @@ docs/internal/
 .streamlit/secrets.toml
 exports/
 tmp/
+data/.local/
 
 # Generated local evidence-search index and non-public source material
 .cache/

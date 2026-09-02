@@ -158,6 +158,7 @@ from sportrx import (
     validate_knowledge_records,
 )
 from sportrx.benchmark_log import build_component_result
+from sportrx.local_accounts import LocalAccountError, authenticate_local_account, create_local_account
 from sportrx.performance_lab import assess_hybrid_performance, measurement_intake_matrix_csv, measurement_intake_matrix_markdown
 from sportrx.release_qa import REQUIRED_EVIDENCE_FILES
 
@@ -940,7 +941,17 @@ def _v01_refresh_plan() -> None:
 
 def _v01_has_local_profile() -> bool:
     registration = st.session_state.get("v01_registration")
-    return isinstance(registration, dict) and bool(str(registration.get("display_name", "")).strip())
+    return (
+        isinstance(registration, dict)
+        and bool(str(registration.get("display_name", "")).strip())
+        and bool(str(registration.get("account_id", "")).strip())
+    )
+
+
+def _v01_local_account_store_path() -> Path:
+    """Keep the prototype account file out of the tracked product corpus."""
+
+    return ROOT / "data" / ".local" / "accounts.json"
 
 
 def _v01_session_records(week_number: int) -> list[dict[str, Any]]:
@@ -12568,7 +12579,7 @@ def _v01_page_header(title: str, subtitle: str) -> None:
 
 
 def _v01_registration_page() -> None:
-    """Create a local training profile before entering the prescription flow."""
+    """Render local-only registration and login before the prescription flow."""
 
     st.markdown(
         """
@@ -12576,7 +12587,7 @@ def _v01_registration_page() -> None:
           <div class="v01-product-main">
             <div class="v01-product-kicker">SportRX / 人群化处方</div>
             <div class="v01-product-title">从你的<br><em>训练档案</em>开始。</div>
-            <p class="v01-product-copy">先创建本地档案，再识别你的当前场景，进入适用的训练路径。</p>
+            <p class="v01-product-copy">先建立本机账户，再识别你的当前场景，进入适用的训练路径。</p>
           </div>
           <div class="v01-product-stats" aria-label="SportRX 档案特点">
             <div class="v01-product-stat">档案模式<strong>本地优先</strong></div>
@@ -12589,28 +12600,52 @@ def _v01_registration_page() -> None:
     st.markdown(
         """
         <section class="v01-registration">
-          <div class="v01-registration-kicker">创建训练档案</div>
-          <div class="v01-registration-title">先认识你，再开始训练。</div>
-          <div class="v01-registration-copy">这一步不收集手机号、邮箱或登录密码。档案仅保留在当前浏览器会话中，用于组织之后的评估与训练记录。</div>
+          <div class="v01-registration-kicker">注册或登录</div>
+          <div class="v01-registration-title">创建你的训练账户。</div>
+          <div class="v01-registration-copy">不需要手机号或邮箱。设置一个训练档案名和密码，即可保存本机体验入口。</div>
         </section>
         """,
         unsafe_allow_html=True,
     )
-    with st.form("v01_local_registration"):
-        display_name = st.text_input("怎么称呼你？", max_chars=24, placeholder="例如：Lena")
-        consent = st.checkbox("我了解：这是本地体验档案，不构成医疗建议或线上账户。")
-        submitted = st.form_submit_button("创建训练档案", type="primary", width="stretch")
-    if submitted:
-        name = display_name.strip()
-        if not name:
-            st.error("请先填写一个称呼。")
-        elif not consent:
-            st.error("请先确认本地体验档案的说明。")
-        else:
-            st.session_state.v01_registration = {"display_name": name, "consent": True, "storage": "local_session"}
-            st.session_state.v01_page = "首页"
-            st.rerun()
-    st.caption("没有创建线上账号、不会上传档案，也不会把你的资料发送给外部 AI 服务。")
+    register_tab, login_tab = st.tabs(["注册", "登录"])
+    with register_tab:
+        with st.form("v01_local_registration"):
+            display_name = st.text_input("训练档案名", max_chars=24, placeholder="例如：Lena", key="v01_register_name")
+            password = st.text_input("设置密码", type="password", help="至少 6 位，仅用于本机登录。", key="v01_register_password")
+            password_confirmation = st.text_input("确认密码", type="password", key="v01_register_password_confirmation")
+            consent = st.checkbox("我了解：这是本机体验账户，不构成医疗建议或线上服务账户。")
+            submitted = st.form_submit_button("创建并进入", type="primary", width="stretch")
+        if submitted:
+            if password != password_confirmation:
+                st.error("两次输入的密码不一致。")
+            elif not consent:
+                st.error("请先确认本机体验账户的说明。")
+            else:
+                try:
+                    st.session_state.v01_registration = create_local_account(
+                        _v01_local_account_store_path(), display_name, password
+                    )
+                except LocalAccountError as exc:
+                    st.error(str(exc))
+                else:
+                    st.session_state.v01_page = "首页"
+                    st.rerun()
+    with login_tab:
+        with st.form("v01_local_login"):
+            display_name = st.text_input("训练档案名", max_chars=24, key="v01_login_name")
+            password = st.text_input("密码", type="password", key="v01_login_password")
+            submitted = st.form_submit_button("登录并进入", type="primary", width="stretch")
+        if submitted:
+            try:
+                st.session_state.v01_registration = authenticate_local_account(
+                    _v01_local_account_store_path(), display_name, password
+                )
+            except LocalAccountError as exc:
+                st.error(str(exc))
+            else:
+                st.session_state.v01_page = "首页"
+                st.rerun()
+    st.caption("密码不会以明文保存；本机只保存不可逆的密码摘要。账户资料不会上传，也不会发送给外部 AI 服务。")
 
 
 def _v01_nav() -> None:
@@ -13032,7 +13067,7 @@ def _v01_profile_page() -> None:
     route = resolve_program_pack(profile)
     pack = route.get("pack") or {}
     _v01_page_header("我的资料", "查看当前场景、适用路径和哪些信息正在被使用。")
-    st.caption(f"本地训练档案：{registration.get('display_name', '未命名')}。当前版本不会创建线上账户或上传资料。")
+    st.caption(f"本机训练账户：{registration.get('display_name', '未命名')}。当前版本不收集邮箱或手机号，也不会上传资料。")
     st.markdown(
         (
             '<div class="v01-stat-grid">'
