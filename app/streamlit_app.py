@@ -920,6 +920,7 @@ def _product_mode() -> str:
 
 def _v01_state_defaults() -> None:
     st.session_state.setdefault("v01_page", "首页")
+    st.session_state.setdefault("v01_registration", None)
     st.session_state.setdefault("v01_profile", V01_DEFAULT_PROFILE.copy())
     st.session_state.setdefault("v01_draft", V01_DEFAULT_PROFILE.copy())
     st.session_state.setdefault("v01_setup_step", 1)
@@ -935,6 +936,11 @@ def _v01_refresh_plan() -> None:
         st.session_state.v01_profile,
         feedback_by_week=st.session_state.v01_feedback_by_week,
     )
+
+
+def _v01_has_local_profile() -> bool:
+    registration = st.session_state.get("v01_registration")
+    return isinstance(registration, dict) and bool(str(registration.get("display_name", "")).strip())
 
 
 def _v01_session_records(week_number: int) -> list[dict[str, Any]]:
@@ -12483,6 +12489,10 @@ def _apply_v01_theme() -> None:
         .v01-product-stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.8rem; margin-top: 1rem; padding-top: 0.9rem; border-top: 1px solid rgba(215, 255, 76, 0.22); }
         .v01-product-stat { color: #9ba9a0; font-size: 0.64rem; font-weight: 760; letter-spacing: 0.1em; text-transform: uppercase; }
         .v01-product-stat strong { display: block; color: #f6f8f1; font-size: 1.45rem; font-weight: 820; letter-spacing: -0.05em; line-height: 1.05; margin-top: 0.24rem; text-transform: none; }
+        .v01-registration { margin-top: 1.35rem; padding: 1.15rem; border: 1px solid #2d3d35; border-radius: 14px; background: rgba(16, 24, 22, 0.9); }
+        .v01-registration-kicker { color: var(--v01-green); font-size: 0.66rem; font-weight: 850; letter-spacing: 0.12em; text-transform: uppercase; }
+        .v01-registration-title { color: #f4f8ef; font-size: 1.32rem; font-weight: 830; line-height: 1.18; margin-top: 0.42rem; }
+        .v01-registration-copy { color: var(--v01-muted); font-size: 0.82rem; line-height: 1.48; margin-top: 0.48rem; }
         .v01-nav-label { color: var(--v01-muted); font-size: 0.68rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; margin: 1.25rem 0 0.52rem; }
         .v01-page-head { display: grid; gap: 0.8rem; overflow: hidden; background: linear-gradient(115deg, #14201c, #0d1513); color: #ffffff; padding: 1.2rem; border-radius: 14px; margin: 1.1rem 0 1.2rem; border: 1px solid #304037; }
         .v01-page-head .v01-eyebrow { color: var(--v01-green); font-size: 0.66rem; font-weight: 830; letter-spacing: 0.11em; text-transform: uppercase; margin-bottom: 0.58rem; }
@@ -12555,6 +12565,52 @@ def _v01_page_header(title: str, subtitle: str) -> None:
         ),
         unsafe_allow_html=True,
     )
+
+
+def _v01_registration_page() -> None:
+    """Create a local training profile before entering the prescription flow."""
+
+    st.markdown(
+        """
+        <header class="v01-product-hero">
+          <div class="v01-product-main">
+            <div class="v01-product-kicker">SportRX / 人群化处方</div>
+            <div class="v01-product-title">从你的<br><em>训练档案</em>开始。</div>
+            <p class="v01-product-copy">先创建本地档案，再识别你的当前场景，进入适用的训练路径。</p>
+          </div>
+          <div class="v01-product-stats" aria-label="SportRX 档案特点">
+            <div class="v01-product-stat">档案模式<strong>本地优先</strong></div>
+            <div class="v01-product-stat">训练路径<strong>可解释</strong></div>
+          </div>
+        </header>
+        """,
+        unsafe_allow_html=True,
+    )
+    st.markdown(
+        """
+        <section class="v01-registration">
+          <div class="v01-registration-kicker">创建训练档案</div>
+          <div class="v01-registration-title">先认识你，再开始训练。</div>
+          <div class="v01-registration-copy">这一步不收集手机号、邮箱或登录密码。档案仅保留在当前浏览器会话中，用于组织之后的评估与训练记录。</div>
+        </section>
+        """,
+        unsafe_allow_html=True,
+    )
+    with st.form("v01_local_registration"):
+        display_name = st.text_input("怎么称呼你？", max_chars=24, placeholder="例如：Lena")
+        consent = st.checkbox("我了解：这是本地体验档案，不构成医疗建议或线上账户。")
+        submitted = st.form_submit_button("创建训练档案", type="primary", width="stretch")
+    if submitted:
+        name = display_name.strip()
+        if not name:
+            st.error("请先填写一个称呼。")
+        elif not consent:
+            st.error("请先确认本地体验档案的说明。")
+        else:
+            st.session_state.v01_registration = {"display_name": name, "consent": True, "storage": "local_session"}
+            st.session_state.v01_page = "首页"
+            st.rerun()
+    st.caption("没有创建线上账号、不会上传档案，也不会把你的资料发送给外部 AI 服务。")
 
 
 def _v01_nav() -> None:
@@ -12972,9 +13028,11 @@ def _v01_profile_page() -> None:
     """Show the current route and data use without exposing internal rule tools."""
 
     profile = st.session_state.v01_profile
+    registration = st.session_state.v01_registration or {}
     route = resolve_program_pack(profile)
     pack = route.get("pack") or {}
     _v01_page_header("我的资料", "查看当前场景、适用路径和哪些信息正在被使用。")
+    st.caption(f"本地训练档案：{registration.get('display_name', '未命名')}。当前版本不会创建线上账户或上传资料。")
     st.markdown(
         (
             '<div class="v01-stat-grid">'
@@ -13178,6 +13236,9 @@ def aerobic_v01_app() -> None:
     _v01_state_defaults()
     _apply_theme()
     _apply_v01_theme()
+    if not _v01_has_local_profile():
+        _v01_registration_page()
+        return
     st.markdown(
         """
         <header class="v01-product-hero">

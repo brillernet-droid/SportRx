@@ -11,6 +11,9 @@
 - Added source-labelled `Measurement`, `CompletedSession`, and `Plan` record
   contracts. Missing measurement data remains `Not tested`; external data
   cannot directly change a prescription or progression decision.
+- Added a local-first registration step before the mobile prescription flow.
+  It creates a session-only training profile without collecting credentials or
+  presenting a non-existent online account system.
 
 ## 0.1.3 - Adaptive Session Loop
 
