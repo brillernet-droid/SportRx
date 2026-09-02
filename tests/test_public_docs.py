@@ -7,6 +7,7 @@ PUBLIC_DOCS = [
     ROOT / "README.md",
     ROOT / "README.en.md",
     ROOT / "docs/zh-CN/quickstart.md",
+    ROOT / "docs/zh-CN/program-packs.md",
     ROOT / "docs/zh-CN/product-guide.md",
     ROOT / "docs/zh-CN/claim-boundaries.md",
     ROOT / "docs/zh-CN/terminology.md",
@@ -30,11 +31,12 @@ def test_chinese_readme_leads_with_product_value_and_trial_path():
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
 
     assert readme.startswith("# SportRX")
-    assert "用可解释规则生成训练处方，用动作内容库支撑训练执行。" in readme
+    assert "把不同人群的运动处方逻辑做成可配置、可追溯、可测试的 Program Pack。" in readme
     assert "开得稳，讲得清，能调整。" in readme
-    assert "基础信息 → 基础筛查 → 当前运动状态 → 可用时间 → 当前周 FITT-VP 处方" in readme
+    assert "当前场景 → Program Pack 路由 → 基础筛查 → 当前运动状态 → 可用时间" in readme
     assert "每次训练完成情况 / RPE → 下一周调整" in readme
     assert "自动处方模块是**有氧运动处方原型**" in readme
+    assert "docs/zh-CN/program-packs.md" in readme
     assert "hasaneyldrm/exercises-dataset" in readme
     assert "python3 -m pip install -e \".[dev,app]\"" in readme
     assert "docs/zh-CN/quickstart.md" in readme

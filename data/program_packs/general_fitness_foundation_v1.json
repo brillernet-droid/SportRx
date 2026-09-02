@@ -1,0 +1,39 @@
+{
+  "id": "general_fitness_foundation_v1",
+  "version": "1.0.0",
+  "name": "一般体能建立：有氧基础路径",
+  "release_status": "released_limited",
+  "automation_level": "self_service",
+  "applicability": {
+    "age_min": 18,
+    "age_max": 64,
+    "goals": ["general_fitness"],
+    "summary": "表观健康、希望建立一般体能基础的成年人。当前自动化只覆盖有氧起点。"
+  },
+  "exclusions": [
+    "需要进一步专业评估的症状、疾病或不确定情况",
+    "需要力量训练自动剂量、专项表现处方或康复方案的情境"
+  ],
+  "required_inputs": [
+    "age",
+    "exercise_days_last_4w",
+    "mvpa_minutes_per_week",
+    "available_days_per_week",
+    "max_minutes_per_session",
+    "preferred_activity",
+    "screening_confirmation"
+  ],
+  "rule_ids": ["SAFE-001", "CORE-002", "INT-001"],
+  "measurement_protocols": ["self_reported_recent_activity", "session_rpe_completion"],
+  "content_mapping": {
+    "allowed_modalities": ["brisk walking", "easy jogging", "cycling", "elliptical"],
+    "dose_authority": "rules_only",
+    "content_only": ["basic_strength_movements"]
+  },
+  "evidence_version": "evidence-store-v0.1",
+  "limitations": [
+    "力量训练目前仅提供动作内容与记录，不自动生成力量剂量。",
+    "自动处方仍为有氧 FITT-VP 起点与按周 RPE/完成情况调整。"
+  ],
+  "withdrawal_switch": true
+}

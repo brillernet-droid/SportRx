@@ -7,6 +7,7 @@ from typing import Any
 from .assessment import classify_fitness
 from .intensity import calculate_intensity
 from .progression import apply_progression, evaluate_week
+from .program_packs import resolve_program_pack
 from .readiness import calculate_readiness
 from .screening import screen_user
 from .volume import estimate_initial_volume
@@ -75,11 +76,14 @@ def generate_prescription(
 
     feedback_by_week = feedback_by_week or {}
     safety = screen_user(profile)
-    if not safety["auto_prescription"]:
+    program_route = resolve_program_pack(profile)
+    if not safety["auto_prescription"] or not program_route["automation_allowed"]:
         return {
             "product": "SportRx",
             "version": "0.1.3",
             "safety": safety,
+            "program_route": program_route,
+            "program_pack": program_route["pack"],
             "readiness": calculate_readiness(profile),
             "weeks": [],
         }
@@ -148,6 +152,9 @@ def generate_prescription(
         "version": "0.1.3",
         "goal": profile.get("goal", "Improve aerobic fitness / general health"),
         "safety": safety,
+        "program_route": program_route,
+        "program_pack": program_route["pack"],
+        "rule_trace": list(program_route["pack"]["rule_ids"]),
         "assessment": assessment,
         "readiness": readiness,
         "intensity": intensity,
@@ -158,5 +165,5 @@ def generate_prescription(
         "commitment_boundary": (
             "Only ready weeks are current prescriptions. Later weeks require prior-week completion and RPE feedback."
         ),
-        "scope": "Apparently healthy adults, aerobic exercise only.",
+        "scope": "Apparently healthy adults, within the matched Program Pack's aerobic automation boundary.",
     }

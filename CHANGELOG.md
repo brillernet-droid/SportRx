@@ -1,5 +1,17 @@
 # Changelog
 
+## Unreleased - Population Prescription Foundation
+
+- Added a versioned `Program Pack` registry and deterministic scenario router.
+  A Pack, rather than a database, movement catalogue, device, or LLM, now
+  defines whether automated dose generation is available for a current context.
+- Published the low-activity aerobic Pack and a limited general-fitness Pack
+  whose automation remains aerobic-only. Metabolic-health and performance-entry
+  paths are assessment-only until their independent rules and validation exist.
+- Added source-labelled `Measurement`, `CompletedSession`, and `Plan` record
+  contracts. Missing measurement data remains `Not tested`; external data
+  cannot directly change a prescription or progression decision.
+
 ## 0.1.3 - Adaptive Session Loop
 
 - Replaced the fixed future-dose preview with an adaptive horizon: SportRX

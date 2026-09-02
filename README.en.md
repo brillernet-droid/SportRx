@@ -1,28 +1,32 @@
 # SportRX
 
-> **An explainable training-prescription engine with a local movement-content layer.**
+> **A population prescription platform built from versioned, explainable Program Packs.**
 
-SportRX is a training-prescription prototype for apparently healthy adults. It
-separates deterministic dose rules from a local movement-content catalogue. It
-is not an AI fitness coach: the active aerobic engine sets the initial FITT-VP
-dose and weekly progression, while the catalogue supplies movement content and
-instructions without deciding a dose.
+SportRX is a population prescription platform prototype. A common core handles
+safety routing, FITT-VP interfaces, feedback, records and explanation. A
+versioned `Program Pack` defines which context may use which inputs, rules,
+measurements and automation boundary. SportRX is not an AI fitness coach:
+deterministic Pack-linked rules set dose and progression, while movement content
+supplies instructions without deciding a dose.
 
 The active v0.1 core loop is:
 
 ```text
-basic inputs → screening boundary → 4-week FITT-VP plan → session execution → RPE / completion → next-week adjustment
+current context → Program Pack route → screening boundary → current-week FITT-VP plan → session execution → RPE / completion → next-week adjustment
 ```
 
-The first interface is Chinese and mobile-first: Set-up, Plan, Today, Progress,
-and an Exercise Library. It asks only for inputs that affect the plan: recent
-activity, time availability, preferred aerobic modality, optional resting heart
-rate, and a minimal stop boundary.
+The first interface is Chinese and mobile-first: Today, My Plan, Assessment,
+Progress and My Profile. It asks only for inputs that affect routing or dose:
+goal, recent activity, time availability, preferred aerobic modality, optional
+resting heart rate, and a minimal stop boundary.
 
 ## Current status
 
-This is an aerobic-prescription prototype with a movement-content foundation.
-Current work focuses on self-use and small-sample usability testing. The local
+The released self-service capability remains aerobic prescription for
+apparently healthy adults. The registry also includes a limited general-fitness
+Pack (aerobic automation only), plus assessment-only metabolic-health and
+performance-entry routes. Current work focuses on self-use and small-sample
+usability testing. The local
 catalogue contains 1,324 text-only records from the reviewed
 [`hasaneyldrm/exercises-dataset`](https://github.com/hasaneyldrm/exercises-dataset)
 source; third-party images and GIFs are excluded. SportRX does not claim
@@ -33,10 +37,11 @@ AI does not decide safety, exercise dose, weekly volume, or progression.
 
 ## Scope boundary
 
-v0.1 covers aerobic exercise only, for adults aged 18-64. It blocks automated
-prescription when a warning symptom, a relevant condition, or uncertainty is
-reported. It does not provide medical clearance, diagnosis, emergency advice,
-injury-risk estimates, race prediction, nutrition advice, or athlete percentiles.
+The published self-service Packs cover aerobic exercise only, for adults aged
+18-64. They block automated prescription when a warning symptom, a relevant
+condition, uncertainty, or a non-released Pack route is present. SportRX does
+not provide medical clearance, diagnosis, emergency advice, injury-risk
+estimates, race prediction, nutrition advice, or athlete percentiles.
 
 ## Internal Knowledge RAG
 
@@ -61,6 +66,7 @@ open the retained internal measurement-lab prototype.
 ## Chinese documentation
 
 - [Quick start](docs/zh-CN/quickstart.md)
+- [Program Pack path](docs/zh-CN/program-packs.md)
 - [Product guide](docs/zh-CN/product-guide.md)
 - [Claim boundaries](docs/zh-CN/claim-boundaries.md)
 - [Terminology](docs/zh-CN/terminology.md)

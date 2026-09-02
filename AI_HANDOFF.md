@@ -2,11 +2,13 @@
 
 ## What this repository is
 
-SportRX is a Chinese-first Streamlit prototype for an explainable, adaptive
-aerobic exercise prescription loop for apparently healthy adults. It is not an
-AI fitness coach. Deterministic Python rules determine screening routes,
-training dose, and weekly progression; evidence and knowledge components are
-kept separate from those decisions.
+SportRX is a Chinese-first population prescription platform prototype. Its
+current released self-service loop is an explainable, adaptive aerobic exercise
+prescription for apparently healthy adults, but the architecture is now a
+common core plus versioned `Program Pack` configurations. It is not an AI
+fitness coach. Deterministic Python rules determine screening routes, training
+dose, and weekly progression; evidence and knowledge components are kept
+separate from those decisions.
 
 Current release: **v0.1.3**.
 
@@ -52,7 +54,8 @@ The active navigation is implemented in `app/streamlit_app.py`:
 
 ## Active product constraints
 
-- v0.1 auto-prescribes **aerobic exercise only**.
+- Only a released self-service Program Pack may auto-prescribe. The currently
+  released rule capability is **aerobic exercise only**.
 - Scope is apparently healthy adults; signals requiring further professional
   assessment stop automation.
 - A future week is not a guaranteed prescription. It remains awaiting feedback
@@ -74,11 +77,16 @@ The active navigation is implemented in `app/streamlit_app.py`:
 Read `evidence/README.md` and `evidence/knowledge/README.md` before changing
 rules or evidence-related outputs.
 
+Read `docs/zh-CN/program-packs.md` and `sportrx/program_packs.py` before
+adding a user pathway. A new Pack needs its own scope, required inputs, rules,
+measurement rules, limitations, tests, release status, and withdrawal switch.
+
 ## Repository map
 
 ```text
 app/                 Streamlit interface
 sportrx/             deterministic engine and supporting modules
+data/program_packs/  versioned population prescription configurations
 data/exercises/      local third-party movement catalogue and license notices
 evidence/            public metadata, rule evidence, knowledge cards, evaluation
 docs/zh-CN/          Chinese public product documentation

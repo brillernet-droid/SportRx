@@ -1,0 +1,38 @@
+{
+  "id": "low_activity_aerobic_v1",
+  "version": "1.0.0",
+  "name": "久坐 / 低活动成人：有氧起步",
+  "release_status": "released",
+  "automation_level": "self_service",
+  "applicability": {
+    "age_min": 18,
+    "age_max": 64,
+    "goals": ["build_activity_habit", "improve_aerobic_fitness"],
+    "summary": "表观健康、近期活动不足、希望建立可完成有氧习惯的成年人。"
+  },
+  "exclusions": [
+    "需要进一步专业评估的症状、疾病或不确定情况",
+    "孕产期、未成年人和当前未覆盖的高龄处方情境"
+  ],
+  "required_inputs": [
+    "age",
+    "exercise_days_last_4w",
+    "mvpa_minutes_per_week",
+    "available_days_per_week",
+    "max_minutes_per_session",
+    "preferred_activity",
+    "screening_confirmation"
+  ],
+  "rule_ids": ["SAFE-001", "CORE-002", "INT-001"],
+  "measurement_protocols": ["self_reported_recent_activity", "session_rpe_completion"],
+  "content_mapping": {
+    "allowed_modalities": ["brisk walking", "easy jogging", "cycling", "elliptical"],
+    "dose_authority": "rules_only"
+  },
+  "evidence_version": "evidence-store-v0.1",
+  "limitations": [
+    "只生成有氧 FITT-VP 起点与按周 RPE/完成情况调整。",
+    "不生成力量、康复、慢病治疗、赛事成绩或医疗建议。"
+  ],
+  "withdrawal_switch": true
+}

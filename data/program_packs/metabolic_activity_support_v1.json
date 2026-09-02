@@ -1,0 +1,26 @@
+{
+  "id": "metabolic_activity_support_v1",
+  "version": "0.1.0",
+  "name": "体重与代谢健康关注：活动支持路径",
+  "release_status": "assessment_only",
+  "automation_level": "assessment_only",
+  "applicability": {
+    "age_min": 18,
+    "age_max": 64,
+    "goals": ["metabolic_health"],
+    "summary": "关注体重或代谢健康、但不寻求疾病诊疗的成年人。"
+  },
+  "exclusions": [
+    "任何需要医疗评估、治疗或专业协作确认的情况"
+  ],
+  "required_inputs": ["age", "goal", "screening_confirmation"],
+  "rule_ids": [],
+  "measurement_protocols": ["self_reported_recent_activity"],
+  "content_mapping": {"allowed_modalities": [], "dose_authority": "none"},
+  "evidence_version": "evidence-store-v0.1",
+  "limitations": [
+    "当前只进行场景识别与记录准备，不自动生成运动剂量。",
+    "不提供减重承诺、疾病判断或医疗建议。"
+  ],
+  "withdrawal_switch": true
+}

@@ -65,6 +65,11 @@ from .knowledge_rag import (
 from .knowledge_discovery import discover_knowledge_candidates
 from .launch_command_center import build_launch_command_center
 from .launch_readiness import build_launch_readiness, launch_readiness_markdown
+from .longitudinal_records import (
+    build_plan_record,
+    create_completed_session_record,
+    create_measurement_record,
+)
 from .language_editions import (
     build_language_edition_contract,
     get_language_edition,
@@ -91,6 +96,7 @@ from .pilot_feedback import (
 )
 from .plan_actual import classify_plan_actual, provisional_plan_actual
 from .prescription import generate_prescription
+from .program_packs import get_program_pack, load_program_packs, resolve_program_pack, validate_program_packs
 from .protocol_deviation import build_protocol_deviation_review, protocol_deviation_markdown
 from .protocol_source import (
     PROTOCOL_SOURCE_HELP,
@@ -177,6 +183,7 @@ __all__ = [
     "validate_knowledge_records",
     "discover_knowledge_candidates",
     "build_launch_readiness",
+    "build_plan_record",
     "build_launch_command_center",
     "build_language_edition_contract",
     "build_measurement_timeline",
@@ -233,6 +240,8 @@ __all__ = [
     "benchmark_log_entry_contract_markdown",
     "compare_retest_sessions",
     "create_benchmark_session",
+    "create_completed_session_record",
+    "create_measurement_record",
     "create_pilot_feedback_entry",
     "demo_runbook_markdown",
     "demo_experience_markdown",
@@ -257,6 +266,10 @@ __all__ = [
     "evidence_coverage_markdown",
     "evidence_library_markdown",
     "generate_prescription",
+    "get_program_pack",
+    "load_program_packs",
+    "resolve_program_pack",
+    "validate_program_packs",
     "get_exercise",
     "get_benchmark_protocol",
     "get_hybrid_benchmark",

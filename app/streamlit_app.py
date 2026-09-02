@@ -115,6 +115,7 @@ from sportrx import (
     quick_match_intake_contract_markdown,
     quick_match_lab_intake_sheet_markdown,
     quick_match,
+    resolve_program_pack,
     search_knowledge,
     search_exercises,
     create_session_feedback,
@@ -179,7 +180,7 @@ DEFAULT_PROFILE = {
     "loaded_movement_sessions_last_4w": 2,
     "preferred_activity": "brisk walking",
     "primary_goal": "first finish",
-    "goal": "Improve aerobic fitness / general health",
+    "goal": "build_activity_habit",
     "symptoms": [],
     "known_conditions": [],
 }
@@ -193,7 +194,7 @@ V01_DEFAULT_PROFILE = {
     "available_days_per_week": 3,
     "max_minutes_per_session": 30,
     "preferred_activity": "brisk walking",
-    "goal": "Improve aerobic fitness / general health",
+    "goal": "build_activity_habit",
     "symptoms": [],
     "known_conditions": [],
 }
@@ -203,6 +204,13 @@ V01_ACTIVITY_LABELS = {
     "easy jogging": "轻松慢跑",
     "cycling": "骑行",
     "elliptical": "椭圆机",
+}
+
+V01_GOAL_LABELS = {
+    "build_activity_habit": "建立规律运动习惯",
+    "general_fitness": "建立一般体能基础",
+    "metabolic_health": "关注体重与代谢健康",
+    "performance_entry": "为跑步、HYROX 等目标做准备",
 }
 
 V01_DISCOVERY_EXERCISE_NAMES = {
@@ -998,6 +1006,10 @@ def _v01_set_setup_step(step: int) -> None:
 
 def _v01_activity(activity: object) -> str:
     return V01_ACTIVITY_LABELS.get(str(activity), str(activity))
+
+
+def _v01_goal(goal: object) -> str:
+    return V01_GOAL_LABELS.get(str(goal), str(goal))
 
 
 def _v01_exercise_label(exercise: dict[str, Any]) -> str:
@@ -12404,85 +12416,122 @@ def pilot_feedback_page() -> None:
 
 
 def _apply_v01_theme() -> None:
-    """Apply the compact, Chinese-first mobile product surface."""
+    """Apply the mobile-first SportRX performance-lab visual system."""
 
     st.markdown(
         """
         <style>
-        :root { --v01-ink: #15211a; --v01-muted: #5f7064; --v01-line: #d6e1d8; --v01-canvas: #f3f7f4; --v01-panel: #ffffff; --v01-green: #176b45; --v01-green-soft: #e9f4ed; --v01-blue: #286c9f; }
-        html, body, [data-testid="stAppViewContainer"], [data-testid="stMain"] { background: var(--v01-canvas) !important; color: var(--v01-ink) !important; }
-        [data-testid="stHeader"] { background: rgba(243, 247, 244, 0.92) !important; backdrop-filter: blur(10px); }
-        [data-testid="stToolbar"] { right: 0.25rem; }
-        .block-container { width: min(100%, 440px) !important; max-width: 440px !important; padding: 3.85rem 0.8rem 4.25rem !important; }
+        :root {
+            --v01-ink: #f4f8ef;
+            --v01-muted: #a8b5ac;
+            --v01-line: #2a3931;
+            --v01-canvas: #080d0c;
+            --v01-panel: #101816;
+            --v01-panel-raised: #16221e;
+            --v01-green: #d7ff4c;
+            --v01-green-soft: rgba(215, 255, 76, 0.12);
+            --v01-blue: #7ab9ff;
+            --v01-alert: #ffb19b;
+        }
+        html, body, [data-testid="stAppViewContainer"], [data-testid="stMain"] {
+            background: var(--v01-canvas) !important;
+            color: var(--v01-ink) !important;
+        }
+        [data-testid="stAppViewContainer"] {
+            background:
+                radial-gradient(circle at 80% 7%, rgba(84, 130, 98, 0.18), transparent 23rem),
+                linear-gradient(135deg, #080d0c 0%, #0a100e 55%, #090d0c 100%) !important;
+        }
+        [data-testid="stHeader"] { background: transparent !important; }
+        [data-testid="stToolbar"] { display: none !important; }
+        .block-container { width: min(100%, 430px) !important; max-width: 430px !important; padding: 0.85rem 0.85rem 3.5rem !important; }
         [data-testid="stMainBlockContainer"] { padding-left: 0 !important; padding-right: 0 !important; }
         h1, h2, h3, p, li, label, [data-testid="stCaptionContainer"], [data-testid="stMarkdownContainer"] { color: var(--v01-ink) !important; letter-spacing: 0 !important; }
-        h1 { font-size: 1.65rem !important; line-height: 1.2 !important; font-weight: 780 !important; margin: 0.25rem 0 0.35rem !important; }
-        h2 { font-size: 1.18rem !important; margin-top: 1.5rem !important; }
-        h3 { font-size: 1rem !important; margin-top: 1.15rem !important; }
+        h1 { font-size: 2.35rem !important; line-height: 0.98 !important; font-weight: 840 !important; letter-spacing: -0.055em !important; margin: 0.28rem 0 0.35rem !important; }
+        h2 { font-size: 1.24rem !important; margin-top: 1.9rem !important; letter-spacing: -0.025em !important; }
+        h3 { font-size: 1rem !important; margin-top: 1.3rem !important; }
         [data-testid="stCaptionContainer"] p { color: var(--v01-muted) !important; font-size: 0.82rem !important; line-height: 1.45 !important; }
-        [data-testid="stForm"] { background: var(--v01-panel); border: 1px solid var(--v01-line); border-radius: 8px; padding: 1rem 0.9rem 0.85rem; box-shadow: 0 8px 20px rgba(20, 42, 30, 0.045); }
-        [data-testid="stNumberInput"] label, [data-testid="stSelectbox"] label, [data-testid="stRadio"] label, [data-testid="stSlider"] label, [data-testid="stCheckbox"] label { color: var(--v01-ink) !important; font-size: 0.9rem !important; font-weight: 680 !important; }
-        [data-testid="stNumberInput"] input, [data-testid="stSelectbox"] input { color: var(--v01-ink) !important; background: #ffffff !important; border: 1px solid #bdcfc0 !important; border-radius: 6px !important; min-height: 46px !important; font-size: 1rem !important; }
-        [data-testid="stNumberInput"] button { color: var(--v01-green) !important; background: #f4f8f5 !important; border-color: #bdcfc0 !important; }
-        [data-testid="stNumberInput"] input:focus, [data-testid="stSelectbox"] input:focus { border-color: var(--v01-green) !important; box-shadow: 0 0 0 3px rgba(23, 107, 69, 0.13) !important; }
-        [data-testid="stRadio"] [role="radiogroup"] { gap: 0.45rem !important; }
-        [data-testid="stRadio"] label { background: #ffffff !important; border: 1px solid #bdcfc0 !important; border-radius: 6px !important; padding: 0.6rem 0.65rem !important; min-height: 44px !important; align-items: center !important; }
+        [data-testid="stForm"] { background: rgba(16, 24, 22, 0.86); border: 1px solid var(--v01-line); border-radius: 14px; padding: 1.1rem 1rem 0.95rem; box-shadow: 0 24px 70px rgba(0, 0, 0, 0.18); }
+        [data-testid="stNumberInput"] label, [data-testid="stSelectbox"] label, [data-testid="stRadio"] label, [data-testid="stSlider"] label, [data-testid="stCheckbox"] label { color: var(--v01-ink) !important; font-size: 0.88rem !important; font-weight: 720 !important; }
+        [data-testid="stNumberInput"] input, [data-testid="stSelectbox"] input { color: var(--v01-ink) !important; background: #0b1110 !important; border: 1px solid #314039 !important; border-radius: 10px !important; min-height: 48px !important; font-size: 1rem !important; }
+        [data-testid="stNumberInput"] button { color: var(--v01-green) !important; background: #17241f !important; border-color: #314039 !important; }
+        [data-testid="stNumberInput"] input:focus, [data-testid="stSelectbox"] input:focus { border-color: var(--v01-green) !important; box-shadow: 0 0 0 3px rgba(215, 255, 76, 0.16) !important; }
+        [data-testid="stRadio"] [role="radiogroup"] { gap: 0.6rem !important; }
+        [data-testid="stRadio"] label { background: #0b1110 !important; border: 1px solid #314039 !important; border-radius: 10px !important; padding: 0.68rem 0.72rem !important; min-height: 46px !important; align-items: center !important; }
         [data-testid="stRadio"] label:has(input:checked) { border-color: var(--v01-green) !important; background: var(--v01-green-soft) !important; }
-        [data-testid="stButton"] > button, [data-testid="stFormSubmitButton"] > button { min-height: 46px !important; border-radius: 7px !important; font-size: 0.94rem !important; font-weight: 720 !important; letter-spacing: 0 !important; border: 1px solid #b7c9bb !important; color: var(--v01-ink) !important; background: #ffffff !important; box-shadow: none !important; }
-        [data-testid="stButton"] > button:hover, [data-testid="stFormSubmitButton"] > button:hover { border-color: var(--v01-green) !important; background: #f7fbf8 !important; }
-        [data-testid="stButton"] > button:focus-visible, [data-testid="stFormSubmitButton"] > button:focus-visible { outline: 3px solid rgba(23, 107, 69, 0.28) !important; outline-offset: 2px !important; }
-        [data-testid="stButton"] > button[kind="primary"], [data-testid="stFormSubmitButton"] > button[kind="primary"] { color: #ffffff !important; background: var(--v01-green) !important; border-color: var(--v01-green) !important; }
-        [data-testid="stButton"] > button[kind="primary"] p, [data-testid="stFormSubmitButton"] > button[kind="primary"] p { color: #ffffff !important; }
-        [data-testid="stExpander"] { border: 1px solid var(--v01-line) !important; border-radius: 8px !important; background: var(--v01-panel) !important; box-shadow: none !important; }
-        [data-testid="stAlert"] { border-radius: 8px !important; }
-        [data-testid="stRadioGroup"][aria-label="页面导航"] { display: grid !important; grid-template-columns: repeat(5, minmax(0, 1fr)) !important; gap: 0.3rem !important; width: 100% !important; }
-        [data-testid="stRadioGroup"][aria-label="页面导航"] [data-testid="stRadioOption"] { display: flex !important; justify-content: center !important; min-width: 0 !important; margin: 0 !important; padding: 0.58rem 0.12rem !important; background: #ffffff !important; border: 1px solid var(--v01-line) !important; border-radius: 7px !important; }
-        [data-testid="stRadioGroup"][aria-label="页面导航"] [data-testid="stRadioOption"][data-selected="true"] { background: var(--v01-green-soft) !important; border-color: var(--v01-green) !important; }
+        [data-testid="stButton"] > button, [data-testid="stFormSubmitButton"] > button { min-height: 50px !important; border-radius: 10px !important; font-size: 0.92rem !important; font-weight: 800 !important; letter-spacing: 0.01em !important; border: 1px solid #3a4a42 !important; color: var(--v01-ink) !important; background: var(--v01-panel-raised) !important; box-shadow: none !important; transition: transform 140ms ease, background 140ms ease, border-color 140ms ease !important; }
+        [data-testid="stButton"] > button:hover, [data-testid="stFormSubmitButton"] > button:hover { border-color: var(--v01-green) !important; transform: translateY(-1px); }
+        [data-testid="stButton"] > button:focus-visible, [data-testid="stFormSubmitButton"] > button:focus-visible { outline: 3px solid rgba(215, 255, 76, 0.42) !important; outline-offset: 3px !important; }
+        [data-testid="stButton"] > button[kind="primary"], [data-testid="stFormSubmitButton"] > button[kind="primary"] { color: #08100d !important; background: var(--v01-green) !important; border-color: var(--v01-green) !important; }
+        [data-testid="stButton"] > button[kind="primary"] p, [data-testid="stFormSubmitButton"] > button[kind="primary"] p { color: #08100d !important; }
+        [data-testid="stExpander"] { border: 1px solid var(--v01-line) !important; border-radius: 12px !important; background: var(--v01-panel) !important; box-shadow: none !important; }
+        [data-testid="stExpander"] details, [data-testid="stExpander"] summary, [data-testid="stExpanderDetails"] { background: var(--v01-panel) !important; color: var(--v01-ink) !important; }
+        [data-testid="stAlert"] { border-radius: 12px !important; }
+        [data-testid="stRadioGroup"][aria-label="页面导航"] { display: grid !important; grid-template-columns: repeat(5, minmax(0, 1fr)) !important; gap: 0.38rem !important; width: 100% !important; }
+        [data-testid="stRadioGroup"][aria-label="页面导航"] [data-testid="stRadioOption"] { display: flex !important; justify-content: center !important; min-width: 0 !important; margin: 0 !important; padding: 0.7rem 0.1rem !important; background: rgba(16, 24, 22, 0.84) !important; border: 1px solid var(--v01-line) !important; border-radius: 10px !important; }
+        [data-testid="stRadioGroup"][aria-label="页面导航"] [data-testid="stRadioOption"][data-selected="true"] { background: var(--v01-green) !important; border-color: var(--v01-green) !important; }
         [data-testid="stRadioGroup"][aria-label="页面导航"] [data-testid="stRadioOption"] > div > div > div:first-child { display: none !important; }
-        [data-testid="stRadioGroup"][aria-label="页面导航"] [data-testid="stMarkdownContainer"] p { color: var(--v01-ink) !important; font-size: 0.74rem !important; font-weight: 720 !important; white-space: nowrap !important; }
-        .v01-app-brand { color: var(--v01-green); font-size: 0.9rem; font-weight: 820; margin: 0.1rem 0 0.5rem; }
-        .v01-app-subtitle { color: var(--v01-muted); font-size: 0.8rem; line-height: 1.4; margin-bottom: 1rem; }
-        .v01-nav-label { color: var(--v01-muted); font-size: 0.75rem; font-weight: 650; margin: 0.2rem 0 0.45rem; }
-        .v01-page-head { background: transparent; margin: 1.2rem 0 0.8rem; }
-        .v01-page-head .v01-eyebrow { color: var(--v01-green); font-size: 0.72rem; font-weight: 720; margin-bottom: 0.36rem; }
-        .v01-page-head .v01-title { color: var(--v01-ink); font-size: 1.45rem; font-weight: 780; line-height: 1.2; }
-        .v01-page-head .v01-copy { color: var(--v01-muted); font-size: 0.88rem; line-height: 1.46; margin-top: 0.42rem; }
-        .v01-stepper { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.4rem; margin: 0.75rem 0 1rem; }
-        .v01-step { border-top: 3px solid #cbd9ce; color: var(--v01-muted); font-size: 0.76rem; padding-top: 0.42rem; }
-        .v01-step-active { border-top-color: var(--v01-green); color: var(--v01-green); font-weight: 720; }
-        .v01-section-note { color: var(--v01-muted); font-size: 0.82rem; line-height: 1.45; margin: 0 0 0.75rem; }
-        .v01-stat-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.55rem; margin: 0.75rem 0 1rem; }
-        .v01-stat { background: var(--v01-panel); border: 1px solid var(--v01-line); border-radius: 8px; padding: 0.8rem; }
+        [data-testid="stRadioGroup"][aria-label="页面导航"] [data-testid="stMarkdownContainer"] p { color: var(--v01-ink) !important; font-size: 0.72rem !important; font-weight: 800 !important; white-space: nowrap !important; }
+        [data-testid="stRadioGroup"][aria-label="页面导航"] [data-testid="stRadioOption"][data-selected="true"] [data-testid="stMarkdownContainer"] p { color: #08100d !important; }
+        .v01-product-hero { position: relative; overflow: hidden; padding: 1.3rem; border: 1px solid #2c3b34; border-radius: 14px; background: linear-gradient(135deg, rgba(22, 34, 30, 0.98), rgba(10, 16, 14, 0.98)); box-shadow: 0 30px 90px rgba(0, 0, 0, 0.22); }
+        .v01-product-hero::after { position: absolute; inset: 0; background-image: linear-gradient(rgba(215, 255, 76, 0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(215, 255, 76, 0.07) 1px, transparent 1px); background-size: 26px 26px; content: ""; mask-image: linear-gradient(90deg, transparent 20%, rgba(0, 0, 0, 0.8)); pointer-events: none; }
+        .v01-product-main, .v01-product-stats { position: relative; z-index: 1; }
+        .v01-product-kicker, .v01-brand { color: var(--v01-green); font-size: 0.68rem; font-weight: 850; letter-spacing: 0.14em; text-transform: uppercase; }
+        .v01-product-title { max-width: 610px; margin: 0.8rem 0 0; color: #f8faf4; font-size: 2.45rem; font-weight: 850; letter-spacing: -0.065em; line-height: 0.91; }
+        .v01-product-title em { color: var(--v01-green); font-style: normal; }
+        .v01-product-copy { max-width: 470px; margin: 0.95rem 0 0; color: #b8c5bc; font-size: 0.94rem; line-height: 1.55; }
+        .v01-product-stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.8rem; margin-top: 1rem; padding-top: 0.9rem; border-top: 1px solid rgba(215, 255, 76, 0.22); }
+        .v01-product-stat { color: #9ba9a0; font-size: 0.64rem; font-weight: 760; letter-spacing: 0.1em; text-transform: uppercase; }
+        .v01-product-stat strong { display: block; color: #f6f8f1; font-size: 1.45rem; font-weight: 820; letter-spacing: -0.05em; line-height: 1.05; margin-top: 0.24rem; text-transform: none; }
+        .v01-nav-label { color: var(--v01-muted); font-size: 0.68rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; margin: 1.25rem 0 0.52rem; }
+        .v01-page-head { display: grid; gap: 0.8rem; overflow: hidden; background: linear-gradient(115deg, #14201c, #0d1513); color: #ffffff; padding: 1.2rem; border-radius: 14px; margin: 1.1rem 0 1.2rem; border: 1px solid #304037; }
+        .v01-page-head .v01-eyebrow { color: var(--v01-green); font-size: 0.66rem; font-weight: 830; letter-spacing: 0.11em; text-transform: uppercase; margin-bottom: 0.58rem; }
+        .v01-page-head .v01-title { color: #ffffff; font-size: 1.72rem; font-weight: 830; letter-spacing: -0.045em; line-height: 1.05; }
+        .v01-page-head .v01-copy { color: #c1cbc4; font-size: 0.88rem; line-height: 1.5; margin-top: 0.62rem; }
+        .v01-page-meta { border-top: 1px solid rgba(215, 255, 76, 0.25); padding-top: 0.68rem; }
+        .v01-page-meta span { display: block; color: #92a198; font-size: 0.62rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; }
+        .v01-page-meta strong { display: block; color: var(--v01-green); font-size: 1rem; font-weight: 800; letter-spacing: -0.025em; margin-top: 0.28rem; }
+        .v01-stepper { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.4rem; margin: 0.65rem 0 1.15rem; }
+        .v01-step { border-top: 3px solid #314039; color: var(--v01-muted); font-size: 0.72rem; padding-top: 0.5rem; }
+        .v01-step-active { border-top-color: var(--v01-green); color: var(--v01-green); font-weight: 800; }
+        .v01-section-note { color: var(--v01-muted); font-size: 0.8rem; line-height: 1.45; margin: -0.25rem 0 0.82rem; }
+        .v01-stat-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.72rem; margin: 0.9rem 0 1.1rem; }
+        .v01-stat { background: var(--v01-panel); border: 1px solid var(--v01-line); border-top: 3px solid var(--v01-green); border-radius: 12px; padding: 0.92rem; }
         .v01-stat-label { color: var(--v01-muted); font-size: 0.72rem; }
-        .v01-stat-value { color: var(--v01-ink); font-size: 1rem; font-weight: 760; line-height: 1.25; margin-top: 0.25rem; }
-        .v01-stat-copy { color: var(--v01-muted); font-size: 0.74rem; line-height: 1.36; margin-top: 0.3rem; }
-        .v01-discovery-context, .v01-discovery-card { background: var(--v01-panel); border: 1px solid var(--v01-line); border-radius: 8px; }
-        .v01-discovery-context { margin: 0.8rem 0 0.55rem; padding: 0.85rem; }
-        .v01-discovery-kicker { color: var(--v01-green); font-size: 0.72rem; font-weight: 720; }
-        .v01-discovery-title { color: var(--v01-ink); font-size: 1.02rem; font-weight: 760; margin-top: 0.28rem; }
-        .v01-discovery-copy, .v01-discovery-card-meta { color: var(--v01-muted); font-size: 0.76rem; line-height: 1.42; margin-top: 0.28rem; }
-        .v01-discovery-grid { display: grid; gap: 0.45rem; margin: 0 0 0.8rem; }
-        .v01-discovery-card { padding: 0.72rem 0.78rem; }
-        .v01-discovery-card-name { color: var(--v01-ink); font-size: 0.88rem; font-weight: 700; line-height: 1.28; }
-        .v01-week { background: var(--v01-panel); border: 1px solid var(--v01-line); border-left: 3px solid var(--v01-green); border-radius: 0 8px 8px 0; padding: 0.85rem 0.85rem 0.2rem; margin: 0.7rem 0 0; }
-        .v01-week-title { color: var(--v01-ink); font-size: 1rem; font-weight: 760; }
-        .v01-week-meta { color: var(--v01-muted); font-size: 0.78rem; line-height: 1.4; margin-top: 0.28rem; }
-        .v01-today-session { border: 1px solid #a9cdb5; border-left: 5px solid var(--v01-green); border-radius: 0 8px 8px 0; background: #ffffff; padding: 1rem; margin: 0.85rem 0; }
-        .v01-session-kicker { color: var(--v01-green); font-size: 0.72rem; font-weight: 720; }
-        .v01-session-title { color: var(--v01-ink); font-size: 1.28rem; font-weight: 780; line-height: 1.22; margin-top: 0.3rem; }
-        .v01-session-detail { color: var(--v01-muted); font-size: 0.86rem; line-height: 1.48; margin-top: 0.42rem; }
-        .v01-rule-list { border-top: 1px solid var(--v01-line); margin: 0.85rem 0; }
-        .v01-rule { display: grid; grid-template-columns: 68px minmax(0, 1fr); gap: 0.55rem; padding: 0.72rem 0; border-bottom: 1px solid var(--v01-line); }
-        .v01-rule-label { color: var(--v01-green); font-size: 0.78rem; font-weight: 720; }
+        .v01-stat-value { color: var(--v01-ink); font-size: 1.04rem; font-weight: 820; line-height: 1.22; margin-top: 0.3rem; }
+        .v01-stat-copy { color: var(--v01-muted); font-size: 0.74rem; line-height: 1.35; margin-top: 0.38rem; }
+        .v01-discovery-context { margin: 1rem 0 0.8rem; padding: 1rem; border: 1px solid #365044; border-radius: 14px; background: linear-gradient(135deg, rgba(24, 40, 32, 0.9), rgba(16, 24, 22, 0.9)); }
+        .v01-discovery-kicker { color: var(--v01-green); font-size: 0.66rem; font-weight: 850; letter-spacing: 0.12em; text-transform: uppercase; }
+        .v01-discovery-title { color: #f4f8ef; font-size: 1.12rem; font-weight: 820; letter-spacing: -0.035em; margin-top: 0.38rem; }
+        .v01-discovery-copy, .v01-discovery-card-meta { color: var(--v01-muted); font-size: 0.76rem; line-height: 1.48; margin-top: 0.38rem; }
+        .v01-discovery-grid { display: grid; gap: 0.52rem; margin: 0 0 1rem; }
+        .v01-discovery-card { padding: 0.82rem 0.86rem; border: 1px solid var(--v01-line); border-radius: 12px; background: rgba(16, 24, 22, 0.8); }
+        .v01-discovery-card-name { color: #f2f7ee; font-size: 0.88rem; font-weight: 780; line-height: 1.25; }
+        .v01-week { background: var(--v01-panel); border: 1px solid var(--v01-line); border-left: 4px solid var(--v01-green); border-radius: 0 12px 12px 0; padding: 0.9rem 0.92rem 0.25rem; margin: 0.78rem 0 0; }
+        .v01-week-title { color: var(--v01-ink); font-size: 1rem; font-weight: 830; }
+        .v01-week-meta { color: var(--v01-muted); font-size: 0.76rem; line-height: 1.4; margin-top: 0.28rem; }
+        .v01-today-session { border: 1px solid #445b50; border-left: 6px solid var(--v01-green); border-radius: 0 14px 14px 0; background: linear-gradient(110deg, #16231e, #101816); padding: 1.15rem 1.1rem; margin: 1rem 0; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12); }
+        .v01-session-kicker { color: var(--v01-green); font-size: 0.7rem; font-weight: 820; letter-spacing: 0.1em; text-transform: uppercase; }
+        .v01-session-title { color: var(--v01-ink); font-size: 1.32rem; font-weight: 830; line-height: 1.18; margin-top: 0.32rem; }
+        .v01-session-detail { color: var(--v01-muted); font-size: 0.84rem; line-height: 1.5; margin-top: 0.45rem; }
+        .v01-rule-list { border-top: 1px solid var(--v01-line); margin: 1.15rem 0; }
+        .v01-rule { display: grid; grid-template-columns: 76px minmax(0, 1fr); gap: 0.6rem; padding: 0.85rem 0; border-bottom: 1px solid var(--v01-line); }
+        .v01-rule-label { color: var(--v01-green); font-size: 0.72rem; font-weight: 800; letter-spacing: 0.06em; }
         .v01-rule-copy { color: var(--v01-muted); font-size: 0.82rem; line-height: 1.42; }
-        .v01-launch-steps { border: 1px solid var(--v01-line); border-radius: 8px; background: var(--v01-panel); overflow: hidden; margin: 0.85rem 0 0.9rem; }
-        .v01-launch-step { display: grid; grid-template-columns: 28px 1fr; gap: 0.65rem; align-items: start; padding: 0.8rem; border-bottom: 1px solid var(--v01-line); }
+        .v01-launch-steps { border: 1px solid var(--v01-line); border-radius: 14px; background: rgba(16, 24, 22, 0.74); overflow: hidden; margin: 0.95rem 0 1rem; }
+        .v01-launch-step { display: grid; grid-template-columns: 32px minmax(0, 1fr); gap: 0.55rem; align-items: start; padding: 0.86rem 0.8rem; border-bottom: 1px solid var(--v01-line); }
         .v01-launch-step:last-child { border-bottom: 0; }
-        .v01-launch-index { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; color: #ffffff; background: var(--v01-green); font-size: 0.72rem; font-weight: 760; }
-        .v01-launch-label { color: var(--v01-ink); display: block; font-size: 0.88rem; font-weight: 720; }
-        .v01-launch-copy { color: var(--v01-muted); display: block; font-size: 0.78rem; line-height: 1.4; margin-top: 0.16rem; }
-        @media (max-width: 460px) { .block-container { width: 100% !important; max-width: 100% !important; padding: 3.85rem 0.75rem 4rem !important; } }
-        @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+        .v01-launch-step > div { display: grid; grid-template-columns: 88px minmax(0, 1fr); gap: 0.45rem; align-items: start; }
+        .v01-launch-index { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; color: #08100d; background: var(--v01-green); font-size: 0.7rem; font-weight: 850; }
+        .v01-launch-label { color: #eff5ed; display: block; font-size: 0.8rem; font-weight: 760; }
+        .v01-launch-copy { color: var(--v01-muted); display: block; font-size: 0.76rem; line-height: 1.42; }
+        @media (max-width: 460px) {
+            .block-container { width: 100% !important; max-width: 100% !important; padding: 0.85rem 0.85rem 3.5rem !important; }
+            .v01-product-title { font-size: 2.36rem; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            [data-testid="stButton"] > button, [data-testid="stFormSubmitButton"] > button { transition: none !important; }
+        }
         </style>
         """,
         unsafe_allow_html=True,
@@ -12493,9 +12542,15 @@ def _v01_page_header(title: str, subtitle: str) -> None:
     st.markdown(
         (
             '<section class="v01-page-head">'
-            '<div class="v01-eyebrow">SPORT RX</div>'
+            '<div>'
+            '<div class="v01-eyebrow">SportRX / 人群化处方</div>'
             f'<div class="v01-title">{escape(title)}</div>'
             f'<div class="v01-copy">{escape(subtitle)}</div>'
+            '</div>'
+            '<aside class="v01-page-meta">'
+            '<span>训练逻辑</span>'
+            '<strong>从实际开始</strong>'
+            '</aside>'
             '</section>'
         ),
         unsafe_allow_html=True,
@@ -12503,15 +12558,16 @@ def _v01_page_header(title: str, subtitle: str) -> None:
 
 
 def _v01_nav() -> None:
-    pages = [("首页", "首页"), ("计划", "计划"), ("设置", "设置"), ("记录", "记录"), ("动作", "动作")]
-    if st.session_state.v01_page not in {page_id for page_id, _label in pages}:
-        st.session_state.v01_page = "首页"
-    st.markdown('<div class="v01-nav-label">选择要做的事</div>', unsafe_allow_html=True)
+    pages = [("首页", "今天"), ("计划", "我的计划"), ("设置", "评估"), ("记录", "进展"), ("资料", "我的资料")]
     page_ids = [page_id for page_id, _label in pages]
+    if st.session_state.v01_page not in {*page_ids, "动作"}:
+        st.session_state.v01_page = "首页"
+    st.markdown('<div class="v01-nav-label">我的处方</div>', unsafe_allow_html=True)
+    selected_page = st.session_state.v01_page if st.session_state.v01_page in page_ids else "首页"
     selected = st.radio(
         "页面导航",
         page_ids,
-        index=page_ids.index(st.session_state.v01_page),
+        index=page_ids.index(selected_page),
         format_func=lambda page_id: dict(pages)[page_id],
         horizontal=True,
         label_visibility="collapsed",
@@ -12526,14 +12582,14 @@ def _v01_setup_page() -> None:
     step = int(st.session_state.v01_setup_step)
     draft = st.session_state.v01_draft
     headers = {
-        1: ("先了解你的运动", "只填写会改变处方的内容。"),
+        1: ("评估你的当前场景", "只填写会改变路径或处方的内容。"),
         2: ("把训练放进生活", "告诉我你的时间和偏好，然后生成第一份处方。"),
     }
     if step not in headers:
         step = 1
         _v01_set_setup_step(step)
     _v01_page_header(*headers[step])
-    step_names = ["运动情况", "时间与确认"]
+    step_names = ["目标与运动情况", "时间与确认"]
     st.markdown(
         '<div class="v01-stepper">'
         + "".join(
@@ -12547,6 +12603,14 @@ def _v01_setup_page() -> None:
     if step == 1:
         st.markdown('<div class="v01-section-note">不问“基础好不好”，只记录你近期实际做了多少运动。</div>', unsafe_allow_html=True)
         with st.form("v01_profile_step_one"):
+            goal_options = list(V01_GOAL_LABELS)
+            current_goal = str(draft.get("goal", "build_activity_habit"))
+            goal = st.selectbox(
+                "你现在最想改善什么？",
+                goal_options,
+                index=goal_options.index(current_goal) if current_goal in goal_options else 0,
+                format_func=_v01_goal,
+            )
             age = st.number_input("年龄", min_value=18, max_value=64, value=int(draft.get("age", 30)), step=1)
             activity_days = st.number_input(
                 "最近一个月，平均每周运动几天",
@@ -12565,7 +12629,14 @@ def _v01_setup_page() -> None:
             )
             next_step = st.form_submit_button("继续", type="primary", width="stretch")
         if next_step:
-            draft.update({"age": int(age), "exercise_days_last_4w": int(activity_days), "mvpa_minutes_per_week": int(mvpa_minutes)})
+            draft.update(
+                {
+                    "goal": goal,
+                    "age": int(age),
+                    "exercise_days_last_4w": int(activity_days),
+                    "mvpa_minutes_per_week": int(mvpa_minutes),
+                }
+            )
             _v01_set_setup_step(2)
             st.rerun()
         return
@@ -12629,7 +12700,7 @@ def _v01_setup_page() -> None:
                 "max_minutes_per_session": int(max_minutes),
                 "preferred_activity": preferred_activity,
                 "resting_hr": int(resting_hr),
-                "goal": "Improve aerobic fitness / general health",
+                "goal": str(draft.get("goal", "build_activity_habit")),
                 "symptoms": ["reported_warning_symptom"] if has_warning_symptoms != "没有" else [],
                 "known_conditions": ["reported_relevant_condition"] if has_relevant_condition != "没有" else [],
             }
@@ -12660,11 +12731,34 @@ def _v01_plan_page() -> None:
         st.button("返回设置", type="primary", width="stretch", on_click=_v01_set_page, args=("设置",))
         return
 
+    program_route = plan.get("program_route", {})
+    matched_pack = program_route.get("pack") or {}
+    if not program_route.get("automation_allowed", False):
+        _v01_page_header("当前先进入评估路径", "这个目标的独立处方规则还没有发布，因此不会生成自动训练剂量。")
+        st.markdown(
+            (
+                '<section class="v01-today-session">'
+                '<div class="v01-session-kicker">当前匹配路径</div>'
+                f'<div class="v01-session-title">{escape(str(matched_pack.get("name", "专业协作路径")))}</div>'
+                f'<div class="v01-session-detail">{escape(str(program_route.get("reason", "")))}</div>'
+                '</section>'
+            ),
+            unsafe_allow_html=True,
+        )
+        for limitation in program_route.get("limitations", []):
+            st.caption(f"边界：{limitation}")
+        st.button("调整我的目标", type="primary", width="stretch", on_click=_v01_set_page, args=("设置",))
+        return
+
     assessment = plan["assessment"]
     intensity = plan["intensity"]
     _v01_page_header(
         "你的适应性计划",
         "现在只承诺当前周；下一周会根据完成情况和 RPE 再生成。",
+    )
+    st.caption(
+        f"当前适用方案：{matched_pack.get('name', '有氧起步')} · {matched_pack.get('version', '')}。"
+        "自动化只在该方案的已发布边界内生效。"
     )
     st.markdown(
         (
@@ -12874,9 +12968,57 @@ def _v01_exercise_catalogue_page() -> None:
     st.link_button("查看动作库来源与许可", source["repository_url"], width="stretch")
 
 
+def _v01_profile_page() -> None:
+    """Show the current route and data use without exposing internal rule tools."""
+
+    profile = st.session_state.v01_profile
+    route = resolve_program_pack(profile)
+    pack = route.get("pack") or {}
+    _v01_page_header("我的资料", "查看当前场景、适用路径和哪些信息正在被使用。")
+    st.markdown(
+        (
+            '<div class="v01-stat-grid">'
+            f'<section class="v01-stat"><div class="v01-stat-label">当前目标</div><div class="v01-stat-value">{escape(_v01_goal(profile.get("goal")))}</div><div class="v01-stat-copy">目标会影响匹配路径，不直接替代剂量规则。</div></section>'
+            f'<section class="v01-stat"><div class="v01-stat-label">当前路径</div><div class="v01-stat-value">{escape(str(pack.get("name", "专业协作路径")))}</div><div class="v01-stat-copy">{escape(str(route.get("reason", "")))}</div></section>'
+            '</div>'
+        ),
+        unsafe_allow_html=True,
+    )
+    st.subheader("用于当前路径的信息")
+    values = [
+        ("年龄", f"{profile.get('age', '未填写')} 岁"),
+        ("近期运动", f"每周 {profile.get('exercise_days_last_4w', '未填写')} 天 · {profile.get('mvpa_minutes_per_week', '未填写')} 分钟"),
+        ("可用时间", f"每周 {profile.get('available_days_per_week', '未填写')} 天 · 每次最多 {profile.get('max_minutes_per_session', '未填写')} 分钟"),
+        ("偏好方式", _v01_activity(profile.get("preferred_activity", "brisk walking"))),
+    ]
+    st.markdown(
+        '<div class="v01-rule-list">'
+        + "".join(
+            f'<div class="v01-rule"><div class="v01-rule-label">{escape(label)}</div><div class="v01-rule-copy">{escape(value)}</div></div>'
+            for label, value in values
+        )
+        + '</div>',
+        unsafe_allow_html=True,
+    )
+    st.caption("当前尚未测量：专项表现测试与设备数据。未测量信息会保留为 Not tested，不会被自动补齐。")
+    if pack:
+        with st.expander("查看当前方案边界", expanded=False):
+            for limitation in pack.get("limitations", []):
+                st.write(f"- {limitation}")
+    st.button("编辑评估信息", type="primary", width="stretch", on_click=_v01_set_page, args=("设置",))
+    st.button("查看动作内容库", width="stretch", on_click=_v01_set_page, args=("动作",))
+
+
 def _v01_today_page() -> None:
     plan = st.session_state.v01_plan
     if not isinstance(plan, dict) or not plan.get("weeks") or not plan.get("safety", {}).get("auto_prescription"):
+        route = plan.get("program_route", {}) if isinstance(plan, dict) else {}
+        matched_pack = route.get("pack") or {}
+        if route and not route.get("automation_allowed", False):
+            _v01_page_header("当前先完成评估", "你的目标已被识别，但对应的独立处方规则还没有发布。")
+            st.info(f"当前路径：{matched_pack.get('name', '专业协作路径')}。{route.get('reason', '')}")
+            st.button("查看路径说明", type="primary", width="stretch", on_click=_v01_set_page, args=("资料",))
+            return
         _v01_page_header("从今天开始", "用近期运动和可用时间，生成一份先能完成、再逐周调整的有氧处方。")
         st.markdown(
             """
@@ -13036,9 +13178,20 @@ def aerobic_v01_app() -> None:
     _v01_state_defaults()
     _apply_theme()
     _apply_v01_theme()
-    st.markdown('<div class="v01-app-brand">SportRX</div>', unsafe_allow_html=True)
     st.markdown(
-        '<div class="v01-app-subtitle">从今天能完成的运动开始，逐周根据完成情况与 RPE 调整。</div>',
+        """
+        <header class="v01-product-hero">
+          <div class="v01-product-main">
+            <div class="v01-product-kicker">SportRX / 人群化处方</div>
+            <div class="v01-product-title">训练，<br><em>从今天的状态开始。</em></div>
+            <p class="v01-product-copy">先识别你的当前场景，再用对应方案的清楚规则，把现实时间和运动反馈变成可执行的训练起点。</p>
+          </div>
+          <div class="v01-product-stats" aria-label="SportRX 计划特点">
+            <div class="v01-product-stat">当前路径<strong>Program Pack</strong></div>
+            <div class="v01-product-stat">反馈信号<strong>RPE</strong></div>
+          </div>
+        </header>
+        """,
         unsafe_allow_html=True,
     )
     _v01_nav()
@@ -13051,6 +13204,8 @@ def aerobic_v01_app() -> None:
         _v01_today_page()
     elif page == "动作":
         _v01_exercise_catalogue_page()
+    elif page == "资料":
+        _v01_profile_page()
     else:
         _v01_progress_page()
 

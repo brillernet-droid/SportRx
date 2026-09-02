@@ -1,0 +1,27 @@
+{
+  "id": "performance_entry_v1",
+  "version": "0.1.0",
+  "name": "运动表现目标入门：测量优先路径",
+  "release_status": "assessment_only",
+  "automation_level": "assessment_only",
+  "applicability": {
+    "age_min": 18,
+    "age_max": 64,
+    "goals": ["performance_entry"],
+    "summary": "希望为 5K、Hybrid、骑行等表现目标建立基础的成年人。"
+  },
+  "exclusions": [
+    "未完成对应专项 Pack 审核前的自动训练剂量",
+    "赛事成绩、完赛概率、伤病概率或人群排名结论"
+  ],
+  "required_inputs": ["age", "goal", "screening_confirmation"],
+  "rule_ids": [],
+  "measurement_protocols": ["benchmark_protocol_required"],
+  "content_mapping": {"allowed_modalities": [], "dose_authority": "none"},
+  "evidence_version": "evidence-store-v0.1",
+  "limitations": [
+    "当前先进入测量与训练记录准备，不自动生成专项训练。",
+    "现有 Benchmark 研究模块不构成赛事适配或表现预测。"
+  ],
+  "withdrawal_switch": true
+}
