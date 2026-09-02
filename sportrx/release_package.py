@@ -61,6 +61,7 @@ EXCLUDED_PARTS = {
 
 
 EXCLUDED_PREFIXES = (
+    "data/.local/",
     "docs/internal/",
     "evidence/private/",
 )
@@ -112,6 +113,7 @@ REQUIRED_PUBLIC_FILES = [
     "sportrx/knowledge_rag.py",
     "sportrx/launch_command_center.py",
     "sportrx/launch_readiness.py",
+    "sportrx/local_accounts.py",
     "sportrx/measurement_timeline.py",
     "sportrx/metric_sources.py",
     "sportrx/open_source_integration.py",
@@ -195,6 +197,7 @@ REQUIRED_PUBLIC_FILES = [
     "tests/test_lab_readiness.py",
     "tests/test_launch_command_center.py",
     "tests/test_launch_readiness.py",
+    "tests/test_local_accounts.py",
     "tests/test_measurement_timeline.py",
     "tests/test_metric_sources.py",
     "tests/test_open_source_integration.py",

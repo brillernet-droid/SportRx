@@ -20,6 +20,14 @@ bash scripts/run_local.sh
 浏览器打开终端输出的本地地址。默认使用 `127.0.0.1:8501`；如端口被占用，可使用
 `SPORTRX_PORT=8502 bash scripts/run_local.sh`。
 
+开发者希望直接进入应用时，可运行：
+
+```bash
+SPORT_RX_DEVELOPER_MODE=1 bash scripts/run_local.sh
+```
+
+这只跳过本机体验账户入口，不能用于公开部署。
+
 ## 3 分钟体验
 
 首次打开就是中文、手机优先的五个页面：

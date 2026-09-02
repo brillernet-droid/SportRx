@@ -15,6 +15,9 @@
   training-profile name plus an initial password, without email or phone.
   Passwords are persisted locally as PBKDF2 hashes; this remains a local demo
   account, not a cloud identity system.
+- Added an explicit `SPORT_RX_DEVELOPER_MODE=1` local bypass so developers can
+  enter the product without registering. The bypass is off by default and is
+  not intended for public deployment.
 
 ## 0.1.3 - Adaptive Session Loop
 

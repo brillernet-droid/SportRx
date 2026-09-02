@@ -919,9 +919,21 @@ def _product_mode() -> str:
     return os.environ.get("SPORT_RX_PRODUCT_MODE", "aerobic_v01").strip().lower()
 
 
+def _v01_developer_mode() -> bool:
+    """Allow an explicit local developer session to skip the account gate."""
+
+    return os.environ.get("SPORT_RX_DEVELOPER_MODE", "0").strip() == "1"
+
+
 def _v01_state_defaults() -> None:
     st.session_state.setdefault("v01_page", "首页")
     st.session_state.setdefault("v01_registration", None)
+    if _v01_developer_mode() and not st.session_state.v01_registration:
+        st.session_state.v01_registration = {
+            "account_id": "local-developer",
+            "display_name": "开发者",
+            "storage": "developer_bypass",
+        }
     st.session_state.setdefault("v01_profile", V01_DEFAULT_PROFILE.copy())
     st.session_state.setdefault("v01_draft", V01_DEFAULT_PROFILE.copy())
     st.session_state.setdefault("v01_setup_step", 1)
@@ -13067,7 +13079,10 @@ def _v01_profile_page() -> None:
     route = resolve_program_pack(profile)
     pack = route.get("pack") or {}
     _v01_page_header("我的资料", "查看当前场景、适用路径和哪些信息正在被使用。")
-    st.caption(f"本机训练账户：{registration.get('display_name', '未命名')}。当前版本不收集邮箱或手机号，也不会上传资料。")
+    if registration.get("storage") == "developer_bypass":
+        st.caption("当前为本地开发者直入模式；未执行注册或登录。")
+    else:
+        st.caption(f"本机训练账户：{registration.get('display_name', '未命名')}。当前版本不收集邮箱或手机号，也不会上传资料。")
     st.markdown(
         (
             '<div class="v01-stat-grid">'

@@ -41,6 +41,7 @@ def test_should_include_release_path_excludes_internal_and_generated_files():
     assert not should_include_release_path("dist/SportRx_public.zip")
     assert not should_include_release_path(".cache/sportrx_evidence.sqlite")
     assert not should_include_release_path("evidence/private/licensed_source.pdf")
+    assert not should_include_release_path("data/.local/accounts.json")
 
 
 def test_release_package_manifest_is_public_ready():

@@ -9,6 +9,7 @@ def test_streamlit_app_imports():
     assert hasattr(module, "_hero_status_console")
     assert hasattr(module, "_demo_experience_console")
     assert hasattr(module, "_demo_experience_sequence_rows")
+    assert hasattr(module, "_v01_developer_mode")
     assert hasattr(module, "_guided_review_console")
     assert hasattr(module, "_guided_action_rail")
     assert hasattr(module, "_guided_review_step_rows")
@@ -119,3 +120,13 @@ def test_streamlit_app_imports():
     }
     assert module._v01_intensity("light_to_moderate") == "轻松到中等"
     assert module._v01_fitness_class("inactive") == "目前运动不足"
+
+
+def test_developer_mode_is_explicitly_opt_in(monkeypatch):
+    module = importlib.import_module("app.streamlit_app")
+
+    monkeypatch.delenv("SPORT_RX_DEVELOPER_MODE", raising=False)
+    assert module._v01_developer_mode() is False
+
+    monkeypatch.setenv("SPORT_RX_DEVELOPER_MODE", "1")
+    assert module._v01_developer_mode() is True

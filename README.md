@@ -60,6 +60,14 @@ bash scripts/run_local.sh
 5. 在 **我的计划** 查看当前周处方和 4 周适应性路线；未来周不会被伪装为已确定处方。
 6. 在 **我的资料** 查看当前 Pack 和数据边界；动作库可从当天训练或资料页进入。
 
+本地开发时可跳过账户入口直接进入应用：
+
+```bash
+SPORT_RX_DEVELOPER_MODE=1 bash scripts/run_local.sh
+```
+
+该开关默认关闭，不应在公开部署中启用。
+
 完整说明见 [首次体验与本地运行](docs/zh-CN/quickstart.md)。
 
 ## 产品能力地图
