@@ -22,7 +22,7 @@ def test_structured_evidence_records_validate_and_cover_current_rules():
 
     assert validation["valid"]
     assert validation["status"] == "ready_for_internal_retrieval"
-    assert validation["counts"] == {"sources": 60, "claims": 51, "rules": 17, "protocols": 9}
+    assert validation["counts"] == {"sources": 80, "claims": 68, "rules": 17, "protocols": 9}
     assert validation["mapped_rule_count"] == 17
     assert "does not provide medical clearance" in validation["claim_boundary"]
 
@@ -46,10 +46,10 @@ def test_internal_index_search_and_rule_trace_return_sources_and_limits(tmp_path
     search = search_evidence("PATH-001", lane="rules", root=ROOT, db_path=db_path)
     trace = trace_rule("PATH-001", ROOT)
 
-    assert index["document_count"] == 137
+    assert index["document_count"] == 174
     assert db_path.exists()
     with sqlite3.connect(db_path) as connection:
-        assert connection.execute("SELECT count(*) FROM evidence_fts").fetchone()[0] == 137
+        assert connection.execute("SELECT count(*) FROM evidence_fts").fetchone()[0] == 174
     assert search["results"][0]["id"] == "PATH-001"
     assert search["results"][0]["source_ids"]
     assert search["results"][0]["limitations"]

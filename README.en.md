@@ -61,6 +61,12 @@ muscle or functional-group records linked to the movement atlas. It describes
 attachments, joint crossing, actions and training roles without making
 activation, diagnosis, exercise-ranking or dose claims.
 
+The [Training Science Foundation](evidence/training_science/README.md) adds 20
+reviewed sources and 26 bilingual cards across resistance programming,
+endurance intensity distribution, tapering, monitoring, recovery, flexibility,
+and plyometrics. It is an educational retrieval layer, not a personal dose
+engine.
+
 ## Run locally
 
 ```bash

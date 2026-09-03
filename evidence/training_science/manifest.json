@@ -1,0 +1,16 @@
+{
+  "schema": "sportrx.training_science_manifest.v1",
+  "version": "0.1.0",
+  "reviewed_at": "2026-09-03",
+  "status": "reviewed_educational_layer",
+  "source_pack": "evidence/records/packs/training_science_sources.json",
+  "claim_pack": "evidence/records/packs/training_science_claims.json",
+  "knowledge_pack": "evidence/knowledge/packs/training_science_v1.json",
+  "fetch_script": "scripts/fetch_open_access_training_science_reviews.py",
+  "source_count": 20,
+  "claim_count": 17,
+  "knowledge_card_count": 26,
+  "knowledge_card_range": ["K-CARD-097", "K-CARD-122"],
+  "product_authority": "education_only",
+  "boundary": "Training-science evidence can support internal research explanations but cannot change safety routing, activate a Program Pack, set personal dose, diagnose, or predict outcomes."
+}

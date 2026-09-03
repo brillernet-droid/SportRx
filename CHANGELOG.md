@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-09-03 - Training Science Foundation v0.1
+
+- Added 20 reviewed training-science sources, 17 atomic claims and 26 bilingual
+  KnowledgeCards, taking the corpus to 80 sources, 68 claims and 122 cards.
+- Covered resistance dose, periodization, rest, tempo, velocity loss,
+  autoregulation, endurance intensity distribution, tapering, load monitoring,
+  recovery, overtraining boundaries, flexibility and plyometric training.
+- Preserved disagreements and population limits, including the absence of one
+  universally superior endurance intensity distribution or resistance setup.
+- Added a reproducible downloader for seven PubMed Central JATS full texts;
+  source files and checksums remain in ignored private storage.
+- Kept Knowledge RAG educational and internal: no Safety Gate, Program Pack,
+  training-dose, diagnosis or prediction authority was added.
+
 ## 2026-09-03 - Training Anatomy v0.1
 
 - Added 34 reviewed training-anatomy records covering the major muscles and

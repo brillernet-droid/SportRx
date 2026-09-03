@@ -31,6 +31,17 @@
     {"id":"KE-027","query_zh":"训练坚持 监督 社会支持 出勤","query_en":"exercise adherence supervision social support attendance","expected_card_id":"K-CARD-058"},
     {"id":"KE-028","query_zh":"完成率 调整信号 不是适应证据","query_en":"completion progression signal not proof of adaptation","expected_card_id":"K-CARD-059"},
     {"id":"KE-029","query_zh":"体成分复测 不是结果承诺","query_en":"body composition retest not outcome promise","expected_card_id":"K-CARD-060"},
-    {"id":"KE-030","query_zh":"RPE 主观用力感","query_en":"rating of perceived exertion RPE","expected_card_id":"K-CARD-015"}
+    {"id":"KE-030","query_zh":"RPE 主观用力感","query_en":"rating of perceived exertion RPE","expected_card_id":"K-CARD-015"},
+    {"id":"KE-031","query_zh":"抗阻训练周组数 边际收益递减","query_en":"resistance weekly sets diminishing returns","expected_card_id":"K-CARD-098"},
+    {"id":"KE-032","query_zh":"周期化可以组织力量发展 线性 波动","query_en":"periodized resistance training 1RM strength","expected_card_id":"K-CARD-101"},
+    {"id":"KE-033","query_zh":"组间休息 维持训练质量","query_en":"inter-set rest preserve work quality","expected_card_id":"K-CARD-103"},
+    {"id":"KE-034","query_zh":"动作节奏 没有唯一最优增肌速度","query_en":"no single repetition tempo maximizes hypertrophy","expected_card_id":"K-CARD-104"},
+    {"id":"KE-035","query_zh":"速度损失 组内疲劳信号","query_en":"velocity loss set-level fatigue signal","expected_card_id":"K-CARD-105"},
+    {"id":"KE-036","query_zh":"极化训练 并非普遍优于金字塔","query_en":"polarized training not universally superior to pyramidal","expected_card_id":"K-CARD-110"},
+    {"id":"KE-037","query_zh":"赛前减量 降低训练量 保留强度","query_en":"taper reduce volume maintain intensity","expected_card_id":"K-CARD-112"},
+    {"id":"KE-038","query_zh":"内部负荷 外部负荷 区别","query_en":"difference between internal and external training load","expected_card_id":"K-CARD-113"},
+    {"id":"KE-039","query_zh":"恢复 疲劳 压力 个体差异 监控","query_en":"recovery is multidimensional not one score","expected_card_id":"K-CARD-115"},
+    {"id":"KE-040","query_zh":"过度训练综合征 不能用单一指标诊断","query_en":"overtraining syndrome cannot be diagnosed by one marker","expected_card_id":"K-CARD-116"},
+    {"id":"KE-041","query_zh":"长期拉伸 改善关节活动范围","query_en":"chronic stretching improves range of motion","expected_card_id":"K-CARD-117"}
   ]
 }

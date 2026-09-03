@@ -30,7 +30,7 @@ rehabilitation instructions, or individual risk estimates.
 
 ## Readiness
 
-Direct internal retrieval currently covers 96 reviewed cards. Reaching the
+Direct internal retrieval currently covers 122 reviewed cards. Reaching the
 60-card count only opens the answer-evaluation stage: DeepSeek synthesis remains
 disabled until at least 60 manually passed answer-quality cases, bilingual
 retrieval checks, citation checks, and boundary checks all pass. The v1 corpus
@@ -50,3 +50,9 @@ The [Training Anatomy layer](../anatomy/README.md) adds 34 structured muscle or
 functional-group records and 18 reviewed knowledge cards. Source full text is
 not copied into the public corpus; anatomy supports structure-and-action
 explanations, not activation claims, exercise rankings or diagnosis.
+
+The [Training Science Foundation](../training_science/README.md) adds 20
+reviewed sources, 17 atomic claims and 26 bilingual cards covering program-level
+resistance, endurance, monitoring, recovery, flexibility and plyometric
+concepts. It preserves disagreements and population limits and does not set a
+personal training dose.

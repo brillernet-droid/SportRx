@@ -167,9 +167,14 @@ SportRX 另有一个内部研究型 Knowledge Lab，用于检索已审核的运�
 [Knowledge Corpus](evidence/knowledge/README.md)。
 
 目标导向处方的来源、原子结论、知识卡与当前 Pack 状态已经整理为独立的
-[处方知识层](evidence/prescription/README.md)。目前 96 张知识卡已经达到“进入人工
+[处方知识层](evidence/prescription/README.md)。目前 122 张知识卡已经达到“进入人工
 答案评测”的数量门槛，但 AI 综合仍关闭；增肌和减脂 Pack 也仍是仅评估状态，不会
 因为知识卡增加而自动开放处方。
+
+训练学证据已经扩展为独立的
+[Training Science Foundation](evidence/training_science/README.md)，覆盖抗阻训练剂量、
+周期化、组间休息、动作节奏、速度损失、自我调节、有氧强度分布、减量、训练负荷、
+恢复、柔韧性和增强式训练。它用于研究解释，不直接生成个人剂量。
 
 增肌动作知识已经单独整理为
 [Hypertrophy Movement Atlas](evidence/hypertrophy/README.md)：它用 16 个肌群区域、
