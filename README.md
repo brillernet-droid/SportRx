@@ -60,13 +60,19 @@ bash scripts/run_local.sh
 5. 在 **我的计划** 查看当前周处方和 4 周适应性路线；未来周不会被伪装为已确定处方。
 6. 在 **我的资料** 查看当前 Pack 和数据边界；动作库可从当天训练或资料页进入。
 
-本地开发时可跳过账户入口直接进入应用：
+`scripts/run_local.sh` 默认按本地开发模式启动，会跳过账户入口并直接进入应用：
 
 ```bash
-SPORT_RX_DEVELOPER_MODE=1 bash scripts/run_local.sh
+bash scripts/run_local.sh
 ```
 
-该开关默认关闭，不应在公开部署中启用。
+需要检查普通用户的注册与登录流程时，运行：
+
+```bash
+SPORT_RX_DEVELOPER_MODE=0 bash scripts/run_local.sh
+```
+
+Render 与 Docker 的公开部署配置明确将开发者模式设为 `0`。
 
 完整说明见 [首次体验与本地运行](docs/zh-CN/quickstart.md)。
 

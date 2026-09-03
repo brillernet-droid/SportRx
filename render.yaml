@@ -11,3 +11,5 @@ services:
         value: "1"
       - key: SPORT_RX_ENABLE_INTERNAL_REVIEW
         value: "0"
+      - key: SPORT_RX_DEVELOPER_MODE
+        value: "0"
