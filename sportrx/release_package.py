@@ -148,6 +148,7 @@ REQUIRED_PUBLIC_FILES = [
     "sportrx/terminology.py",
     "sportrx/validation_readiness.py",
     "sportrx/venue_entry.py",
+    "sportrx/voice_guidance.py",
     "evidence/claim_policy.md",
     "evidence/data_governance.md",
     "evidence/knowledge/README.md",
@@ -224,6 +225,7 @@ REQUIRED_PUBLIC_FILES = [
     "tests/test_test_session_operator.py",
     "tests/test_terminology.py",
     "tests/test_validation_readiness.py",
+    "tests/test_voice_guidance.py",
 ]
 
 

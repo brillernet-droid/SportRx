@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Any
 
 import streamlit as st
+import streamlit.components.v1 as components
 
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
@@ -161,6 +162,7 @@ from sportrx.benchmark_log import build_component_result
 from sportrx.local_accounts import LocalAccountError, authenticate_local_account, create_local_account
 from sportrx.performance_lab import assess_hybrid_performance, measurement_intake_matrix_csv, measurement_intake_matrix_markdown
 from sportrx.release_qa import REQUIRED_EVIDENCE_FILES
+from sportrx.voice_guidance import build_exercise_voice_script, build_session_voice_script
 
 
 DEFAULT_PROFILE = {
@@ -260,6 +262,9 @@ V01_CATALOGUE_VALUE_LABELS = {
     "stepmill machine": "踏步机",
     "treadmill": "跑步机",
     "cardiovascular system": "心肺训练",
+    "quadriceps": "股四头肌",
+    "hamstrings": "腘绳肌",
+    "calves": "小腿肌群",
 }
 
 V01_INTENSITY_LABELS = {
@@ -1050,6 +1055,60 @@ def _v01_exercise_label(exercise: dict[str, Any]) -> str:
 
 def _v01_catalogue_value_label(value: object) -> str:
     return V01_CATALOGUE_VALUE_LABELS.get(str(value), str(value))
+
+
+def _v01_voice_player(script: str, component_key: str) -> None:
+    """Play a Chinese guide with the browser's local speech engine."""
+
+    safe_key = "".join(char if char.isalnum() else "-" for char in component_key)
+    script_json = json.dumps(str(script), ensure_ascii=False).replace("</", "<\\/")
+    components.html(
+        f"""
+        <div class="voice-player" role="group" aria-label="语音指导">
+          <button id="play-{safe_key}" class="voice-primary" title="播放语音指导">▶ <span>播放语音指导</span></button>
+          <button id="stop-{safe_key}" class="voice-stop" title="停止语音" aria-label="停止语音">■</button>
+          <span id="status-{safe_key}" class="voice-status">设备端播放</span>
+        </div>
+        <style>
+          html, body {{ margin: 0; background: transparent; color: #f4f8ef; font-family: Inter, "PingFang SC", "Microsoft YaHei", sans-serif; }}
+          .voice-player {{ display: grid; grid-template-columns: 1fr 48px auto; gap: 8px; align-items: center; }}
+          button {{ min-height: 48px; border: 1px solid #3a4a42; border-radius: 8px; font-family: inherit; font-size: 14px; font-weight: 800; cursor: pointer; }}
+          .voice-primary {{ color: #08100d; background: #d7ff4c; }}
+          .voice-stop {{ color: #f4f8ef; background: #16221e; }}
+          .voice-status {{ color: #a8b5ac; font-size: 11px; white-space: nowrap; }}
+          button:focus-visible {{ outline: 3px solid rgba(215,255,76,.45); outline-offset: 2px; }}
+          button:disabled {{ cursor: not-allowed; opacity: .5; }}
+        </style>
+        <script>
+          const guideText = {script_json};
+          const playButton = document.getElementById("play-{safe_key}");
+          const stopButton = document.getElementById("stop-{safe_key}");
+          const status = document.getElementById("status-{safe_key}");
+          const synth = window.speechSynthesis;
+          if (!synth) {{
+            playButton.disabled = true;
+            stopButton.disabled = true;
+            status.textContent = "当前设备不支持";
+          }}
+          playButton.addEventListener("click", () => {{
+            synth.cancel();
+            const speech = new SpeechSynthesisUtterance(guideText);
+            speech.lang = "zh-CN";
+            speech.rate = 0.92;
+            const voice = synth.getVoices().find(item => item.lang.toLowerCase().startsWith("zh"));
+            if (voice) speech.voice = voice;
+            speech.onstart = () => status.textContent = "正在播放";
+            speech.onend = () => status.textContent = "播放完成";
+            speech.onerror = () => status.textContent = "播放失败";
+            synth.speak(speech);
+          }});
+          stopButton.addEventListener("click", () => {{ synth.cancel(); status.textContent = "已停止"; }});
+          window.addEventListener("beforeunload", () => synth && synth.cancel());
+        </script>
+        """,
+        height=58,
+        scrolling=False,
+    )
 
 
 def _v01_select_exercise(exercise_id: str) -> None:
@@ -12663,6 +12722,10 @@ def _v01_registration_page() -> None:
 def _v01_nav() -> None:
     pages = [("首页", "今天"), ("计划", "我的计划"), ("设置", "评估"), ("记录", "进展"), ("资料", "我的资料")]
     page_ids = [page_id for page_id, _label in pages]
+    if st.session_state.v01_page == "动作":
+        st.markdown('<div class="v01-nav-label">动作指导</div>', unsafe_allow_html=True)
+        st.button("← 返回今天", key="v01_back_from_exercise", width="stretch", on_click=_v01_set_page, args=("首页",))
+        return
     if st.session_state.v01_page not in {*page_ids, "动作"}:
         st.session_state.v01_page = "首页"
     st.markdown('<div class="v01-nav-label">我的处方</div>', unsafe_allow_html=True)
@@ -12968,7 +13031,7 @@ def _v01_exercise_catalogue_page() -> None:
                     '<article class="v01-discovery-card">'
                     f'<div class="v01-discovery-card-name">{escape(_v01_exercise_label(item))}</div>'
                     f'<div class="v01-discovery-card-meta">{escape(body_part_label(item["body_part"]))} · '
-                    f'{escape(item["equipment"])} · {escape(item["target"])}</div>'
+                    f'{escape(_v01_catalogue_value_label(item["equipment"]))} · {escape(_v01_catalogue_value_label(item["target"]))}</div>'
                     '</article>'
                 )
             )
@@ -13045,7 +13108,7 @@ def _v01_exercise_catalogue_page() -> None:
             '<section class="v01-today-session">'
             '<div class="v01-session-kicker">动作说明</div>'
             f'<div class="v01-session-title">{escape(exercise["name"])}</div>'
-            f'<div class="v01-session-detail">目标：{escape(exercise["target"])} · 部位：{escape(body_part_label(exercise["body_part"]))} · 器械：{escape(exercise["equipment"])}</div>'
+            f'<div class="v01-session-detail">目标：{escape(_v01_catalogue_value_label(exercise["target"]))} · 部位：{escape(body_part_label(exercise["body_part"]))} · 器械：{escape(_v01_catalogue_value_label(exercise["equipment"]))}</div>'
             '</section>'
         ),
         unsafe_allow_html=True,
@@ -13053,8 +13116,8 @@ def _v01_exercise_catalogue_page() -> None:
     st.markdown(
         (
             '<div class="v01-rule-list">'
-            f'<div class="v01-rule"><div class="v01-rule-label">主要肌群</div><div class="v01-rule-copy">{escape(exercise["muscle_group"])}</div></div>'
-            f'<div class="v01-rule"><div class="v01-rule-label">辅助肌群</div><div class="v01-rule-copy">{escape("、".join(exercise["secondary_muscles"]) or "未提供")}</div></div>'
+            f'<div class="v01-rule"><div class="v01-rule-label">主要肌群</div><div class="v01-rule-copy">{escape(_v01_catalogue_value_label(exercise["muscle_group"]))}</div></div>'
+            f'<div class="v01-rule"><div class="v01-rule-label">辅助肌群</div><div class="v01-rule-copy">{escape("、".join(_v01_catalogue_value_label(item) for item in exercise["secondary_muscles"]) or "未提供")}</div></div>'
             '</div>'
         ),
         unsafe_allow_html=True,
@@ -13063,6 +13126,13 @@ def _v01_exercise_catalogue_page() -> None:
     steps = exercise["instruction_steps"].get("zh") or [exercise["instructions"]["zh"]]
     for index, step in enumerate(steps, start=1):
         st.markdown(f"{index}. {escape(step)}")
+
+    st.subheader("语音动作指导")
+    _v01_voice_player(
+        build_exercise_voice_script(exercise, display_name=_v01_exercise_label(exercise)),
+        f"exercise-{exercise['id']}",
+    )
+    st.caption("使用当前设备的中文语音播放，不会上传动作、账户或训练数据。")
 
     source = summary["source"]
     st.caption(
@@ -13154,7 +13224,11 @@ def _v01_today_page() -> None:
     summary = _v01_session_summary(active_week)
     session_index = summary["missing_session_indexes"][0]
     session = active_week["sessions"][session_index]
-    _v01_page_header("今天的训练", "一次只完成一节。训练结束后花 20 秒记录完成情况和 RPE。")
+    _v01_page_header("今天，先完成这一节", "打开即看到当前处方；训练结束后花 20 秒记录完成情况和 RPE。")
+    st.markdown(
+        '<div class="v01-section-note">处方状态：已通过当前 Program Pack、单次时长和训练量边界检查。</div>',
+        unsafe_allow_html=True,
+    )
     st.markdown(
         (
             '<section class="v01-today-session">'
@@ -13176,10 +13250,22 @@ def _v01_today_page() -> None:
         unsafe_allow_html=True,
     )
 
+    st.subheader("语音带练")
+    _v01_voice_player(
+        build_session_voice_script(
+            session,
+            activity_label=_v01_activity(session["activity"]),
+            intensity_label=_v01_intensity(session["intensity"]),
+            talk_test=_v01_talk_test(session["intensity"]),
+        ),
+        f"session-{active_week['week']}-{session_index}",
+    )
+    st.caption("语音来自当前设备，只朗读已通过边界检查的处方内容，不会自行改变训练剂量。")
+
     suggestions = _v01_discovery_exercises(session["activity"])
     if suggestions:
-        st.subheader("你可以这样完成")
-        st.caption("以下是与本次训练方式相关的动作说明。任选一种方式完成，不改变今天的时长或强度。")
+        st.subheader("本次训练动作")
+        st.caption("已从本地 GitHub 动作库找到与本次训练方式相关的动作。选择后可查看并播放动作步骤。")
         for item in suggestions:
             st.markdown(
                 (

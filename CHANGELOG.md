@@ -7,6 +7,9 @@
   Added a Chinese product-shaping document and a three-direction mobile layout
   prototype; this is a planned architecture, not a claim that AI prescribing is
   already active in the current product.
+- Selected the prescription-first mobile direction and added device-local
+  Chinese voice guidance for the approved session and exercise-catalogue steps.
+  Voice playback does not call an external service or change training dose.
 
 - Added a versioned `Program Pack` registry and deterministic scenario router.
   A Pack, rather than a database, movement catalogue, device, or LLM, now

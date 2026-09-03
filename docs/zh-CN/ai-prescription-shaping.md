@@ -43,7 +43,7 @@ SportRX 采用“AI 规划，约束验收”的双层决策模式：
 
 ## 页面布局
 
-第一版采用“处方优先”结构：
+已选择方向 A：“处方优先”结构：
 
 1. **今天**：直接显示 AI 为今天安排的训练、剂量、调整原因和约束校验状态。
 2. **我的计划**：显示当前周期、AI 的计划策略、可调整项目与未来一周方向。
@@ -135,7 +135,7 @@ build_context() → retrieve_evidence() → generate_ai_draft()
 ## 未知项记录
 
 - **已确定**：AI 直接参与处方决策；规则作为边界；中文、手机优先；Safety Gate 独立。
-- **待验证**：用户更喜欢处方优先、调整优先还是对话优先的首页。
+- **已选择**：方向 A，用户打开后首先看到今天的处方；调整与画像作为后续页面。
 - **隐含风险**：模型漂移、费用、延迟、供应商不可用和处方责任边界。
 - **延后决定**：公开 AI 聊天、可穿戴设备、更多人群 Pack、专业人员审核后台。
 
@@ -144,4 +144,3 @@ build_context() → retrieve_evidence() → generate_ai_draft()
 - [AI 处方布局对比原型](ai-prescription-layout-prototype.html)
 - [Program Pack 路径](program-packs.md)
 - [产品边界](claim-boundaries.md)
-

@@ -120,6 +120,8 @@ def test_streamlit_app_imports():
     }
     assert module._v01_intensity("light_to_moderate") == "轻松到中等"
     assert module._v01_fitness_class("inactive") == "目前运动不足"
+    assert module._v01_catalogue_value_label("leverage machine") == "固定器械"
+    assert module._v01_catalogue_value_label("quadriceps") == "股四头肌"
 
 
 def test_developer_mode_is_explicitly_opt_in(monkeypatch):
