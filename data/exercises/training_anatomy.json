@@ -1,0 +1,283 @@
+{
+  "schema": "sportrx.training_anatomy.v1",
+  "version": "0.1.0",
+  "reviewed_at": "2026-09-03",
+  "scope": "Major muscles and functional groups commonly referenced in general adult hypertrophy and resistance-training education.",
+  "methodology": "Manually curated structure-and-action summaries linked to the SportRX movement atlas, representative local catalogue IDs, and reviewed source/claim records.",
+  "source_policy": "Source pages are cited but not copied into the corpus. OpenStax full text is not ingested into an LLM or redistributed by SportRX.",
+  "content_boundary": "Educational anatomy only; no diagnosis, activation percentage, exercise ranking, individual suitability or training dose.",
+  "records": [
+    {
+      "id": "ANAT-MUSCLE-001", "name_en": "Pectoralis major", "name_zh": "胸大肌", "aliases_zh": ["胸肌"], "anatomical_group": "anterior shoulder and chest",
+      "atlas_region_ids": ["pectorals"], "origin_summary": "Clavicle, sternum and upper costal cartilages across broad clavicular and sternocostal attachments.", "insertion_summary": "Proximal humerus at the lateral lip of the intertubercular groove.",
+      "crosses_joints": ["glenohumeral joint"], "primary_actions": ["shoulder horizontal adduction", "shoulder adduction", "shoulder internal rotation"], "secondary_actions": ["shoulder flexion contribution from clavicular fibers"],
+      "role_in_training": "Primary chest contributor in horizontal pressing and adduction-dominant movements; regional emphasis can vary with arm path but is not quantified here.",
+      "movement_pattern_ids": ["horizontal_push", "chest_adduction"], "representative_exercise_ids": ["exercises-dataset:0025", "exercises-dataset:0308"],
+      "source_ids": ["ANAT-OPENSTAX-UPPER-2022"], "claim_ids": ["CLM-ANAT-STRUCTURE-001", "CLM-ANAT-ROLE-001"], "limitations": "Broad attachment summary; pectoralis minor and fiber-level regional hypertrophy are not represented as separate dose targets."
+    },
+    {
+      "id": "ANAT-MUSCLE-002", "name_en": "Latissimus dorsi", "name_zh": "背阔肌", "aliases_zh": ["背阔", "背部"], "anatomical_group": "posterior axioappendicular",
+      "atlas_region_ids": ["latissimus_dorsi"], "origin_summary": "Lower thoracic and lumbar spine through thoracolumbar fascia, iliac crest and lower ribs.", "insertion_summary": "Proximal humerus at the floor of the intertubercular groove.",
+      "crosses_joints": ["glenohumeral joint"], "primary_actions": ["shoulder extension", "shoulder adduction", "shoulder internal rotation"], "secondary_actions": ["assistance in trunk-to-arm pulling tasks"],
+      "role_in_training": "Major shoulder extensor and adductor in vertical pulling, with contribution to many horizontal pulls.",
+      "movement_pattern_ids": ["vertical_pull", "horizontal_pull"], "representative_exercise_ids": ["exercises-dataset:0652", "exercises-dataset:2330"],
+      "source_ids": ["ANAT-OPENSTAX-UPPER-2022"], "claim_ids": ["CLM-ANAT-STRUCTURE-001", "CLM-ANAT-ROLE-001"], "limitations": "Does not quantify contribution across grips, torso angles or individual techniques."
+    },
+    {
+      "id": "ANAT-MUSCLE-003", "name_en": "Trapezius", "name_zh": "斜方肌", "aliases_zh": ["上斜方肌", "中斜方肌", "下斜方肌"], "anatomical_group": "posterior shoulder girdle",
+      "atlas_region_ids": ["trapezius", "upper_back_scapular"], "origin_summary": "Occipital region, nuchal ligament and spinous processes of the cervical and thoracic spine.", "insertion_summary": "Clavicle, acromion and spine of the scapula.",
+      "crosses_joints": ["scapulothoracic articulation through scapular control"], "primary_actions": ["scapular elevation", "scapular retraction", "scapular upward rotation"], "secondary_actions": ["scapular depression by lower fibers", "neck extension contribution"],
+      "role_in_training": "Different regions contribute to shrugging, rowing and overhead scapular motion; one exercise should not be described as complete trapezius isolation.",
+      "movement_pattern_ids": ["scapular_elevation", "horizontal_pull", "vertical_push"], "representative_exercise_ids": ["exercises-dataset:0095", "exercises-dataset:0861"],
+      "source_ids": ["ANAT-OPENSTAX-UPPER-2022", "ANAT-OPENSTAX-BACK-2022"], "claim_ids": ["CLM-ANAT-STRUCTURE-001", "CLM-ANAT-ROLE-001"], "limitations": "Upper, middle and lower regions are not assigned separate validated hypertrophy doses."
+    },
+    {
+      "id": "ANAT-MUSCLE-004", "name_en": "Rhomboid major and minor", "name_zh": "菱形肌群", "aliases_zh": ["大菱形肌", "小菱形肌", "上背"], "anatomical_group": "posterior shoulder girdle",
+      "atlas_region_ids": ["upper_back_scapular"], "origin_summary": "Lower cervical and upper thoracic spinous-process region.", "insertion_summary": "Medial border of the scapula.",
+      "crosses_joints": ["scapulothoracic articulation through scapular control"], "primary_actions": ["scapular retraction", "scapular downward rotation"], "secondary_actions": ["scapular stabilization"],
+      "role_in_training": "Contributes to scapular retraction in horizontal pulling; catalogue rows cannot isolate rhomboids from trapezius and posterior shoulder contributors.",
+      "movement_pattern_ids": ["horizontal_pull"], "representative_exercise_ids": ["exercises-dataset:0027", "exercises-dataset:0861"],
+      "source_ids": ["ANAT-OPENSTAX-UPPER-2022"], "claim_ids": ["CLM-ANAT-STRUCTURE-001", "CLM-ANAT-ROLE-001"], "limitations": "Grouped record; major and minor are not separately measured or programmed."
+    },
+    {
+      "id": "ANAT-MUSCLE-005", "name_en": "Serratus anterior", "name_zh": "前锯肌", "aliases_zh": ["肩胛前伸肌"], "anatomical_group": "anterior shoulder girdle",
+      "atlas_region_ids": ["upper_back_scapular"], "origin_summary": "Lateral surfaces of the upper ribs.", "insertion_summary": "Anterior surface of the medial border of the scapula.",
+      "crosses_joints": ["scapulothoracic articulation through scapular control"], "primary_actions": ["scapular protraction", "scapular upward rotation"], "secondary_actions": ["holds scapula against thorax"],
+      "role_in_training": "Contributes to reaching, pressing and overhead scapular motion; ordinary push-up labels do not quantify serratus loading.",
+      "movement_pattern_ids": ["horizontal_push", "vertical_push"], "representative_exercise_ids": ["exercises-dataset:0662"],
+      "source_ids": ["ANAT-OPENSTAX-UPPER-2022"], "claim_ids": ["CLM-ANAT-STRUCTURE-001", "CLM-ANAT-ROLE-001"], "limitations": "The current catalogue lacks a reviewed serratus-specific exercise family."
+    },
+    {
+      "id": "ANAT-MUSCLE-006", "name_en": "Anterior deltoid", "name_zh": "三角肌前束", "aliases_zh": ["前束"], "anatomical_group": "shoulder",
+      "atlas_region_ids": ["deltoid_anterior"], "origin_summary": "Lateral clavicle.", "insertion_summary": "Deltoid tuberosity of the humerus.",
+      "crosses_joints": ["glenohumeral joint"], "primary_actions": ["shoulder flexion"], "secondary_actions": ["shoulder internal rotation", "assistance in horizontal adduction"],
+      "role_in_training": "Primary shoulder contributor in vertical pressing and a secondary contributor in horizontal pressing.",
+      "movement_pattern_ids": ["vertical_push", "horizontal_push"], "representative_exercise_ids": ["exercises-dataset:0405", "exercises-dataset:0289"],
+      "source_ids": ["ANAT-NCBI-DELTOID-2024", "ANAT-OPENSTAX-UPPER-2022"], "claim_ids": ["CLM-ANAT-STRUCTURE-001", "CLM-ANAT-ROLE-001"], "limitations": "Exercise technique changes contribution; pressing sets are not converted into fixed fractional anterior-deltoid sets."
+    },
+    {
+      "id": "ANAT-MUSCLE-007", "name_en": "Lateral deltoid", "name_zh": "三角肌中束", "aliases_zh": ["中束", "侧束"], "anatomical_group": "shoulder",
+      "atlas_region_ids": ["deltoid_lateral"], "origin_summary": "Acromion of the scapula.", "insertion_summary": "Deltoid tuberosity of the humerus.",
+      "crosses_joints": ["glenohumeral joint"], "primary_actions": ["shoulder abduction"], "secondary_actions": ["shoulder stabilization during elevation"],
+      "role_in_training": "More directly represented by lateral-raise tasks, with contribution to overhead pressing.",
+      "movement_pattern_ids": ["lateral_raise", "vertical_push"], "representative_exercise_ids": ["exercises-dataset:0334", "exercises-dataset:0405"],
+      "source_ids": ["ANAT-NCBI-DELTOID-2024", "ANAT-OPENSTAX-UPPER-2022"], "claim_ids": ["CLM-ANAT-STRUCTURE-001", "CLM-ANAT-ROLE-001"], "limitations": "No arm path or resistance profile is ranked as universally superior."
+    },
+    {
+      "id": "ANAT-MUSCLE-008", "name_en": "Posterior deltoid", "name_zh": "三角肌后束", "aliases_zh": ["后束", "后肩"], "anatomical_group": "shoulder",
+      "atlas_region_ids": ["deltoid_posterior"], "origin_summary": "Spine of the scapula.", "insertion_summary": "Deltoid tuberosity of the humerus.",
+      "crosses_joints": ["glenohumeral joint"], "primary_actions": ["shoulder horizontal abduction", "shoulder extension"], "secondary_actions": ["shoulder external rotation contribution"],
+      "role_in_training": "Represented by posterior-shoulder movements and contributes to horizontal pulling.",
+      "movement_pattern_ids": ["posterior_shoulder", "horizontal_pull"], "representative_exercise_ids": ["exercises-dataset:2292", "exercises-dataset:0203"],
+      "source_ids": ["ANAT-NCBI-DELTOID-2024", "ANAT-OPENSTAX-UPPER-2022"], "claim_ids": ["CLM-ANAT-STRUCTURE-001", "CLM-ANAT-ROLE-001"], "limitations": "Scapular movement can shift loading toward upper-back muscles."
+    },
+    {
+      "id": "ANAT-MUSCLE-009", "name_en": "Rotator cuff group", "name_zh": "肩袖肌群", "aliases_zh": ["冈上肌", "冈下肌", "小圆肌", "肩胛下肌"], "anatomical_group": "deep shoulder stabilizers",
+      "atlas_region_ids": ["upper_back_scapular", "deltoid_posterior"], "origin_summary": "Scapular fossae and lateral border across supraspinatus, infraspinatus, teres minor and subscapularis.", "insertion_summary": "Greater and lesser tubercles of the humerus around the shoulder capsule.",
+      "crosses_joints": ["glenohumeral joint"], "primary_actions": ["glenohumeral stabilization", "shoulder external rotation", "shoulder internal rotation"], "secondary_actions": ["initiation or assistance of shoulder abduction depending on muscle"],
+      "role_in_training": "Contextual stabilizer group in upper-body movement; external-rotation exercises are not automatically rehabilitation prescriptions.",
+      "movement_pattern_ids": ["posterior_shoulder", "vertical_push"], "representative_exercise_ids": ["exercises-dataset:0235", "exercises-dataset:0216"],
+      "source_ids": ["ANAT-OPENSTAX-UPPER-2022", "ANAT-NCBI-DELTOID-2024"], "claim_ids": ["CLM-ANAT-STRUCTURE-001", "CLM-ANAT-ROLE-001"], "limitations": "Grouped for education only; pain, instability and rehabilitation require separate clinical assessment."
+    },
+    {
+      "id": "ANAT-MUSCLE-010", "name_en": "Biceps brachii", "name_zh": "肱二头肌", "aliases_zh": ["二头肌"], "anatomical_group": "anterior upper arm",
+      "atlas_region_ids": ["elbow_flexors"], "origin_summary": "Coracoid process and supraglenoid region of the scapula through short and long heads.", "insertion_summary": "Radial tuberosity and forearm fascia through the bicipital aponeurosis.",
+      "crosses_joints": ["glenohumeral joint", "elbow joint", "proximal radioulnar joint"], "primary_actions": ["elbow flexion", "forearm supination"], "secondary_actions": ["shoulder flexion contribution"],
+      "role_in_training": "Directly covered by elbow-flexion tasks and contributes to pulling; shoulder position changes length across the long head.",
+      "movement_pattern_ids": ["elbow_flexion", "vertical_pull", "horizontal_pull"], "representative_exercise_ids": ["exercises-dataset:0294", "exercises-dataset:0652"],
+      "source_ids": ["ANAT-OPENSTAX-UPPER-2022"], "claim_ids": ["CLM-ANAT-STRUCTURE-001", "CLM-ANAT-BIARTICULAR-001", "CLM-ANAT-ROLE-001"], "limitations": "Long- and short-head hypertrophy are not estimated from curl name or grip alone."
+    },
+    {
+      "id": "ANAT-MUSCLE-011", "name_en": "Brachialis", "name_zh": "肱肌", "aliases_zh": ["深层肘屈肌"], "anatomical_group": "anterior upper arm",
+      "atlas_region_ids": ["elbow_flexors"], "origin_summary": "Anterior distal humerus.", "insertion_summary": "Coronoid process and tuberosity of the ulna.",
+      "crosses_joints": ["elbow joint"], "primary_actions": ["elbow flexion"], "secondary_actions": [],
+      "role_in_training": "A primary elbow flexor across forearm positions; curl variations do not isolate it completely from other elbow flexors.",
+      "movement_pattern_ids": ["elbow_flexion", "vertical_pull", "horizontal_pull"], "representative_exercise_ids": ["exercises-dataset:0313", "exercises-dataset:0165"],
+      "source_ids": ["ANAT-OPENSTAX-UPPER-2022"], "claim_ids": ["CLM-ANAT-STRUCTURE-001", "CLM-ANAT-ROLE-001"], "limitations": "The atlas does not assign a validated grip-specific brachialis stimulus score."
+    },
+    {
+      "id": "ANAT-MUSCLE-012", "name_en": "Brachioradialis", "name_zh": "肱桡肌", "aliases_zh": ["前臂肘屈肌"], "anatomical_group": "lateral forearm and elbow",
+      "atlas_region_ids": ["elbow_flexors", "forearms_grip"], "origin_summary": "Lateral supracondylar ridge of the humerus.", "insertion_summary": "Distal radius near the styloid process.",
+      "crosses_joints": ["elbow joint"], "primary_actions": ["elbow flexion in neutral forearm position"], "secondary_actions": ["returns forearm toward neutral from pronation or supination"],
+      "role_in_training": "Commonly emphasized in neutral-grip curl tasks and contributes to pulling.",
+      "movement_pattern_ids": ["elbow_flexion", "vertical_pull", "horizontal_pull"], "representative_exercise_ids": ["exercises-dataset:0313", "exercises-dataset:0165"],
+      "source_ids": ["ANAT-OPENSTAX-UPPER-2022"], "claim_ids": ["CLM-ANAT-STRUCTURE-001", "CLM-ANAT-ROLE-001"], "limitations": "Neutral grip does not make the movement an isolation test."
+    },
+    {
+      "id": "ANAT-MUSCLE-013", "name_en": "Triceps brachii", "name_zh": "肱三头肌", "aliases_zh": ["三头肌"], "anatomical_group": "posterior upper arm",
+      "atlas_region_ids": ["triceps"], "origin_summary": "Infraglenoid scapula and posterior humerus across long, lateral and medial heads.", "insertion_summary": "Olecranon of the ulna.",
+      "crosses_joints": ["elbow joint", "glenohumeral joint for long head"], "primary_actions": ["elbow extension"], "secondary_actions": ["shoulder extension and adduction contribution from long head"],
+      "role_in_training": "Directly covered by elbow extension and contributes to pressing; overhead position changes long-head length but does not guarantee regional growth.",
+      "movement_pattern_ids": ["elbow_extension", "horizontal_push", "vertical_push"], "representative_exercise_ids": ["exercises-dataset:0194", "exercises-dataset:0201", "exercises-dataset:0025"],
+      "source_ids": ["ANAT-OPENSTAX-UPPER-2022"], "claim_ids": ["CLM-ANAT-STRUCTURE-001", "CLM-ANAT-BIARTICULAR-001", "CLM-ANAT-ROLE-001"], "limitations": "Head-specific hypertrophy is not predicted from one exercise label."
+    },
+    {
+      "id": "ANAT-MUSCLE-014", "name_en": "Wrist and finger flexor group", "name_zh": "腕指屈肌群", "aliases_zh": ["前臂屈肌", "握力肌群"], "anatomical_group": "anterior forearm",
+      "atlas_region_ids": ["forearms_grip"], "origin_summary": "Broadly from the medial elbow and anterior forearm bones across superficial and deep flexors.", "insertion_summary": "Carpal bones, metacarpals and phalanges through multiple tendons.",
+      "crosses_joints": ["wrist joint", "finger joints", "some cross elbow joint"], "primary_actions": ["wrist flexion", "finger flexion", "grip"], "secondary_actions": ["wrist deviation depending on muscle"],
+      "role_in_training": "Direct wrist-flexion work and gripping demands both involve the group but represent different tasks.",
+      "movement_pattern_ids": ["wrist_grip"], "representative_exercise_ids": ["exercises-dataset:1412", "exercises-dataset:1016"],
+      "source_ids": ["ANAT-OPENSTAX-UPPER-2022"], "claim_ids": ["CLM-ANAT-STRUCTURE-001", "CLM-ANAT-ROLE-001"], "limitations": "Grouped record; individual finger and wrist muscles are not separately programmed."
+    },
+    {
+      "id": "ANAT-MUSCLE-015", "name_en": "Wrist and finger extensor group", "name_zh": "腕指伸肌群", "aliases_zh": ["前臂伸肌"], "anatomical_group": "posterior forearm",
+      "atlas_region_ids": ["forearms_grip"], "origin_summary": "Broadly from the lateral elbow and posterior forearm bones.", "insertion_summary": "Metacarpals and phalanges through multiple extensor tendons.",
+      "crosses_joints": ["wrist joint", "finger joints", "some cross elbow joint"], "primary_actions": ["wrist extension", "finger extension"], "secondary_actions": ["wrist deviation depending on muscle"],
+      "role_in_training": "Direct wrist-extension work complements flexion and gripping tasks.",
+      "movement_pattern_ids": ["wrist_grip"], "representative_exercise_ids": ["exercises-dataset:0385", "exercises-dataset:0994"],
+      "source_ids": ["ANAT-OPENSTAX-UPPER-2022"], "claim_ids": ["CLM-ANAT-STRUCTURE-001", "CLM-ANAT-ROLE-001"], "limitations": "Grouped record; the catalogue does not cover all hand and finger functions."
+    },
+    {
+      "id": "ANAT-MUSCLE-016", "name_en": "Rectus abdominis", "name_zh": "腹直肌", "aliases_zh": ["腹肌"], "anatomical_group": "anterior abdominal wall",
+      "atlas_region_ids": ["trunk"], "origin_summary": "Pubic crest and pubic symphysis.", "insertion_summary": "Xiphoid process and costal cartilages of upper ribs.",
+      "crosses_joints": ["intervertebral joints through trunk flexion"], "primary_actions": ["trunk flexion"], "secondary_actions": ["abdominal compression", "pelvic control"],
+      "role_in_training": "More directly represented by controlled trunk-flexion tasks and contributes to resisting trunk extension.",
+      "movement_pattern_ids": ["trunk_flexion", "trunk_stability"], "representative_exercise_ids": ["exercises-dataset:0274", "exercises-dataset:0276"],
+      "source_ids": ["ANAT-OPENSTAX-TRUNK-2022"], "claim_ids": ["CLM-ANAT-STRUCTURE-001", "CLM-ANAT-ROLE-001"], "limitations": "Abdominal exercise does not support spot-reduction claims or spinal diagnosis."
+    },
+    {
+      "id": "ANAT-MUSCLE-017", "name_en": "External oblique", "name_zh": "腹外斜肌", "aliases_zh": ["外斜肌"], "anatomical_group": "lateral abdominal wall",
+      "atlas_region_ids": ["trunk"], "origin_summary": "External surfaces of lower ribs.", "insertion_summary": "Linea alba, pubis and iliac crest through broad aponeurotic attachments.",
+      "crosses_joints": ["intervertebral joints through trunk motion"], "primary_actions": ["contralateral trunk rotation", "trunk lateral flexion"], "secondary_actions": ["trunk flexion", "abdominal compression"],
+      "role_in_training": "Contributes to rotation and anti-rotation tasks as well as lateral trunk control.",
+      "movement_pattern_ids": ["trunk_flexion", "trunk_stability"], "representative_exercise_ids": ["exercises-dataset:0979", "exercises-dataset:3544"],
+      "source_ids": ["ANAT-OPENSTAX-TRUNK-2022"], "claim_ids": ["CLM-ANAT-STRUCTURE-001", "CLM-ANAT-ROLE-001"], "limitations": "Rotation direction and bilateral function are simplified for a catalogue-level explanation."
+    },
+    {
+      "id": "ANAT-MUSCLE-018", "name_en": "Internal oblique", "name_zh": "腹内斜肌", "aliases_zh": ["内斜肌"], "anatomical_group": "lateral abdominal wall",
+      "atlas_region_ids": ["trunk"], "origin_summary": "Thoracolumbar fascia, iliac crest and inguinal region.", "insertion_summary": "Lower ribs, linea alba and pubic region.",
+      "crosses_joints": ["intervertebral joints through trunk motion"], "primary_actions": ["ipsilateral trunk rotation", "trunk lateral flexion"], "secondary_actions": ["trunk flexion", "abdominal compression"],
+      "role_in_training": "Works with the external oblique in rotation, anti-rotation and lateral trunk tasks.",
+      "movement_pattern_ids": ["trunk_flexion", "trunk_stability"], "representative_exercise_ids": ["exercises-dataset:0979", "exercises-dataset:3544"],
+      "source_ids": ["ANAT-OPENSTAX-TRUNK-2022"], "claim_ids": ["CLM-ANAT-STRUCTURE-001", "CLM-ANAT-ROLE-001"], "limitations": "Surface movement does not isolate internal from external oblique activity."
+    },
+    {
+      "id": "ANAT-MUSCLE-019", "name_en": "Transversus abdominis", "name_zh": "腹横肌", "aliases_zh": ["深层腹肌"], "anatomical_group": "deep abdominal wall",
+      "atlas_region_ids": ["trunk"], "origin_summary": "Lower ribs, thoracolumbar fascia, iliac crest and inguinal region.", "insertion_summary": "Linea alba and pubic region through broad aponeurotic attachments.",
+      "crosses_joints": ["no single limb joint; acts across abdominal wall"], "primary_actions": ["abdominal compression", "trunk stabilization"], "secondary_actions": ["breathing and pressure-management contribution"],
+      "role_in_training": "Part of trunk bracing and pressure management; it is not isolated or clinically assessed by a generic plank label.",
+      "movement_pattern_ids": ["trunk_stability"], "representative_exercise_ids": ["exercises-dataset:0276", "exercises-dataset:0979"],
+      "source_ids": ["ANAT-OPENSTAX-TRUNK-2022"], "claim_ids": ["CLM-ANAT-STRUCTURE-001", "CLM-ANAT-ROLE-001"], "limitations": "No claim of selective activation, spinal protection or pain treatment."
+    },
+    {
+      "id": "ANAT-MUSCLE-020", "name_en": "Erector spinae group", "name_zh": "竖脊肌群", "aliases_zh": ["背伸肌", "下背肌群"], "anatomical_group": "intrinsic back",
+      "atlas_region_ids": ["trunk"], "origin_summary": "Broad posterior attachments from pelvis and sacrum into lumbar and thoracic vertebral regions.", "insertion_summary": "Ribs, vertebral processes and cranial attachments across iliocostalis, longissimus and spinalis columns.",
+      "crosses_joints": ["multiple intervertebral joints"], "primary_actions": ["spinal extension", "spinal lateral flexion"], "secondary_actions": ["postural control"],
+      "role_in_training": "Contributes to trunk extension and isometric control in hinges, rows and loaded standing tasks.",
+      "movement_pattern_ids": ["hip_hinge", "trunk_stability"], "representative_exercise_ids": ["exercises-dataset:0489", "exercises-dataset:0085"],
+      "source_ids": ["ANAT-OPENSTAX-BACK-2022"], "claim_ids": ["CLM-ANAT-STRUCTURE-001", "CLM-ANAT-ROLE-001"], "limitations": "Grouped record; catalogue exercises do not diagnose weakness or back-pain mechanisms."
+    },
+    {
+      "id": "ANAT-MUSCLE-021", "name_en": "Quadratus lumborum", "name_zh": "腰方肌", "aliases_zh": ["腰部侧屈肌"], "anatomical_group": "posterior abdominal wall",
+      "atlas_region_ids": ["trunk"], "origin_summary": "Iliac crest and iliolumbar region.", "insertion_summary": "Twelfth rib and upper lumbar transverse processes.",
+      "crosses_joints": ["lumbar intervertebral joints"], "primary_actions": ["trunk lateral flexion", "pelvic elevation"], "secondary_actions": ["lumbar stabilization", "fixes twelfth rib during breathing"],
+      "role_in_training": "Contributes to lateral trunk tasks and resisting lateral flexion.",
+      "movement_pattern_ids": ["trunk_stability"], "representative_exercise_ids": ["exercises-dataset:0407", "exercises-dataset:3544"],
+      "source_ids": ["ANAT-OPENSTAX-TRUNK-2022"], "claim_ids": ["CLM-ANAT-STRUCTURE-001", "CLM-ANAT-ROLE-001"], "limitations": "Side-bending or carrying performance is not a diagnostic test of this muscle."
+    },
+    {
+      "id": "ANAT-MUSCLE-022", "name_en": "Rectus femoris", "name_zh": "股直肌", "aliases_zh": ["股四头肌中央部分"], "anatomical_group": "anterior thigh quadriceps",
+      "atlas_region_ids": ["quadriceps"], "origin_summary": "Anterior inferior iliac spine and superior acetabular region.", "insertion_summary": "Tibial tuberosity through the quadriceps tendon, patella and patellar ligament.",
+      "crosses_joints": ["hip joint", "knee joint"], "primary_actions": ["knee extension", "hip flexion"], "secondary_actions": [],
+      "role_in_training": "Biarticular quadriceps component; hip position can affect muscle length during knee-extension tasks.",
+      "movement_pattern_ids": ["squat_knee_dominant", "unilateral_knee_dominant", "knee_extension"], "representative_exercise_ids": ["exercises-dataset:1760", "exercises-dataset:0585"],
+      "source_ids": ["ANAT-OPENSTAX-LOWER-2022"], "claim_ids": ["CLM-ANAT-STRUCTURE-001", "CLM-ANAT-BIARTICULAR-001"], "limitations": "The record does not prescribe hip angle or infer regional hypertrophy."
+    },
+    {
+      "id": "ANAT-MUSCLE-023", "name_en": "Vastus lateralis", "name_zh": "股外侧肌", "aliases_zh": ["股四头肌外侧"], "anatomical_group": "anterior thigh quadriceps",
+      "atlas_region_ids": ["quadriceps"], "origin_summary": "Greater trochanter and lateral linea aspera region of the femur.", "insertion_summary": "Tibial tuberosity through the quadriceps tendon, patella and patellar ligament.",
+      "crosses_joints": ["knee joint"], "primary_actions": ["knee extension"], "secondary_actions": ["patellar tracking contribution through quadriceps mechanism"],
+      "role_in_training": "Contributes to knee extension in squat, leg-press and knee-extension families.",
+      "movement_pattern_ids": ["squat_knee_dominant", "unilateral_knee_dominant", "knee_extension"], "representative_exercise_ids": ["exercises-dataset:0043", "exercises-dataset:0585"],
+      "source_ids": ["ANAT-OPENSTAX-LOWER-2022"], "claim_ids": ["CLM-ANAT-STRUCTURE-001", "CLM-ANAT-ROLE-001"], "limitations": "Stance width or foot position is not used to promise selective growth."
+    },
+    {
+      "id": "ANAT-MUSCLE-024", "name_en": "Vastus medialis", "name_zh": "股内侧肌", "aliases_zh": ["股四头肌内侧", "VMO"], "anatomical_group": "anterior thigh quadriceps",
+      "atlas_region_ids": ["quadriceps"], "origin_summary": "Intertrochanteric line and medial linea aspera region of the femur.", "insertion_summary": "Tibial tuberosity through the quadriceps tendon, patella and patellar ligament.",
+      "crosses_joints": ["knee joint"], "primary_actions": ["knee extension"], "secondary_actions": ["patellar tracking contribution through quadriceps mechanism"],
+      "role_in_training": "Contributes to knee extension across knee-dominant and direct knee-extension tasks.",
+      "movement_pattern_ids": ["squat_knee_dominant", "unilateral_knee_dominant", "knee_extension"], "representative_exercise_ids": ["exercises-dataset:0410", "exercises-dataset:0585"],
+      "source_ids": ["ANAT-OPENSTAX-LOWER-2022"], "claim_ids": ["CLM-ANAT-STRUCTURE-001", "CLM-ANAT-ROLE-001"], "limitations": "SportRX does not claim selective VMO isolation or knee-pain treatment."
+    },
+    {
+      "id": "ANAT-MUSCLE-025", "name_en": "Vastus intermedius", "name_zh": "股中间肌", "aliases_zh": ["深层股四头肌"], "anatomical_group": "anterior thigh quadriceps",
+      "atlas_region_ids": ["quadriceps"], "origin_summary": "Anterior and lateral shaft of the femur beneath rectus femoris.", "insertion_summary": "Tibial tuberosity through the quadriceps tendon, patella and patellar ligament.",
+      "crosses_joints": ["knee joint"], "primary_actions": ["knee extension"], "secondary_actions": [],
+      "role_in_training": "Deep quadriceps contributor to knee extension; not individually inferred from external exercise form.",
+      "movement_pattern_ids": ["squat_knee_dominant", "unilateral_knee_dominant", "knee_extension"], "representative_exercise_ids": ["exercises-dataset:2287", "exercises-dataset:0585"],
+      "source_ids": ["ANAT-OPENSTAX-LOWER-2022"], "claim_ids": ["CLM-ANAT-STRUCTURE-001", "CLM-ANAT-ROLE-001"], "limitations": "No exercise in the catalogue is labelled as isolated vastus intermedius training."
+    },
+    {
+      "id": "ANAT-MUSCLE-026", "name_en": "Biceps femoris", "name_zh": "股二头肌", "aliases_zh": ["外侧腘绳肌"], "anatomical_group": "posterior thigh hamstrings",
+      "atlas_region_ids": ["hamstrings"], "origin_summary": "Ischial tuberosity for long head and posterior femur for short head.", "insertion_summary": "Head of the fibula.",
+      "crosses_joints": ["hip joint for long head", "knee joint"], "primary_actions": ["knee flexion", "hip extension by long head"], "secondary_actions": ["external rotation of flexed knee"],
+      "role_in_training": "Covered through both hip-hinge and knee-flexion families; the short head does not cross the hip.",
+      "movement_pattern_ids": ["hip_hinge", "knee_flexion"], "representative_exercise_ids": ["exercises-dataset:0085", "exercises-dataset:0586"],
+      "source_ids": ["ANAT-OPENSTAX-LOWER-2022"], "claim_ids": ["CLM-ANAT-STRUCTURE-001", "CLM-ANAT-BIARTICULAR-001", "CLM-ANAT-ROLE-001"], "limitations": "Long- and short-head regional hypertrophy are not predicted."
+    },
+    {
+      "id": "ANAT-MUSCLE-027", "name_en": "Semitendinosus", "name_zh": "半腱肌", "aliases_zh": ["内侧腘绳肌"], "anatomical_group": "posterior thigh hamstrings",
+      "atlas_region_ids": ["hamstrings"], "origin_summary": "Ischial tuberosity.", "insertion_summary": "Medial proximal tibia through the pes anserinus region.",
+      "crosses_joints": ["hip joint", "knee joint"], "primary_actions": ["hip extension", "knee flexion"], "secondary_actions": ["internal rotation of flexed knee"],
+      "role_in_training": "Biarticular hamstring contributing to both hip-hinge and knee-flexion tasks.",
+      "movement_pattern_ids": ["hip_hinge", "knee_flexion"], "representative_exercise_ids": ["exercises-dataset:1459", "exercises-dataset:0586"],
+      "source_ids": ["ANAT-OPENSTAX-LOWER-2022"], "claim_ids": ["CLM-ANAT-STRUCTURE-001", "CLM-ANAT-BIARTICULAR-001"], "limitations": "The atlas does not rank hinge or curl variants for this muscle."
+    },
+    {
+      "id": "ANAT-MUSCLE-028", "name_en": "Semimembranosus", "name_zh": "半膜肌", "aliases_zh": ["内侧腘绳肌"], "anatomical_group": "posterior thigh hamstrings",
+      "atlas_region_ids": ["hamstrings"], "origin_summary": "Ischial tuberosity.", "insertion_summary": "Posteromedial proximal tibia.",
+      "crosses_joints": ["hip joint", "knee joint"], "primary_actions": ["hip extension", "knee flexion"], "secondary_actions": ["internal rotation of flexed knee"],
+      "role_in_training": "Biarticular hamstring contributing to both hip-hinge and knee-flexion tasks.",
+      "movement_pattern_ids": ["hip_hinge", "knee_flexion"], "representative_exercise_ids": ["exercises-dataset:0116", "exercises-dataset:3235"],
+      "source_ids": ["ANAT-OPENSTAX-LOWER-2022"], "claim_ids": ["CLM-ANAT-STRUCTURE-001", "CLM-ANAT-BIARTICULAR-001"], "limitations": "The atlas does not rank hinge or curl variants for this muscle."
+    },
+    {
+      "id": "ANAT-MUSCLE-029", "name_en": "Gluteus maximus", "name_zh": "臀大肌", "aliases_zh": ["臀肌"], "anatomical_group": "posterior hip",
+      "atlas_region_ids": ["gluteals"], "origin_summary": "Posterior ilium, sacrum, coccyx and associated fascia.", "insertion_summary": "Iliotibial tract and gluteal tuberosity of the femur.",
+      "crosses_joints": ["hip joint"], "primary_actions": ["hip extension", "hip external rotation"], "secondary_actions": ["hip abduction or adduction contributions by regional fibers"],
+      "role_in_training": "Major contributor to loaded hip extension across bridge, hinge and squat-related tasks.",
+      "movement_pattern_ids": ["hip_extension", "hip_hinge", "squat_knee_dominant", "unilateral_knee_dominant"], "representative_exercise_ids": ["exercises-dataset:1409", "exercises-dataset:0085", "exercises-dataset:0043"],
+      "source_ids": ["ANAT-OPENSTAX-LOWER-2022"], "claim_ids": ["CLM-ANAT-STRUCTURE-001", "CLM-ANAT-ROLE-001"], "limitations": "No single movement is declared the best gluteus-maximus exercise."
+    },
+    {
+      "id": "ANAT-MUSCLE-030", "name_en": "Gluteus medius", "name_zh": "臀中肌", "aliases_zh": ["髋外展肌"], "anatomical_group": "lateral hip",
+      "atlas_region_ids": ["gluteals", "hip_adductors_abductors"], "origin_summary": "External surface of the ilium.", "insertion_summary": "Greater trochanter of the femur.",
+      "crosses_joints": ["hip joint"], "primary_actions": ["hip abduction", "pelvic stabilization in single-leg stance"], "secondary_actions": ["hip internal or external rotation depending on fiber region"],
+      "role_in_training": "Contributes to direct hip-abduction tasks and frontal-plane control in single-leg work.",
+      "movement_pattern_ids": ["hip_abduction_adduction", "unilateral_knee_dominant"], "representative_exercise_ids": ["exercises-dataset:0597", "exercises-dataset:0710", "exercises-dataset:0410"],
+      "source_ids": ["ANAT-OPENSTAX-LOWER-2022"], "claim_ids": ["CLM-ANAT-STRUCTURE-001", "CLM-ANAT-ROLE-001"], "limitations": "Single-leg performance is not a diagnostic test of gluteus medius function."
+    },
+    {
+      "id": "ANAT-MUSCLE-031", "name_en": "Gluteus minimus", "name_zh": "臀小肌", "aliases_zh": ["深层髋外展肌"], "anatomical_group": "deep lateral hip",
+      "atlas_region_ids": ["gluteals", "hip_adductors_abductors"], "origin_summary": "External ilium deep to gluteus medius.", "insertion_summary": "Greater trochanter of the femur.",
+      "crosses_joints": ["hip joint"], "primary_actions": ["hip abduction", "pelvic stabilization"], "secondary_actions": ["hip internal rotation contribution"],
+      "role_in_training": "Contributes with gluteus medius to abduction and pelvic control; not isolated by catalogue labels.",
+      "movement_pattern_ids": ["hip_abduction_adduction", "unilateral_knee_dominant"], "representative_exercise_ids": ["exercises-dataset:0597", "exercises-dataset:0710"],
+      "source_ids": ["ANAT-OPENSTAX-LOWER-2022"], "claim_ids": ["CLM-ANAT-STRUCTURE-001", "CLM-ANAT-ROLE-001"], "limitations": "No direct SportRX measure distinguishes medius from minimus contribution."
+    },
+    {
+      "id": "ANAT-MUSCLE-032", "name_en": "Hip adductor group", "name_zh": "髋内收肌群", "aliases_zh": ["大腿内侧", "内收长肌", "内收短肌", "内收大肌"], "anatomical_group": "medial thigh",
+      "atlas_region_ids": ["hip_adductors_abductors"], "origin_summary": "Pubic and ischial regions across adductor longus, brevis, magnus and related medial-thigh muscles.", "insertion_summary": "Medial and posterior femur with additional distal attachments depending on muscle.",
+      "crosses_joints": ["hip joint", "some related muscles also cross knee joint"], "primary_actions": ["hip adduction"], "secondary_actions": ["hip flexion or extension contributions depending on muscle and joint position"],
+      "role_in_training": "Directly represented by hip-adduction tasks and contributes to squat and single-leg patterns.",
+      "movement_pattern_ids": ["hip_abduction_adduction", "squat_knee_dominant", "unilateral_knee_dominant"], "representative_exercise_ids": ["exercises-dataset:0168", "exercises-dataset:0598", "exercises-dataset:0043"],
+      "source_ids": ["ANAT-OPENSTAX-LOWER-2022"], "claim_ids": ["CLM-ANAT-STRUCTURE-001", "CLM-ANAT-ROLE-001"], "limitations": "Grouped record; no clinical groin assessment or muscle-specific dose is provided."
+    },
+    {
+      "id": "ANAT-MUSCLE-033", "name_en": "Gastrocnemius", "name_zh": "腓肠肌", "aliases_zh": ["小腿肌", "小腿表层"], "anatomical_group": "posterior lower leg",
+      "atlas_region_ids": ["calves"], "origin_summary": "Posterior aspects of the medial and lateral femoral condyles.", "insertion_summary": "Calcaneus through the Achilles tendon.",
+      "crosses_joints": ["knee joint", "ankle joint"], "primary_actions": ["ankle plantar flexion"], "secondary_actions": ["knee flexion contribution"],
+      "role_in_training": "Biarticular calf muscle whose length and contribution change with knee position; often represented in straight-knee calf raises.",
+      "movement_pattern_ids": ["plantar_flexion"], "representative_exercise_ids": ["exercises-dataset:1373", "exercises-dataset:1372"],
+      "source_ids": ["ANAT-OPENSTAX-LOWER-2022"], "claim_ids": ["CLM-ANAT-STRUCTURE-001", "CLM-ANAT-BIARTICULAR-001", "CLM-ANAT-ROLE-001"], "limitations": "Straight-knee work does not completely isolate gastrocnemius."
+    },
+    {
+      "id": "ANAT-MUSCLE-034", "name_en": "Soleus", "name_zh": "比目鱼肌", "aliases_zh": ["小腿深层"], "anatomical_group": "posterior lower leg",
+      "atlas_region_ids": ["calves"], "origin_summary": "Posterior proximal tibia and fibula.", "insertion_summary": "Calcaneus through the Achilles tendon.",
+      "crosses_joints": ["ankle joint"], "primary_actions": ["ankle plantar flexion"], "secondary_actions": ["postural control in standing"],
+      "role_in_training": "Single-joint plantar flexor that remains active with the knee flexed; seated calf raises provide a distinct setup rather than perfect isolation.",
+      "movement_pattern_ids": ["plantar_flexion"], "representative_exercise_ids": ["exercises-dataset:1379", "exercises-dataset:0088"],
+      "source_ids": ["ANAT-OPENSTAX-LOWER-2022"], "claim_ids": ["CLM-ANAT-STRUCTURE-001", "CLM-ANAT-ROLE-001"], "limitations": "Bent-knee work does not completely exclude gastrocnemius or establish an optimal hypertrophy method."
+    }
+  ]
+}

@@ -7,6 +7,10 @@
 也不生成训练剂量。人工说明见
 [`evidence/hypertrophy/README.md`](../../evidence/hypertrophy/README.md)。
 
+`training_anatomy.json` 保存 34 条主要训练肌肉或功能肌群的起止点摘要、跨关节、
+主要动作、训练角色和图谱链接。它是人工审阅的运动解剖学教育层，详细说明见
+[`evidence/anatomy/README.md`](../../evidence/anatomy/README.md)。
+
 它不保存或展示上游项目的图片、GIF 或其他媒体文件，也不负责决定训练量、强度、进阶或运动风险。
 
 ## 来源与更新

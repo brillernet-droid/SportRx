@@ -1,5 +1,19 @@
 # Changelog
 
+## 2026-09-03 - Training Anatomy v0.1
+
+- Added 34 reviewed training-anatomy records covering the major muscles and
+  functional groups used by the existing 16-region hypertrophy atlas.
+- Added four anatomy sources, three boundary claims and 18 bilingual knowledge
+  cards for attachments, joint crossing, task-dependent roles and major muscle
+  groups.
+- Added Chinese anatomy search with joint-action and biarticular-muscle terms,
+  source/claim tracing and validation against atlas and exercise IDs.
+- Added a reproducible downloader for two Europe PMC open-access hypertrophy
+  reviews. PDFs and checksums stay in ignored `evidence/private/` storage.
+- Kept source full text outside public RAG and preserved the assessment-only
+  status of automated hypertrophy prescription.
+
 ## 2026-09-03 - Hypertrophy Movement Knowledge v0.1
 
 - Added a reviewed `Hypertrophy Movement Atlas` with 16 muscle regions,

@@ -156,6 +156,13 @@ from .test_session_operator import (
     test_session_operator_markdown,
 )
 from .terminology import build_terminology_guide, terminology_markdown
+from .training_anatomy import (
+    get_training_anatomy_record,
+    load_training_anatomy,
+    search_training_anatomy,
+    training_anatomy_summary,
+    validate_training_anatomy,
+)
 from .training_block import build_training_block, training_block_markdown
 from .validation_readiness import build_validation_readiness_matrix, validation_readiness_markdown
 from .walkthrough import build_walkthrough
@@ -282,6 +289,7 @@ __all__ = [
     "validate_program_packs",
     "get_exercise",
     "get_muscle_region",
+    "get_training_anatomy_record",
     "get_benchmark_protocol",
     "get_hybrid_benchmark",
     "get_language_edition",
@@ -291,6 +299,7 @@ __all__ = [
     "launch_readiness_markdown",
     "load_exercise_catalogue",
     "load_hypertrophy_atlas",
+    "load_training_anatomy",
     "measurement_timeline_markdown",
     "measurement_schema_registry_markdown",
     "open_source_integration_markdown",
@@ -321,6 +330,7 @@ __all__ = [
     "self_use_protocol_markdown",
     "search_exercises",
     "search_hypertrophy_movements",
+    "search_training_anatomy",
     "summarize_benchmark_sessions",
     "summarize_pilot_feedback",
     "session_snapshot_json",
@@ -334,10 +344,12 @@ __all__ = [
     "test_session_operator_markdown",
     "terminology_markdown",
     "training_block_markdown",
+    "training_anatomy_summary",
     "ui_text",
     "validation_readiness_markdown",
     "validate_exercise_catalogue",
     "validate_hypertrophy_atlas",
+    "validate_training_anatomy",
     "write_release_package",
     "PROTOCOL_SOURCE_HELP",
     "PROTOCOL_SOURCE_OPTIONS",

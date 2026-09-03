@@ -56,6 +56,11 @@ The reviewed [Hypertrophy Movement Atlas](evidence/hypertrophy/README.md) adds
 existing exercise catalogue. It supports discovery and explanation only; it
 does not activate hypertrophy dose or progression rules.
 
+The [Training Anatomy layer](evidence/anatomy/README.md) contains 34 reviewed
+muscle or functional-group records linked to the movement atlas. It describes
+attachments, joint crossing, actions and training roles without making
+activation, diagnosis, exercise-ranking or dose claims.
+
 ## Run locally
 
 ```bash

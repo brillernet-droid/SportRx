@@ -1,0 +1,187 @@
+{
+  "schema": "sportrx.knowledge_card_pack",
+  "schema_version": "0.1",
+  "pack_id": "training_anatomy_v1",
+  "records": [
+    {
+      "id": "K-CARD-079", "topic": "biomechanics_motor_control", "subtopic": "origin_insertion_action",
+      "title_en": "Attachments support action descriptions, not exercise rankings", "title_zh": "起止点能解释动作，不能直接给动作排名",
+      "keywords_en": ["origin", "insertion", "joint action", "functional anatomy"], "keywords_zh": ["起点", "止点", "关节动作", "功能解剖"],
+      "source_ids": ["ANAT-OPENSTAX-PRINCIPLES-2022", "ANAT-OPENSTAX-UPPER-2022", "ANAT-OPENSTAX-LOWER-2022"], "claim_ids": ["CLM-ANAT-STRUCTURE-001"], "evidence_tier": "D", "population": "Foundational human anatomy; educational use only.",
+      "summary_zh": "肌肉从哪里起、附着到哪里、跨过哪些关节，可以帮助解释它可能产生的动作。但这些结构信息不能直接证明某个动作激活最高、最安全或最适合增肌。",
+      "technical_summary_en": "Origin, insertion and joint crossing support plausible action descriptions but do not quantify exercise contribution.",
+      "limitations": "Task, joint position, external load, technique and individual anatomy still affect contribution.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-080", "topic": "biomechanics_motor_control", "subtopic": "task_dependent_roles",
+      "title_en": "Muscle roles depend on the task", "title_zh": "肌肉角色会随任务改变",
+      "keywords_en": ["prime mover", "synergist", "antagonist", "stabilizer"], "keywords_zh": ["原动肌", "协同肌", "拮抗肌", "稳定肌"],
+      "source_ids": ["ANAT-OPENSTAX-PRINCIPLES-2022"], "claim_ids": ["CLM-ANAT-ROLE-001"], "evidence_tier": "D", "population": "Foundational human anatomy; educational use only.",
+      "summary_zh": "同一块肌肉在一个动作里可能主要产生运动，在另一个动作里主要稳定关节。SportRX 因此不会把原动肌、协同肌和稳定肌标签换算成固定的有效组数。",
+      "technical_summary_en": "Mover and stabilizer roles are task-dependent and cannot be converted into fixed hypertrophy credit.",
+      "limitations": "Role labels simplify coordination and do not replace biomechanical or physiological measurement.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-081", "topic": "biomechanics_motor_control", "subtopic": "biarticular_muscles",
+      "title_en": "Two-joint muscles need joint-position context", "title_zh": "跨双关节肌肉必须保留关节位置",
+      "keywords_en": ["biarticular", "muscle length", "joint position", "exercise setup"], "keywords_zh": ["双关节肌", "肌肉长度", "关节位置", "动作设置"],
+      "source_ids": ["ANAT-OPENSTAX-UPPER-2022", "ANAT-OPENSTAX-LOWER-2022"], "claim_ids": ["CLM-ANAT-BIARTICULAR-001"], "evidence_tier": "D", "population": "Foundational human anatomy; educational use only.",
+      "summary_zh": "肱二头肌、肱三头肌长头、股直肌、部分腘绳肌和腓肠肌跨越两个关节。改变其中一个关节的位置会改变肌肉长度与任务条件，但不等于完全隔离或自动获得更大增肌效果。",
+      "technical_summary_en": "Biarticular muscle length and contribution vary with both joint positions.",
+      "limitations": "Anatomy alone does not determine force, activation, hypertrophy or a safe personal setup.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-082", "topic": "biomechanics_motor_control", "subtopic": "pectoralis_major",
+      "title_en": "Pectoralis major links the trunk to the humerus", "title_zh": "胸大肌连接躯干与肱骨",
+      "keywords_en": ["pectoralis major", "horizontal adduction", "press", "fly"], "keywords_zh": ["胸大肌", "肩水平内收", "卧推", "飞鸟"],
+      "source_ids": ["ANAT-OPENSTAX-UPPER-2022"], "claim_ids": ["CLM-ANAT-STRUCTURE-001", "CLM-ANAT-ROLE-001"], "evidence_tier": "D", "population": "Foundational human anatomy; educational use for generally healthy adults.",
+      "summary_zh": "胸大肌从锁骨、胸骨和肋软骨区域连到肱骨，主要参与肩水平内收、内收和内旋。水平推和飞鸟都能表达这些任务，但不能据此证明某个角度是唯一最佳选择。",
+      "technical_summary_en": "Pectoralis major contributes to horizontal adduction, adduction and internal rotation of the shoulder.",
+      "limitations": "Regional fiber contribution and individual hypertrophy are not quantified.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-083", "topic": "biomechanics_motor_control", "subtopic": "latissimus_dorsi",
+      "title_en": "Latissimus dorsi is a shoulder extensor and adductor", "title_zh": "背阔肌主要参与肩伸展与内收",
+      "keywords_en": ["latissimus dorsi", "shoulder extension", "shoulder adduction", "pulling"], "keywords_zh": ["背阔肌", "肩伸展", "肩内收", "拉类动作"],
+      "source_ids": ["ANAT-OPENSTAX-UPPER-2022"], "claim_ids": ["CLM-ANAT-STRUCTURE-001", "CLM-ANAT-ROLE-001"], "evidence_tier": "D", "population": "Foundational human anatomy; educational use for generally healthy adults.",
+      "summary_zh": "背阔肌从下胸椎、腰背筋膜、髂嵴和下位肋骨区域连到肱骨，主要参与肩伸展和内收。垂直拉通常更直接表达这些动作，水平拉也可参与。",
+      "technical_summary_en": "Latissimus dorsi crosses the shoulder and contributes to extension, adduction and internal rotation.",
+      "limitations": "Grip and torso-angle claims require exercise-specific evidence beyond anatomy.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-084", "topic": "biomechanics_motor_control", "subtopic": "scapular_muscles",
+      "title_en": "Scapular muscles do not perform one single back action", "title_zh": "肩胛肌群并不是一个单一的背部动作",
+      "keywords_en": ["trapezius", "rhomboids", "serratus anterior", "scapula"], "keywords_zh": ["斜方肌", "菱形肌", "前锯肌", "肩胛骨"],
+      "source_ids": ["ANAT-OPENSTAX-UPPER-2022", "ANAT-OPENSTAX-BACK-2022"], "claim_ids": ["CLM-ANAT-STRUCTURE-001", "CLM-ANAT-ROLE-001"], "evidence_tier": "D", "population": "Foundational human anatomy; educational use for generally healthy adults.",
+      "summary_zh": "斜方肌、菱形肌和前锯肌分别参与肩胛上提、后缩、前伸与旋转等任务。划船、耸肩和推举中的作用不同，不能用一个笼统的‘背部激活’标签替代。",
+      "technical_summary_en": "Scapular elevation, retraction, protraction and rotation involve distinct but coordinated muscle roles.",
+      "limitations": "No scapular dyskinesis, posture or pain diagnosis is supported.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-085", "topic": "biomechanics_motor_control", "subtopic": "deltoid_regions",
+      "title_en": "The deltoid has three functionally distinct regions", "title_zh": "三角肌前中后束的主要动作不同",
+      "keywords_en": ["anterior deltoid", "lateral deltoid", "posterior deltoid", "shoulder"], "keywords_zh": ["三角肌前束", "三角肌中束", "三角肌后束", "肩部"],
+      "source_ids": ["ANAT-NCBI-DELTOID-2024", "ANAT-OPENSTAX-UPPER-2022"], "claim_ids": ["CLM-ANAT-STRUCTURE-001", "CLM-ANAT-ROLE-001"], "evidence_tier": "D", "population": "Foundational shoulder anatomy; educational use only.",
+      "summary_zh": "前束主要参与肩屈曲，中束主要参与肩外展，后束主要参与肩水平外展和伸展。肩上推、侧平举与后肩动作因此不能压缩成一个 delts 标签。",
+      "technical_summary_en": "Anterior, lateral and posterior deltoid regions have distinguishable principal shoulder actions.",
+      "limitations": "Anatomical actions do not rank exercises or quantify regional hypertrophy.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-086", "topic": "sports_medicine_injury_rehab", "subtopic": "rotator_cuff_anatomy",
+      "title_en": "Rotator cuff anatomy is not a rehabilitation prescription", "title_zh": "肩袖解剖知识不等于康复处方",
+      "keywords_en": ["rotator cuff", "supraspinatus", "infraspinatus", "subscapularis"], "keywords_zh": ["肩袖", "冈上肌", "冈下肌", "肩胛下肌"],
+      "source_ids": ["ANAT-OPENSTAX-UPPER-2022", "ANAT-NCBI-DELTOID-2024"], "claim_ids": ["CLM-ANAT-STRUCTURE-001", "CLM-ANAT-ROLE-001"], "evidence_tier": "D", "population": "Foundational shoulder anatomy; research-only clinical boundary.",
+      "summary_zh": "肩袖由冈上肌、冈下肌、小圆肌和肩胛下肌组成，参与肩关节稳定、外旋、内旋和外展等任务。知道这些结构不能用于诊断肩痛，也不能自动生成外旋康复训练。",
+      "technical_summary_en": "Rotator-cuff muscles contribute to glenohumeral stability and distinct rotation or abduction tasks.",
+      "limitations": "Research summary only; no diagnosis, rehabilitation, clearance or personal exercise recommendation.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "research_only"
+    },
+    {
+      "id": "K-CARD-087", "topic": "biomechanics_motor_control", "subtopic": "elbow_flexors",
+      "title_en": "Elbow flexion involves more than the biceps", "title_zh": "肘屈并不只有肱二头肌参与",
+      "keywords_en": ["biceps", "brachialis", "brachioradialis", "elbow flexion"], "keywords_zh": ["肱二头肌", "肱肌", "肱桡肌", "肘屈"],
+      "source_ids": ["ANAT-OPENSTAX-UPPER-2022"], "claim_ids": ["CLM-ANAT-STRUCTURE-001", "CLM-ANAT-BIARTICULAR-001", "CLM-ANAT-ROLE-001"], "evidence_tier": "D", "population": "Foundational upper-limb anatomy; educational use only.",
+      "summary_zh": "肱二头肌、肱肌和肱桡肌都参与肘屈。肱二头肌还参与前臂旋后并跨过肩关节，肱桡肌在中立握位下常有明显作用，但握法不构成完全隔离。",
+      "technical_summary_en": "Elbow flexion is shared across biceps brachii, brachialis and brachioradialis with position-dependent roles.",
+      "limitations": "No grip-specific activation or hypertrophy percentage is inferred.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-088", "topic": "biomechanics_motor_control", "subtopic": "triceps_brachii",
+      "title_en": "The triceps long head crosses the shoulder and elbow", "title_zh": "肱三头肌长头跨越肩与肘两个关节",
+      "keywords_en": ["triceps", "long head", "elbow extension", "overhead"], "keywords_zh": ["肱三头肌", "长头", "肘伸", "过顶"],
+      "source_ids": ["ANAT-OPENSTAX-UPPER-2022"], "claim_ids": ["CLM-ANAT-STRUCTURE-001", "CLM-ANAT-BIARTICULAR-001", "CLM-ANAT-ROLE-001"], "evidence_tier": "D", "population": "Foundational upper-limb anatomy; educational use only.",
+      "summary_zh": "肱三头肌三头共同参与肘伸，其中长头还跨过肩关节。过顶与非过顶臂屈伸因此具有不同的肌长条件，但解剖结构本身不能保证某个变式带来更大局部增肌。",
+      "technical_summary_en": "The triceps long head is biarticular and changes length across shoulder position.",
+      "limitations": "Head-specific hypertrophy requires longitudinal exercise evidence, not anatomy alone.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-089", "topic": "biomechanics_motor_control", "subtopic": "forearm_groups",
+      "title_en": "Wrist flexion, extension and grip are different tasks", "title_zh": "腕屈、腕伸与握持是不同任务",
+      "keywords_en": ["forearm", "wrist flexors", "wrist extensors", "grip"], "keywords_zh": ["前臂", "腕屈肌", "腕伸肌", "握力"],
+      "source_ids": ["ANAT-OPENSTAX-UPPER-2022"], "claim_ids": ["CLM-ANAT-STRUCTURE-001", "CLM-ANAT-ROLE-001"], "evidence_tier": "D", "population": "Foundational upper-limb anatomy; educational use only.",
+      "summary_zh": "前臂包含多条腕指屈肌和伸肌。腕弯举、反向腕弯举和负重握持表达不同任务，握力成绩不能直接替代前臂肌肥大测量。",
+      "technical_summary_en": "Forearm training tasks should distinguish wrist flexion, wrist extension, finger action and gripping demands.",
+      "limitations": "The current catalogue does not comprehensively cover finger and grip-device exercise families.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-090", "topic": "biomechanics_motor_control", "subtopic": "abdominal_wall",
+      "title_en": "The abdominal wall has distinct motion and pressure roles", "title_zh": "腹壁肌群同时承担运动与压力管理",
+      "keywords_en": ["rectus abdominis", "obliques", "transversus abdominis", "trunk"], "keywords_zh": ["腹直肌", "腹斜肌", "腹横肌", "躯干"],
+      "source_ids": ["ANAT-OPENSTAX-TRUNK-2022"], "claim_ids": ["CLM-ANAT-STRUCTURE-001", "CLM-ANAT-ROLE-001"], "evidence_tier": "D", "population": "Foundational trunk anatomy; educational use only.",
+      "summary_zh": "腹直肌主要参与躯干屈曲，腹内外斜肌参与旋转和侧屈，腹横肌更多参与腹腔压缩与稳定。卷腹、抗旋转和抗伸展因此不应被视为完全相同的核心动作。",
+      "technical_summary_en": "Rectus abdominis, obliques and transversus abdominis have distinguishable trunk-motion and pressure roles.",
+      "limitations": "No spot-reduction, spinal-protection or pain-treatment claim is supported.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-091", "topic": "biomechanics_motor_control", "subtopic": "spinal_extensors",
+      "title_en": "Spinal extensors can move or stabilize the trunk", "title_zh": "脊柱伸肌既可以产生运动，也可以维持稳定",
+      "keywords_en": ["erector spinae", "quadratus lumborum", "spinal extension", "stability"], "keywords_zh": ["竖脊肌", "腰方肌", "脊柱伸展", "稳定"],
+      "source_ids": ["ANAT-OPENSTAX-BACK-2022", "ANAT-OPENSTAX-TRUNK-2022"], "claim_ids": ["CLM-ANAT-STRUCTURE-001", "CLM-ANAT-ROLE-001"], "evidence_tier": "D", "population": "Foundational trunk and back anatomy; educational use only.",
+      "summary_zh": "竖脊肌群可参与脊柱伸展和侧屈，也会在髋铰链等动作中维持躯干位置；腰方肌参与侧屈和骨盆控制。动作参与不等于腰痛原因或康复方向。",
+      "technical_summary_en": "Back and posterior-abdominal muscles can act dynamically or isometrically depending on the task.",
+      "limitations": "No back-pain diagnosis, weakness assessment or rehabilitation advice is provided.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-092", "topic": "biomechanics_motor_control", "subtopic": "quadriceps_anatomy",
+      "title_en": "Rectus femoris differs from the three vasti", "title_zh": "股直肌与三块股肌的跨关节关系不同",
+      "keywords_en": ["rectus femoris", "vastus lateralis", "vastus medialis", "quadriceps"], "keywords_zh": ["股直肌", "股外侧肌", "股内侧肌", "股四头肌"],
+      "source_ids": ["ANAT-OPENSTAX-LOWER-2022"], "claim_ids": ["CLM-ANAT-STRUCTURE-001", "CLM-ANAT-BIARTICULAR-001", "CLM-ANAT-ROLE-001"], "evidence_tier": "D", "population": "Foundational lower-limb anatomy; educational use only.",
+      "summary_zh": "股四头肌都参与膝伸，但股直肌还跨过髋关节并参与髋屈；股外侧肌、股内侧肌和股中间肌只跨膝。髋位因此是解释腿屈伸与蹲类差异时的重要条件。",
+      "technical_summary_en": "Rectus femoris is biarticular, while the vasti cross the knee only.",
+      "limitations": "Foot angle, stance or exercise name does not prove selective vastus hypertrophy.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-093", "topic": "biomechanics_motor_control", "subtopic": "hamstring_anatomy",
+      "title_en": "Hamstring anatomy explains the need for two movement families", "title_zh": "腘绳肌解剖解释了为什么要区分髋铰链与屈膝",
+      "keywords_en": ["hamstrings", "biceps femoris", "semitendinosus", "semimembranosus"], "keywords_zh": ["腘绳肌", "股二头肌", "半腱肌", "半膜肌"],
+      "source_ids": ["ANAT-OPENSTAX-LOWER-2022"], "claim_ids": ["CLM-ANAT-STRUCTURE-001", "CLM-ANAT-BIARTICULAR-001", "CLM-ANAT-ROLE-001"], "evidence_tier": "D", "population": "Foundational lower-limb anatomy; educational use only.",
+      "summary_zh": "多数腘绳肌跨越髋和膝，参与髋伸与屈膝；股二头肌短头例外，只跨膝。髋铰链和腿弯举因此表达不同任务，但解剖结构不能单独决定两类动作的剂量。",
+      "technical_summary_en": "Most hamstrings are biarticular and contribute to both hip extension and knee flexion; biceps-femoris short head is an exception.",
+      "limitations": "Regional hypertrophy and exercise superiority require longitudinal evidence.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-094", "topic": "biomechanics_motor_control", "subtopic": "gluteal_anatomy",
+      "title_en": "The gluteal group combines extension, abduction and pelvic control", "title_zh": "臀肌群包含髋伸、外展与骨盆控制任务",
+      "keywords_en": ["gluteus maximus", "gluteus medius", "gluteus minimus", "hip"], "keywords_zh": ["臀大肌", "臀中肌", "臀小肌", "髋"],
+      "source_ids": ["ANAT-OPENSTAX-LOWER-2022"], "claim_ids": ["CLM-ANAT-STRUCTURE-001", "CLM-ANAT-ROLE-001"], "evidence_tier": "D", "population": "Foundational lower-limb anatomy; educational use only.",
+      "summary_zh": "臀大肌主要参与髋伸和外旋，臀中肌与臀小肌更多参与髋外展和单腿支撑中的骨盆控制。因此练臀不应被压缩成单一臀桥或单一外展动作。",
+      "technical_summary_en": "Gluteus maximus, medius and minimus contribute to distinct but overlapping hip tasks.",
+      "limitations": "No movement is ranked as the best glute exercise and single-leg form is not a clinical screen.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-095", "topic": "biomechanics_motor_control", "subtopic": "hip_adductor_abductor_anatomy",
+      "title_en": "Hip adduction and abduction are opposite but coordinated tasks", "title_zh": "髋内收与外展是相反但协同的任务",
+      "keywords_en": ["adductors", "abductors", "medial thigh", "pelvic control"], "keywords_zh": ["内收肌", "外展肌", "大腿内侧", "骨盆控制"],
+      "source_ids": ["ANAT-OPENSTAX-LOWER-2022"], "claim_ids": ["CLM-ANAT-STRUCTURE-001", "CLM-ANAT-ROLE-001"], "evidence_tier": "D", "population": "Foundational lower-limb anatomy; educational use only.",
+      "summary_zh": "内收长肌、短肌和大肌等参与髋内收，臀中肌和臀小肌等参与外展与骨盆控制。两类动作要分别记录，不能把一个‘髋稳定’标签当作临床结论。",
+      "technical_summary_en": "Adductor and abductor groups perform opposite frontal-plane actions while contributing to broader hip control.",
+      "limitations": "No groin, hip-stability or rehabilitation assessment is provided.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-096", "topic": "biomechanics_motor_control", "subtopic": "calf_anatomy",
+      "title_en": "Gastrocnemius and soleus differ in joint crossing", "title_zh": "腓肠肌与比目鱼肌的跨关节关系不同",
+      "keywords_en": ["gastrocnemius", "soleus", "plantar flexion", "knee position"], "keywords_zh": ["腓肠肌", "比目鱼肌", "跖屈", "膝关节位置"],
+      "source_ids": ["ANAT-OPENSTAX-LOWER-2022"], "claim_ids": ["CLM-ANAT-STRUCTURE-001", "CLM-ANAT-BIARTICULAR-001", "CLM-ANAT-ROLE-001"], "evidence_tier": "D", "population": "Foundational lower-limb anatomy; educational use only.",
+      "summary_zh": "腓肠肌跨越膝和踝，比目鱼肌只跨踝。膝关节位置会改变腓肠肌长度，因此站姿与坐姿提踵条件不同，但任何一种都不能被称为完全隔离。",
+      "technical_summary_en": "Gastrocnemius is biarticular while soleus crosses the ankle only, making knee position relevant to interpretation.",
+      "limitations": "Anatomy does not establish an optimal calf exercise or personal range of motion.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    }
+  ]
+}

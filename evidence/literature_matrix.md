@@ -113,6 +113,18 @@ The muscle-region atlas, atomic claims and reviewed knowledge cards are maintain
 | RT-ORDER-SR-2021 | Exercise-order Meta-analysis. https://pubmed.ncbi.nlm.nih.gov/32077380/ | B | Priority-first strength context | No clear hypertrophy order effect |
 | RT-SJMJ-REVIEW-2017 | Single- versus multi-joint exercise review. https://pubmed.ncbi.nlm.nih.gov/27677913/ | B | Isolation work as a contextual option | Small and often upper-limb-focused evidence |
 
+## Training Anatomy Foundation
+
+The 34 structured records and their exact product boundaries are maintained in
+`data/exercises/training_anatomy.json` and `evidence/anatomy/`.
+
+| ID | Source | Evidence tier | SportRx use | Limits |
+| --- | --- | --- | --- | --- |
+| ANAT-OPENSTAX-PRINCIPLES-2022 | OpenStax muscle interaction and lever-system chapter. https://openstax.org/books/anatomy-and-physiology-2e/pages/11-1-interactions-of-skeletal-muscles-their-fascicle-arrangement-and-their-lever-systems | D | Origins, insertions and task-dependent muscle-role concepts | Full text is not ingested; no exercise efficacy |
+| ANAT-OPENSTAX-BACK-2022 | OpenStax axial back-muscle chapter. https://openstax.org/books/anatomy-and-physiology-2e/pages/11-3-axial-muscles-of-the-head-neck-and-back | D | Erector-spinae structure and broad actions | No back-pain or exercise-specific inference |
+| ANAT-OPENSTAX-TRUNK-2022 | OpenStax abdominal-wall and thorax chapter. https://openstax.org/books/anatomy-and-physiology-2e/pages/11-4-axial-muscles-of-the-abdominal-wall-and-thorax | D | Abdominal-wall structure and broad trunk actions | No core score, spot reduction or rehabilitation |
+| ANAT-NCBI-DELTOID-2024 | NCBI Bookshelf deltoid anatomy. https://www.ncbi.nlm.nih.gov/books/NBK537056/ | D | Anterior, lateral and posterior deltoid structure/action context | No regional hypertrophy or safe-technique claim |
+
 ## Evidence Gaps To Fill
 
 - Test-retest reliability of SportRx Hybrid Benchmark v1.

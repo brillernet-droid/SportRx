@@ -1,0 +1,17 @@
+{
+  "schema": "sportrx.training_anatomy_manifest.v1",
+  "version": "0.1.0",
+  "reviewed_at": "2026-09-03",
+  "status": "reviewed_educational_layer",
+  "anatomy_records": "data/exercises/training_anatomy.json",
+  "source_pack": "evidence/records/packs/training_anatomy_sources.json",
+  "claim_pack": "evidence/records/packs/training_anatomy_claims.json",
+  "knowledge_pack": "evidence/knowledge/packs/training_anatomy_v1.json",
+  "fetch_script": "scripts/fetch_open_access_hypertrophy_reviews.py",
+  "record_count": 34,
+  "knowledge_card_count": 18,
+  "source_ids": ["ANAT-OPENSTAX-PRINCIPLES-2022", "ANAT-OPENSTAX-BACK-2022", "ANAT-OPENSTAX-TRUNK-2022", "ANAT-NCBI-DELTOID-2024"],
+  "claim_ids": ["CLM-ANAT-STRUCTURE-001", "CLM-ANAT-BIARTICULAR-001", "CLM-ANAT-ROLE-001"],
+  "product_authority": "education_only",
+  "boundary": "Training anatomy can explain structures and actions but cannot diagnose, rank exercises, prescribe dose or establish individual suitability."
+}

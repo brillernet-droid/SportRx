@@ -1,0 +1,46 @@
+{
+  "schema": "sportrx.evidence_claims_pack",
+  "schema_version": "0.1",
+  "pack_id": "training_anatomy_v1",
+  "records": [
+    {
+      "id": "CLM-ANAT-STRUCTURE-001",
+      "statement": "Origin, insertion and joint crossing provide a structural basis for describing a muscle's plausible actions, but anatomy alone does not quantify its contribution during an exercise.",
+      "applies_to": "SportRX training-anatomy records and educational movement explanations.",
+      "evidence_tier": "D",
+      "source_ids": ["ANAT-OPENSTAX-PRINCIPLES-2022", "ANAT-OPENSTAX-UPPER-2022", "ANAT-OPENSTAX-LOWER-2022", "ANAT-OPENSTAX-BACK-2022", "ANAT-OPENSTAX-TRUNK-2022"],
+      "allowed_language": ["This muscle crosses the elbow and can contribute to elbow flexion.", "Its attachments make the listed joint actions anatomically plausible."],
+      "disallowed_language": ["This anatomy proves that the exercise maximally activates the muscle.", "Origin and insertion identify the best hypertrophy exercise.", "The catalogue can diagnose a weak muscle."],
+      "limitations": "Muscle contribution depends on joint position, external load, technique, task and individual anatomy; these records are concise educational summaries.",
+      "review_status": "reviewed",
+      "reviewed_by": "SportRX internal evidence review",
+      "reviewed_at": "2026-09-03"
+    },
+    {
+      "id": "CLM-ANAT-BIARTICULAR-001",
+      "statement": "A muscle crossing two joints can change length and mechanical contribution when either joint position changes, so a movement label alone is not a complete training description.",
+      "applies_to": "Biarticular muscles represented in SportRX, including biceps brachii, triceps long head, rectus femoris, hamstrings and gastrocnemius.",
+      "evidence_tier": "D",
+      "source_ids": ["ANAT-OPENSTAX-UPPER-2022", "ANAT-OPENSTAX-LOWER-2022"],
+      "allowed_language": ["Knee position changes gastrocnemius length because it crosses the knee and ankle.", "Hip position is relevant when interpreting rectus femoris or hamstring exercises."],
+      "disallowed_language": ["One joint position completely isolates a biarticular muscle.", "Anatomy alone proves a regional hypertrophy advantage.", "SportRX can infer safe joint positions for pain."],
+      "limitations": "This is a structural interpretation boundary, not a direct measurement of force, activation, hypertrophy or individual tolerance.",
+      "review_status": "reviewed",
+      "reviewed_by": "SportRX internal evidence review",
+      "reviewed_at": "2026-09-03"
+    },
+    {
+      "id": "CLM-ANAT-ROLE-001",
+      "statement": "Prime-mover, synergist, antagonist and stabilizer roles are task-dependent descriptions and should not be converted into fixed exercise rankings or identical set credit.",
+      "applies_to": "SportRX muscle coverage, movement patterns and representative exercise explanations.",
+      "evidence_tier": "D",
+      "source_ids": ["ANAT-OPENSTAX-PRINCIPLES-2022", "ANAT-OPENSTAX-UPPER-2022", "ANAT-OPENSTAX-LOWER-2022", "ANAT-OPENSTAX-BACK-2022", "ANAT-OPENSTAX-TRUNK-2022"],
+      "allowed_language": ["The triceps contributes to horizontal pressing while the pectorals remain the primary atlas region.", "A muscle may act as a mover in one task and a stabilizer in another."],
+      "disallowed_language": ["Every participating muscle receives the same hypertrophy dose.", "A stabilizer never needs direct training.", "The listed prime mover is the only active muscle."],
+      "limitations": "Role labels simplify coordination and do not replace biomechanical measurement, EMG interpretation or longitudinal hypertrophy evidence.",
+      "review_status": "reviewed",
+      "reviewed_by": "SportRX internal evidence review",
+      "reviewed_at": "2026-09-03"
+    }
+  ]
+}

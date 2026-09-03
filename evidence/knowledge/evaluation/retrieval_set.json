@@ -1951,6 +1951,456 @@
       "id": "KR-390",
       "query": "K-CARD-078 review",
       "expected_card_id": "K-CARD-078"
+    },
+    {
+      "id": "KR-391",
+      "query": "K-CARD-079",
+      "expected_card_id": "K-CARD-079"
+    },
+    {
+      "id": "KR-392",
+      "query": "K-CARD-079 evidence",
+      "expected_card_id": "K-CARD-079"
+    },
+    {
+      "id": "KR-393",
+      "query": "K-CARD-079 research",
+      "expected_card_id": "K-CARD-079"
+    },
+    {
+      "id": "KR-394",
+      "query": "K-CARD-079 source",
+      "expected_card_id": "K-CARD-079"
+    },
+    {
+      "id": "KR-395",
+      "query": "K-CARD-079 review",
+      "expected_card_id": "K-CARD-079"
+    },
+    {
+      "id": "KR-396",
+      "query": "K-CARD-080",
+      "expected_card_id": "K-CARD-080"
+    },
+    {
+      "id": "KR-397",
+      "query": "K-CARD-080 evidence",
+      "expected_card_id": "K-CARD-080"
+    },
+    {
+      "id": "KR-398",
+      "query": "K-CARD-080 research",
+      "expected_card_id": "K-CARD-080"
+    },
+    {
+      "id": "KR-399",
+      "query": "K-CARD-080 source",
+      "expected_card_id": "K-CARD-080"
+    },
+    {
+      "id": "KR-400",
+      "query": "K-CARD-080 review",
+      "expected_card_id": "K-CARD-080"
+    },
+    {
+      "id": "KR-401",
+      "query": "K-CARD-081",
+      "expected_card_id": "K-CARD-081"
+    },
+    {
+      "id": "KR-402",
+      "query": "K-CARD-081 evidence",
+      "expected_card_id": "K-CARD-081"
+    },
+    {
+      "id": "KR-403",
+      "query": "K-CARD-081 research",
+      "expected_card_id": "K-CARD-081"
+    },
+    {
+      "id": "KR-404",
+      "query": "K-CARD-081 source",
+      "expected_card_id": "K-CARD-081"
+    },
+    {
+      "id": "KR-405",
+      "query": "K-CARD-081 review",
+      "expected_card_id": "K-CARD-081"
+    },
+    {
+      "id": "KR-406",
+      "query": "K-CARD-082",
+      "expected_card_id": "K-CARD-082"
+    },
+    {
+      "id": "KR-407",
+      "query": "K-CARD-082 evidence",
+      "expected_card_id": "K-CARD-082"
+    },
+    {
+      "id": "KR-408",
+      "query": "K-CARD-082 research",
+      "expected_card_id": "K-CARD-082"
+    },
+    {
+      "id": "KR-409",
+      "query": "K-CARD-082 source",
+      "expected_card_id": "K-CARD-082"
+    },
+    {
+      "id": "KR-410",
+      "query": "K-CARD-082 review",
+      "expected_card_id": "K-CARD-082"
+    },
+    {
+      "id": "KR-411",
+      "query": "K-CARD-083",
+      "expected_card_id": "K-CARD-083"
+    },
+    {
+      "id": "KR-412",
+      "query": "K-CARD-083 evidence",
+      "expected_card_id": "K-CARD-083"
+    },
+    {
+      "id": "KR-413",
+      "query": "K-CARD-083 research",
+      "expected_card_id": "K-CARD-083"
+    },
+    {
+      "id": "KR-414",
+      "query": "K-CARD-083 source",
+      "expected_card_id": "K-CARD-083"
+    },
+    {
+      "id": "KR-415",
+      "query": "K-CARD-083 review",
+      "expected_card_id": "K-CARD-083"
+    },
+    {
+      "id": "KR-416",
+      "query": "K-CARD-084",
+      "expected_card_id": "K-CARD-084"
+    },
+    {
+      "id": "KR-417",
+      "query": "K-CARD-084 evidence",
+      "expected_card_id": "K-CARD-084"
+    },
+    {
+      "id": "KR-418",
+      "query": "K-CARD-084 research",
+      "expected_card_id": "K-CARD-084"
+    },
+    {
+      "id": "KR-419",
+      "query": "K-CARD-084 source",
+      "expected_card_id": "K-CARD-084"
+    },
+    {
+      "id": "KR-420",
+      "query": "K-CARD-084 review",
+      "expected_card_id": "K-CARD-084"
+    },
+    {
+      "id": "KR-421",
+      "query": "K-CARD-085",
+      "expected_card_id": "K-CARD-085"
+    },
+    {
+      "id": "KR-422",
+      "query": "K-CARD-085 evidence",
+      "expected_card_id": "K-CARD-085"
+    },
+    {
+      "id": "KR-423",
+      "query": "K-CARD-085 research",
+      "expected_card_id": "K-CARD-085"
+    },
+    {
+      "id": "KR-424",
+      "query": "K-CARD-085 source",
+      "expected_card_id": "K-CARD-085"
+    },
+    {
+      "id": "KR-425",
+      "query": "K-CARD-085 review",
+      "expected_card_id": "K-CARD-085"
+    },
+    {
+      "id": "KR-426",
+      "query": "K-CARD-086",
+      "expected_card_id": "K-CARD-086"
+    },
+    {
+      "id": "KR-427",
+      "query": "K-CARD-086 evidence",
+      "expected_card_id": "K-CARD-086"
+    },
+    {
+      "id": "KR-428",
+      "query": "K-CARD-086 research",
+      "expected_card_id": "K-CARD-086"
+    },
+    {
+      "id": "KR-429",
+      "query": "K-CARD-086 source",
+      "expected_card_id": "K-CARD-086"
+    },
+    {
+      "id": "KR-430",
+      "query": "K-CARD-086 review",
+      "expected_card_id": "K-CARD-086"
+    },
+    {
+      "id": "KR-431",
+      "query": "K-CARD-087",
+      "expected_card_id": "K-CARD-087"
+    },
+    {
+      "id": "KR-432",
+      "query": "K-CARD-087 evidence",
+      "expected_card_id": "K-CARD-087"
+    },
+    {
+      "id": "KR-433",
+      "query": "K-CARD-087 research",
+      "expected_card_id": "K-CARD-087"
+    },
+    {
+      "id": "KR-434",
+      "query": "K-CARD-087 source",
+      "expected_card_id": "K-CARD-087"
+    },
+    {
+      "id": "KR-435",
+      "query": "K-CARD-087 review",
+      "expected_card_id": "K-CARD-087"
+    },
+    {
+      "id": "KR-436",
+      "query": "K-CARD-088",
+      "expected_card_id": "K-CARD-088"
+    },
+    {
+      "id": "KR-437",
+      "query": "K-CARD-088 evidence",
+      "expected_card_id": "K-CARD-088"
+    },
+    {
+      "id": "KR-438",
+      "query": "K-CARD-088 research",
+      "expected_card_id": "K-CARD-088"
+    },
+    {
+      "id": "KR-439",
+      "query": "K-CARD-088 source",
+      "expected_card_id": "K-CARD-088"
+    },
+    {
+      "id": "KR-440",
+      "query": "K-CARD-088 review",
+      "expected_card_id": "K-CARD-088"
+    },
+    {
+      "id": "KR-441",
+      "query": "K-CARD-089",
+      "expected_card_id": "K-CARD-089"
+    },
+    {
+      "id": "KR-442",
+      "query": "K-CARD-089 evidence",
+      "expected_card_id": "K-CARD-089"
+    },
+    {
+      "id": "KR-443",
+      "query": "K-CARD-089 research",
+      "expected_card_id": "K-CARD-089"
+    },
+    {
+      "id": "KR-444",
+      "query": "K-CARD-089 source",
+      "expected_card_id": "K-CARD-089"
+    },
+    {
+      "id": "KR-445",
+      "query": "K-CARD-089 review",
+      "expected_card_id": "K-CARD-089"
+    },
+    {
+      "id": "KR-446",
+      "query": "K-CARD-090",
+      "expected_card_id": "K-CARD-090"
+    },
+    {
+      "id": "KR-447",
+      "query": "K-CARD-090 evidence",
+      "expected_card_id": "K-CARD-090"
+    },
+    {
+      "id": "KR-448",
+      "query": "K-CARD-090 research",
+      "expected_card_id": "K-CARD-090"
+    },
+    {
+      "id": "KR-449",
+      "query": "K-CARD-090 source",
+      "expected_card_id": "K-CARD-090"
+    },
+    {
+      "id": "KR-450",
+      "query": "K-CARD-090 review",
+      "expected_card_id": "K-CARD-090"
+    },
+    {
+      "id": "KR-451",
+      "query": "K-CARD-091",
+      "expected_card_id": "K-CARD-091"
+    },
+    {
+      "id": "KR-452",
+      "query": "K-CARD-091 evidence",
+      "expected_card_id": "K-CARD-091"
+    },
+    {
+      "id": "KR-453",
+      "query": "K-CARD-091 research",
+      "expected_card_id": "K-CARD-091"
+    },
+    {
+      "id": "KR-454",
+      "query": "K-CARD-091 source",
+      "expected_card_id": "K-CARD-091"
+    },
+    {
+      "id": "KR-455",
+      "query": "K-CARD-091 review",
+      "expected_card_id": "K-CARD-091"
+    },
+    {
+      "id": "KR-456",
+      "query": "K-CARD-092",
+      "expected_card_id": "K-CARD-092"
+    },
+    {
+      "id": "KR-457",
+      "query": "K-CARD-092 evidence",
+      "expected_card_id": "K-CARD-092"
+    },
+    {
+      "id": "KR-458",
+      "query": "K-CARD-092 research",
+      "expected_card_id": "K-CARD-092"
+    },
+    {
+      "id": "KR-459",
+      "query": "K-CARD-092 source",
+      "expected_card_id": "K-CARD-092"
+    },
+    {
+      "id": "KR-460",
+      "query": "K-CARD-092 review",
+      "expected_card_id": "K-CARD-092"
+    },
+    {
+      "id": "KR-461",
+      "query": "K-CARD-093",
+      "expected_card_id": "K-CARD-093"
+    },
+    {
+      "id": "KR-462",
+      "query": "K-CARD-093 evidence",
+      "expected_card_id": "K-CARD-093"
+    },
+    {
+      "id": "KR-463",
+      "query": "K-CARD-093 research",
+      "expected_card_id": "K-CARD-093"
+    },
+    {
+      "id": "KR-464",
+      "query": "K-CARD-093 source",
+      "expected_card_id": "K-CARD-093"
+    },
+    {
+      "id": "KR-465",
+      "query": "K-CARD-093 review",
+      "expected_card_id": "K-CARD-093"
+    },
+    {
+      "id": "KR-466",
+      "query": "K-CARD-094",
+      "expected_card_id": "K-CARD-094"
+    },
+    {
+      "id": "KR-467",
+      "query": "K-CARD-094 evidence",
+      "expected_card_id": "K-CARD-094"
+    },
+    {
+      "id": "KR-468",
+      "query": "K-CARD-094 research",
+      "expected_card_id": "K-CARD-094"
+    },
+    {
+      "id": "KR-469",
+      "query": "K-CARD-094 source",
+      "expected_card_id": "K-CARD-094"
+    },
+    {
+      "id": "KR-470",
+      "query": "K-CARD-094 review",
+      "expected_card_id": "K-CARD-094"
+    },
+    {
+      "id": "KR-471",
+      "query": "K-CARD-095",
+      "expected_card_id": "K-CARD-095"
+    },
+    {
+      "id": "KR-472",
+      "query": "K-CARD-095 evidence",
+      "expected_card_id": "K-CARD-095"
+    },
+    {
+      "id": "KR-473",
+      "query": "K-CARD-095 research",
+      "expected_card_id": "K-CARD-095"
+    },
+    {
+      "id": "KR-474",
+      "query": "K-CARD-095 source",
+      "expected_card_id": "K-CARD-095"
+    },
+    {
+      "id": "KR-475",
+      "query": "K-CARD-095 review",
+      "expected_card_id": "K-CARD-095"
+    },
+    {
+      "id": "KR-476",
+      "query": "K-CARD-096",
+      "expected_card_id": "K-CARD-096"
+    },
+    {
+      "id": "KR-477",
+      "query": "K-CARD-096 evidence",
+      "expected_card_id": "K-CARD-096"
+    },
+    {
+      "id": "KR-478",
+      "query": "K-CARD-096 research",
+      "expected_card_id": "K-CARD-096"
+    },
+    {
+      "id": "KR-479",
+      "query": "K-CARD-096 source",
+      "expected_card_id": "K-CARD-096"
+    },
+    {
+      "id": "KR-480",
+      "query": "K-CARD-096 review",
+      "expected_card_id": "K-CARD-096"
     }
   ]
 }

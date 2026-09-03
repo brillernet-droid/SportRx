@@ -30,7 +30,7 @@ rehabilitation instructions, or individual risk estimates.
 
 ## Readiness
 
-Direct internal retrieval currently covers 78 reviewed cards. Reaching the
+Direct internal retrieval currently covers 96 reviewed cards. Reaching the
 60-card count only opens the answer-evaluation stage: DeepSeek synthesis remains
 disabled until at least 60 manually passed answer-quality cases, bilingual
 retrieval checks, citation checks, and boundary checks all pass. The v1 corpus
@@ -45,3 +45,8 @@ The reviewed hypertrophy movement layer is documented in
 `../hypertrophy/README.md`. It adds muscle-region, movement-family, equipment,
 range-of-motion and exercise-selection explanations. It remains a content layer
 and does not activate hypertrophy dose or progression rules.
+
+The [Training Anatomy layer](../anatomy/README.md) adds 34 structured muscle or
+functional-group records and 18 reviewed knowledge cards. Source full text is
+not copied into the public corpus; anatomy supports structure-and-action
+explanations, not activation claims, exercise rankings or diagnosis.

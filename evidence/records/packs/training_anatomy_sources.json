@@ -1,0 +1,63 @@
+{
+  "schema": "sportrx.evidence_sources_pack",
+  "schema_version": "0.1",
+  "pack_id": "training_anatomy_v1",
+  "records": [
+    {
+      "id": "ANAT-OPENSTAX-PRINCIPLES-2022",
+      "citation": "Betts JG, et al. Anatomy and Physiology 2e, section 11.1: Interactions of Skeletal Muscles, Their Fascicle Arrangement, and Their Lever Systems. OpenStax; 2022.",
+      "stable_url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/11-1-interactions-of-skeletal-muscles-their-fascicle-arrangement-and-their-lever-systems",
+      "evidence_tier": "D",
+      "population": "Foundational human anatomy reference; not a training intervention population.",
+      "access_status": "public_link",
+      "content_storage": "metadata_only",
+      "product_topics": ["muscle interaction", "agonist", "antagonist", "fascicle arrangement", "levers"],
+      "limitations": "Foundational anatomy does not quantify exercise stimulus, muscle activation, hypertrophy or individual suitability. SportRX does not ingest or redistribute the source full text.",
+      "review_status": "reviewed",
+      "reviewed_by": "SportRX internal evidence review",
+      "reviewed_at": "2026-09-03"
+    },
+    {
+      "id": "ANAT-OPENSTAX-BACK-2022",
+      "citation": "Betts JG, et al. Anatomy and Physiology 2e, section 11.3: Axial Muscles of the Head, Neck, and Back. OpenStax; 2022.",
+      "stable_url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/11-3-axial-muscles-of-the-head-neck-and-back",
+      "evidence_tier": "D",
+      "population": "Foundational human anatomy reference; not a training intervention population.",
+      "access_status": "public_link",
+      "content_storage": "metadata_only",
+      "product_topics": ["intrinsic back", "erector spinae", "spinal extension", "posture"],
+      "limitations": "The reference supports broad structure and action only. It does not diagnose back pain or support exercise-specific hypertrophy claims, and its full text is not ingested.",
+      "review_status": "reviewed",
+      "reviewed_by": "SportRX internal evidence review",
+      "reviewed_at": "2026-09-03"
+    },
+    {
+      "id": "ANAT-OPENSTAX-TRUNK-2022",
+      "citation": "Betts JG, et al. Anatomy and Physiology 2e, section 11.4: Axial Muscles of the Abdominal Wall and Thorax. OpenStax; 2022.",
+      "stable_url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/11-4-axial-muscles-of-the-abdominal-wall-and-thorax",
+      "evidence_tier": "D",
+      "population": "Foundational human anatomy reference; not a training intervention population.",
+      "access_status": "public_link",
+      "content_storage": "metadata_only",
+      "product_topics": ["abdominal wall", "trunk movement", "trunk stabilization", "thorax"],
+      "limitations": "The reference supports broad structure and action only. It does not validate core-training outcomes, spot reduction or rehabilitation, and its full text is not ingested.",
+      "review_status": "reviewed",
+      "reviewed_by": "SportRX internal evidence review",
+      "reviewed_at": "2026-09-03"
+    },
+    {
+      "id": "ANAT-NCBI-DELTOID-2024",
+      "citation": "Elzanie A, Varacallo MA. Anatomy, Shoulder and Upper Limb, Deltoid Muscle. StatPearls. Updated January 30, 2024. NCBI Bookshelf.",
+      "stable_url": "https://www.ncbi.nlm.nih.gov/books/NBK537056/",
+      "evidence_tier": "D",
+      "population": "Foundational clinical anatomy reference; not a resistance-training intervention population.",
+      "access_status": "public_link",
+      "content_storage": "metadata_only",
+      "product_topics": ["deltoid", "anterior deltoid", "lateral deltoid", "posterior deltoid", "shoulder action"],
+      "limitations": "Anatomical segmentation and action do not establish exercise efficacy, regional hypertrophy, safe technique or treatment. Full text is not stored in the public corpus.",
+      "review_status": "reviewed",
+      "reviewed_by": "SportRX internal evidence review",
+      "reviewed_at": "2026-09-03"
+    }
+  ]
+}

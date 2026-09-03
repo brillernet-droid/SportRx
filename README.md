@@ -167,7 +167,7 @@ SportRX 另有一个内部研究型 Knowledge Lab，用于检索已审核的运�
 [Knowledge Corpus](evidence/knowledge/README.md)。
 
 目标导向处方的来源、原子结论、知识卡与当前 Pack 状态已经整理为独立的
-[处方知识层](evidence/prescription/README.md)。目前 78 张知识卡已经达到“进入人工
+[处方知识层](evidence/prescription/README.md)。目前 96 张知识卡已经达到“进入人工
 答案评测”的数量门槛，但 AI 综合仍关闭；增肌和减脂 Pack 也仍是仅评估状态，不会
 因为知识卡增加而自动开放处方。
 
@@ -175,6 +175,10 @@ SportRX 另有一个内部研究型 Knowledge Lab，用于检索已审核的运�
 [Hypertrophy Movement Atlas](evidence/hypertrophy/README.md)：它用 16 个肌群区域、
 21 个动作家族和 62 个代表动作连接现有动作库，支持动作发现、覆盖解释和器械替代。
 它不是“最佳动作榜”，也不决定组数、次数、负荷或进阶。
+
+运动解剖学基础见 [Training Anatomy](evidence/anatomy/README.md)。当前整理了 34 条
+主要训练肌肉或功能肌群记录，包括起止点摘要、跨关节、关节动作、训练角色以及与
+动作图谱的连接。它不覆盖全部人体肌肉，也不把解剖结构当作肌肉激活或动作优劣证据。
 
 ## 开发与验证
 
