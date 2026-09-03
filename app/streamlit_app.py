@@ -212,9 +212,29 @@ V01_ACTIVITY_LABELS = {
 
 V01_GOAL_LABELS = {
     "build_activity_habit": "建立规律运动习惯",
-    "general_fitness": "建立一般体能基础",
-    "metabolic_health": "关注体重与代谢健康",
+    "improve_aerobic_fitness": "提升心肺适能",
+    "general_fitness": "改善综合体能",
+    "muscle_gain": "增加肌肉量",
+    "fat_loss": "减少脂肪并改善体成分",
     "performance_entry": "为跑步、HYROX 等目标做准备",
+}
+
+V01_GOAL_DESCRIPTIONS = {
+    "build_activity_habit": "先建立能持续完成的运动频率，再逐步增加训练量。",
+    "improve_aerobic_fitness": "以有氧训练为主，管理频率、时长、强度和周训练量。",
+    "general_fitness": "组合心肺、抗阻、灵活性和协调能力，不只训练一个维度。",
+    "muscle_gain": "以抗阻训练为主，重点管理每个肌群的周组数、负荷和接近力竭程度。",
+    "fat_loss": "组合有氧与抗阻训练，关注可持续活动量和瘦体重维持，不承诺具体减重。",
+    "performance_entry": "先测量专项能力，再进入对应运动项目的独立训练方案。",
+}
+
+V01_GOAL_RELEASE_LABELS = {
+    "build_activity_habit": "当前可生成",
+    "improve_aerobic_fitness": "当前可生成",
+    "general_fitness": "当前仅开放有氧基础",
+    "muscle_gain": "增肌处方规则建设中",
+    "fat_loss": "组合处方规则建设中",
+    "performance_entry": "当前先测量，再进入专项方案",
 }
 
 V01_DISCOVERY_EXERCISE_NAMES = {
@@ -1055,7 +1075,7 @@ def _v01_set_page(page: str) -> None:
 
 
 def _v01_set_setup_step(step: int) -> None:
-    st.session_state.v01_setup_step = max(1, min(2, int(step)))
+    st.session_state.v01_setup_step = max(1, min(3, int(step)))
 
 
 def _v01_activity(activity: object) -> str:
@@ -1064,6 +1084,10 @@ def _v01_activity(activity: object) -> str:
 
 def _v01_goal(goal: object) -> str:
     return V01_GOAL_LABELS.get(str(goal), str(goal))
+
+
+def _v01_uses_current_aerobic_inputs(goal: object) -> bool:
+    return str(goal) in {"build_activity_habit", "improve_aerobic_fitness", "general_fitness"}
 
 
 def _v01_exercise_label(exercise: dict[str, Any]) -> str:
@@ -12826,7 +12850,7 @@ def _apply_v01_theme() -> None:
         .v01-page-meta { border-top: 1px solid rgba(215, 255, 76, 0.25); padding-top: 0.68rem; }
         .v01-page-meta span { display: block; color: #92a198; font-size: 0.62rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; }
         .v01-page-meta strong { display: block; color: var(--v01-green); font-size: 1rem; font-weight: 800; letter-spacing: -0.025em; margin-top: 0.28rem; }
-        .v01-stepper { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.4rem; margin: 0.65rem 0 1.15rem; }
+        .v01-stepper { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.4rem; margin: 0.65rem 0 1.15rem; }
         .v01-step { border-top: 3px solid #314039; color: var(--v01-muted); font-size: 0.72rem; padding-top: 0.5rem; }
         .v01-step-active { border-top-color: var(--v01-green); color: var(--v01-green); font-weight: 800; }
         .v01-section-note { color: var(--v01-muted); font-size: 0.8rem; line-height: 1.45; margin: -0.25rem 0 0.82rem; }
@@ -12991,14 +13015,15 @@ def _v01_setup_page() -> None:
     step = int(st.session_state.v01_setup_step)
     draft = st.session_state.v01_draft
     headers = {
-        1: ("评估你的当前场景", "只填写会改变路径或处方的内容。"),
-        2: ("把训练放进生活", "告诉我你的时间和偏好，然后生成第一份处方。"),
+        1: ("你训练最想得到什么？", "目标先决定处方类型，再决定要问哪些信息。"),
+        2: ("你现在从哪里开始？", "只记录会改变起点和训练量的近期情况。"),
+        3: ("把训练放进生活", "告诉我你的时间和偏好，然后匹配适用方案。"),
     }
     if step not in headers:
         step = 1
         _v01_set_setup_step(step)
     _v01_page_header(*headers[step])
-    step_names = ["目标与运动情况", "时间与确认"]
+    step_names = ["训练目标", "当前情况", "时间与确认"]
     st.markdown(
         '<div class="v01-stepper">'
         + "".join(
@@ -13010,79 +13035,118 @@ def _v01_setup_page() -> None:
     )
 
     if step == 1:
-        st.markdown('<div class="v01-section-note">不问“基础好不好”，只记录你近期实际做了多少运动。</div>', unsafe_allow_html=True)
-        with st.form("v01_profile_step_one"):
+        st.markdown('<div class="v01-section-note">先选一个现阶段最重要的目标。目标不同，训练组成和进阶标准也不同。</div>', unsafe_allow_html=True)
+        with st.form("v01_goal_step"):
             goal_options = list(V01_GOAL_LABELS)
             current_goal = str(draft.get("goal", "build_activity_habit"))
-            goal = st.selectbox(
-                "你现在最想改善什么？",
+            goal = st.radio(
+                "选择首要训练目标",
                 goal_options,
                 index=goal_options.index(current_goal) if current_goal in goal_options else 0,
                 format_func=_v01_goal,
             )
-            age = st.number_input("年龄", min_value=18, max_value=64, value=int(draft.get("age", 30)), step=1)
-            activity_days = st.number_input(
-                "最近一个月，平均每周运动几天",
-                min_value=0,
-                max_value=7,
-                value=int(draft.get("exercise_days_last_4w", 0)),
-                step=1,
-                help="包含快走、慢跑、骑行等中等或更高强度活动。",
+            st.caption(V01_GOAL_DESCRIPTIONS[goal])
+            st.markdown(
+                f'<div class="v01-section-note">方案状态：{escape(V01_GOAL_RELEASE_LABELS[goal])}</div>',
+                unsafe_allow_html=True,
             )
-            mvpa_minutes = st.number_input(
-                "最近一个月，平均每周运动多少分钟",
-                min_value=0,
-                max_value=600,
-                value=int(draft.get("mvpa_minutes_per_week", 0)),
-                step=5,
-            )
-            next_step = st.form_submit_button("继续", type="primary", width="stretch")
+            next_step = st.form_submit_button("下一步，评估当前情况", type="primary", width="stretch")
         if next_step:
-            draft.update(
-                {
-                    "goal": goal,
-                    "age": int(age),
-                    "exercise_days_last_4w": int(activity_days),
-                    "mvpa_minutes_per_week": int(mvpa_minutes),
-                }
-            )
+            draft["goal"] = goal
             _v01_set_setup_step(2)
             st.rerun()
         return
 
     if step == 2:
-        st.markdown('<div class="v01-section-note">处方会优先适配你的可用时间和愿意做的运动方式。</div>', unsafe_allow_html=True)
+        st.markdown('<div class="v01-section-note">不问“基础好不好”，只记录最近 4 周实际完成的运动。</div>', unsafe_allow_html=True)
         with st.form("v01_profile_step_two"):
-            available_days = st.number_input(
-                "未来每周能安排几天",
-                min_value=1,
-                max_value=7,
-                value=int(draft.get("available_days_per_week", 3)),
-                step=1,
+            age = st.number_input("年龄", min_value=18, max_value=64, value=int(draft.get("age", 30)), step=1)
+            goal = str(draft.get("goal", "build_activity_habit"))
+            activity_days = int(draft.get("exercise_days_last_4w", 0))
+            mvpa_minutes = int(draft.get("mvpa_minutes_per_week", 0))
+            if _v01_uses_current_aerobic_inputs(goal):
+                activity_days = st.number_input(
+                    "最近一个月，平均每周运动几天",
+                    min_value=0,
+                    max_value=7,
+                    value=activity_days,
+                    step=1,
+                    help="包含快走、慢跑、骑行等中等或更高强度活动。",
+                )
+                mvpa_minutes = st.number_input(
+                    "最近一个月，平均每周运动多少分钟",
+                    min_value=0,
+                    max_value=600,
+                    value=mvpa_minutes,
+                    step=5,
+                )
+            else:
+                st.info("这个目标的剂量输入还在审核，本轮不会收集不能改变输出的训练数据。")
+            back, next_column = st.columns(2)
+            with back:
+                previous = st.form_submit_button("上一步", width="stretch")
+            with next_column:
+                next_step = st.form_submit_button("继续", type="primary", width="stretch")
+        if previous:
+            _v01_set_setup_step(1)
+            st.rerun()
+        if next_step:
+            draft.update(
+                {
+                    "age": int(age),
+                    "exercise_days_last_4w": int(activity_days),
+                    "mvpa_minutes_per_week": int(mvpa_minutes),
+                }
             )
-            max_minutes = st.number_input(
-                "每次最多能安排多少分钟",
-                min_value=10,
-                max_value=120,
-                value=int(draft.get("max_minutes_per_session", 30)),
-                step=5,
-            )
-            activity_options = list(V01_ACTIVITY_LABELS)
-            current_activity = str(draft.get("preferred_activity", "brisk walking"))
-            preferred_activity = st.selectbox(
-                "你更愿意用哪种方式完成有氧训练",
-                activity_options,
-                index=activity_options.index(current_activity) if current_activity in activity_options else 0,
-                format_func=_v01_activity,
-            )
-            resting_hr = st.number_input(
-                "静息心率（可选，知道时再填）",
-                min_value=0,
-                max_value=120,
-                value=int(draft.get("resting_hr", 0) or 0),
-                step=1,
-                help="留空时，计划只使用 RPE 和说话测试。",
-            )
+            _v01_set_setup_step(3)
+            st.rerun()
+        return
+
+    if step == 3:
+        selected_goal = str(draft.get("goal", "build_activity_habit"))
+        step_note = (
+            "处方会优先适配你的可用时间和愿意做的运动方式。"
+            if _v01_uses_current_aerobic_inputs(selected_goal)
+            else "当前先确认适用边界；该目标的剂量规则审核完成后才会收集训练处方输入。"
+        )
+        st.markdown(f'<div class="v01-section-note">{escape(step_note)}</div>', unsafe_allow_html=True)
+        with st.form("v01_profile_step_two"):
+            goal = selected_goal
+            available_days = int(draft.get("available_days_per_week", 3))
+            max_minutes = int(draft.get("max_minutes_per_session", 30))
+            preferred_activity = str(draft.get("preferred_activity", "brisk walking"))
+            resting_hr = int(draft.get("resting_hr", 0) or 0)
+            if _v01_uses_current_aerobic_inputs(goal):
+                available_days = st.number_input(
+                    "未来每周能安排几天",
+                    min_value=1,
+                    max_value=7,
+                    value=available_days,
+                    step=1,
+                )
+                max_minutes = st.number_input(
+                    "每次最多能安排多少分钟",
+                    min_value=10,
+                    max_value=120,
+                    value=max_minutes,
+                    step=5,
+                )
+                activity_options = list(V01_ACTIVITY_LABELS)
+                current_activity = preferred_activity
+                preferred_activity = st.selectbox(
+                    "你更愿意用哪种方式完成有氧训练",
+                    activity_options,
+                    index=activity_options.index(current_activity) if current_activity in activity_options else 0,
+                    format_func=_v01_activity,
+                )
+                resting_hr = st.number_input(
+                    "静息心率（可选，知道时再填）",
+                    min_value=0,
+                    max_value=120,
+                    value=resting_hr,
+                    step=1,
+                    help="留空时，计划只使用 RPE 和说话测试。",
+                )
             st.markdown("#### 开始前确认")
             has_warning_symptoms = st.radio(
                 "运动时是否出现过胸痛、异常气短、头晕或晕厥等警示情况？",
@@ -13098,9 +13162,10 @@ def _v01_setup_page() -> None:
             with back:
                 previous = st.form_submit_button("上一步", width="stretch")
             with generate:
-                submitted = st.form_submit_button("生成我的处方", type="primary", width="stretch")
+                submit_label = "生成我的处方" if _v01_uses_current_aerobic_inputs(goal) else "查看当前方案状态"
+                submitted = st.form_submit_button(submit_label, type="primary", width="stretch")
         if previous:
-            _v01_set_setup_step(1)
+            _v01_set_setup_step(2)
             st.rerun()
         if submitted:
             st.session_state.v01_profile = {
@@ -13121,7 +13186,7 @@ def _v01_setup_page() -> None:
             _v01_set_setup_step(1)
             st.rerun()
 
-    st.caption("当前版本只生成表观健康成年人的有氧训练处方；遇到需要进一步确认的情况，系统不会继续自动生成。")
+    st.caption("每个训练目标使用独立方案。没有完成规则和证据审核的目标只做路径识别，不会套用有氧模板冒充完整处方。")
 
 
 def _v01_plan_page() -> None:
@@ -13438,20 +13503,21 @@ def _v01_today_page() -> None:
         if route and not route.get("automation_allowed", False):
             _v01_page_header("当前先完成评估", "你的目标已被识别，但对应的独立处方规则还没有发布。")
             st.info(f"当前路径：{matched_pack.get('name', '专业协作路径')}。{route.get('reason', '')}")
-            st.button("查看路径说明", type="primary", width="stretch", on_click=_v01_set_page, args=("资料",))
+            st.button("重新选择训练目标", type="primary", width="stretch", on_click=_v01_set_page, args=("设置",))
+            st.button("查看方案边界", width="stretch", on_click=_v01_set_page, args=("资料",))
             return
-        _v01_page_header("从今天开始", "用近期运动和可用时间，生成一份先能完成、再逐周调整的有氧处方。")
+        _v01_page_header("从训练目标开始", "先决定你想改善什么，再匹配真正适用于这个目标的处方方案。")
         st.markdown(
             """
             <section class="v01-launch-steps">
-              <div class="v01-launch-step"><span class="v01-launch-index">1</span><div><span class="v01-launch-label">填写最近运动</span><span class="v01-launch-copy">只记录近期实际完成的天数和时间。</span></div></div>
-              <div class="v01-launch-step"><span class="v01-launch-index">2</span><div><span class="v01-launch-label">安排可用时间</span><span class="v01-launch-copy">计划不会超过你每周能安排的天数和单次时长。</span></div></div>
-              <div class="v01-launch-step"><span class="v01-launch-index">3</span><div><span class="v01-launch-label">记录 RPE 与完成情况</span><span class="v01-launch-copy">下一周会按照明确规则调整，不是随机变化。</span></div></div>
+              <div class="v01-launch-step"><span class="v01-launch-index">1</span><div><span class="v01-launch-label">选择首要目标</span><span class="v01-launch-copy">心肺、综合体能、增肌、减脂和专项表现使用不同方案。</span></div></div>
+              <div class="v01-launch-step"><span class="v01-launch-index">2</span><div><span class="v01-launch-label">记录当前起点</span><span class="v01-launch-copy">只询问会改变该目标处方的近期训练和现实条件。</span></div></div>
+              <div class="v01-launch-step"><span class="v01-launch-index">3</span><div><span class="v01-launch-label">匹配处方方案</span><span class="v01-launch-copy">规则未完成审核的目标不会套用其他训练模板。</span></div></div>
             </section>
             """,
             unsafe_allow_html=True,
         )
-        st.button("创建运动处方", type="primary", width="stretch", on_click=_v01_set_page, args=("设置",))
+        st.button("开始目标评估", type="primary", width="stretch", on_click=_v01_set_page, args=("设置",))
         return
 
     active_week = _v01_active_week(plan)

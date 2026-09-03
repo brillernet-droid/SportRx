@@ -11,6 +11,8 @@ SportRX 是一个人群化运动处方平台原型。通用内核负责安全路
 
 [英文说明](README.en.md) · [3 分钟开始体验](docs/zh-CN/quickstart.md) · [Program Pack 与平台路径](docs/zh-CN/program-packs.md) · [产品说明](docs/zh-CN/product-guide.md) · [术语说明](docs/zh-CN/terminology.md) · [产品边界](docs/zh-CN/claim-boundaries.md) · [数据治理](evidence/data_governance.md)
 
+[目标优先运动处方设计](docs/zh-CN/goal-first-prescription-design.md)说明心肺、综合体能、增肌、减脂和专项表现为什么需要独立处方方案。
+
 ## SportRX 解决什么问题
 
 平台服务不同场景，但只对已发布、已审阅的 Pack 开放自动化。当前首个已发布闭环是：
@@ -38,6 +40,8 @@ SportRX 是一个人群化运动处方平台原型。通用内核负责安全路
 | --- | --- | --- |
 | 久坐 / 低活动成人：有氧起步 | 已发布 | 当前周有氧 FITT-VP + 完成情况 / RPE 周调整。 |
 | 一般体能建立：有氧基础 | 有限发布 | 自动化仅为有氧；力量只做动作内容和记录。 |
+| 增肌入门 | 仅评估 | 已建立独立目标路由；抗阻训练剂量规则审核完成前不生成计划。 |
+| 减脂与体成分改善 | 仅评估 | 已建立组合训练路由；不套用有氧模板，不承诺减重结果。 |
 | 代谢健康关注、运动表现入门 | 仅评估 | 可识别场景和准备测量，不自动生成训练剂量。 |
 | 高龄、孕产、青少年、慢病、康复 | 专业协作 | 在独立 Pack、专业审核和验证完成前不自动化。 |
 

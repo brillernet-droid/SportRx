@@ -1,0 +1,28 @@
+{
+  "id": "hypertrophy_foundation_v0",
+  "version": "0.1.0",
+  "name": "增肌入门：抗阻训练方案",
+  "release_status": "assessment_only",
+  "automation_level": "assessment_only",
+  "applicability": {
+    "age_min": 18,
+    "age_max": 64,
+    "goals": ["muscle_gain"],
+    "summary": "希望增加肌肉量、目前不需要康复或医疗管理的成年人。"
+  },
+  "exclusions": [
+    "急性伤病、术后、康复或需要专业人员管理的情境",
+    "未完成抗阻训练经验、器械、动作能力和训练量输入审核的情境"
+  ],
+  "required_inputs": ["age", "goal", "screening_confirmation"],
+  "rule_ids": [],
+  "measurement_protocols": ["resistance_training_history_required"],
+  "content_mapping": {"allowed_modalities": [], "dose_authority": "none"},
+  "evidence_version": "goal-first-prescription-design-v0.1",
+  "limitations": [
+    "当前只完成目标识别，抗阻训练剂量尚未发布。",
+    "未来方案必须管理肌群周组数、负荷、次数、RIR 或 RPE、休息和进阶。",
+    "动作内容库不能独立决定训练剂量。"
+  ],
+  "withdrawal_switch": true
+}

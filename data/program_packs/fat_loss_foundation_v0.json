@@ -1,0 +1,28 @@
+{
+  "id": "fat_loss_foundation_v0",
+  "version": "0.1.0",
+  "name": "减脂与体成分改善：组合训练方案",
+  "release_status": "assessment_only",
+  "automation_level": "assessment_only",
+  "applicability": {
+    "age_min": 18,
+    "age_max": 64,
+    "goals": ["fat_loss"],
+    "summary": "希望通过运动减少脂肪并改善体成分的表观健康成年人。"
+  },
+  "exclusions": [
+    "需要疾病诊疗、营养治疗或专业体重管理的情境",
+    "要求具体减重数字、减脂速度或热量缺口预测的情境"
+  ],
+  "required_inputs": ["age", "goal", "screening_confirmation"],
+  "rule_ids": [],
+  "measurement_protocols": ["self_reported_recent_activity"],
+  "content_mapping": {"allowed_modalities": [], "dose_authority": "none"},
+  "evidence_version": "goal-first-prescription-design-v0.1",
+  "limitations": [
+    "当前只完成目标识别，组合训练剂量尚未发布。",
+    "未来方案必须同时定义有氧剂量、抗阻训练量和瘦体重维持边界。",
+    "不承诺具体减重、体脂变化或代谢治疗效果。"
+  ],
+  "withdrawal_switch": true
+}

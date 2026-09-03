@@ -93,6 +93,9 @@ def test_release_package_manifest_is_public_ready():
     assert "docs/zh-CN/quickstart.md" in manifest["included_files"]
     assert "docs/zh-CN/product-guide.md" in manifest["included_files"]
     assert "docs/zh-CN/claim-boundaries.md" in manifest["included_files"]
+    assert "docs/zh-CN/goal-first-prescription-design.md" in manifest["included_files"]
+    assert "data/program_packs/hypertrophy_foundation_v0.json" in manifest["included_files"]
+    assert "data/program_packs/fat_loss_foundation_v0.json" in manifest["included_files"]
     assert "docs/zh-CN/terminology.md" in manifest["included_files"]
     assert "docs/zh-CN/venue-entry.md" in manifest["included_files"]
     assert "docs/zh-CN/public-preview.md" in manifest["included_files"]
@@ -151,6 +154,7 @@ def test_write_release_package_excludes_internal_files(tmp_path):
     assert "docs/zh-CN/quickstart.md" in names
     assert "docs/zh-CN/product-guide.md" in names
     assert "docs/zh-CN/claim-boundaries.md" in names
+    assert "docs/zh-CN/goal-first-prescription-design.md" in names
     assert "docs/zh-CN/terminology.md" in names
     assert not any(name.startswith("docs/internal/") for name in names)
     assert not any("__pycache__" in name for name in names)

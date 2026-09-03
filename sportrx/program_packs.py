@@ -38,6 +38,8 @@ _GOAL_ALIASES = {
     "improve_aerobic_fitness": "improve_aerobic_fitness",
     "build_activity_habit": "build_activity_habit",
     "general_fitness": "general_fitness",
+    "muscle_gain": "muscle_gain",
+    "fat_loss": "fat_loss",
     "metabolic_health": "metabolic_health",
     "performance_entry": "performance_entry",
 }
@@ -138,9 +140,9 @@ def resolve_program_pack(profile: dict[str, Any]) -> dict[str, Any]:
         "used_inputs": used_inputs + list(pack["required_inputs"]),
         "not_measured": ["performance tests", "device data"],
         "reason": (
-            "当前 Pack 已发布，可在其明确边界内生成有氧起点。"
+            "当前方案已发布，可在其明确边界内生成有氧起点。"
             if automation_allowed
-            else "当前 Pack 只开放评估与记录准备，尚未开放自动训练剂量。"
+            else "当前方案只开放评估与记录准备，尚未开放自动训练剂量。"
         ),
         "limitations": list(pack["limitations"]),
     }

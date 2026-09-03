@@ -2,6 +2,13 @@
 
 ## Unreleased - Population Prescription Foundation
 
+- Reworked onboarding so the primary training goal is selected before current
+  activity and time constraints. Added distinct aerobic-fitness, general
+  fitness, hypertrophy, fat-loss, and performance-entry routes.
+- Added assessment-only hypertrophy and fat-loss Pack records so unsupported
+  goals can never silently fall back to an aerobic prescription. Added a
+  Chinese evidence-backed design contract for the inputs, dose fields,
+  progression rules, and validation gates required before those Packs release.
 - Shaped the next AI-prescription architecture: AI creates and adapts candidate
   plans, while deterministic Safety and Constraint Gates remain mandatory.
   Added a Chinese product-shaping document and a three-direction mobile layout

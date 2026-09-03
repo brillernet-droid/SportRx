@@ -172,6 +172,7 @@ REQUIRED_PUBLIC_FILES = [
     "docs/zh-CN/quickstart.md",
     "docs/zh-CN/product-guide.md",
     "docs/zh-CN/claim-boundaries.md",
+    "docs/zh-CN/goal-first-prescription-design.md",
     "docs/zh-CN/terminology.md",
     "docs/zh-CN/venue-entry.md",
     "docs/zh-CN/public-preview.md",

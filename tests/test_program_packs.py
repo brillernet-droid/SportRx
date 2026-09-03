@@ -21,7 +21,7 @@ def test_program_pack_registry_is_versioned_and_valid():
     result = validate_program_packs(load_program_packs())
 
     assert result["valid"] is True
-    assert result["pack_count"] == 4
+    assert result["pack_count"] == 6
     assert "low_activity_aerobic_v1" in result["pack_ids"]
 
 
@@ -49,6 +49,16 @@ def test_assessment_only_pack_cannot_generate_automatic_dose():
     assert result["program_route"]["route"] == "assessment_only"
     assert result["program_route"]["automation_allowed"] is False
     assert result["weeks"] == []
+
+
+def test_goal_specific_strength_and_fat_loss_routes_do_not_fall_back_to_aerobic():
+    muscle_route = resolve_program_pack(_healthy_profile(goal="muscle_gain"))
+    fat_loss_route = resolve_program_pack(_healthy_profile(goal="fat_loss"))
+
+    assert muscle_route["pack"]["id"] == "hypertrophy_foundation_v0"
+    assert fat_loss_route["pack"]["id"] == "fat_loss_foundation_v0"
+    assert muscle_route["automation_allowed"] is False
+    assert fat_loss_route["automation_allowed"] is False
 
 
 def test_out_of_scope_context_routes_to_professional_collaboration():
