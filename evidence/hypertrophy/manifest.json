@@ -1,0 +1,29 @@
+{
+  "schema": "sportrx.hypertrophy_knowledge_manifest.v1",
+  "version": "0.1.0",
+  "reviewed_at": "2026-09-03",
+  "status": "reviewed_content_layer",
+  "atlas_path": "data/exercises/hypertrophy_atlas.json",
+  "catalogue_path": "data/exercises/catalogue.json",
+  "source_pack": "evidence/records/packs/hypertrophy_movement_sources.json",
+  "claim_pack": "evidence/records/packs/hypertrophy_movement_claims.json",
+  "knowledge_pack": "evidence/knowledge/packs/hypertrophy_movement_v1.json",
+  "source_ids": [
+    "ANAT-OPENSTAX-UPPER-2022", "ANAT-OPENSTAX-LOWER-2022", "RT-VARIATION-SR-2022",
+    "RT-FREE-MACHINE-SR-2023", "RT-ROM-SR-2020", "RT-MUSCLE-LENGTH-SR-2025",
+    "RT-ORDER-SR-2021", "RT-SJMJ-REVIEW-2017"
+  ],
+  "claim_ids": [
+    "CLM-HYP-ANATOMY-001", "CLM-HYP-COVERAGE-001", "CLM-HYP-VARIATION-001",
+    "CLM-HYP-EQUIPMENT-001", "CLM-HYP-ROM-001", "CLM-HYP-LENGTH-001",
+    "CLM-HYP-ORDER-001", "CLM-HYP-SJMJ-001"
+  ],
+  "knowledge_card_ids": [
+    "K-CARD-061", "K-CARD-062", "K-CARD-063", "K-CARD-064", "K-CARD-065", "K-CARD-066",
+    "K-CARD-067", "K-CARD-068", "K-CARD-069", "K-CARD-070", "K-CARD-071", "K-CARD-072",
+    "K-CARD-073", "K-CARD-074", "K-CARD-075", "K-CARD-076", "K-CARD-077", "K-CARD-078"
+  ],
+  "product_authority": "content_only",
+  "program_pack_status": "assessment_only",
+  "boundary": "The atlas supports discovery and explanation only; it cannot set dose, progression, safety or medical suitability."
+}

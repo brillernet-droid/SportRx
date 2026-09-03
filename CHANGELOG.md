@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-09-03 - Hypertrophy Movement Knowledge v0.1
+
+- Added a reviewed `Hypertrophy Movement Atlas` with 16 muscle regions,
+  21 movement families and 62 representative IDs from the existing licensed
+  text-only exercise catalogue.
+- Added eight reviewed sources, eight atomic claims and 18 bilingual knowledge
+  cards covering functional anatomy, exercise variation, equipment choice, ROM,
+  muscle length, exercise order and single- versus multi-joint exercise.
+- Added a read-only movement search API and validation that rejects unknown
+  exercise, muscle-region or evidence links.
+- Kept the hypertrophy program pack `assessment_only`; this content layer does
+  not set dose, progression, safety or medical suitability.
+
 ## Unreleased - Population Prescription Foundation
 
 - Reworked onboarding so the primary training goal is selected before current

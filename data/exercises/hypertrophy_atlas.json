@@ -1,0 +1,425 @@
+{
+  "schema": "sportrx.hypertrophy_movement_atlas.v1",
+  "version": "0.1.0",
+  "reviewed_at": "2026-09-03",
+  "source_catalogue": {
+    "path": "data/exercises/catalogue.json",
+    "upstream_repository": "hasaneyldrm/exercises-dataset",
+    "relationship": "Representative exercise IDs point to the existing text-only catalogue; the atlas does not copy or add third-party media."
+  },
+  "content_boundary": "Educational movement coverage only; no automatic dose, medical suitability decision, best-exercise ranking, or individual outcome promise.",
+  "excluded_scope": [
+    "neck hypertrophy programming",
+    "rehabilitation and pain-specific exercise selection",
+    "injury diagnosis or corrective-exercise claims",
+    "exercise rankings based only on acute EMG",
+    "unverified regional-hypertrophy promises",
+    "sets, repetitions, load, frequency and progression"
+  ],
+  "muscle_regions": [
+    {
+      "id": "pectorals",
+      "label_en": "Pectorals",
+      "label_zh": "胸肌",
+      "aliases_zh": ["胸部", "上胸", "下胸"],
+      "anatomical_scope": "Pectoralis major as the primary hypertrophy region; pectoralis minor is not separately programmed.",
+      "primary_joint_actions": ["shoulder horizontal adduction", "shoulder flexion/adduction depending on arm path"],
+      "movement_pattern_ids": ["horizontal_push", "chest_adduction"],
+      "coverage_notes_zh": "用推类动作承担主要复合覆盖，用夹胸类动作补充单关节肩水平内收；不把上胸、下胸写成可被完全隔离的独立肌肉。",
+      "limitations": "Bench angle and arm path may change regional emphasis, but the atlas does not quantify regional growth or rank one variation as universally superior.",
+      "evidence_claim_ids": ["CLM-HYP-ANATOMY-001", "CLM-HYP-VARIATION-001"]
+    },
+    {
+      "id": "latissimus_dorsi",
+      "label_en": "Latissimus dorsi",
+      "label_zh": "背阔肌",
+      "aliases_zh": ["背部", "大圆肌"],
+      "anatomical_scope": "Latissimus dorsi within the broader back region.",
+      "primary_joint_actions": ["shoulder extension", "shoulder adduction"],
+      "movement_pattern_ids": ["vertical_pull", "horizontal_pull"],
+      "coverage_notes_zh": "垂直拉是主要动作家族，水平拉也可覆盖背阔肌；握法和拉向只记录为变式，不据此承诺局部增长。",
+      "limitations": "Back exercises involve several muscles simultaneously; catalogue target labels are not direct measurements of individual muscle stimulus.",
+      "evidence_claim_ids": ["CLM-HYP-ANATOMY-001", "CLM-HYP-COVERAGE-001"]
+    },
+    {
+      "id": "upper_back_scapular",
+      "label_en": "Upper back and scapular retractors",
+      "label_zh": "上背与肩胛后缩肌群",
+      "aliases_zh": ["背部", "上背", "菱形肌"],
+      "anatomical_scope": "Rhomboids, middle trapezius and other scapular retractors grouped for programming coverage.",
+      "primary_joint_actions": ["scapular retraction", "shoulder horizontal abduction"],
+      "movement_pattern_ids": ["horizontal_pull", "posterior_shoulder"],
+      "coverage_notes_zh": "以水平拉覆盖肩胛后缩，再用后肩类动作补充肩水平外展；这是训练覆盖分组，不是单块肌肉的精确剂量。",
+      "limitations": "The grouping simplifies several muscles with different roles and does not diagnose scapular mechanics.",
+      "evidence_claim_ids": ["CLM-HYP-ANATOMY-001", "CLM-HYP-COVERAGE-001"]
+    },
+    {
+      "id": "trapezius",
+      "label_en": "Trapezius",
+      "label_zh": "斜方肌",
+      "aliases_zh": ["背部", "上斜方肌", "中斜方肌", "下斜方肌"],
+      "anatomical_scope": "Upper, middle and lower trapezius are acknowledged; direct shrug coverage mainly reflects scapular elevation.",
+      "primary_joint_actions": ["scapular elevation", "scapular retraction", "scapular rotation"],
+      "movement_pattern_ids": ["scapular_elevation", "horizontal_pull"],
+      "coverage_notes_zh": "耸肩类主要记录肩胛上提覆盖，划船类提供部分肩胛后缩覆盖；不把一个动作标成完整覆盖斜方肌全部区域。",
+      "limitations": "Regional trapezius emphasis is not quantified by this atlas.",
+      "evidence_claim_ids": ["CLM-HYP-ANATOMY-001", "CLM-HYP-COVERAGE-001"]
+    },
+    {
+      "id": "deltoid_anterior",
+      "label_en": "Anterior deltoid",
+      "label_zh": "三角肌前束",
+      "aliases_zh": ["肩部", "前束"],
+      "anatomical_scope": "Anterior/clavicular region of the deltoid.",
+      "primary_joint_actions": ["shoulder flexion", "assistance in pressing"],
+      "movement_pattern_ids": ["vertical_push", "horizontal_push"],
+      "coverage_notes_zh": "肩上推承担直接复合覆盖，卧推类也会形成协同覆盖；避免把所有推举组数重复计算为同等直接组数。",
+      "limitations": "Contribution varies with technique and arm path; the atlas does not calculate fractional set credit.",
+      "evidence_claim_ids": ["CLM-HYP-ANATOMY-001", "CLM-HYP-COVERAGE-001"]
+    },
+    {
+      "id": "deltoid_lateral",
+      "label_en": "Lateral deltoid",
+      "label_zh": "三角肌中束",
+      "aliases_zh": ["肩部", "中束"],
+      "anatomical_scope": "Lateral/acromial region of the deltoid.",
+      "primary_joint_actions": ["shoulder abduction"],
+      "movement_pattern_ids": ["lateral_raise", "vertical_push"],
+      "coverage_notes_zh": "侧平举类提供更直接的肩外展覆盖，肩上推作为复合协同覆盖；两类动作不是完全等价替代。",
+      "limitations": "The atlas describes plausible coverage, not measured regional hypertrophy for every variation.",
+      "evidence_claim_ids": ["CLM-HYP-ANATOMY-001", "CLM-HYP-VARIATION-001"]
+    },
+    {
+      "id": "deltoid_posterior",
+      "label_en": "Posterior deltoid",
+      "label_zh": "三角肌后束",
+      "aliases_zh": ["肩部", "后束", "后肩"],
+      "anatomical_scope": "Posterior/spinal region of the deltoid.",
+      "primary_joint_actions": ["shoulder horizontal abduction", "shoulder extension"],
+      "movement_pattern_ids": ["posterior_shoulder", "horizontal_pull"],
+      "coverage_notes_zh": "后肩飞鸟或后束划船提供更直接覆盖，普通水平拉提供协同覆盖；不依据动作名称推断精确刺激。",
+      "limitations": "Technique can shift work toward upper-back muscles; no individual activation measurement is available.",
+      "evidence_claim_ids": ["CLM-HYP-ANATOMY-001", "CLM-HYP-COVERAGE-001"]
+    },
+    {
+      "id": "elbow_flexors",
+      "label_en": "Elbow flexors",
+      "label_zh": "肘屈肌群",
+      "aliases_zh": ["手臂", "肱二头肌", "肱肌"],
+      "anatomical_scope": "Biceps brachii, brachialis and brachioradialis grouped for practical exercise coverage.",
+      "primary_joint_actions": ["elbow flexion", "forearm supination for biceps brachii"],
+      "movement_pattern_ids": ["elbow_flexion", "vertical_pull", "horizontal_pull"],
+      "coverage_notes_zh": "弯举类提供直接覆盖，拉类动作提供协同覆盖；是否增加弯举取决于目标、时间和整体动作结构，而不是固定必需。",
+      "limitations": "Single- and multi-joint evidence is limited and does not support a universal isolation-exercise requirement.",
+      "evidence_claim_ids": ["CLM-HYP-ANATOMY-001", "CLM-HYP-SJMJ-001"]
+    },
+    {
+      "id": "triceps",
+      "label_en": "Triceps",
+      "label_zh": "肱三头肌",
+      "aliases_zh": ["手臂", "三头肌"],
+      "anatomical_scope": "Triceps brachii as an elbow extensor; heads are not assigned separate validated dose targets.",
+      "primary_joint_actions": ["elbow extension", "shoulder extension contribution from the long head"],
+      "movement_pattern_ids": ["elbow_extension", "horizontal_push", "vertical_push"],
+      "coverage_notes_zh": "臂屈伸类提供直接覆盖，推类动作提供协同覆盖；可记录过顶与非过顶变式，但不承诺某一头的精确增肌比例。",
+      "limitations": "Joint position can change muscle length and emphasis, but individual regional growth is not inferred.",
+      "evidence_claim_ids": ["CLM-HYP-ANATOMY-001", "CLM-HYP-SJMJ-001", "CLM-HYP-LENGTH-001"]
+    },
+    {
+      "id": "quadriceps",
+      "label_en": "Quadriceps",
+      "label_zh": "股四头肌",
+      "aliases_zh": ["腿部", "大腿前侧", "股直肌"],
+      "anatomical_scope": "Quadriceps femoris group; rectus femoris and vasti are not treated as interchangeable regions.",
+      "primary_joint_actions": ["knee extension", "hip flexion contribution from rectus femoris"],
+      "movement_pattern_ids": ["squat_knee_dominant", "unilateral_knee_dominant", "knee_extension"],
+      "coverage_notes_zh": "深蹲、分腿动作和腿屈伸构成不同动作家族；它们可以互补，但不能仅按‘练腿’合并为一个无差别标签。",
+      "limitations": "Exercise setup and range of motion affect joint demands; this atlas does not prescribe depth for an individual.",
+      "evidence_claim_ids": ["CLM-HYP-ANATOMY-001", "CLM-HYP-ROM-001", "CLM-HYP-VARIATION-001"]
+    },
+    {
+      "id": "hamstrings",
+      "label_en": "Hamstrings",
+      "label_zh": "腘绳肌",
+      "aliases_zh": ["腿部", "大腿后侧", "股二头肌"],
+      "anatomical_scope": "Posterior-thigh knee flexors and hip extensors grouped while preserving two distinct action families.",
+      "primary_joint_actions": ["knee flexion", "hip extension"],
+      "movement_pattern_ids": ["hip_hinge", "knee_flexion"],
+      "coverage_notes_zh": "髋铰链和屈膝是两个不可简单互换的动作家族；只做硬拉类不等于完整覆盖屈膝功能。",
+      "limitations": "The atlas does not infer regional hamstring growth from one exercise name.",
+      "evidence_claim_ids": ["CLM-HYP-ANATOMY-001", "CLM-HYP-VARIATION-001", "CLM-HYP-LENGTH-001"]
+    },
+    {
+      "id": "gluteals",
+      "label_en": "Gluteals",
+      "label_zh": "臀肌",
+      "aliases_zh": ["臀部", "臀大肌", "臀中肌"],
+      "anatomical_scope": "Gluteus maximus for hip extension plus gluteus medius/minimus contributions to frontal-plane control.",
+      "primary_joint_actions": ["hip extension", "hip abduction", "pelvic stabilization"],
+      "movement_pattern_ids": ["hip_extension", "hip_hinge", "squat_knee_dominant", "unilateral_knee_dominant", "hip_abduction_adduction"],
+      "coverage_notes_zh": "臀肌覆盖至少分为髋伸、蹲/单腿和髋外展家族；动作选择强调互补，不用单一‘臀部最佳动作’排名。",
+      "limitations": "The gluteal group contains distinct muscles and regions; coverage labels do not establish individual growth distribution.",
+      "evidence_claim_ids": ["CLM-HYP-ANATOMY-001", "CLM-HYP-VARIATION-001"]
+    },
+    {
+      "id": "hip_adductors_abductors",
+      "label_en": "Hip adductors and abductors",
+      "label_zh": "髋内收与外展肌群",
+      "aliases_zh": ["髋部", "大腿内侧", "大腿外侧"],
+      "anatomical_scope": "Practical frontal-plane grouping; adductors and abductors remain opposite action families.",
+      "primary_joint_actions": ["hip adduction", "hip abduction", "pelvic stabilization"],
+      "movement_pattern_ids": ["hip_abduction_adduction", "squat_knee_dominant", "unilateral_knee_dominant"],
+      "coverage_notes_zh": "髋内收和外展需要分别记录；深蹲和单腿动作提供协同负荷，但不替代所有直接动作需求。",
+      "limitations": "This is a programming taxonomy, not a pelvic or hip clinical assessment.",
+      "evidence_claim_ids": ["CLM-HYP-ANATOMY-001", "CLM-HYP-COVERAGE-001"]
+    },
+    {
+      "id": "calves",
+      "label_en": "Calf complex",
+      "label_zh": "小腿后侧肌群",
+      "aliases_zh": ["小腿", "腓肠肌", "比目鱼肌"],
+      "anatomical_scope": "Gastrocnemius and soleus grouped as plantar flexors while preserving straight- and bent-knee setup differences.",
+      "primary_joint_actions": ["ankle plantar flexion"],
+      "movement_pattern_ids": ["plantar_flexion"],
+      "coverage_notes_zh": "站姿与坐姿提踵都属于跖屈家族，但膝关节位置不同；系统保留两类设置，不把它们视为完全相同。",
+      "limitations": "No calf-specific optimal exercise or minimum effective dose is asserted.",
+      "evidence_claim_ids": ["CLM-HYP-ANATOMY-001", "CLM-HYP-VARIATION-001"]
+    },
+    {
+      "id": "trunk",
+      "label_en": "Trunk musculature",
+      "label_zh": "躯干肌群",
+      "aliases_zh": ["核心", "腹部", "腰腹", "腹肌"],
+      "anatomical_scope": "Abdominal wall and trunk stabilizers grouped by movement task rather than a cosmetic 'core' score.",
+      "primary_joint_actions": ["trunk flexion", "resisting extension", "resisting rotation", "resisting lateral flexion"],
+      "movement_pattern_ids": ["trunk_flexion", "trunk_stability"],
+      "coverage_notes_zh": "把躯干屈曲与抗伸展、抗旋转、抗侧屈分开记录；稳定类动作不是医学意义上的腰背康复。",
+      "limitations": "No pain-treatment or spinal-stability diagnosis is made from exercise categories.",
+      "evidence_claim_ids": ["CLM-HYP-ANATOMY-001", "CLM-HYP-COVERAGE-001"]
+    },
+    {
+      "id": "forearms_grip",
+      "label_en": "Forearms and grip",
+      "label_zh": "前臂与握力相关肌群",
+      "aliases_zh": ["前臂", "握力", "小臂"],
+      "anatomical_scope": "Wrist flexors/extensors and grip-related forearm musculature grouped for practical coverage.",
+      "primary_joint_actions": ["wrist flexion", "wrist extension", "grip"],
+      "movement_pattern_ids": ["wrist_grip"],
+      "coverage_notes_zh": "直接腕屈伸与负重握持属于不同任务；动作库暂以腕屈伸代表直接覆盖，不把握力成绩等同于前臂增肌。",
+      "limitations": "Representative catalogue coverage is incomplete for loaded carries and grip devices.",
+      "evidence_claim_ids": ["CLM-HYP-ANATOMY-001", "CLM-HYP-COVERAGE-001"]
+    }
+  ],
+  "movement_patterns": [
+    {
+      "id": "horizontal_push", "label_en": "Horizontal push", "label_zh": "水平推",
+      "joint_actions": ["shoulder horizontal adduction", "elbow extension"],
+      "primary_region_ids": ["pectorals"], "secondary_region_ids": ["deltoid_anterior", "triceps"],
+      "classification": "multi_joint", "representative_exercise_ids": ["exercises-dataset:0025", "exercises-dataset:0289", "exercises-dataset:0662"],
+      "equipment_options": ["barbell", "dumbbell", "body weight"],
+      "selection_notes_zh": "从杠铃、哑铃或自重变式中选能稳定完成并记录进步的一种；更换器械时视为新变式，不直接比较负重数字。",
+      "limitations": "Pressing variations do not isolate the pectorals and are not interchangeable strength tests.",
+      "evidence_claim_ids": ["CLM-HYP-COVERAGE-001", "CLM-HYP-EQUIPMENT-001"]
+    },
+    {
+      "id": "chest_adduction", "label_en": "Chest adduction / fly", "label_zh": "夹胸 / 飞鸟",
+      "joint_actions": ["shoulder horizontal adduction"],
+      "primary_region_ids": ["pectorals"], "secondary_region_ids": ["deltoid_anterior"],
+      "classification": "single_joint_dominant", "representative_exercise_ids": ["exercises-dataset:0308", "exercises-dataset:1262", "exercises-dataset:1269"],
+      "equipment_options": ["dumbbell", "cable"],
+      "selection_notes_zh": "用于补充肩水平内收，不自动优先于推类动作；选择能控制动作幅度和张力的变式。",
+      "limitations": "The shoulder is not literally single-joint in all implementations; regional chest claims remain uncertain.",
+      "evidence_claim_ids": ["CLM-HYP-SJMJ-001", "CLM-HYP-VARIATION-001"]
+    },
+    {
+      "id": "vertical_push", "label_en": "Vertical push", "label_zh": "垂直推",
+      "joint_actions": ["shoulder flexion/abduction", "elbow extension"],
+      "primary_region_ids": ["deltoid_anterior", "deltoid_lateral"], "secondary_region_ids": ["triceps"],
+      "classification": "multi_joint", "representative_exercise_ids": ["exercises-dataset:0405", "exercises-dataset:0603", "exercises-dataset:0997"],
+      "equipment_options": ["dumbbell", "leverage machine", "band"],
+      "selection_notes_zh": "根据器械、技术熟悉度和可控动作范围选择一种肩上推变式；机器与自由重量都可作为有效训练方式。",
+      "limitations": "Shoulder tolerance is not inferred from the atlas; painful pressing requires stopping and separate assessment.",
+      "evidence_claim_ids": ["CLM-HYP-COVERAGE-001", "CLM-HYP-EQUIPMENT-001"]
+    },
+    {
+      "id": "lateral_raise", "label_en": "Lateral raise", "label_zh": "侧平举",
+      "joint_actions": ["shoulder abduction"],
+      "primary_region_ids": ["deltoid_lateral"], "secondary_region_ids": [],
+      "classification": "single_joint_dominant", "representative_exercise_ids": ["exercises-dataset:0334", "exercises-dataset:0178", "exercises-dataset:0311"],
+      "equipment_options": ["dumbbell", "cable"],
+      "selection_notes_zh": "作为中束更直接的动作家族，与肩上推形成互补；系统不按器械给动作效果排名。",
+      "limitations": "Arm path, range and technique can alter loading; no universal best variation is claimed.",
+      "evidence_claim_ids": ["CLM-HYP-VARIATION-001", "CLM-HYP-EQUIPMENT-001"]
+    },
+    {
+      "id": "posterior_shoulder", "label_en": "Posterior shoulder", "label_zh": "后肩水平外展",
+      "joint_actions": ["shoulder horizontal abduction", "scapular retraction contribution"],
+      "primary_region_ids": ["deltoid_posterior"], "secondary_region_ids": ["upper_back_scapular"],
+      "classification": "single_joint_dominant", "representative_exercise_ids": ["exercises-dataset:2292", "exercises-dataset:0203", "exercises-dataset:0602"],
+      "equipment_options": ["dumbbell", "cable", "leverage machine"],
+      "selection_notes_zh": "用于补充后束和上背覆盖；保持动作定义一致后再比较训练记录。",
+      "limitations": "Scapular motion changes upper-back contribution, so target labels are not isolation proof.",
+      "evidence_claim_ids": ["CLM-HYP-COVERAGE-001", "CLM-HYP-EQUIPMENT-001"]
+    },
+    {
+      "id": "vertical_pull", "label_en": "Vertical pull", "label_zh": "垂直拉",
+      "joint_actions": ["shoulder adduction/extension", "elbow flexion"],
+      "primary_region_ids": ["latissimus_dorsi"], "secondary_region_ids": ["elbow_flexors", "upper_back_scapular"],
+      "classification": "multi_joint", "representative_exercise_ids": ["exercises-dataset:0652", "exercises-dataset:2330", "exercises-dataset:0017"],
+      "equipment_options": ["body weight", "cable", "leverage machine"],
+      "selection_notes_zh": "引体向上、下拉和辅助引体属于同一大类但负荷记录方式不同；优先选择可重复、可进阶的版本。",
+      "limitations": "Grip and torso position change demands; exercise names do not quantify latissimus stimulus.",
+      "evidence_claim_ids": ["CLM-HYP-COVERAGE-001", "CLM-HYP-EQUIPMENT-001"]
+    },
+    {
+      "id": "horizontal_pull", "label_en": "Horizontal pull", "label_zh": "水平拉",
+      "joint_actions": ["shoulder extension/horizontal abduction", "scapular retraction", "elbow flexion"],
+      "primary_region_ids": ["upper_back_scapular", "latissimus_dorsi"], "secondary_region_ids": ["deltoid_posterior", "elbow_flexors", "trapezius"],
+      "classification": "multi_joint", "representative_exercise_ids": ["exercises-dataset:0027", "exercises-dataset:0292", "exercises-dataset:0861", "exercises-dataset:0499"],
+      "equipment_options": ["barbell", "dumbbell", "cable", "body weight"],
+      "selection_notes_zh": "根据躯干支撑、器械和可重复性选择划船变式；更换支撑方式时不要把重量直接横向比较。",
+      "limitations": "This broad family covers several muscles and cannot assign exact set credit to each region.",
+      "evidence_claim_ids": ["CLM-HYP-COVERAGE-001", "CLM-HYP-EQUIPMENT-001"]
+    },
+    {
+      "id": "scapular_elevation", "label_en": "Scapular elevation", "label_zh": "肩胛上提",
+      "joint_actions": ["scapular elevation"],
+      "primary_region_ids": ["trapezius"], "secondary_region_ids": ["forearms_grip"],
+      "classification": "single_joint_dominant", "representative_exercise_ids": ["exercises-dataset:0095", "exercises-dataset:0406", "exercises-dataset:0220"],
+      "equipment_options": ["barbell", "dumbbell", "cable"],
+      "selection_notes_zh": "耸肩主要表示肩胛上提任务；它不能替代水平拉对中下斜方肌和肩胛后缩的覆盖。",
+      "limitations": "The atlas does not infer upper-trapezius need from posture or symptoms.",
+      "evidence_claim_ids": ["CLM-HYP-ANATOMY-001", "CLM-HYP-COVERAGE-001"]
+    },
+    {
+      "id": "elbow_flexion", "label_en": "Elbow flexion", "label_zh": "肘屈 / 弯举",
+      "joint_actions": ["elbow flexion", "forearm supination depending on variation"],
+      "primary_region_ids": ["elbow_flexors"], "secondary_region_ids": ["forearms_grip"],
+      "classification": "single_joint_dominant", "representative_exercise_ids": ["exercises-dataset:0294", "exercises-dataset:0313", "exercises-dataset:0165"],
+      "equipment_options": ["dumbbell", "cable"],
+      "selection_notes_zh": "旋后握与中立握属于不同变式；动作可用于增加直接肘屈覆盖，但并非所有计划都必须加入。",
+      "limitations": "Evidence comparing isolation and compound exercises is limited and population-specific.",
+      "evidence_claim_ids": ["CLM-HYP-SJMJ-001", "CLM-HYP-VARIATION-001"]
+    },
+    {
+      "id": "elbow_extension", "label_en": "Elbow extension", "label_zh": "肘伸 / 臂屈伸",
+      "joint_actions": ["elbow extension"],
+      "primary_region_ids": ["triceps"], "secondary_region_ids": [],
+      "classification": "single_joint_dominant", "representative_exercise_ids": ["exercises-dataset:0201", "exercises-dataset:0194", "exercises-dataset:0351"],
+      "equipment_options": ["cable", "dumbbell"],
+      "selection_notes_zh": "下压、过顶伸展和仰卧臂屈伸属于同一家族的不同关节设置；可系统变化，但不频繁随机轮换。",
+      "limitations": "Long-head emphasis is plausible but individual regional hypertrophy is not predicted.",
+      "evidence_claim_ids": ["CLM-HYP-SJMJ-001", "CLM-HYP-LENGTH-001", "CLM-HYP-VARIATION-001"]
+    },
+    {
+      "id": "squat_knee_dominant", "label_en": "Squat / knee-dominant", "label_zh": "深蹲 / 膝主导",
+      "joint_actions": ["knee extension", "hip extension"],
+      "primary_region_ids": ["quadriceps", "gluteals"], "secondary_region_ids": ["hip_adductors_abductors"],
+      "classification": "multi_joint", "representative_exercise_ids": ["exercises-dataset:1760", "exercises-dataset:0043", "exercises-dataset:2287"],
+      "equipment_options": ["dumbbell", "barbell", "leverage machine"],
+      "selection_notes_zh": "高脚杯深蹲、杠铃深蹲和腿举可按技术与器械选择；它们不是相同力量测试，但都可承担膝主导覆盖。",
+      "limitations": "Joint demands and range differ substantially; no universal squat depth or stance is prescribed.",
+      "evidence_claim_ids": ["CLM-HYP-EQUIPMENT-001", "CLM-HYP-ROM-001", "CLM-HYP-COVERAGE-001"]
+    },
+    {
+      "id": "unilateral_knee_dominant", "label_en": "Unilateral knee-dominant", "label_zh": "单腿膝主导",
+      "joint_actions": ["knee extension", "hip extension", "frontal-plane stabilization"],
+      "primary_region_ids": ["quadriceps", "gluteals"], "secondary_region_ids": ["hip_adductors_abductors"],
+      "classification": "multi_joint", "representative_exercise_ids": ["exercises-dataset:0410", "exercises-dataset:0809", "exercises-dataset:0336"],
+      "equipment_options": ["dumbbell", "body weight"],
+      "selection_notes_zh": "分腿蹲和弓步提供单侧训练任务；它们是可选覆盖方式，不被宣传为自动修复左右差异。",
+      "limitations": "No movement-screen diagnosis or asymmetry correction is inferred.",
+      "evidence_claim_ids": ["CLM-HYP-COVERAGE-001", "CLM-HYP-VARIATION-001"]
+    },
+    {
+      "id": "knee_extension", "label_en": "Knee extension", "label_zh": "膝伸",
+      "joint_actions": ["knee extension"],
+      "primary_region_ids": ["quadriceps"], "secondary_region_ids": [],
+      "classification": "single_joint", "representative_exercise_ids": ["exercises-dataset:0585"],
+      "equipment_options": ["leverage machine"],
+      "selection_notes_zh": "腿屈伸提供直接膝伸覆盖，可与蹲类互补；系统不把它设为每个计划的强制动作。",
+      "limitations": "One machine setup does not represent all knee-extension devices or individual joint tolerance.",
+      "evidence_claim_ids": ["CLM-HYP-SJMJ-001", "CLM-HYP-VARIATION-001"]
+    },
+    {
+      "id": "hip_hinge", "label_en": "Hip hinge", "label_zh": "髋铰链",
+      "joint_actions": ["hip extension with controlled hip flexion"],
+      "primary_region_ids": ["hamstrings", "gluteals"], "secondary_region_ids": ["trunk", "forearms_grip"],
+      "classification": "multi_joint", "representative_exercise_ids": ["exercises-dataset:0085", "exercises-dataset:1459", "exercises-dataset:0116"],
+      "equipment_options": ["barbell", "dumbbell"],
+      "selection_notes_zh": "罗马尼亚硬拉和直腿硬拉都属于髋铰链家族；先固定技术与动作幅度，再比较训练记录。",
+      "limitations": "The atlas does not assess lumbar symptoms or prescribe range of motion for an individual.",
+      "evidence_claim_ids": ["CLM-HYP-ROM-001", "CLM-HYP-LENGTH-001", "CLM-HYP-COVERAGE-001"]
+    },
+    {
+      "id": "knee_flexion", "label_en": "Knee flexion", "label_zh": "屈膝",
+      "joint_actions": ["knee flexion"],
+      "primary_region_ids": ["hamstrings"], "secondary_region_ids": [],
+      "classification": "single_joint", "representative_exercise_ids": ["exercises-dataset:0586", "exercises-dataset:3235"],
+      "equipment_options": ["leverage machine", "cable"],
+      "selection_notes_zh": "腿弯举补充髋铰链没有直接表达的屈膝任务；器械设置变化时应重新建立训练基线。",
+      "limitations": "Exercise setup can change muscle length; no universal regional-growth advantage is asserted.",
+      "evidence_claim_ids": ["CLM-HYP-VARIATION-001", "CLM-HYP-LENGTH-001"]
+    },
+    {
+      "id": "hip_extension", "label_en": "Hip extension / bridge", "label_zh": "髋伸 / 臀桥",
+      "joint_actions": ["hip extension"],
+      "primary_region_ids": ["gluteals"], "secondary_region_ids": ["hamstrings"],
+      "classification": "multi_joint_dominant", "representative_exercise_ids": ["exercises-dataset:1409", "exercises-dataset:3013", "exercises-dataset:3236"],
+      "equipment_options": ["barbell", "body weight", "resistance band"],
+      "selection_notes_zh": "臀桥家族提供髋伸覆盖，可根据器械从自重过渡到外部负荷；不把臀桥与髋铰链视为同一刺激。",
+      "limitations": "The catalogue label does not establish superiority for gluteal hypertrophy.",
+      "evidence_claim_ids": ["CLM-HYP-COVERAGE-001", "CLM-HYP-EQUIPMENT-001", "CLM-HYP-VARIATION-001"]
+    },
+    {
+      "id": "hip_abduction_adduction", "label_en": "Hip abduction / adduction", "label_zh": "髋外展 / 内收",
+      "joint_actions": ["hip abduction", "hip adduction"],
+      "primary_region_ids": ["hip_adductors_abductors"], "secondary_region_ids": ["gluteals"],
+      "classification": "single_joint_dominant", "representative_exercise_ids": ["exercises-dataset:0597", "exercises-dataset:0598", "exercises-dataset:0710", "exercises-dataset:0168"],
+      "equipment_options": ["leverage machine", "body weight", "cable"],
+      "selection_notes_zh": "外展和内收是相反动作，应分别记录；是否加入直接动作由训练目标和整体覆盖决定。",
+      "limitations": "This family is not a hip stability screen or rehabilitation recommendation.",
+      "evidence_claim_ids": ["CLM-HYP-ANATOMY-001", "CLM-HYP-SJMJ-001"]
+    },
+    {
+      "id": "plantar_flexion", "label_en": "Plantar flexion", "label_zh": "跖屈 / 提踵",
+      "joint_actions": ["ankle plantar flexion"],
+      "primary_region_ids": ["calves"], "secondary_region_ids": [],
+      "classification": "single_joint", "representative_exercise_ids": ["exercises-dataset:1373", "exercises-dataset:1379", "exercises-dataset:1372"],
+      "equipment_options": ["body weight", "dumbbell", "barbell"],
+      "selection_notes_zh": "保留直膝和屈膝设置，并在复训时维持相同站位、支撑和动作范围。",
+      "limitations": "No claim is made that one knee position completely isolates one calf muscle.",
+      "evidence_claim_ids": ["CLM-HYP-ANATOMY-001", "CLM-HYP-ROM-001", "CLM-HYP-VARIATION-001"]
+    },
+    {
+      "id": "trunk_flexion", "label_en": "Trunk flexion", "label_zh": "躯干屈曲",
+      "joint_actions": ["trunk flexion"],
+      "primary_region_ids": ["trunk"], "secondary_region_ids": [],
+      "classification": "single_joint_dominant", "representative_exercise_ids": ["exercises-dataset:0274", "exercises-dataset:0175", "exercises-dataset:1005"],
+      "equipment_options": ["body weight", "cable", "band"],
+      "selection_notes_zh": "卷腹家族记录主动躯干屈曲，与稳定类动作分开；动作库不判断腰痛人群适用性。",
+      "limitations": "No spinal-health or spot-reduction claim is supported.",
+      "evidence_claim_ids": ["CLM-HYP-ANATOMY-001", "CLM-HYP-COVERAGE-001"]
+    },
+    {
+      "id": "trunk_stability", "label_en": "Trunk stability tasks", "label_zh": "躯干稳定任务",
+      "joint_actions": ["resist extension", "resist rotation", "resist lateral flexion"],
+      "primary_region_ids": ["trunk"], "secondary_region_ids": ["gluteals"],
+      "classification": "isometric_or_control", "representative_exercise_ids": ["exercises-dataset:0276", "exercises-dataset:0979", "exercises-dataset:3544"],
+      "equipment_options": ["body weight", "band"],
+      "selection_notes_zh": "死虫、Pallof press 和侧桥代表不同稳定任务；不把坚持时间直接换算为增肌分数。",
+      "limitations": "These categories do not diagnose core weakness or prescribe rehabilitation.",
+      "evidence_claim_ids": ["CLM-HYP-ANATOMY-001", "CLM-HYP-COVERAGE-001"]
+    },
+    {
+      "id": "wrist_grip", "label_en": "Wrist and grip", "label_zh": "腕屈伸与握持",
+      "joint_actions": ["wrist flexion", "wrist extension", "grip"],
+      "primary_region_ids": ["forearms_grip"], "secondary_region_ids": [],
+      "classification": "single_joint_or_isometric", "representative_exercise_ids": ["exercises-dataset:1412", "exercises-dataset:0385", "exercises-dataset:1016"],
+      "equipment_options": ["barbell", "dumbbell", "band"],
+      "selection_notes_zh": "腕屈与腕伸分别记录；上游动作库缺少完整握持分类，因此这一家族标记为内容覆盖有限。",
+      "limitations": "Representative exercises do not cover all grip types or loaded carries.",
+      "evidence_claim_ids": ["CLM-HYP-ANATOMY-001", "CLM-HYP-COVERAGE-001"]
+    }
+  ]
+}

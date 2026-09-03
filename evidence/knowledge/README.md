@@ -30,7 +30,7 @@ rehabilitation instructions, or individual risk estimates.
 
 ## Readiness
 
-Direct internal retrieval currently covers 60 reviewed cards. Reaching the
+Direct internal retrieval currently covers 78 reviewed cards. Reaching the
 60-card count only opens the answer-evaluation stage: DeepSeek synthesis remains
 disabled until at least 60 manually passed answer-quality cases, bilingual
 retrieval checks, citation checks, and boundary checks all pass. The v1 corpus
@@ -40,3 +40,8 @@ validation claims.
 The first goal-directed prescription pack is documented in
 `../prescription/README.md`. It adds research explanations but does not enable
 an assessment-only program pack or change a training dose.
+
+The reviewed hypertrophy movement layer is documented in
+`../hypertrophy/README.md`. It adds muscle-region, movement-family, equipment,
+range-of-motion and exercise-selection explanations. It remains a content layer
+and does not activate hypertrophy dose or progression rules.

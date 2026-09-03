@@ -1,0 +1,187 @@
+{
+  "schema": "sportrx.knowledge_card_pack",
+  "schema_version": "0.1",
+  "pack_id": "hypertrophy_movement_v1",
+  "records": [
+    {
+      "id": "K-CARD-061", "topic": "biomechanics_motor_control", "subtopic": "functional_anatomy_map",
+      "title_en": "Muscle labels need a movement layer", "title_zh": "肌群标签与动作之间需要一层动作模式",
+      "keywords_en": ["functional anatomy", "joint action", "movement pattern", "exercise catalogue"], "keywords_zh": ["功能解剖", "关节动作", "动作模式", "动作库"],
+      "source_ids": ["ANAT-OPENSTAX-UPPER-2022", "ANAT-OPENSTAX-LOWER-2022"], "claim_ids": ["CLM-HYP-ANATOMY-001", "CLM-HYP-COVERAGE-001"], "evidence_tier": "D", "population": "Foundational human anatomy; educational use for generally healthy adults.",
+      "summary_zh": "只给动作贴上“胸”或“腿”的标签不够。SportRX 先记录肌群的主要关节动作，再用水平推、垂直拉、膝主导、髋铰链等动作家族连接具体变式。",
+      "technical_summary_en": "The atlas inserts movement families between anatomical regions and individual catalogue exercises.",
+      "limitations": "This is an expert-curated educational taxonomy, not a physiological stimulus measurement or validated score.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-062", "topic": "strength_power", "subtopic": "direct_and_secondary_coverage",
+      "title_en": "Primary and secondary muscle coverage are not equal", "title_zh": "直接覆盖与协同覆盖不能等量计算",
+      "keywords_en": ["primary muscle", "secondary muscle", "compound exercise", "set counting"], "keywords_zh": ["主要肌群", "协同肌群", "复合动作", "组数计算"],
+      "source_ids": ["ANAT-OPENSTAX-UPPER-2022", "ANAT-OPENSTAX-LOWER-2022", "RT-ACSM-2026"], "claim_ids": ["CLM-HYP-COVERAGE-001"], "evidence_tier": "D", "population": "Generally healthy adults using resistance-training exercise catalogues.",
+      "summary_zh": "卧推会用到胸肌、三角肌前束和肱三头肌，但这不意味着一组卧推对三者提供完全相同的增肌剂量。图谱只描述覆盖关系，不生成小数化的“有效组”分数。",
+      "technical_summary_en": "Compound exercise participation does not justify equal hypertrophy credit for every participating muscle.",
+      "limitations": "SportRX does not measure internal muscle force, activation or individual regional adaptation.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-063", "topic": "strength_power", "subtopic": "systematic_exercise_variation",
+      "title_en": "Exercise variation should be systematic", "title_zh": "动作变化要系统化，而不是随机换动作",
+      "keywords_en": ["exercise variation", "regional hypertrophy", "redundant exercise", "muscle confusion"], "keywords_zh": ["动作变化", "区域性增肌", "重复刺激", "肌肉混淆"],
+      "source_ids": ["RT-VARIATION-SR-2022"], "claim_ids": ["CLM-HYP-VARIATION-001"], "evidence_tier": "B", "population": "Young men in eight resistance-training studies.",
+      "summary_zh": "不同动作可能影响区域性增肌和专项力量，但证据支持的是有解剖与生物力学理由的系统变化，不是每次训练随机换一套动作。过度变化和高度重复的变式反而会削弱学习与追踪。",
+      "technical_summary_en": "Systematic variation may support regional adaptation; excessive random or redundant variation can compromise gains.",
+      "limitations": "Only eight studies with 241 young men were included, so findings are not universal.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-064", "topic": "strength_power", "subtopic": "equipment_substitution",
+      "title_en": "Machines and free weights are both valid tools", "title_zh": "器械与自由重量都可以是有效工具",
+      "keywords_en": ["machine", "free weight", "equipment substitution", "hypertrophy"], "keywords_zh": ["固定器械", "自由重量", "器械替代", "增肌"],
+      "source_ids": ["RT-FREE-MACHINE-SR-2023", "RT-ACSM-2026"], "claim_ids": ["CLM-HYP-EQUIPMENT-001"], "evidence_tier": "A/B", "population": "Healthy adults aged 18-60 years in comparative resistance-training studies.",
+      "summary_zh": "直接比较没有显示自由重量或固定器械在增肌上稳定胜出。选择应结合目标、偏好、器械条件和能否稳定进阶，但不同设备的负重数字不能直接互换。",
+      "technical_summary_en": "Hypertrophy outcomes did not differ directly between modalities, while strength adaptation remained test and modality specific.",
+      "limitations": "Only five studies reported hypertrophy and average equivalence does not imply identical mechanics or individual tolerance.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-065", "topic": "strength_power", "subtopic": "range_of_motion",
+      "title_en": "Range of motion needs exercise context", "title_zh": "动作幅度需要结合具体动作解释",
+      "keywords_en": ["range of motion", "full ROM", "partial ROM", "hypertrophy"], "keywords_zh": ["动作幅度", "完整幅度", "部分幅度", "增肌"],
+      "source_ids": ["RT-ROM-SR-2020", "RT-ACSM-2026"], "claim_ids": ["CLM-HYP-ROM-001"], "evidence_tier": "A/B", "population": "Healthy adults in longitudinal resistance-training studies.",
+      "summary_zh": "完整动作幅度对下肢增肌有更有利的证据，但上肢证据有限且不一致。SportRX 把可控的完整幅度作为一般记录起点，不会替用户判断疼痛状态下的适用幅度。",
+      "technical_summary_en": "Full ROM has more favorable lower-limb hypertrophy evidence, but upper-body findings and individual applicability remain uncertain.",
+      "limitations": "The review does not establish a universally safe or optimal range for every exercise and person.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-066", "topic": "strength_power", "subtopic": "muscle_length_regional_hypertrophy",
+      "title_en": "Longer muscle length is a promising but uncertain selector", "title_zh": "较长肌长是可考虑因素，但不是动作排名器",
+      "keywords_en": ["long muscle length", "regional hypertrophy", "exercise selection", "distal hypertrophy"], "keywords_zh": ["较长肌长", "区域性增肌", "动作选择", "远端增肌"],
+      "source_ids": ["RT-MUSCLE-LENGTH-SR-2025"], "claim_ids": ["CLM-HYP-LENGTH-001"], "evidence_tier": "B", "population": "Young adults in 12 regional-hypertrophy studies.",
+      "summary_zh": "在较长平均肌长下训练可能对部分区域有小幅优势，但汇总效应较小且有不确定性。它适合作为选择互补变式的一个因素，不足以生成“最佳动作榜”。",
+      "technical_summary_en": "Longer-muscle-length training showed a small trend toward greater distal hypertrophy with uncertainty.",
+      "limitations": "Studies were in young adults and varied by muscle, method and region.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-067", "topic": "strength_power", "subtopic": "exercise_order_priority",
+      "title_en": "Put the priority exercise earlier", "title_zh": "优先动作可以放在训练前部",
+      "keywords_en": ["exercise order", "priority", "strength specificity", "pre-exhaustion"], "keywords_zh": ["动作顺序", "训练优先级", "专项力量", "预疲劳"],
+      "source_ids": ["RT-ORDER-SR-2021"], "claim_ids": ["CLM-HYP-ORDER-001"], "evidence_tier": "B", "population": "Healthy adults in resistance-training exercise-order studies.",
+      "summary_zh": "先练的动作通常更有利于该动作的力量提升，因此主要技能或力量目标可放在前面。现有证据没有证明复合动作永远先做，或预疲劳能稳定增加肌肥大。",
+      "technical_summary_en": "Strength gains favor exercises performed early; hypertrophy did not show a clear multi-joint-first versus single-joint-first effect.",
+      "limitations": "Hypertrophy studies were limited and do not establish a universal session order.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-068", "topic": "strength_power", "subtopic": "single_multi_joint_mix",
+      "title_en": "Isolation work is contextual", "title_zh": "孤立动作是按需要添加的工具",
+      "keywords_en": ["single joint", "multi joint", "isolation exercise", "time efficiency"], "keywords_zh": ["单关节", "多关节", "孤立动作", "时间效率"],
+      "source_ids": ["RT-SJMJ-REVIEW-2017", "RT-VARIATION-SR-2022"], "claim_ids": ["CLM-HYP-SJMJ-001"], "evidence_tier": "B", "population": "Healthy adults in comparative resistance-training studies.",
+      "summary_zh": "复合动作适合提供广泛覆盖，孤立动作可在局部目标、器械条件或训练时间允许时补充。证据不支持“每个部位必须有孤立动作”，也不支持“复合动作永远足够”。",
+      "technical_summary_en": "Single-joint work is a contextual complement rather than a universal requirement or redundant category.",
+      "limitations": "Comparative evidence is small and often focused on upper-limb outcomes.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-069", "topic": "strength_power", "subtopic": "chest_coverage",
+      "title_en": "Chest coverage uses push and adduction families", "title_zh": "胸肌覆盖由推与夹胸两类动作构成",
+      "keywords_en": ["pectorals", "horizontal push", "chest fly", "horizontal adduction"], "keywords_zh": ["胸肌", "水平推", "飞鸟", "肩水平内收"],
+      "source_ids": ["ANAT-OPENSTAX-UPPER-2022", "RT-VARIATION-SR-2022"], "claim_ids": ["CLM-HYP-ANATOMY-001", "CLM-HYP-VARIATION-001"], "evidence_tier": "B/D", "population": "Generally healthy adults selecting chest resistance exercises.",
+      "summary_zh": "水平推承担胸肌主要复合覆盖，夹胸或飞鸟补充更直接的肩水平内收。上斜、平板与下斜可以作为变式，但系统不会承诺某个角度精确增加某一区域。",
+      "technical_summary_en": "The atlas uses horizontal pressing plus optional adduction-dominant work without claiming exact regional isolation.",
+      "limitations": "No individual regional hypertrophy is inferred from bench angle or exercise name.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-070", "topic": "strength_power", "subtopic": "back_coverage",
+      "title_en": "Back coverage separates vertical and horizontal pulling", "title_zh": "背部覆盖要区分垂直拉与水平拉",
+      "keywords_en": ["latissimus", "upper back", "vertical pull", "horizontal pull"], "keywords_zh": ["背阔肌", "上背", "垂直拉", "水平拉"],
+      "source_ids": ["ANAT-OPENSTAX-UPPER-2022", "RT-VARIATION-SR-2022"], "claim_ids": ["CLM-HYP-ANATOMY-001", "CLM-HYP-COVERAGE-001", "CLM-HYP-VARIATION-001"], "evidence_tier": "B/D", "population": "Generally healthy adults selecting back resistance exercises.",
+      "summary_zh": "垂直拉更直接表达肩内收和伸展，水平拉同时涉及肩伸、水平外展和肩胛后缩。两类动作有重叠，但不能用一个笼统的“背部动作”完全替代。",
+      "technical_summary_en": "Vertical and horizontal pulling overlap but provide distinguishable movement-task coverage.",
+      "limitations": "The broad back region contains several muscles; exact stimulus cannot be inferred from labels.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-071", "topic": "strength_power", "subtopic": "shoulder_coverage",
+      "title_en": "Shoulder coverage separates three deltoid regions", "title_zh": "肩部覆盖应区分三角肌前中后束",
+      "keywords_en": ["anterior deltoid", "lateral deltoid", "posterior deltoid", "shoulder exercise"], "keywords_zh": ["三角肌前束", "三角肌中束", "三角肌后束", "肩部动作"],
+      "source_ids": ["ANAT-OPENSTAX-UPPER-2022", "RT-VARIATION-SR-2022"], "claim_ids": ["CLM-HYP-ANATOMY-001", "CLM-HYP-VARIATION-001"], "evidence_tier": "B/D", "population": "Generally healthy adults selecting shoulder resistance exercises.",
+      "summary_zh": "肩上推主要覆盖前束并协同覆盖中束和肱三头肌；侧平举更直接对应肩外展；后肩动作对应水平外展。三类不应压缩成一个笼统的 delts 标签。",
+      "technical_summary_en": "The atlas separates anterior, lateral and posterior deltoid coverage by movement task.",
+      "limitations": "Movement labels do not quantify regional activation or hypertrophy, and pain suitability is outside scope.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-072", "topic": "strength_power", "subtopic": "arm_coverage",
+      "title_en": "Arm work combines compound contribution and direct actions", "title_zh": "手臂训练要同时看复合贡献与直接动作",
+      "keywords_en": ["biceps", "triceps", "elbow flexion", "elbow extension"], "keywords_zh": ["肱二头肌", "肱三头肌", "肘屈", "肘伸"],
+      "source_ids": ["ANAT-OPENSTAX-UPPER-2022", "RT-SJMJ-REVIEW-2017"], "claim_ids": ["CLM-HYP-ANATOMY-001", "CLM-HYP-SJMJ-001"], "evidence_tier": "B/D", "population": "Generally healthy adults selecting upper-arm resistance exercises.",
+      "summary_zh": "拉类会让肘屈肌参与，推类会让肱三头肌参与；弯举和臂屈伸则提供更直接的肘屈、肘伸覆盖。是否加入直接动作取决于局部目标与时间。",
+      "technical_summary_en": "Elbow flexors and extensors receive compound contribution and can also be trained through direct action families.",
+      "limitations": "The evidence does not establish a universal amount of direct arm work.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-073", "topic": "strength_power", "subtopic": "quadriceps_coverage",
+      "title_en": "Quadriceps coverage uses knee-dominant and direct knee-extension tasks", "title_zh": "股四头肌覆盖包括膝主导与直接膝伸",
+      "keywords_en": ["quadriceps", "squat", "split squat", "knee extension"], "keywords_zh": ["股四头肌", "深蹲", "分腿蹲", "腿屈伸"],
+      "source_ids": ["ANAT-OPENSTAX-LOWER-2022", "RT-ROM-SR-2020", "RT-SJMJ-REVIEW-2017"], "claim_ids": ["CLM-HYP-ANATOMY-001", "CLM-HYP-ROM-001", "CLM-HYP-SJMJ-001"], "evidence_tier": "B/D", "population": "Generally healthy adults selecting quadriceps resistance exercises.",
+      "summary_zh": "深蹲、腿举和分腿动作提供复合膝伸覆盖，腿屈伸提供更直接的膝伸任务。它们可以互补，但不同动作幅度与器械负重不能直接横向比较。",
+      "technical_summary_en": "Quadriceps coverage includes multi-joint knee-dominant patterns and optional direct knee extension.",
+      "limitations": "No individual squat depth, stance or joint suitability is prescribed.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-074", "topic": "strength_power", "subtopic": "posterior_thigh_coverage",
+      "title_en": "Hamstrings need hip-hinge and knee-flexion coverage", "title_zh": "腘绳肌覆盖要区分髋铰链与屈膝",
+      "keywords_en": ["hamstrings", "hip hinge", "knee flexion", "leg curl"], "keywords_zh": ["腘绳肌", "髋铰链", "屈膝", "腿弯举"],
+      "source_ids": ["ANAT-OPENSTAX-LOWER-2022", "RT-VARIATION-SR-2022", "RT-MUSCLE-LENGTH-SR-2025"], "claim_ids": ["CLM-HYP-ANATOMY-001", "CLM-HYP-VARIATION-001", "CLM-HYP-LENGTH-001"], "evidence_tier": "B/D", "population": "Generally healthy adults selecting posterior-thigh resistance exercises.",
+      "summary_zh": "腘绳肌跨髋和膝，罗马尼亚硬拉等髋铰链与腿弯举等屈膝动作表达不同任务。只做一类不能被描述为完整覆盖所有功能。",
+      "technical_summary_en": "Hamstring programming should preserve hip-extension and knee-flexion movement families.",
+      "limitations": "The atlas does not predict regional hamstring growth or assess lumbar and knee symptoms.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-075", "topic": "strength_power", "subtopic": "gluteal_coverage",
+      "title_en": "Gluteal coverage spans more than one exercise family", "title_zh": "臀肌覆盖不应只依赖一个动作家族",
+      "keywords_en": ["gluteals", "hip extension", "squat", "hip abduction"], "keywords_zh": ["臀肌", "髋伸", "深蹲", "髋外展"],
+      "source_ids": ["ANAT-OPENSTAX-LOWER-2022", "RT-VARIATION-SR-2022"], "claim_ids": ["CLM-HYP-ANATOMY-001", "CLM-HYP-VARIATION-001"], "evidence_tier": "B/D", "population": "Generally healthy adults selecting gluteal resistance exercises.",
+      "summary_zh": "臀肌训练可以由蹲类、髋铰链、臀桥和髋外展等家族共同构成。动作之间有重叠但任务不同，因此不建立“唯一练臀动作”的排名。",
+      "technical_summary_en": "Gluteal coverage spans squat, hinge, bridge and abduction-related movement tasks.",
+      "limitations": "The gluteal group contains distinct muscles and regions; exact regional growth is not inferred.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-076", "topic": "strength_power", "subtopic": "calf_coverage",
+      "title_en": "Calf raises should preserve knee-position context", "title_zh": "提踵记录要保留膝关节位置",
+      "keywords_en": ["calves", "plantar flexion", "standing calf raise", "seated calf raise"], "keywords_zh": ["小腿", "跖屈", "站姿提踵", "坐姿提踵"],
+      "source_ids": ["ANAT-OPENSTAX-LOWER-2022", "RT-VARIATION-SR-2022"], "claim_ids": ["CLM-HYP-ANATOMY-001", "CLM-HYP-VARIATION-001"], "evidence_tier": "B/D", "population": "Generally healthy adults selecting calf resistance exercises.",
+      "summary_zh": "站姿与坐姿提踵都训练跖屈，但膝关节位置不同。SportRX 会保留直膝、屈膝和器械设置，避免把不同测试条件的表现混在一起。",
+      "technical_summary_en": "Calf exercise records should preserve straight- versus bent-knee setup and equipment context.",
+      "limitations": "No optimal calf exercise or isolated-muscle claim is made.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-077", "topic": "strength_power", "subtopic": "trunk_coverage",
+      "title_en": "Trunk flexion and stability tasks are different", "title_zh": "躯干屈曲与稳定任务应分开记录",
+      "keywords_en": ["trunk", "core", "flexion", "anti-rotation", "anti-extension"], "keywords_zh": ["躯干", "核心", "屈曲", "抗旋转", "抗伸展"],
+      "source_ids": ["ANAT-OPENSTAX-UPPER-2022", "ANAT-OPENSTAX-LOWER-2022"], "claim_ids": ["CLM-HYP-ANATOMY-001", "CLM-HYP-COVERAGE-001"], "evidence_tier": "D", "population": "Foundational anatomy and educational exercise categorisation.",
+      "summary_zh": "卷腹表达主动躯干屈曲，死虫、侧桥和 Pallof press 表达不同方向的稳定任务。它们不是同一个动作模式，也不构成腰痛诊断或康复建议。",
+      "technical_summary_en": "The atlas separates active trunk flexion from resisting extension, rotation and lateral flexion.",
+      "limitations": "This movement taxonomy does not validate trunk hypertrophy dose or spinal rehabilitation.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-078", "topic": "strength_power", "subtopic": "forearm_grip_coverage",
+      "title_en": "Forearm hypertrophy and grip performance are not the same outcome", "title_zh": "前臂增肌与握力表现不是同一个结果",
+      "keywords_en": ["forearms", "grip", "wrist flexion", "wrist extension"], "keywords_zh": ["前臂", "握力", "腕屈", "腕伸"],
+      "source_ids": ["ANAT-OPENSTAX-UPPER-2022"], "claim_ids": ["CLM-HYP-ANATOMY-001", "CLM-HYP-COVERAGE-001"], "evidence_tier": "D", "population": "Foundational anatomy and educational exercise categorisation.",
+      "summary_zh": "腕屈、腕伸和负重握持是不同任务。现有上游动作库对握持动作覆盖不足，因此 SportRX 只把它们作为动作发现标签，不用握力成绩替代前臂肌肥大测量。",
+      "technical_summary_en": "Wrist actions and grip tasks should be distinguished, and grip performance should not proxy forearm hypertrophy.",
+      "limitations": "The current catalogue does not comprehensively cover loaded carries or grip devices.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    }
+  ]
+}

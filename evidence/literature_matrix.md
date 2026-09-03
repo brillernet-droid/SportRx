@@ -96,6 +96,23 @@ The atomic conclusions and complete citation metadata are maintained in
 | WEIGHT-RT-DIET-SR-2025 | Resistance exercise during dietary weight loss. https://pubmed.ncbi.nlm.nih.gov/40909191/ | B | Lean-mass preservation context | Diet is outside SportRX scope |
 | ADHERENCE-OBESITY-SR-2025 | Exercise adherence review. https://pubmed.ncbi.nlm.nih.gov/39727160/ | B | Completion and support design signals | Associations do not prove product effects |
 
+## Hypertrophy Movement Knowledge
+
+The muscle-region atlas, atomic claims and reviewed knowledge cards are maintained in
+`hypertrophy/`, `records/packs/hypertrophy_movement_*.json`, and
+`knowledge/packs/hypertrophy_movement_v1.json`.
+
+| ID | Source | Evidence tier | SportRx use | Limits |
+| --- | --- | --- | --- | --- |
+| ANAT-OPENSTAX-UPPER-2022 | OpenStax upper-body muscular anatomy. https://openstax.org/books/anatomy-and-physiology-2e/pages/11-5-muscles-of-the-pectoral-girdle-and-upper-limbs | D | Region names and broad joint actions | Anatomy reference, not exercise efficacy |
+| ANAT-OPENSTAX-LOWER-2022 | OpenStax lower-body muscular anatomy. https://openstax.org/books/anatomy-and-physiology-2e/pages/11-6-appendicular-muscles-of-the-pelvic-girdle-and-lower-limbs | D | Region names and broad joint actions | Anatomy reference, not exercise efficacy |
+| RT-VARIATION-SR-2022 | Exercise-variation systematic review. https://pubmed.ncbi.nlm.nih.gov/35438660/ | B | Systematic, non-random variation and regional-hypertrophy boundary | Eight studies; 241 young men |
+| RT-FREE-MACHINE-SR-2023 | Free-weight versus machine Meta-analysis. https://pubmed.ncbi.nlm.nih.gov/37582807/ | B | Equipment substitution and strength-specificity boundary | Five studies reported hypertrophy |
+| RT-ROM-SR-2020 | Range-of-motion systematic review. https://pubmed.ncbi.nlm.nih.gov/32030125/ | B | Recordable ROM and lower-limb hypertrophy context | Upper-body evidence limited and conflicting |
+| RT-MUSCLE-LENGTH-SR-2025 | Muscle-length and regional-hypertrophy Meta-analysis. https://pubmed.ncbi.nlm.nih.gov/40570881/ | B | Cautious long-muscle-length selection context | Small or trivial estimates with uncertainty |
+| RT-ORDER-SR-2021 | Exercise-order Meta-analysis. https://pubmed.ncbi.nlm.nih.gov/32077380/ | B | Priority-first strength context | No clear hypertrophy order effect |
+| RT-SJMJ-REVIEW-2017 | Single- versus multi-joint exercise review. https://pubmed.ncbi.nlm.nih.gov/27677913/ | B | Isolation work as a contextual option | Small and often upper-limb-focused evidence |
+
 ## Evidence Gaps To Fill
 
 - Test-retest reliability of SportRx Hybrid Benchmark v1.

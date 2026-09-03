@@ -51,6 +51,11 @@ human-reviewed bilingual knowledge cards and stays separate from the
 deterministic rule-evidence store. The optional DeepSeek synthesis path remains
 disabled until the corpus and citation, boundary, and answer-quality gates pass.
 
+The reviewed [Hypertrophy Movement Atlas](evidence/hypertrophy/README.md) adds
+16 muscle regions, 21 movement families, and 62 representative IDs from the
+existing exercise catalogue. It supports discovery and explanation only; it
+does not activate hypertrophy dose or progression rules.
+
 ## Run locally
 
 ```bash

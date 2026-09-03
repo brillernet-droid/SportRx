@@ -25,7 +25,7 @@ def test_reviewed_knowledge_cards_validate_but_do_not_overstate_v1_readiness():
     summary = knowledge_corpus_summary(ROOT)
 
     assert validation["valid"]
-    assert validation["reviewed_card_count"] == 60
+    assert validation["reviewed_card_count"] == 78
     assert summary["status"] == "foundation_in_progress"
     assert summary["synthesis_enabled"] is False
     assert "sports_medicine_injury_rehab" in validation["covered_topics"]
@@ -40,7 +40,17 @@ def test_search_returns_reviewed_bilingual_card_and_excludes_candidates(tmp_path
     assert result["results"][0]["id"] == "K-CARD-026"
     assert "Six-minute" in result["results"][0]["title_en"]
     assert result["results"][0]["sources"][0]["stable_url"].startswith("https://")
-    assert index["document_count"] == 60
+    assert index["document_count"] == 78
+
+
+def test_search_retrieves_reviewed_hypertrophy_movement_knowledge():
+    shoulders = search_knowledge("肩部 动作模式", root=ROOT)
+    equipment = search_knowledge("自由重量 器械 增肌", root=ROOT)
+
+    assert shoulders["results"][0]["id"] == "K-CARD-061"
+    assert "K-CARD-071" in {item["id"] for item in shoulders["results"][:3]}
+    assert equipment["results"][0]["id"] == "K-CARD-064"
+    assert equipment["results"][0]["sources"][0]["stable_url"].startswith("https://")
 
 
 def test_validator_rejects_private_path_or_unknown_source(tmp_path):

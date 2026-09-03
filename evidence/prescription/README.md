@@ -33,6 +33,10 @@ Gate、选择个人剂量或覆盖进阶规则。
 - `evidence/records/packs/goal_prescription_claims.json`
 - `evidence/knowledge/packs/goal_prescription_v1.json`
 
+增肌目标的动作知识继续在
+[`evidence/hypertrophy/`](../hypertrophy/README.md) 中分层维护。动作图谱可以帮助
+发现和解释动作，但不能把仅评估的增肌 Pack 自动变成可用处方。
+
 ## 当前结论
 
 - 已运行：建立习惯、提升心肺适能的有氧基础处方。

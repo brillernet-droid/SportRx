@@ -22,6 +22,13 @@ from .exercise_catalogue import (
     search_exercises,
     validate_exercise_catalogue,
 )
+from .hypertrophy_atlas import (
+    atlas_summary,
+    get_muscle_region,
+    load_hypertrophy_atlas,
+    search_hypertrophy_movements,
+    validate_hypertrophy_atlas,
+)
 from .benchmark import empty_benchmark_result, get_hybrid_benchmark
 from .benchmark_log import (
     benchmark_profile_patch,
@@ -164,6 +171,7 @@ __all__ = [
     "BODY_PART_LABELS",
     "body_part_label",
     "catalogue_summary",
+    "atlas_summary",
     "build_benchmark_import_compatibility",
     "build_benchmark_log_entry_contract",
     "build_feedback_dashboard",
@@ -273,6 +281,7 @@ __all__ = [
     "resolve_program_pack",
     "validate_program_packs",
     "get_exercise",
+    "get_muscle_region",
     "get_benchmark_protocol",
     "get_hybrid_benchmark",
     "get_language_edition",
@@ -281,6 +290,7 @@ __all__ = [
     "language_edition_options",
     "launch_readiness_markdown",
     "load_exercise_catalogue",
+    "load_hypertrophy_atlas",
     "measurement_timeline_markdown",
     "measurement_schema_registry_markdown",
     "open_source_integration_markdown",
@@ -310,6 +320,7 @@ __all__ = [
     "restore_session_snapshot",
     "self_use_protocol_markdown",
     "search_exercises",
+    "search_hypertrophy_movements",
     "summarize_benchmark_sessions",
     "summarize_pilot_feedback",
     "session_snapshot_json",
@@ -326,6 +337,7 @@ __all__ = [
     "ui_text",
     "validation_readiness_markdown",
     "validate_exercise_catalogue",
+    "validate_hypertrophy_atlas",
     "write_release_package",
     "PROTOCOL_SOURCE_HELP",
     "PROTOCOL_SOURCE_OPTIONS",

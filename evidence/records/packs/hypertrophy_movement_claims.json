@@ -1,0 +1,111 @@
+{
+  "schema": "sportrx.evidence_claims_pack",
+  "schema_version": "0.1",
+  "pack_id": "hypertrophy_movement_v1",
+  "records": [
+    {
+      "id": "CLM-HYP-ANATOMY-001",
+      "statement": "A hypertrophy exercise catalogue should distinguish broad muscle regions by their main joint actions before mapping exercises to them.",
+      "applies_to": "SportRX educational muscle-region and movement-pattern taxonomy for generally healthy adults.",
+      "evidence_tier": "D",
+      "source_ids": ["ANAT-OPENSTAX-UPPER-2022", "ANAT-OPENSTAX-LOWER-2022"],
+      "allowed_language": ["SportRX groups exercises by broad anatomical region and movement task.", "A muscle region may require more than one movement family for practical coverage."],
+      "disallowed_language": ["The catalogue target label proves that an exercise isolates a muscle.", "This anatomical map diagnoses weakness, imbalance or pain."],
+      "limitations": "Foundational anatomy supports names and actions, not hypertrophy efficacy, exercise superiority, dose or individual suitability.",
+      "review_status": "reviewed",
+      "reviewed_by": "SportRX internal evidence review",
+      "reviewed_at": "2026-09-03"
+    },
+    {
+      "id": "CLM-HYP-COVERAGE-001",
+      "statement": "Movement families are a practical coverage layer between muscle labels and individual exercise variants, but they do not quantify stimulus to each participating muscle.",
+      "applies_to": "SportRX exercise discovery, substitutions and hypertrophy education.",
+      "evidence_tier": "D",
+      "source_ids": ["ANAT-OPENSTAX-UPPER-2022", "ANAT-OPENSTAX-LOWER-2022", "RT-ACSM-2026"],
+      "allowed_language": ["Horizontal push covers the pectorals with anterior-deltoid and triceps contribution.", "A movement family can have several equipment-specific variants."],
+      "disallowed_language": ["Every set gives identical effective-set credit to every listed secondary muscle.", "Movement-category coverage is a validated hypertrophy score."],
+      "limitations": "The coverage map is an expert-curated taxonomy, not a direct physiological measurement or validated scoring system.",
+      "review_status": "reviewed",
+      "reviewed_by": "SportRX internal evidence review",
+      "reviewed_at": "2026-09-03"
+    },
+    {
+      "id": "CLM-HYP-VARIATION-001",
+      "statement": "Exercise variation may influence regional hypertrophy and strength when applied systematically, while excessive random or redundant variation may compromise adaptation.",
+      "applies_to": "Healthy adults selecting or rotating resistance-training exercise variants.",
+      "evidence_tier": "B",
+      "source_ids": ["RT-VARIATION-SR-2022"],
+      "allowed_language": ["Use anatomical and biomechanical reasoning to choose complementary exercise families.", "Keep a stable variant long enough to learn and track it before changing without a clear reason."],
+      "disallowed_language": ["Muscle confusion is required for growth.", "Changing exercises every session is superior.", "One exercise is proven to maximize every region of a muscle."],
+      "limitations": "The review included only eight studies and 241 young men; exercise-specific regional findings do not generalize to every user or muscle.",
+      "review_status": "reviewed",
+      "reviewed_by": "SportRX internal evidence review",
+      "reviewed_at": "2026-09-03"
+    },
+    {
+      "id": "CLM-HYP-EQUIPMENT-001",
+      "statement": "Free weights and machines can both support hypertrophy; equipment choice should reflect goals, preference, access and the ability to perform and progress the exercise consistently.",
+      "applies_to": "Healthy adults choosing between free-weight and machine-based resistance exercise.",
+      "evidence_tier": "B",
+      "source_ids": ["RT-FREE-MACHINE-SR-2023", "RT-ACSM-2026"],
+      "allowed_language": ["A machine variation can be a valid alternative to a free-weight variation.", "Strength records are specific to the exercise and device used."],
+      "disallowed_language": ["Free weights always build more muscle.", "Machines always isolate a muscle better.", "Loads from different machines and free-weight variants are directly comparable."],
+      "limitations": "Only five studies in the meta-analysis reported hypertrophy, and equivalent average outcomes do not make techniques or individual tolerability identical.",
+      "review_status": "reviewed",
+      "reviewed_by": "SportRX internal evidence review",
+      "reviewed_at": "2026-09-03"
+    },
+    {
+      "id": "CLM-HYP-ROM-001",
+      "statement": "Range of motion is an exercise-selection and technique variable; full range has more favorable lower-limb hypertrophy evidence, but no single range can be prescribed universally without exercise and individual context.",
+      "applies_to": "Healthy adults performing resistance exercise across different ranges of motion.",
+      "evidence_tier": "B",
+      "source_ids": ["RT-ROM-SR-2020", "RT-ACSM-2026"],
+      "allowed_language": ["Record and repeat a controlled range of motion for the selected exercise.", "Full range is a reasonable default where the movement can be performed with control and without a separate constraint."],
+      "disallowed_language": ["Deeper is always better for every person and exercise.", "Partial range never supports hypertrophy.", "SportRX can determine a pain-free range from catalogue data."],
+      "limitations": "Upper-body evidence was limited and conflicting, and the literature does not determine an individual's safe range or account for pain.",
+      "review_status": "reviewed",
+      "reviewed_by": "SportRX internal evidence review",
+      "reviewed_at": "2026-09-03"
+    },
+    {
+      "id": "CLM-HYP-LENGTH-001",
+      "statement": "Training at longer average muscle lengths may modestly influence regional hypertrophy, but current evidence is small, uncertain and not sufficient for deterministic exercise rankings.",
+      "applies_to": "Young healthy adults in resistance-training studies manipulating range of motion or exercise selection.",
+      "evidence_tier": "B",
+      "source_ids": ["RT-MUSCLE-LENGTH-SR-2025"],
+      "allowed_language": ["Muscle length is one factor to consider when selecting complementary exercise variants.", "Regional hypertrophy evidence should be presented with uncertainty."],
+      "disallowed_language": ["The longest-muscle-length exercise is always best.", "A specific exercise guarantees distal muscle growth.", "Stretch sensation proves a superior hypertrophy stimulus."],
+      "limitations": "Twelve studies in young adults produced small or trivial estimates with uncertainty; muscles, methods and regions differed.",
+      "review_status": "reviewed",
+      "reviewed_by": "SportRX internal evidence review",
+      "reviewed_at": "2026-09-03"
+    },
+    {
+      "id": "CLM-HYP-ORDER-001",
+      "statement": "Exercise order mainly favors strength gains in exercises placed earlier; current evidence does not show a clear hypertrophy advantage for a universal multi-joint-first or single-joint-first order.",
+      "applies_to": "Healthy adults arranging resistance exercises within a session.",
+      "evidence_tier": "B",
+      "source_ids": ["RT-ORDER-SR-2021"],
+      "allowed_language": ["Place the highest-priority skill or strength exercise earlier when quality matters.", "Exercise order can follow the session's main priority rather than a fixed compound-first rule."],
+      "disallowed_language": ["Compound exercises must always come first for hypertrophy.", "Pre-exhaustion is proven to produce more muscle growth."],
+      "limitations": "The number of hypertrophy studies was limited; findings do not define an individual session order or fatigue threshold.",
+      "review_status": "reviewed",
+      "reviewed_by": "SportRX internal evidence review",
+      "reviewed_at": "2026-09-03"
+    },
+    {
+      "id": "CLM-HYP-SJMJ-001",
+      "statement": "Single-joint and multi-joint exercises can both support muscle and strength adaptations; isolation work is a contextual option rather than a universal requirement or universally redundant addition.",
+      "applies_to": "Healthy adults choosing time-efficient or region-focused resistance exercise combinations.",
+      "evidence_tier": "B",
+      "source_ids": ["RT-SJMJ-REVIEW-2017", "RT-VARIATION-SR-2022"],
+      "allowed_language": ["Use multi-joint movements for broad coverage and add single-joint work when a goal, region or practical constraint justifies it.", "A time-limited plan may rely more heavily on multi-joint movements."],
+      "disallowed_language": ["Isolation exercises are always necessary for growth.", "Compound exercises always fully cover every contributing muscle.", "Single-joint exercises are always safer."],
+      "limitations": "Comparative evidence is small, often upper-limb focused and cannot determine the optimal exercise mix for every muscle or trainee.",
+      "review_status": "reviewed",
+      "reviewed_by": "SportRX internal evidence review",
+      "reviewed_at": "2026-09-03"
+    }
+  ]
+}

@@ -88,6 +88,12 @@ def test_release_package_manifest_is_public_ready():
     assert "evidence/knowledge/packs/goal_prescription_v1.json" in manifest["included_files"]
     assert "evidence/records/packs/goal_prescription_sources.json" in manifest["included_files"]
     assert "evidence/records/packs/goal_prescription_claims.json" in manifest["included_files"]
+    assert "sportrx/hypertrophy_atlas.py" in manifest["included_files"]
+    assert "data/exercises/hypertrophy_atlas.json" in manifest["included_files"]
+    assert "evidence/knowledge/packs/hypertrophy_movement_v1.json" in manifest["included_files"]
+    assert "evidence/records/packs/hypertrophy_movement_sources.json" in manifest["included_files"]
+    assert "evidence/records/packs/hypertrophy_movement_claims.json" in manifest["included_files"]
+    assert "evidence/hypertrophy/manifest.json" in manifest["included_files"]
     assert "evidence/prescription/manifest.json" in manifest["included_files"]
     assert "README.md" in manifest["included_files"]
     assert "README.en.md" in manifest["included_files"]
@@ -161,6 +167,12 @@ def test_write_release_package_excludes_internal_files(tmp_path):
     assert "evidence/knowledge/packs/goal_prescription_v1.json" in names
     assert "evidence/records/packs/goal_prescription_sources.json" in names
     assert "evidence/records/packs/goal_prescription_claims.json" in names
+    assert "sportrx/hypertrophy_atlas.py" in names
+    assert "data/exercises/hypertrophy_atlas.json" in names
+    assert "evidence/knowledge/packs/hypertrophy_movement_v1.json" in names
+    assert "evidence/records/packs/hypertrophy_movement_sources.json" in names
+    assert "evidence/records/packs/hypertrophy_movement_claims.json" in names
+    assert "evidence/hypertrophy/manifest.json" in names
     assert "evidence/prescription/manifest.json" in names
     assert "docs/research/open_source_landscape.md" in names
     assert "docs/zh-CN/quickstart.md" in names
