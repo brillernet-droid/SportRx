@@ -166,6 +166,11 @@ SportRX 另有一个内部研究型 Knowledge Lab，用于检索已审核的运�
 其公开元数据与审核规则见
 [Knowledge Corpus](evidence/knowledge/README.md)。
 
+目标导向处方的来源、原子结论、知识卡与当前 Pack 状态已经整理为独立的
+[处方知识层](evidence/prescription/README.md)。目前 60 张知识卡已经达到“进入人工
+答案评测”的数量门槛，但 AI 综合仍关闭；增肌和减脂 Pack 也仍是仅评估状态，不会
+因为知识卡增加而自动开放处方。
+
 ## 开发与验证
 
 运行全部测试：

@@ -15,7 +15,10 @@ KNOWLEDGE = ROOT / "evidence/knowledge"
 
 
 def main() -> None:
-    cards = json.loads((KNOWLEDGE / "cards.json").read_text(encoding="utf-8"))["records"]
+    paths = [KNOWLEDGE / "cards.json", *sorted((KNOWLEDGE / "packs").glob("*.json"))]
+    cards = []
+    for path in paths:
+        cards.extend(json.loads(path.read_text(encoding="utf-8"))["records"])
     retrieval = []
     for card in cards:
         for suffix in ("", " evidence", " research", " source", " review"):

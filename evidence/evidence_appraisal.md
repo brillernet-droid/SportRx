@@ -9,11 +9,12 @@ supports, limits, or blocks a product claim.
 
 ## Summary
 
-SportRx currently has strong evidence for general adult physical activity
-guidance and basic aerobic prescription structure. It has moderate evidence for
-RPE and standardized field testing principles. It has early, emerging evidence
-for HYROX / Hybrid Race performance domains. It does not yet have validation for
-SportRx-specific scores, percentiles, prediction, or benchmark cutoffs.
+SportRX currently has strong evidence for general adult program structure,
+physical-activity guidance, aerobic FITT-VP, and broad resistance-training
+principles. It has moderate synthesis evidence for strength, hypertrophy,
+failure/RIR boundaries, concurrent training, and exercise-supported body-
+composition outcomes. These sources explain what a future Pack must represent;
+they do not validate SportRX's own dose-selection logic or outcomes.
 
 ## Evidence Appraisal By Product Area
 
@@ -21,6 +22,11 @@ SportRx-specific scores, percentiles, prediction, or benchmark cutoffs.
 | --- | --- | --- | --- | --- |
 | General adult activity target | Strong | Can reference 150-300 min/week moderate aerobic activity and 2+ days/week strengthening as public-health context | `PA-WHO-2020`, `PA-CDC-ADULT`, `PA-ACSM-CDC`, `PA-AHA` | Do not present as HYROX readiness |
 | FITT-VP aerobic prescription | Strong | Keep SportRx Core aerobic prescription engine | `PA-ACSM-GETP12` | Keep scope to apparently healthy adults and conservative progression |
+| Multi-component adult prescription | Strong | Let the primary goal select training emphasis, then apply exposure and feasibility constraints | `RX-ACSM-2011`, `PA-WHO-2020` | A goal label does not determine personal dose |
+| Resistance training | Strong at population level | Represent strength, hypertrophy, and power as different outcomes with different dose fields | `RT-ACSM-2026`, `RT-BJSM-NMA-2023` | Muscle-gain automation remains assessment-only until SportRX rules are tested |
+| Failure and RIR | Moderate | Record effort without requiring failure on every set | `RT-FAILURE-SR-2022`, `RT-PROXFAIL-SR-2023`, `RT-RIR-METAREG-2024` | RIR is an estimate, not a measured physiological threshold |
+| Concurrent training | Moderate | Allow aerobic and resistance modes in one weekly structure | `CONCURRENT-SCHUMANN-2022` | Session timing may matter for explosive strength; no universal schedule |
+| Body-composition exercise | Moderate | Keep aerobic and resistance doses separate and measure outcomes independently | `WEIGHT-AER-DOSE-2024`, `WEIGHT-EASO-2021`, `WEIGHT-RT-DIET-SR-2025` | No promised weight loss, calorie deficit, or nutrition prescription |
 | Safety Gate | Moderate to strong conceptually | Keep Safety Gate separate from performance scoring | `SAFE-EIM`, `SAFE-EIM-SCREEN`, `SAFE-PARQ`, `SAFE-ACSM-ALGO` | Not medical clearance or diagnosis |
 | RPE and session feedback | Moderate | Use RPE as subjective intensity/training-load feedback | `MON-RPE-ACSM`, `MON-SRPE-FOSTER`, `MON-SRPE-REVIEW` | Do not use RPE alone to infer fitness or injury risk |
 | Field testing principle | Moderate but limited for adults | Use repeatable raw tests; record protocol and retest conditions | `TEST-6MWT-ATS`, `TEST-FIELD-ADULT`, `TEST-FIELD-SAFETY`, `TEST-FIELD-RELIABILITY` | Do not claim validated SportRx norms |
@@ -40,6 +46,8 @@ SportRx can say:
 - "HYROX / Hybrid Race preparation likely requires both running and station
   capacity."
 - "This Starter Path is a conservative starting focus based on measured gaps."
+- "Several resistance-training configurations can improve strength and muscle size."
+- "Exercise can support body-composition change, but the individual result must be measured rather than predicted."
 
 ## What SportRx Cannot Say Yet
 
@@ -51,6 +59,8 @@ SportRx cannot say:
 - "Your percentile is..."
 - "This benchmark is validated."
 - "This plan is proven to improve your HYROX performance."
+- "This four-week plan guarantees muscle gain or a specific amount of fat loss."
+- "Your selected goal is enough to determine your exact training dose."
 
 ## Key Evidence Tensions
 
@@ -71,7 +81,13 @@ protocol conditions, RPE, and retest changes before building norms.
 HYROX-specific research is new. It supports the idea that running and station
 capacity matter, but not yet precise prediction or validated readiness scoring.
 
-### 4. Practical Evidence Must Come From SportRx Users
+### 4. Literature Supports Components, Not SportRX's Selection Logic
+
+The new prescription sources support dose fields and conservative boundaries.
+They do not establish that SportRX selects the correct starting dose, exercise,
+or weekly progression for a particular user.
+
+### 5. Practical Evidence Must Come From SportRx Users
 
 The most important next evidence layer is not another paper. It is SportRx's own
 repeatable benchmark and retest dataset.
@@ -80,11 +96,12 @@ repeatable benchmark and retest dataset.
 
 The next product milestone should be:
 
-**SportRx 2.3 - Benchmark Protocol**
+**SportRX - Goal Pack Validation**
 
 Priority:
 
-1. Make SportRx Hybrid Benchmark v1 executable.
-2. Record raw test results and protocol conditions.
-3. Collect self-use and pilot retest data.
-4. Keep recommendations conservative until SportRx has validation data.
+1. Keep the existing aerobic Pack as the only active automatic foundation.
+2. Define separate resistance and body-composition Pack rules from the reviewed claims.
+3. Test simulated cases before any new Pack is enabled.
+4. Collect consented completion, RPE/RIR, protocol, and retest data.
+5. Keep AI synthesis disabled until answer-quality review is complete.

@@ -19,10 +19,12 @@ from .evidence_store import load_evidence_records
 
 
 CARD_PATH = "evidence/knowledge/cards.json"
+CARD_PACK_GLOB = "evidence/knowledge/packs/*.json"
 CANDIDATE_PATH = "evidence/knowledge/candidates.json"
 RETRIEVAL_EVALUATION_PATH = "evidence/knowledge/evaluation/retrieval_set.json"
 BOUNDARY_EVALUATION_PATH = "evidence/knowledge/evaluation/boundary_set.json"
 ANSWER_EVALUATION_PATH = "evidence/knowledge/evaluation/answer_quality_set.json"
+EQUIVALENCE_EVALUATION_PATH = "evidence/knowledge/evaluation/equivalence_set.json"
 INDEX_PATH = ".cache/sportrx_knowledge.sqlite"
 EMBEDDING_PATH = ".cache/sportrx_knowledge_embeddings.json"
 DEFAULT_EMBEDDING_MODEL = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
@@ -46,6 +48,7 @@ MINIMUM_SYNTHESIS_CARD_COUNT = 60
 MINIMUM_RETRIEVAL_EVALUATIONS = 150
 MINIMUM_BOUNDARY_EVALUATIONS = 50
 MINIMUM_ANSWER_EVALUATIONS = 60
+MINIMUM_EQUIVALENCE_EVALUATIONS = 30
 
 CLAIM_BOUNDARY = (
     "SportRX Knowledge RAG is an internal research explanation layer. It does "
@@ -96,7 +99,14 @@ def _load_json(root: Path, relative_path: str) -> list[dict[str, Any]]:
 def load_knowledge_cards(root: str | Path = ".") -> list[dict[str, Any]]:
     """Load public card metadata and summaries, never private source files."""
 
-    return _load_json(_root(root), CARD_PATH)
+    root_path = _root(root)
+    cards = _load_json(root_path, CARD_PATH)
+    for path in sorted(root_path.glob(CARD_PACK_GLOB)):
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        records = payload.get("records", [])
+        if isinstance(records, list):
+            cards.extend(records)
+    return cards
 
 
 def load_knowledge_candidates(root: str | Path = ".") -> list[dict[str, Any]]:
@@ -119,7 +129,9 @@ def validate_knowledge_records(root: str | Path = ".") -> dict[str, Any]:
     root_path = _root(root)
     cards = load_knowledge_cards(root_path)
     candidates = load_knowledge_candidates(root_path)
-    source_ids = {item["id"] for item in load_evidence_records(root_path)["sources"]}
+    evidence_records = load_evidence_records(root_path)
+    source_ids = {item["id"] for item in evidence_records["sources"]}
+    claim_ids = {item["id"] for item in evidence_records["claims"]}
     errors: list[str] = []
     warnings: list[str] = []
     seen: set[str] = set()
@@ -142,6 +154,9 @@ def validate_knowledge_records(root: str | Path = ".") -> dict[str, Any]:
         for source_id in card.get("source_ids", []):
             if source_id not in source_ids:
                 errors.append(f"knowledge card {card_id} references unknown source: {source_id}")
+        for claim_id in card.get("claim_ids", []):
+            if claim_id not in claim_ids:
+                errors.append(f"knowledge card {card_id} references unknown claim: {claim_id}")
         if "evidence/private" in _card_text(card).lower():
             errors.append(f"knowledge card {card_id} leaks a private path")
 
@@ -184,6 +199,7 @@ def _card_text(card: dict[str, Any]) -> str:
         card.get("title_en", ""), card.get("title_zh", ""), card.get("keywords_en", []),
         card.get("keywords_zh", []), card.get("population", ""), card.get("summary_zh", ""),
         card.get("technical_summary_en", ""), card.get("limitations", ""), card.get("source_ids", []),
+        card.get("claim_ids", []),
     ]
     return " ".join(" ".join(value) if isinstance(value, list) else str(value) for value in values)
 
@@ -281,6 +297,7 @@ def _source_metadata(
             "stable_url": source_records[source_id]["stable_url"],
             "evidence_tier": source_records[source_id]["evidence_tier"],
             "access_status": source_records[source_id]["access_status"],
+            "identifiers": source_records[source_id].get("identifiers", {}),
             "limitations": source_records[source_id]["limitations"],
         }
         for source_id in source_ids
@@ -453,8 +470,10 @@ def synthesize_knowledge(
     root_path = _root(root)
     approved = [card for card in load_knowledge_cards(root_path) if card.get("review_status") == "reviewed"]
     readiness = knowledge_evaluation_status(root_path)
-    if len(approved) < MINIMUM_SYNTHESIS_CARD_COUNT or not readiness["synthesis_gate_passed"]:
+    if len(approved) < MINIMUM_SYNTHESIS_CARD_COUNT:
         return {"schema": "sportrx.knowledge_synthesis", "status": "corpus_not_ready", "answer_zh": "当前已审核知识卡不足，暂不生成综合回答。请继续完成来源审核。", "claim_boundary": CLAIM_BOUNDARY}
+    if not readiness["synthesis_gate_passed"]:
+        return {"schema": "sportrx.knowledge_synthesis", "status": "evaluation_not_ready", "answer_zh": "知识卡已达到数量门槛，但人工答案质量评测尚未完成，暂不生成综合回答。", "claim_boundary": CLAIM_BOUNDARY}
     selected = [card for card in approved if card["id"] in set(retrieved_card_ids)]
     if not selected:
         return {"schema": "sportrx.knowledge_synthesis", "status": "retrieval_insufficient", "answer_zh": "没有足够的已审核证据卡可用于回答这个问题。", "claim_boundary": CLAIM_BOUNDARY}
@@ -560,23 +579,43 @@ def evaluate_knowledge_boundary_set(root: str | Path = ".") -> dict[str, Any]:
     return {"status": "passed" if not failures else "failed", "query_count": len(records), "failures": failures, "claim_boundary": CLAIM_BOUNDARY}
 
 
+def evaluate_knowledge_equivalence_set(root: str | Path = ".") -> dict[str, Any]:
+    """Check that paired Chinese and English searches retrieve the same card."""
+
+    root_path = _root(root)
+    records = _load_evaluation(root_path, EQUIVALENCE_EVALUATION_PATH)
+    failures = []
+    for item in records:
+        expected = item.get("expected_card_id")
+        zh = search_knowledge(item["query_zh"], root=root_path, limit=1)
+        en = search_knowledge(item["query_en"], root=root_path, limit=1)
+        actual_zh = zh["results"][0]["id"] if zh["results"] else None
+        actual_en = en["results"][0]["id"] if en["results"] else None
+        if actual_zh != expected or actual_en != expected:
+            failures.append({"id": item.get("id"), "expected": expected, "actual_zh": actual_zh, "actual_en": actual_en})
+    return {"status": "passed" if not failures else "failed", "query_count": len(records), "failures": failures, "claim_boundary": CLAIM_BOUNDARY}
+
+
 def knowledge_evaluation_status(root: str | Path = ".") -> dict[str, Any]:
     """Report release gates without pretending an unevaluated model is ready."""
 
     root_path = _root(root)
     retrieval = evaluate_knowledge_retrieval_set(root_path)
     boundary = evaluate_knowledge_boundary_set(root_path)
+    equivalence = evaluate_knowledge_equivalence_set(root_path)
     answer_records = _load_evaluation(root_path, ANSWER_EVALUATION_PATH)
     answer_passed = [item for item in answer_records if item.get("review_status") == "passed"]
     gate = (
         retrieval["status"] == "passed" and retrieval["query_count"] >= MINIMUM_RETRIEVAL_EVALUATIONS
         and boundary["status"] == "passed" and boundary["query_count"] >= MINIMUM_BOUNDARY_EVALUATIONS
+        and equivalence["status"] == "passed" and equivalence["query_count"] >= MINIMUM_EQUIVALENCE_EVALUATIONS
         and len(answer_passed) >= MINIMUM_ANSWER_EVALUATIONS
         and len([card for card in load_knowledge_cards(root_path) if card.get("review_status") == "reviewed"]) >= MINIMUM_SYNTHESIS_CARD_COUNT
     )
     return {
         "retrieval": retrieval,
         "boundary": boundary,
+        "equivalence": equivalence,
         "answer_quality_count": len(answer_records),
         "answer_quality_passed_count": len(answer_passed),
         "synthesis_gate_passed": gate,

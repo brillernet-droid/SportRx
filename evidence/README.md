@@ -17,6 +17,7 @@ It is designed to answer four questions before a rule appears in the product:
 | `literature_matrix.md` | Source registry and source IDs |
 | `library/` | Saved citation library grouped by topic |
 | `records/` | Machine-readable source, claim, rule, and protocol records for internal audit and retrieval |
+| `prescription/` | Goal-directed prescription evidence maps and human-readable topic reviews |
 | `evaluation/` | Curated retrieval and unsafe-query checks; not user data |
 | `evidence_appraisal.md` | Strength-of-evidence judgement by product area |
 | `evidence_questions.md` | Open evidence questions to answer before stronger claims |
@@ -61,4 +62,7 @@ The most important current evidence documents are:
 ledger. It labels each real Benchmark component as `partial_evidence` or
 `experimental`; it does not make any component a normed SportRX test.
 
-The source collection itself is stored in `library/`.
+The source collection itself is stored in `library/`. Goal-directed aerobic,
+resistance, body-composition, and concurrent-training evidence is organized in
+`prescription/`; its machine-readable additions are kept as independent packs
+under `records/packs/` and `knowledge/packs/`.

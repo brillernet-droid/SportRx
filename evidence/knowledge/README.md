@@ -7,6 +7,8 @@ the authoritative source for product rules and protocols.
 ## Records
 
 - `cards.json`: reviewed bilingual Knowledge Cards eligible for retrieval.
+- `packs/`: reviewed domain packs loaded alongside `cards.json`; new curation
+  should be added here instead of expanding the base seed indefinitely.
 - `candidates.json`: unreviewed discovery records; never eligible for search or
   model context.
 - `discovery_queries.json`: repeatable PubMed, OpenAlex, and Crossref search
@@ -28,6 +30,13 @@ rehabilitation instructions, or individual risk estimates.
 
 ## Readiness
 
-Direct internal retrieval begins with reviewed cards. DeepSeek synthesis stays
-disabled below 60 reviewed cards; the v1 corpus target is 300 reviewed cards.
-Those thresholds are corpus-governance gates, not scientific validation claims.
+Direct internal retrieval currently covers 60 reviewed cards. Reaching the
+60-card count only opens the answer-evaluation stage: DeepSeek synthesis remains
+disabled until at least 60 manually passed answer-quality cases, bilingual
+retrieval checks, citation checks, and boundary checks all pass. The v1 corpus
+target remains 300 reviewed cards. These are governance gates, not scientific
+validation claims.
+
+The first goal-directed prescription pack is documented in
+`../prescription/README.md`. It adds research explanations but does not enable
+an assessment-only program pack or change a training dose.

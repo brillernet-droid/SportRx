@@ -1,0 +1,80 @@
+{
+  "schema": "sportrx.prescription_knowledge_manifest",
+  "schema_version": "0.1",
+  "reviewed_at": "2026-09-03",
+  "reviewed_by": "SportRX internal evidence review",
+  "goals": [
+    {
+      "goal_id": "build_habit",
+      "label_zh": "建立运动习惯",
+      "product_status": "active_aerobic_foundation",
+      "rule_ids": ["CORE-001", "CORE-002", "INT-001"],
+      "claim_ids": ["CLM-RX-ARCH-001", "CLM-RX-CARDIO-001", "CLM-RX-ADHERENCE-001"],
+      "source_ids": ["RX-ACSM-2011", "PA-WHO-2020", "ADHERENCE-OBESITY-SR-2025"],
+      "card_ids": ["K-CARD-033", "K-CARD-035", "K-CARD-058", "K-CARD-059"],
+      "supports": ["Use recent activity and available time to constrain an aerobic starting point.", "Use completion and RPE as feasibility signals for weekly review."],
+      "does_not_support": ["Guaranteed adherence.", "Assuming completion proves physiological adaptation."],
+      "next_evidence_action": "Collect SportRX completion, RPE, dropout-reason, and retest data under a defined consent protocol."
+    },
+    {
+      "goal_id": "improve_aerobic_fitness",
+      "label_zh": "提升心肺适能",
+      "product_status": "active_aerobic_foundation",
+      "rule_ids": ["CORE-001", "CORE-002", "INT-001"],
+      "claim_ids": ["CLM-RX-CARDIO-001", "CLM-RX-CARDIO-002"],
+      "source_ids": ["RX-ACSM-2011", "PA-ACSM-GETP12", "AER-HIIT-META-2019", "AER-SIT-BIAS-2022"],
+      "card_ids": ["K-CARD-034", "K-CARD-035", "K-CARD-036", "K-CARD-037"],
+      "supports": ["Use FITT-VP to represent aerobic dose.", "Treat interval and continuous training as selectable methods, not a universal hierarchy."],
+      "does_not_support": ["Predicted VO2max improvement.", "HIIT as the default for every user."],
+      "next_evidence_action": "Validate SportRX aerobic progression against completion, session RPE, and like-for-like field retest data."
+    },
+    {
+      "goal_id": "general_fitness",
+      "label_zh": "改善综合体能",
+      "product_status": "active_but_aerobic_only",
+      "rule_ids": ["CORE-001", "CORE-002", "INT-001"],
+      "claim_ids": ["CLM-RX-ARCH-001", "CLM-RX-CONCURRENT-001"],
+      "source_ids": ["RX-ACSM-2011", "CONCURRENT-SCHUMANN-2022"],
+      "card_ids": ["K-CARD-032", "K-CARD-033", "K-CARD-050", "K-CARD-051"],
+      "supports": ["A complete general-fitness plan should eventually manage multiple training modes.", "Aerobic and resistance training can coexist in a weekly plan."],
+      "does_not_support": ["Calling the current aerobic-only output a complete general-fitness prescription.", "Ignoring same-session tradeoffs when power is the primary outcome."],
+      "next_evidence_action": "Define and simulate a separate multi-component pack before enabling full general-fitness automation."
+    },
+    {
+      "goal_id": "muscle_gain",
+      "label_zh": "增加肌肉量",
+      "product_status": "assessment_only",
+      "rule_ids": [],
+      "claim_ids": ["CLM-RX-RT-001", "CLM-RX-HYP-001", "CLM-RX-FAILURE-001", "CLM-RX-RIR-001", "CLM-RX-FREQ-001"],
+      "source_ids": ["RT-ACSM-2026", "RT-BJSM-NMA-2023", "RT-FAILURE-SR-2022", "RT-PROXFAIL-SR-2023", "RT-RIR-METAREG-2024", "RT-FREQ-SR-2019"],
+      "card_ids": ["K-CARD-038", "K-CARD-041", "K-CARD-042", "K-CARD-045", "K-CARD-046", "K-CARD-047", "K-CARD-048"],
+      "supports": ["Track weekly sets per muscle group, load, repetitions, and estimated RIR.", "Do not require momentary failure on every set."],
+      "does_not_support": ["Automatic hypertrophy dosing from a goal label.", "Guaranteed muscle gain or a universal maximizing volume."],
+      "next_evidence_action": "Define beginner scope, exercise-pattern prerequisites, set-volume start and progression rules, then run simulated and real usability review."
+    },
+    {
+      "goal_id": "fat_loss",
+      "label_zh": "减少脂肪并改善体成分",
+      "product_status": "assessment_only",
+      "rule_ids": [],
+      "claim_ids": ["CLM-RX-FATLOSS-001", "CLM-RX-FATLOSS-002", "CLM-RX-FATLOSS-003", "CLM-RX-CONCURRENT-001"],
+      "source_ids": ["WEIGHT-AER-DOSE-2024", "WEIGHT-EASO-2021", "WEIGHT-WAIST-SR-2022", "WEIGHT-MODALITY-NMA-2024", "WEIGHT-RT-DIET-SR-2025", "CONCURRENT-SCHUMANN-2022"],
+      "card_ids": ["K-CARD-052", "K-CARD-053", "K-CARD-054", "K-CARD-055", "K-CARD-056", "K-CARD-057", "K-CARD-060"],
+      "supports": ["Combine aerobic and resistance training as distinct dose components.", "Track body-composition outcomes separately under consistent measurement conditions."],
+      "does_not_support": ["A promised weight-loss number.", "A calorie-deficit estimate or nutrition prescription."],
+      "next_evidence_action": "Define a non-nutrition body-composition pack and validate measurement consistency before enabling automated training."
+    },
+    {
+      "goal_id": "performance_entry",
+      "label_zh": "专项表现入口",
+      "product_status": "measurement_first",
+      "rule_ids": ["MEAS-001", "MEAS-002", "HYB-002", "PROTOCOL-001", "PATH-001"],
+      "claim_ids": ["CLM-MEAS-001", "CLM-MEAS-002", "CLM-HYB-002", "CLM-PROTOCOL-001", "CLM-PATH-001"],
+      "source_ids": ["TEST-FIELD-ADULT", "TEST-FIELD-RELIABILITY", "TEST-FIELD-SAFETY"],
+      "card_ids": ["K-CARD-012", "K-CARD-013", "K-CARD-014"],
+      "supports": ["Route to measured Benchmark data before comparing strengths and gaps.", "Keep missing dimensions as Not tested."],
+      "does_not_support": ["Race prediction.", "A tailored Starter Path without enough measured dimensions."],
+      "next_evidence_action": "Collect protocol-consistent SportRX retest data before defining meaningful-change thresholds."
+    }
+  ]
+}

@@ -5,6 +5,7 @@ from pathlib import Path
 from sportrx.knowledge_rag import (
     build_knowledge_index,
     evaluate_knowledge_boundary_set,
+    evaluate_knowledge_equivalence_set,
     evaluate_knowledge_retrieval_set,
     ingest_candidates,
     knowledge_corpus_summary,
@@ -24,7 +25,7 @@ def test_reviewed_knowledge_cards_validate_but_do_not_overstate_v1_readiness():
     summary = knowledge_corpus_summary(ROOT)
 
     assert validation["valid"]
-    assert validation["reviewed_card_count"] == 31
+    assert validation["reviewed_card_count"] == 60
     assert summary["status"] == "foundation_in_progress"
     assert summary["synthesis_enabled"] is False
     assert "sports_medicine_injury_rehab" in validation["covered_topics"]
@@ -39,7 +40,7 @@ def test_search_returns_reviewed_bilingual_card_and_excludes_candidates(tmp_path
     assert result["results"][0]["id"] == "K-CARD-026"
     assert "Six-minute" in result["results"][0]["title_en"]
     assert result["results"][0]["sources"][0]["stable_url"].startswith("https://")
-    assert index["document_count"] == 31
+    assert index["document_count"] == 60
 
 
 def test_validator_rejects_private_path_or_unknown_source(tmp_path):
@@ -81,21 +82,24 @@ def test_review_operation_is_explicit_and_does_not_touch_product_rules():
     assert "cannot change SportRX product rules" in review["claim_boundary"]
 
 
-def test_synthesis_stays_disabled_before_reviewed_card_gate():
+def test_synthesis_stays_disabled_until_answer_quality_gate_passes():
     result = synthesize_knowledge("什么是 RPE？", ["K-CARD-015"], ROOT)
 
-    assert result["status"] == "corpus_not_ready"
+    assert result["status"] == "evaluation_not_ready"
     assert "暂不生成" in result["answer_zh"]
 
 
 def test_retrieval_and_boundary_fixtures_pass_but_do_not_enable_synthesis():
     retrieval = evaluate_knowledge_retrieval_set(ROOT)
     boundary = evaluate_knowledge_boundary_set(ROOT)
+    equivalence = evaluate_knowledge_equivalence_set(ROOT)
     status = knowledge_evaluation_status(ROOT)
 
     assert retrieval["status"] == "passed"
     assert retrieval["query_count"] >= 150
     assert boundary["status"] == "passed"
     assert boundary["query_count"] >= 50
+    assert equivalence["status"] == "passed"
+    assert equivalence["query_count"] >= 30
     assert status["answer_quality_passed_count"] == 0
     assert status["synthesis_gate_passed"] is False

@@ -15,6 +15,8 @@ SourceRecord -> ClaimRecord -> RuleRecord / ProtocolRecord -> product explanatio
   allowed/disallowed user-facing language.
 - `rules.json`: a product rule linked to reviewed claims and explicit failure modes.
 - `protocols.json`: the execution and retest boundary for a measurement workflow.
+- `packs/`: reviewed domain additions merged with the base files by the loader.
+  Each pack is append-only evidence content, not a separate source of truth.
 
 Public records are metadata and structured notes only. Put licensed PDFs,
 institutional documents, or other non-public material in `evidence/private/`;
@@ -44,3 +46,6 @@ PY
 
 The local SQLite FTS5 file is generated under `.cache/` and is intentionally not
 committed.
+
+Optional DOI, PMID, and PMCID values live in a source record's `identifiers`
+object. The validator rejects repeated identifiers across merged source packs.

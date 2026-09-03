@@ -34,6 +34,8 @@ This is the master list of sources currently saved for SportRx.
 | `TEST-6MRT-ADULT-2023` | 6-minute run validation in adults | `../source_notes/006_benchmark_component_evidence.md` | Continuous-run evidence; run/walk remains partial |
 | `ERG-SKIERG-1000M-2025` | Concept2 SkiErg 1,000 m case study | `../source_notes/006_benchmark_component_evidence.md` | Device-specific personal retest only |
 | `ERG-ROWERG-ACCURACY-2022` | Concept2 RowErg monitor accuracy | `../source_notes/006_benchmark_component_evidence.md` | Device context, not human validation |
+| `ERG-ROWERG-RELIABILITY-1999` | Trained-rower 2,000 m reliability | `../source_notes/006_benchmark_component_evidence.md` | Same-device retest context only |
+| `ERG-CONCEPT2-PM5` | Concept2 PM5 manufacturer documentation | `../source_notes/006_benchmark_component_evidence.md` | Equipment-setting capture only |
 | `CN-NPFS-2023` | Chinese national physical-fitness standard notice | `../source_notes/006_benchmark_component_evidence.md` | Method and terminology boundary only |
 | `MON-RPE-ACSM` | ACSM RPE article | `measurement_and_rpe.md` | RPE interpretation |
 | `MON-SRPE-FOSTER` | Foster et al. session-RPE | `measurement_and_rpe.md` | Training-load monitoring |
@@ -50,3 +52,28 @@ This is the master list of sources currently saved for SportRx.
 | `CONCURRENT-TRAINING` | Concurrent strength and endurance training review | `hyrox_hift_hybrid.md` | Hybrid programming tradeoffs |
 | `INJ-CROSSFIT-SR` | CrossFit overview systematic review/meta-analysis | `hyrox_hift_hybrid.md` | Injury-claim caution |
 | `INJ-HIFT-SR` | Injuries in CrossFit/cross-training/HIFT review | `hyrox_hift_hybrid.md` | Injury-claim caution |
+
+## Goal-Directed Exercise Prescription
+
+The complete source-to-claim-to-card mapping is maintained in
+`../prescription/manifest.json`; topic summaries are in `../prescription/`.
+
+| Evidence ID | Source | Saved in | Product use |
+| --- | --- | --- |
+| `RX-ACSM-2011` | Multi-component adult prescription | `../prescription/01_general_principles.md` | Goal-first program architecture |
+| `RT-ACSM-2026` | ACSM resistance-training position stand | `../prescription/03_resistance_training.md` | Strength, hypertrophy, power, and weekly dose fields |
+| `RT-BJSM-NMA-2023` | BJSM resistance-prescription network meta-analysis | `../prescription/03_resistance_training.md` | Load, sets, and frequency comparison |
+| `RT-FAILURE-SR-2022` | Failure versus non-failure meta-analysis | `../prescription/03_resistance_training.md` | Failure-language boundary |
+| `RT-PROXFAIL-SR-2023` | Proximity-to-failure hypertrophy review | `../prescription/03_resistance_training.md` | Non-linear effort context |
+| `RT-RIR-METAREG-2024` | RIR dose-response meta-regressions | `../prescription/03_resistance_training.md` | RIR measurement limits |
+| `RT-FREQ-SR-2019` | Hypertrophy frequency meta-analysis | `../prescription/03_resistance_training.md` | Weekly volume distribution |
+| `RT-MIN-DOSE-SR-2020` | Minimum-dose strength review | `../prescription/03_resistance_training.md` | Narrow time-constrained option |
+| `CONCURRENT-SCHUMANN-2022` | Concurrent aerobic and strength meta-analysis | `../prescription/05_concurrent_training.md` | Compatibility and same-session tradeoffs |
+| `AER-HIIT-META-2019` | Adult HIIT protocol meta-analysis | `../prescription/02_cardiorespiratory.md` | HIIT as one option |
+| `AER-SIT-BIAS-2022` | SIT versus continuous-training bias review | `../prescription/02_cardiorespiratory.md` | Superiority-claim caution |
+| `WEIGHT-AER-DOSE-2024` | Aerobic exercise and weight-loss dose response | `../prescription/04_body_composition.md` | Modest group effects and no personal forecast |
+| `WEIGHT-EASO-2021` | EASO exercise recommendations | `../prescription/04_body_composition.md` | Aerobic and resistance roles |
+| `WEIGHT-WAIST-SR-2022` | Aerobic exercise and waist circumference review | `../prescription/04_body_composition.md` | Waist retest context |
+| `WEIGHT-MODALITY-NMA-2024` | Exercise modality and visceral adiposity NMA | `../prescription/04_body_composition.md` | Combined-mode context |
+| `WEIGHT-RT-DIET-SR-2025` | Resistance exercise during dietary weight loss | `../prescription/04_body_composition.md` | Lean-mass preservation context |
+| `ADHERENCE-OBESITY-SR-2025` | Exercise-intervention adherence review | `../prescription/01_general_principles.md` | Support and completion boundaries |

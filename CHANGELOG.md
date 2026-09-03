@@ -99,6 +99,15 @@
   DeepSeek citation-bound synthesis guards, and an internal-only Knowledge Lab.
 - DeepSeek synthesis remains disabled until 60 reviewed cards and required
   retrieval/citation/boundary gates are met; the corpus target remains 300.
+- Added the goal-directed prescription evidence pack: 17 reviewed sources, 16
+  atomic claims, and 29 bilingual cards covering aerobic prescription,
+  resistance training, hypertrophy, strength, power, concurrent training,
+  body composition, and adherence boundaries.
+- Added a six-goal prescription knowledge manifest that distinguishes active,
+  limited, assessment-only, and measurement-first product states.
+- Added DOI/PMID deduplication across modular evidence packs and 30 paired
+  Chinese/English retrieval-equivalence checks. The corpus now contains 60
+  reviewed cards, while synthesis remains disabled pending manual answer review.
 
 ## 2.2.1 - Unreleased
 

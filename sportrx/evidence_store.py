@@ -27,6 +27,7 @@ RECORD_FILES = {
     "rules": "evidence/records/rules.json",
     "protocols": "evidence/records/protocols.json",
 }
+RECORD_PACK_GLOB = "evidence/records/packs/*_{lane}.json"
 LANES = tuple(RECORD_FILES)
 REVIEW_STATUSES = {"reviewed", "needs_revision", "candidate"}
 RULE_STATUSES = {"allowed_ui", "explain_only", "internal_only", "blocked"}
@@ -102,11 +103,15 @@ def _root_path(root: str | Path) -> Path:
 
 def _read_record_file(root: Path, lane: str) -> list[dict[str, Any]]:
     path = root / RECORD_FILES[lane]
-    if not path.exists():
-        return []
-    payload = json.loads(path.read_text(encoding="utf-8"))
-    records = payload.get("records", [])
-    return records if isinstance(records, list) else []
+    paths = [path] if path.exists() else []
+    paths.extend(sorted(root.glob(RECORD_PACK_GLOB.format(lane=lane))))
+    records: list[dict[str, Any]] = []
+    for record_path in paths:
+        payload = json.loads(record_path.read_text(encoding="utf-8"))
+        pack_records = payload.get("records", [])
+        if isinstance(pack_records, list):
+            records.extend(pack_records)
+    return records
 
 
 def load_evidence_records(root: str | Path = ".") -> dict[str, list[dict[str, Any]]]:
@@ -182,6 +187,19 @@ def validate_evidence_records(root: str | Path = ".") -> dict[str, Any]:
             errors.append(f"sources:{source_id} must use an https stable_url")
         if source.get("content_storage") != "metadata_only":
             errors.append(f"sources:{source_id} must not store source full text in the public evidence store")
+
+    identifiers: dict[tuple[str, str], str] = {}
+    for source_id, source in sources_by_id.items():
+        for identifier_type, value in source.get("identifiers", {}).items():
+            normalized = str(value).strip().casefold()
+            if not normalized:
+                continue
+            key = (str(identifier_type).strip().casefold(), normalized)
+            if key in identifiers:
+                errors.append(
+                    f"sources:{source_id} duplicates {identifier_type} from {identifiers[key]}"
+                )
+            identifiers[key] = str(source_id)
 
     for claim_id, claim in claims_by_id.items():
         for source_id in claim.get("source_ids", []):

@@ -12278,7 +12278,7 @@ def knowledge_lab_page() -> None:
     )
     st.caption(summary["claim_boundary"])
     if not summary["synthesis_enabled"]:
-        st.warning("知识检索可用；中文模型综合在达到 60 张审核卡并完成评测前保持关闭。")
+        st.warning("知识检索可用；当前已达到 60 张审核卡，中文模型综合将在人工答案质量评测完成后开放。")
     if validation["warnings"]:
         for warning in validation["warnings"]:
             st.caption(f"- {warning}")

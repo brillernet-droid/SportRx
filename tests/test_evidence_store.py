@@ -22,7 +22,7 @@ def test_structured_evidence_records_validate_and_cover_current_rules():
 
     assert validation["valid"]
     assert validation["status"] == "ready_for_internal_retrieval"
-    assert validation["counts"] == {"sources": 31, "claims": 24, "rules": 17, "protocols": 9}
+    assert validation["counts"] == {"sources": 48, "claims": 40, "rules": 17, "protocols": 9}
     assert validation["mapped_rule_count"] == 17
     assert "does not provide medical clearance" in validation["claim_boundary"]
 
@@ -46,16 +46,29 @@ def test_internal_index_search_and_rule_trace_return_sources_and_limits(tmp_path
     search = search_evidence("PATH-001", lane="rules", root=ROOT, db_path=db_path)
     trace = trace_rule("PATH-001", ROOT)
 
-    assert index["document_count"] == 81
+    assert index["document_count"] == 114
     assert db_path.exists()
     with sqlite3.connect(db_path) as connection:
-        assert connection.execute("SELECT count(*) FROM evidence_fts").fetchone()[0] == 81
+        assert connection.execute("SELECT count(*) FROM evidence_fts").fetchone()[0] == 114
     assert search["results"][0]["id"] == "PATH-001"
     assert search["results"][0]["source_ids"]
     assert search["results"][0]["limitations"]
     assert trace["status"] == "ready"
     assert trace["claims"][0]["id"] == "CLM-PATH-001"
     assert trace["sources"]
+
+
+def test_validator_rejects_duplicate_source_identifier_across_packs(tmp_path):
+    shutil.copytree(ROOT / "evidence", tmp_path / "evidence")
+    pack_path = tmp_path / "evidence/records/packs/goal_prescription_sources.json"
+    payload = json.loads(pack_path.read_text(encoding="utf-8"))
+    payload["records"][1]["identifiers"]["pmid"] = payload["records"][0]["identifiers"]["pmid"]
+    pack_path.write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
+
+    validation = validate_evidence_records(tmp_path)
+
+    assert not validation["valid"]
+    assert any("duplicates pmid" in error for error in validation["errors"])
 
 
 def test_protocol_evidence_ledger_keeps_each_measurement_component_honest():

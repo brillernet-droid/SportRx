@@ -76,6 +76,7 @@ def test_release_package_manifest_is_public_ready():
     assert "evidence/evaluation/retrieval_set.json" in manifest["included_files"]
     assert "evidence/data_governance.md" in manifest["included_files"]
     assert "sportrx/knowledge_rag.py" in manifest["included_files"]
+    assert "sportrx/prescription_knowledge.py" in manifest["included_files"]
     assert "evidence/knowledge/cards.json" in manifest["included_files"]
     assert ".dockerignore" in manifest["included_files"]
     assert "render.yaml" in manifest["included_files"]
@@ -83,6 +84,11 @@ def test_release_package_manifest_is_public_ready():
     assert "evidence/knowledge/evaluation/retrieval_set.json" in manifest["included_files"]
     assert "evidence/knowledge/evaluation/boundary_set.json" in manifest["included_files"]
     assert "evidence/knowledge/evaluation/answer_quality_set.json" in manifest["included_files"]
+    assert "evidence/knowledge/evaluation/equivalence_set.json" in manifest["included_files"]
+    assert "evidence/knowledge/packs/goal_prescription_v1.json" in manifest["included_files"]
+    assert "evidence/records/packs/goal_prescription_sources.json" in manifest["included_files"]
+    assert "evidence/records/packs/goal_prescription_claims.json" in manifest["included_files"]
+    assert "evidence/prescription/manifest.json" in manifest["included_files"]
     assert "README.md" in manifest["included_files"]
     assert "README.en.md" in manifest["included_files"]
     assert "DEPLOY_TENCENT.md" in manifest["included_files"]
@@ -146,10 +152,16 @@ def test_write_release_package_excludes_internal_files(tmp_path):
     assert "evidence/evaluation/unsafe_queries.json" in names
     assert "evidence/data_governance.md" in names
     assert "sportrx/knowledge_rag.py" in names
+    assert "sportrx/prescription_knowledge.py" in names
     assert "evidence/knowledge/cards.json" in names
     assert "evidence/knowledge/evaluation/retrieval_set.json" in names
     assert "evidence/knowledge/evaluation/boundary_set.json" in names
     assert "evidence/knowledge/evaluation/answer_quality_set.json" in names
+    assert "evidence/knowledge/evaluation/equivalence_set.json" in names
+    assert "evidence/knowledge/packs/goal_prescription_v1.json" in names
+    assert "evidence/records/packs/goal_prescription_sources.json" in names
+    assert "evidence/records/packs/goal_prescription_claims.json" in names
+    assert "evidence/prescription/manifest.json" in names
     assert "docs/research/open_source_landscape.md" in names
     assert "docs/zh-CN/quickstart.md" in names
     assert "docs/zh-CN/product-guide.md" in names

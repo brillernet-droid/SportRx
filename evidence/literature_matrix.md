@@ -70,6 +70,32 @@ See also: `source_notes/005_hyrox_hift_hybrid_evidence.md`.
 | INJ-CROSSFIT-SR | CrossFit overview: systematic review and meta-analysis. https://pmc.ncbi.nlm.nih.gov/articles/PMC5826907/ | C | Supports cautious language around high-intensity functional training exposure | CrossFit is not HYROX; injury estimates vary widely |
 | INJ-HIFT-SR | Prevalence of injuries in CrossFit, cross training, and HIFT. https://pmc.ncbi.nlm.nih.gov/articles/PMC7386156/ | C | Supports not making injury-risk predictions without data | Injury definitions and reporting vary |
 
+## Goal-Directed Exercise Prescription
+
+The atomic conclusions and complete citation metadata are maintained in
+`records/packs/goal_prescription_claims.json` and
+`records/packs/goal_prescription_sources.json`.
+
+| ID | Source | Evidence tier | SportRx use | Limits |
+| --- | --- | --- | --- | --- |
+| RX-ACSM-2011 | ACSM adult exercise prescription position stand. https://pubmed.ncbi.nlm.nih.gov/21694556/ | A | Multi-component prescription architecture | Goal does not determine personal dose |
+| RT-ACSM-2026 | ACSM resistance-training position stand. https://pubmed.ncbi.nlm.nih.gov/41843416/ | A | Strength, hypertrophy, and power variables | Population synthesis, not a SportRX algorithm |
+| RT-BJSM-NMA-2023 | Resistance prescription network Meta-analysis. https://pubmed.ncbi.nlm.nih.gov/37414459/ | B | Load, set, and frequency comparison | Rankings are not a universal best program |
+| RT-FAILURE-SR-2022 | Failure versus non-failure Meta-analysis. https://pubmed.ncbi.nlm.nih.gov/33497853/ | B | Do not require failure by default | Mainly young adults; definitions vary |
+| RT-PROXFAIL-SR-2023 | Proximity-to-failure hypertrophy review. https://pubmed.ncbi.nlm.nih.gov/36334240/ | B | Non-linear effort context | No universal RIR threshold |
+| RT-RIR-METAREG-2024 | RIR dose-response Meta-regressions. https://pubmed.ncbi.nlm.nih.gov/38970765/ | B | RIR interpretation boundary | Retrospective estimates and heterogeneity |
+| RT-FREQ-SR-2019 | Resistance frequency Meta-analysis. https://pubmed.ncbi.nlm.nih.gov/30558493/ | B | Distribute weekly hypertrophy volume | Frequency is confounded with volume |
+| RT-MIN-DOSE-SR-2020 | Minimum-dose strength review. https://pubmed.ncbi.nlm.nih.gov/31797219/ | B | Time-constrained strength context | Six studies in trained men and narrow lifts |
+| CONCURRENT-SCHUMANN-2022 | Concurrent training Meta-analysis. https://pubmed.ncbi.nlm.nih.gov/34757594/ | B | Aerobic/resistance weekly composition | Does not prescribe one personal schedule |
+| AER-HIIT-META-2019 | Adult HIIT Meta-analysis. https://pubmed.ncbi.nlm.nih.gov/30733142/ | B | Interval training as one aerobic method | Heterogeneous protocols and populations |
+| AER-SIT-BIAS-2022 | SIT versus continuous-training bias review. https://pubmed.ncbi.nlm.nih.gov/33722760/ | B | Limit superiority claims | Unclear bias and poor reporting |
+| WEIGHT-AER-DOSE-2024 | Aerobic exercise and weight-loss dose response. https://pubmed.ncbi.nlm.nih.gov/39724371/ | B | Group-level body-composition context | No individual weight forecast |
+| WEIGHT-EASO-2021 | EASO exercise recommendations. https://pubmed.ncbi.nlm.nih.gov/34076949/ | A | Aerobic and resistance roles | Obesity-management context only |
+| WEIGHT-WAIST-SR-2022 | Aerobic exercise and waist review. https://pubmed.ncbi.nlm.nih.gov/35383401/ | B | Waist outcome and retest context | No SportRX meaningful-change threshold |
+| WEIGHT-MODALITY-NMA-2024 | Exercise mode and visceral adiposity NMA. https://pubmed.ncbi.nlm.nih.gov/38031812/ | B | Combined-mode context | Heterogeneous network comparisons |
+| WEIGHT-RT-DIET-SR-2025 | Resistance exercise during dietary weight loss. https://pubmed.ncbi.nlm.nih.gov/40909191/ | B | Lean-mass preservation context | Diet is outside SportRX scope |
+| ADHERENCE-OBESITY-SR-2025 | Exercise adherence review. https://pubmed.ncbi.nlm.nih.gov/39727160/ | B | Completion and support design signals | Associations do not prove product effects |
+
 ## Evidence Gaps To Fill
 
 - Test-retest reliability of SportRx Hybrid Benchmark v1.
@@ -79,3 +105,5 @@ See also: `source_notes/005_hyrox_hift_hybrid_evidence.md`.
 - Recreational HYROX first-timer data, not elite-only or race-result-only data.
 - Chinese recreational athlete usability data.
 - China-local recreational athlete usability data.
+- SportRX beginner resistance-training dose and progression data.
+- SportRX body-composition retest error and measurement-consistency data.

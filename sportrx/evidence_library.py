@@ -5,6 +5,8 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
+from .evidence_store import load_evidence_records
+
 
 CLAIM_BOUNDARY = (
     "Evidence Library summarizes locally saved SportRx evidence notes for "
@@ -77,20 +79,42 @@ def build_evidence_library(root: str | Path = ".") -> dict[str, Any]:
     matrix_rows = _parse_section_tables(root_path / "evidence/literature_matrix.md")
 
     matrix_by_id = {row.get("ID", ""): row for row in matrix_rows if row.get("ID")}
+    structured_by_id = {
+        item["id"]: item for item in load_evidence_records(root_path)["sources"]
+    }
     sources: list[dict[str, Any]] = []
     for row in source_rows:
         source_id = row.get("Evidence ID", "")
+        if source_id not in structured_by_id:
+            continue
         matrix = matrix_by_id.get(source_id, {})
+        structured = structured_by_id[source_id]
         saved_in = row.get("Saved in", "")
         sources.append(
             {
                 "id": source_id,
                 "topic": row.get("section", "Uncategorized"),
-                "source": row.get("Source", ""),
+                "source": row.get("Source", "") or structured["citation"],
                 "saved_in": f"evidence/library/{saved_in}" if saved_in and not saved_in.startswith("evidence/") else saved_in,
-                "product_use": row.get("Product use", ""),
-                "evidence_tier": matrix.get("Evidence tier", "not_appraised"),
-                "limits": matrix.get("Limits", "Not yet appraised in literature_matrix.md."),
+                "product_use": row.get("Product use", "") or ", ".join(structured.get("product_topics", [])),
+                "evidence_tier": structured.get("evidence_tier", matrix.get("Evidence tier", "not_appraised")),
+                "limits": structured.get("limitations", matrix.get("Limits", "Not yet appraised.")),
+            }
+        )
+
+    indexed_ids = {item["id"] for item in sources}
+    for source_id, structured in structured_by_id.items():
+        if source_id in indexed_ids:
+            continue
+        sources.append(
+            {
+                "id": source_id,
+                "topic": "Structured Evidence Records",
+                "source": structured["citation"],
+                "saved_in": "evidence/records/",
+                "product_use": ", ".join(structured.get("product_topics", [])),
+                "evidence_tier": structured["evidence_tier"],
+                "limits": structured["limitations"],
             }
         )
 

@@ -1,0 +1,297 @@
+{
+  "schema": "sportrx.knowledge_card_pack",
+  "schema_version": "0.1",
+  "pack_id": "goal_prescription_v1",
+  "records": [
+    {
+      "id": "K-CARD-032", "topic": "training_principles", "subtopic": "multicomponent_program",
+      "title_en": "A complete adult exercise program is multi-component", "title_zh": "成人运动计划为什么不应只有一种训练",
+      "keywords_en": ["exercise prescription", "cardiorespiratory", "resistance", "flexibility", "neuromotor"], "keywords_zh": ["运动处方", "心肺", "抗阻", "柔韧", "神经运动"],
+      "source_ids": ["RX-ACSM-2011"], "claim_ids": ["CLM-RX-ARCH-001"], "evidence_tier": "A", "population": "Apparently healthy adults.",
+      "summary_zh": "一般成人运动计划可以包含心肺、抗阻、柔韧和神经运动训练；首要目标决定重点，但不能仅凭一个目标决定精确剂量。",
+      "technical_summary_en": "ACSM frames adult exercise prescription as a multi-component program rather than a single-modality schedule.",
+      "limitations": "This is population guidance, not validation of a SportRX program pack or an individual starting dose.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-033", "topic": "training_principles", "subtopic": "goal_first_routing",
+      "title_en": "A goal selects emphasis, not dose", "title_zh": "训练目标决定重点，不单独决定剂量",
+      "keywords_en": ["goal first", "training emphasis", "starting dose", "constraints"], "keywords_zh": ["训练目标", "训练重点", "起始剂量", "现实约束"],
+      "source_ids": ["RX-ACSM-2011", "PA-WHO-2020"], "claim_ids": ["CLM-RX-ARCH-001"], "evidence_tier": "A", "population": "Apparently healthy adults.",
+      "summary_zh": "“增肌”“减脂”或“提升心肺”可以改变训练组成，但起始量仍要结合近期训练暴露、可用时间、器械和安全边界。",
+      "technical_summary_en": "Goal selection is a routing variable; dose still requires exposure and feasibility inputs.",
+      "limitations": "No guideline can infer an individual's exact starting dose from a goal label alone.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-034", "topic": "endurance", "subtopic": "aerobic_fitt_vp",
+      "title_en": "Aerobic prescription uses FITT-VP", "title_zh": "有氧处方需要完整记录 FITT-VP",
+      "keywords_en": ["aerobic", "FITT-VP", "frequency", "intensity", "volume"], "keywords_zh": ["有氧处方", "频率", "强度", "时间", "周运动量"],
+      "source_ids": ["RX-ACSM-2011", "PA-ACSM-GETP12"], "claim_ids": ["CLM-RX-CARDIO-001"], "evidence_tier": "A", "population": "Apparently healthy adults.",
+      "summary_zh": "有氧训练不能只写“跑 30 分钟”，还应明确频率、强度、时间、方式、总量和进阶，并记录实际完成情况。",
+      "technical_summary_en": "Aerobic programming requires explicit dose dimensions and progression rather than activity labels alone.",
+      "limitations": "FITT-VP structures a prescription but does not prove that the selected dose is optimal for an individual.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-035", "topic": "endurance", "subtopic": "aerobic_starting_point",
+      "title_en": "Aerobic starting volume needs current-exposure context", "title_zh": "有氧起始量要看当前暴露",
+      "keywords_en": ["aerobic progression", "current activity", "starting volume", "adherence"], "keywords_zh": ["有氧进阶", "当前活动量", "起始周量", "完成率"],
+      "source_ids": ["RX-ACSM-2011", "PA-WHO-2020"], "claim_ids": ["CLM-RX-CARDIO-001"], "evidence_tier": "A", "population": "Apparently healthy adults beginning or progressing aerobic exercise.",
+      "summary_zh": "公共健康建议是方向，不是每个人第一周的起点。近期实际活动量和可完成时间应限制最初周量。",
+      "technical_summary_en": "Population targets should not be copied directly into an individual's first training week.",
+      "limitations": "SportRX still requires real adherence and retest data to validate its progression rules.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-036", "topic": "endurance", "subtopic": "hiit_option",
+      "title_en": "HIIT is one aerobic-fitness option", "title_zh": "HIIT 是心肺训练方法之一",
+      "keywords_en": ["HIIT", "VO2max", "interval training", "continuous training"], "keywords_zh": ["HIIT", "最大摄氧量", "间歇训练", "持续训练"],
+      "source_ids": ["AER-HIIT-META-2019"], "claim_ids": ["CLM-RX-CARDIO-002"], "evidence_tier": "B", "population": "Healthy, overweight or obese, and athletic adults in randomized trials.",
+      "summary_zh": "HIIT 可改善心肺适能，但不同工作间歇、总时长和训练周期的效果不同，不能只用“更高效”三个字替代完整处方。",
+      "technical_summary_en": "HIIT effects vary by work-interval duration, session volume, intervention duration, and population.",
+      "limitations": "Heterogeneous protocols do not support one universal interval prescription.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-037", "topic": "endurance", "subtopic": "interval_evidence_quality",
+      "title_en": "Interval evidence quality limits superiority claims", "title_zh": "间歇训练的“更优”结论需要看偏倚风险",
+      "keywords_en": ["sprint interval", "MICT", "risk of bias", "reporting quality"], "keywords_zh": ["冲刺间歇", "中等强度持续训练", "偏倚风险", "报告质量"],
+      "source_ids": ["AER-SIT-BIAS-2022"], "claim_ids": ["CLM-RX-CARDIO-002"], "evidence_tier": "B", "population": "Healthy adults in supervised interval-versus-continuous training studies.",
+      "summary_zh": "SIT 与持续训练的比较研究存在报告质量和偏倚风险问题，因此 SportRX 不把间歇训练写成对所有人都更优。",
+      "technical_summary_en": "Unclear risk of bias and poor reporting weaken universal claims of interval-training superiority.",
+      "limitations": "This review addresses VO2max comparisons, not safety or suitability for a particular user.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-038", "topic": "strength_power", "subtopic": "resistance_training_effects",
+      "title_en": "Progressive resistance training supports multiple adaptations", "title_zh": "渐进抗阻训练能带来多类适应",
+      "keywords_en": ["resistance training", "strength", "hypertrophy", "power", "physical function"], "keywords_zh": ["抗阻训练", "力量", "增肌", "爆发力", "身体功能"],
+      "source_ids": ["RT-ACSM-2026"], "claim_ids": ["CLM-RX-RT-001"], "evidence_tier": "A", "population": "Healthy adults aged 18 years or older.",
+      "summary_zh": "规律、渐进的抗阻训练可改善力量、肌肉量、功率和多项身体功能；动作或器械不是唯一决定因素。",
+      "technical_summary_en": "The ACSM overview found broad resistance-training benefits across more than 30,000 participants in 137 reviews.",
+      "limitations": "The overview does not validate SportRX's exercise selection or predict individual adaptation.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-039", "topic": "strength_power", "subtopic": "maximal_strength_load",
+      "title_en": "Heavier loads are more specific to maximal strength", "title_zh": "高负荷更针对最大力量",
+      "keywords_en": ["maximal strength", "heavy load", "80 percent 1RM", "resistance prescription"], "keywords_zh": ["最大力量", "高负荷", "1RM", "抗阻处方"],
+      "source_ids": ["RT-ACSM-2026", "RT-BJSM-NMA-2023"], "claim_ids": ["CLM-RX-STRENGTH-001"], "evidence_tier": "A/B", "population": "Healthy adults training for strength.",
+      "summary_zh": "较高负荷更有利于最大力量适应，但“研究中更优”不等于初学者第一周就应使用高负荷。",
+      "technical_summary_en": "Higher-load prescriptions were associated with larger maximal-strength gains at the group level.",
+      "limitations": "Technique, experience, equipment, and tolerance still constrain an individual's starting load.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-040", "topic": "strength_power", "subtopic": "strength_configuration",
+      "title_en": "Strength outcomes depend on the whole prescription", "title_zh": "力量提升要看整套处方配置",
+      "keywords_en": ["strength", "load", "sets", "frequency", "exercise order"], "keywords_zh": ["力量", "负荷", "组数", "频率", "动作顺序"],
+      "source_ids": ["RT-ACSM-2026", "RT-BJSM-NMA-2023"], "claim_ids": ["CLM-RX-STRENGTH-001"], "evidence_tier": "A/B", "population": "Healthy adults in resistance-training studies.",
+      "summary_zh": "负荷、组数、每周暴露和动作顺序共同影响力量训练，不能只用一个“做几次”字段代表处方。",
+      "technical_summary_en": "Strength-oriented prescriptions should encode load, sets, frequency, and exercise order rather than repetitions alone.",
+      "limitations": "No network ranking is a universal personal program.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-041", "topic": "strength_power", "subtopic": "hypertrophy_volume",
+      "title_en": "Weekly sets are a core hypertrophy dose", "title_zh": "肌群周组数是增肌处方的核心剂量",
+      "keywords_en": ["hypertrophy", "weekly sets", "training volume", "dose response"], "keywords_zh": ["增肌", "肌群周组数", "训练量", "剂量反应"],
+      "source_ids": ["RT-ACSM-2026"], "claim_ids": ["CLM-RX-HYP-001"], "evidence_tier": "A", "population": "Healthy adults training for hypertrophy.",
+      "summary_zh": "增肌处方应按肌群核算周组数；较高周量可能进一步优化增肌，但不能把最大化剂量直接当作所有人的起点。",
+      "technical_summary_en": "Higher weekly volume can enhance hypertrophy, but starting and maximizing doses are different decisions.",
+      "limitations": "SportRX has not validated an individual set-volume algorithm.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-042", "topic": "strength_power", "subtopic": "hypertrophy_multiple_options",
+      "title_en": "Many resistance prescriptions can build muscle", "title_zh": "增肌并不存在唯一有效的训练组合",
+      "keywords_en": ["hypertrophy", "network meta-analysis", "load", "sets", "frequency"], "keywords_zh": ["增肌", "网络Meta分析", "负荷", "组数", "频率"],
+      "source_ids": ["RT-BJSM-NMA-2023"], "claim_ids": ["CLM-RX-RT-001", "CLM-RX-HYP-001"], "evidence_tier": "B", "population": "Healthy adults in randomized resistance-training trials.",
+      "summary_zh": "多种负荷、组数和频率组合都能促进增肌。网络排名适合比较研究条件，不应被包装成唯一最佳计划。",
+      "technical_summary_en": "All evaluated resistance-training prescriptions improved hypertrophy compared with no exercise.",
+      "limitations": "Network rankings do not account for every individual's experience, preference, or recoverability.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-043", "topic": "strength_power", "subtopic": "power_training",
+      "title_en": "Power training is not just heavy strength training", "title_zh": "爆发力训练不等于单纯练得更重",
+      "keywords_en": ["power", "fast concentric", "moderate load", "performance"], "keywords_zh": ["爆发力", "快速向心", "中等负荷", "运动表现"],
+      "source_ids": ["RT-ACSM-2026"], "claim_ids": ["CLM-RX-POWER-001"], "evidence_tier": "A", "population": "Healthy adults with a power or physical-performance emphasis.",
+      "summary_zh": "爆发力训练强调快速向心意图和特定负荷区间，不能把普通增肌动作随意改名为功率训练。",
+      "technical_summary_en": "Power adaptations require outcome-specific intent and prescription rather than load alone.",
+      "limitations": "Complex lifts may require coaching and are not automatically appropriate for all users.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-044", "topic": "strength_power", "subtopic": "exercise_order_rom",
+      "title_en": "Range of motion and exercise order are prescription variables", "title_zh": "动作幅度与训练顺序也是处方变量",
+      "keywords_en": ["range of motion", "exercise order", "strength", "technique"], "keywords_zh": ["动作幅度", "训练顺序", "力量", "技术"],
+      "source_ids": ["RT-ACSM-2026"], "claim_ids": ["CLM-RX-STRENGTH-001"], "evidence_tier": "A", "population": "Healthy adults in resistance-training reviews.",
+      "summary_zh": "力量目标不能只看负重和次数。完整动作幅度与优先动作放在训练前部，也是可记录、可复核的处方变量。",
+      "technical_summary_en": "The ACSM overview identifies full range of motion and early-session placement as strength-relevant variables.",
+      "limitations": "The suitable range of motion still depends on exercise skill and individual constraints.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-045", "topic": "strength_power", "subtopic": "failure_not_required",
+      "title_en": "Momentary failure is not required", "title_zh": "练到完全力竭不是必要条件",
+      "keywords_en": ["repetition failure", "non-failure", "strength", "hypertrophy"], "keywords_zh": ["力竭", "非力竭", "力量", "增肌"],
+      "source_ids": ["RT-FAILURE-SR-2022", "RT-ACSM-2026"], "claim_ids": ["CLM-RX-FAILURE-001"], "evidence_tier": "A/B", "population": "Predominantly young healthy adults in resistance-training studies.",
+      "summary_zh": "现有综述没有支持“每组都必须练到完全力竭”这一默认规则；非力竭训练同样可以改善力量和肌肉量。",
+      "technical_summary_en": "Failure training was not required for strength or hypertrophy in the reviewed evidence.",
+      "limitations": "Study definitions and volume matching varied, and older or highly trained populations were underrepresented.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-046", "topic": "strength_power", "subtopic": "proximity_to_failure",
+      "title_en": "Closer to failure is not always better", "title_zh": "越接近力竭不一定越好",
+      "keywords_en": ["proximity to failure", "velocity loss", "hypertrophy", "dose response"], "keywords_zh": ["接近力竭", "速度损失", "增肌", "剂量反应"],
+      "source_ids": ["RT-PROXFAIL-SR-2023"], "claim_ids": ["CLM-RX-FAILURE-001"], "evidence_tier": "B", "population": "Healthy adults in hypertrophy studies.",
+      "summary_zh": "接近力竭与增肌之间可能不是简单线性关系，更高速度损失或完全力竭并未稳定显示更大的肌肥大。",
+      "technical_summary_en": "The review found no consistent superiority of momentary failure and suggested a potentially non-linear relationship.",
+      "limitations": "Failure definitions varied and no universal RIR target was validated.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-047", "topic": "monitoring_recovery", "subtopic": "rir_measurement",
+      "title_en": "RIR is an estimate, not a physiological measurement", "title_zh": "RIR 是估计值，不是生理测量值",
+      "keywords_en": ["RIR", "repetitions in reserve", "effort", "measurement uncertainty"], "keywords_zh": ["RIR", "保留次数", "用力程度", "测量不确定性"],
+      "source_ids": ["RT-RIR-METAREG-2024", "MON-RPE-ACSM"], "claim_ids": ["CLM-RX-RIR-001"], "evidence_tier": "B/D", "population": "Healthy adults recording resistance-training effort.",
+      "summary_zh": "RIR 适合记录一组训练离力竭还有多远，但它是主观估计，需要与负荷、次数、动作质量和完成情况一起解释。",
+      "technical_summary_en": "Estimated repetitions in reserve is useful for effort description but contains measurement uncertainty.",
+      "limitations": "The meta-regression does not prove the accuracy of any user's RIR report.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-048", "topic": "strength_power", "subtopic": "frequency_distribution",
+      "title_en": "Frequency can distribute weekly hypertrophy volume", "title_zh": "训练频率可以用来分配周训练量",
+      "keywords_en": ["frequency", "weekly volume", "hypertrophy", "training split"], "keywords_zh": ["训练频率", "周训练量", "增肌", "训练分化"],
+      "source_ids": ["RT-FREQ-SR-2019"], "claim_ids": ["CLM-RX-FREQ-001"], "evidence_tier": "B", "population": "Adults in resistance-training frequency studies.",
+      "summary_zh": "在周训练量相同的前提下，频率本身对增肌的影响可能不大，因此可根据时间、单次疲劳和偏好分配周组数。",
+      "technical_summary_en": "Volume-equated hypertrophy outcomes did not show a meaningful isolated frequency effect.",
+      "limitations": "Frequency can still matter for skill practice and per-session feasibility; the evidence is heterogeneous.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-049", "topic": "strength_power", "subtopic": "minimum_dose",
+      "title_en": "Minimum-dose evidence has a narrow population", "title_zh": "最小训练剂量证据有严格适用范围",
+      "keywords_en": ["minimum effective dose", "one set", "1RM", "trained men"], "keywords_zh": ["最小有效剂量", "单组训练", "1RM", "有训练经验男性"],
+      "source_ids": ["RT-MIN-DOSE-SR-2020"], "claim_ids": ["CLM-RX-MINDOSE-001"], "evidence_tier": "B", "population": "Resistance-trained men in squat and bench-press focused studies.",
+      "summary_zh": "低训练量也可能提升特定 1RM，但现有证据主要来自有训练经验男性和少数动作，不能推广成所有人的“最低有效剂量”。",
+      "technical_summary_en": "A small evidence base supports suboptimal but meaningful 1RM gains from low-dose training in trained men.",
+      "limitations": "Not generalizable to beginners, women, all lifts, hypertrophy, or broad health outcomes.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-050", "topic": "strength_power", "subtopic": "concurrent_compatibility",
+      "title_en": "Cardio does not automatically cancel muscle or strength gains", "title_zh": "有氧训练不会自动抵消增肌或力量提升",
+      "keywords_en": ["concurrent training", "hypertrophy", "maximal strength", "aerobic"], "keywords_zh": ["并行训练", "增肌", "最大力量", "有氧"],
+      "source_ids": ["CONCURRENT-SCHUMANN-2022"], "claim_ids": ["CLM-RX-CONCURRENT-001"], "evidence_tier": "B", "population": "Healthy adults in supervised concurrent-training studies.",
+      "summary_zh": "并行安排有氧和抗阻训练，通常不会削弱肌肥大或最大力量发展，因此综合体能和减脂方案可以保留两种训练。",
+      "technical_summary_en": "Concurrent training did not compromise hypertrophy or maximal strength compared with strength training alone.",
+      "limitations": "The review does not define one best schedule or guarantee equal outcomes for every individual.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-051", "topic": "strength_power", "subtopic": "concurrent_session_timing",
+      "title_en": "Same-session concurrent training may matter for explosive strength", "title_zh": "同日并行训练更需要关注爆发力目标",
+      "keywords_en": ["concurrent training", "same session", "explosive strength", "session separation"], "keywords_zh": ["并行训练", "同一节训练", "爆发力", "训练间隔"],
+      "source_ids": ["CONCURRENT-SCHUMANN-2022"], "claim_ids": ["CLM-RX-CONCURRENT-001"], "evidence_tier": "B", "population": "Healthy adults combining aerobic and resistance training.",
+      "summary_zh": "当爆发力是主要目标时，有氧与力量放在同一节训练可能产生更明显的安排代价，训练顺序与分开时间应被记录。",
+      "technical_summary_en": "Explosive-strength attenuation was more evident when concurrent modes were performed in the same session.",
+      "limitations": "This finding should not be generalized to hypertrophy, maximal strength, or every user.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-052", "topic": "training_principles", "subtopic": "weight_loss_expectations",
+      "title_en": "Exercise-only weight loss is modest on average", "title_zh": "单靠运动的平均减重幅度通常有限",
+      "keywords_en": ["weight loss", "exercise", "expectations", "body composition"], "keywords_zh": ["减重", "运动", "结果预期", "体成分"],
+      "source_ids": ["WEIGHT-EASO-2021", "WEIGHT-AER-DOSE-2024"], "claim_ids": ["CLM-RX-FATLOSS-001"], "evidence_tier": "A/B", "population": "Adults with overweight or obesity.",
+      "summary_zh": "运动有助于体重和体成分改善，但平均减重幅度通常有限。SportRX 应给出训练任务，不能承诺具体减重结果。",
+      "technical_summary_en": "Exercise supports weight management, but average weight loss is modest and individual response varies.",
+      "limitations": "Evidence from adults with overweight or obesity does not predict an individual result.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-053", "topic": "endurance", "subtopic": "aerobic_body_composition_dose",
+      "title_en": "Aerobic volume has a body-composition dose response", "title_zh": "有氧周量与体成分改善存在群体剂量反应",
+      "keywords_en": ["aerobic volume", "dose response", "body fat", "waist circumference"], "keywords_zh": ["有氧周量", "剂量反应", "体脂", "腰围"],
+      "source_ids": ["WEIGHT-AER-DOSE-2024"], "claim_ids": ["CLM-RX-FATLOSS-001"], "evidence_tier": "B", "population": "Adults with overweight or obesity in supervised trials lasting at least eight weeks.",
+      "summary_zh": "有氧周量增加与体重、腰围和体脂的平均改善相关，但这是群体剂量反应，不能换算成个人会减多少。",
+      "technical_summary_en": "Greater weekly aerobic duration was associated with larger average adiposity improvements up to the studied range.",
+      "limitations": "Supervised trial averages do not establish a personal forecast or a universally tolerable dose.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-054", "topic": "testing", "subtopic": "waist_measurement",
+      "title_en": "Waist change needs consistent measurement", "title_zh": "腰围变化需要一致的测量条件",
+      "keywords_en": ["waist circumference", "retest", "body composition", "measurement conditions"], "keywords_zh": ["腰围", "复测", "体成分", "测量条件"],
+      "source_ids": ["WEIGHT-WAIST-SR-2022"], "claim_ids": ["CLM-RX-FATLOSS-001"], "evidence_tier": "B", "population": "Adults with overweight or obesity in aerobic-exercise trials.",
+      "summary_zh": "腰围可以作为体成分方向的跟踪指标之一，但个人复测要保持测量位置、时间和操作方式一致，不能用一次波动判断计划成败。",
+      "technical_summary_en": "Waist circumference is an outcome measure whose personal interpretation depends on standardized repeated measurement.",
+      "limitations": "Trial-level mean changes do not define a SportRX minimal meaningful change threshold.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-055", "topic": "training_principles", "subtopic": "body_composition_multimodal",
+      "title_en": "Body-composition training can combine modes", "title_zh": "体成分目标可以组合有氧与抗阻训练",
+      "keywords_en": ["body composition", "aerobic", "resistance", "combined training"], "keywords_zh": ["体成分", "有氧", "抗阻", "组合训练"],
+      "source_ids": ["WEIGHT-EASO-2021", "WEIGHT-MODALITY-NMA-2024"], "claim_ids": ["CLM-RX-FATLOSS-002"], "evidence_tier": "A/B", "population": "Adults with overweight or obesity.",
+      "summary_zh": "体成分目标不应只剩下有氧消耗。抗阻训练与有氧训练承担不同作用，方案要分别管理两类剂量和完成情况。",
+      "technical_summary_en": "Aerobic, resistance, combined, and interval modalities can affect different body-composition and fitness outcomes.",
+      "limitations": "Network comparisons do not prove one universally best modality for an individual.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-056", "topic": "strength_power", "subtopic": "lean_mass_preservation",
+      "title_en": "Resistance training supports lean-mass preservation during weight loss", "title_zh": "减重期保留瘦体重需要重视抗阻训练",
+      "keywords_en": ["resistance training", "fat-free mass", "dietary weight loss", "strength"], "keywords_zh": ["抗阻训练", "瘦体重", "减重", "力量"],
+      "source_ids": ["WEIGHT-RT-DIET-SR-2025", "WEIGHT-EASO-2021"], "claim_ids": ["CLM-RX-FATLOSS-003"], "evidence_tier": "A/B", "population": "Adults with overweight or obesity undergoing dietary weight loss.",
+      "summary_zh": "在饮食减重研究中加入抗阻训练，有助于减少瘦体重损失并改善力量；这支持减脂方案保留抗阻训练，而不是让 SportRX 提供饮食处方。",
+      "technical_summary_en": "Resistance exercise during dietary weight loss attenuated fat-free-mass loss and improved strength in the reviewed evidence.",
+      "limitations": "Dietary intervention is outside SportRX's current scope and individual outcomes cannot be guaranteed.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-057", "topic": "training_principles", "subtopic": "no_calorie_forecast",
+      "title_en": "Exercise prescription is not a calorie-deficit forecast", "title_zh": "运动处方不能被写成热量缺口预测",
+      "keywords_en": ["calorie deficit", "weight prediction", "exercise dose", "fat loss"], "keywords_zh": ["热量缺口", "减重预测", "运动剂量", "减脂"],
+      "source_ids": ["WEIGHT-AER-DOSE-2024", "WEIGHT-EASO-2021"], "claim_ids": ["CLM-RX-FATLOSS-001", "CLM-RX-FATLOSS-002"], "evidence_tier": "A/B", "population": "Adults with overweight or obesity in exercise interventions.",
+      "summary_zh": "训练计划可以规定运动方式和剂量，但不能据此承诺热量缺口或体重变化。完成训练与身体变化必须分开记录。",
+      "technical_summary_en": "Exercise dose is an intervention record, not an individual energy-balance or weight-loss prediction.",
+      "limitations": "Body-weight outcomes depend on factors outside the current SportRX product scope.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-058", "topic": "monitoring_recovery", "subtopic": "adherence_support",
+      "title_en": "Adherence varies and may benefit from support", "title_zh": "训练坚持度差异很大，支持方式可能有帮助",
+      "keywords_en": ["adherence", "supervision", "social support", "attendance"], "keywords_zh": ["训练坚持", "监督", "社会支持", "出勤"],
+      "source_ids": ["ADHERENCE-OBESITY-SR-2025"], "claim_ids": ["CLM-RX-ADHERENCE-001"], "evidence_tier": "B", "population": "Adults with obesity in structured exercise interventions.",
+      "summary_zh": "研究中的训练完成率差异很大，监督、组合训练和社会支持与更高出勤相关，但没有任何单一设计能保证坚持。",
+      "technical_summary_en": "Adherence ranged widely; several support characteristics were associated with higher attendance in heterogeneous interventions.",
+      "limitations": "Associations in obesity interventions are not causal proof for a SportRX interface feature.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-059", "topic": "monitoring_recovery", "subtopic": "completion_as_signal",
+      "title_en": "Completion is a product signal, not proof of adaptation", "title_zh": "完成率是调整信号，不是适应证据",
+      "keywords_en": ["completion rate", "adherence", "progression", "retest"], "keywords_zh": ["完成率", "坚持度", "进阶", "复测"],
+      "source_ids": ["ADHERENCE-OBESITY-SR-2025", "MON-SRPE-REVIEW"], "claim_ids": ["CLM-RX-ADHERENCE-001", "CLM-INT-001"], "evidence_tier": "B", "population": "Adults participating in structured exercise.",
+      "summary_zh": "完成率和 RPE 可以帮助判断计划是否可执行、下周是否应维持或调整，但不能单独证明心肺、力量或体成分已经改善。",
+      "technical_summary_en": "Completion and subjective effort are implementation signals that remain distinct from measured adaptation.",
+      "limitations": "SportRX needs real longitudinal data before validating progression decisions based on these signals.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    },
+    {
+      "id": "K-CARD-060", "topic": "testing", "subtopic": "body_composition_retest_boundary",
+      "title_en": "Body-composition tracking is not an outcome promise", "title_zh": "体成分复测不等于结果承诺",
+      "keywords_en": ["body composition", "retest", "measurement", "outcome prediction"], "keywords_zh": ["体成分", "复测", "测量", "结果预测"],
+      "source_ids": ["WEIGHT-AER-DOSE-2024", "WEIGHT-WAIST-SR-2022", "WEIGHT-RT-DIET-SR-2025"], "claim_ids": ["CLM-RX-FATLOSS-001", "CLM-RX-FATLOSS-003"], "evidence_tier": "B", "population": "Adults with overweight or obesity in exercise or weight-loss trials.",
+      "summary_zh": "体重、腰围和体成分应作为独立复测结果，在条件一致时观察变化；处方生成时不能先假定这些指标会改善多少。",
+      "technical_summary_en": "Body-composition outcomes should be measured longitudinally rather than imputed from the prescribed exercise dose.",
+      "limitations": "No SportRX-specific measurement error or minimal meaningful-change threshold has been established.",
+      "review_status": "reviewed", "reviewed_by": "SportRX internal knowledge review", "reviewed_at": "2026-09-03", "access_tier": "public_metadata", "question_policy": "education"
+    }
+  ]
+}
