@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>SportRX AI 处方布局原型</title>
+  <style>
+    :root { --ink:#101513; --paper:#f4f6f1; --line:#cbd2cb; --green:#b8ef38; --coral:#ff735e; --blue:#87b8ff; --muted:#647069; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:#dfe4df; color:var(--ink); font-family:Inter,"PingFang SC","Microsoft YaHei",sans-serif; letter-spacing:0; }
+    button { font:inherit; }
+    .switcher { position:sticky; top:0; z-index:5; padding:12px; background:#101513; color:white; border-bottom:1px solid #344139; }
+    .switcher-inner { max-width:980px; margin:auto; display:flex; gap:8px; overflow:auto; }
+    .direction { min-width:max-content; padding:9px 12px; border:1px solid #4c5952; border-radius:6px; color:#cbd4ce; background:transparent; cursor:pointer; }
+    .direction.active { color:#101513; background:var(--green); border-color:var(--green); font-weight:750; }
+    .stage { max-width:390px; min-height:780px; margin:26px auto; background:var(--paper); border:1px solid #aeb7b0; box-shadow:0 16px 42px rgba(20,32,25,.15); }
+    .screen { display:none; }
+    .screen.active { display:block; }
+    header { padding:18px 18px 16px; color:white; background:#131b17; }
+    .brand { display:flex; align-items:center; justify-content:space-between; font-size:13px; font-weight:800; }
+    .status { color:var(--green); font-size:11px; font-weight:750; }
+    h1 { margin:24px 0 6px; max-width:310px; font-size:32px; line-height:1.08; letter-spacing:0; }
+    .lead { margin:0; color:#aebbb3; font-size:13px; line-height:1.5; }
+    nav { display:grid; grid-template-columns:repeat(4,1fr); border-bottom:1px solid var(--line); background:#fff; }
+    nav span { padding:12px 4px; text-align:center; font-size:11px; color:#6b756f; }
+    nav .selected { color:#101513; font-weight:800; border-bottom:3px solid #101513; }
+    main { padding:16px; }
+    .eyebrow { margin-bottom:7px; color:#526058; font-size:10px; font-weight:850; text-transform:uppercase; }
+    h2 { margin:0; font-size:22px; line-height:1.2; letter-spacing:0; }
+    .sub { margin:7px 0 14px; color:var(--muted); font-size:12px; line-height:1.5; }
+    .plan { border-top:4px solid var(--green); background:#17201b; color:white; padding:15px; }
+    .plan-head { display:flex; justify-content:space-between; gap:12px; align-items:start; }
+    .tag { padding:4px 7px; border-radius:4px; background:#2b382f; color:var(--green); font-size:10px; white-space:nowrap; }
+    .dose { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; margin-top:14px; background:#36423b; }
+    .dose div { min-width:0; padding:10px; background:#202b25; font-size:10px; color:#aeb8b2; }
+    .dose strong { display:block; margin-top:3px; color:white; font-size:15px; }
+    .session { margin-top:10px; padding:13px 0; border-bottom:1px solid var(--line); }
+    .session-row { display:flex; justify-content:space-between; gap:12px; }
+    .session strong { font-size:14px; }
+    .session p { margin:5px 0 0; color:var(--muted); font-size:11px; line-height:1.45; }
+    .why { margin-top:12px; padding:12px; border-left:3px solid var(--blue); background:#e8eff7; font-size:11px; line-height:1.55; }
+    .validation { display:flex; gap:8px; align-items:center; margin-top:12px; color:#465249; font-size:10px; }
+    .validation b { width:8px; height:8px; border-radius:50%; background:#55a75b; }
+    .primary { width:100%; margin-top:14px; padding:12px; border:0; border-radius:6px; background:#101513; color:white; font-weight:800; }
+    .chips { display:flex; gap:7px; flex-wrap:wrap; margin:12px 0; }
+    .chip { padding:8px 9px; border:1px solid #adb7b0; border-radius:5px; background:white; font-size:11px; }
+    .chip.hot { color:#792d22; border-color:var(--coral); background:#fff0ec; }
+    .week { display:grid; gap:8px; margin-top:13px; }
+    .day { display:grid; grid-template-columns:48px 1fr auto; gap:10px; align-items:center; padding:12px; background:white; border:1px solid var(--line); }
+    .day span { color:var(--muted); font-size:10px; }
+    .day strong { font-size:12px; }
+    .profile { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:13px 0; }
+    .metric { min-height:86px; padding:12px; border:1px solid var(--line); background:white; }
+    .metric span { color:var(--muted); font-size:10px; }
+    .metric strong { display:block; margin-top:12px; font-size:18px; }
+    .metric.accent { background:#f0f9d9; border-color:#9eba51; }
+    .decision-note { margin-top:12px; padding:13px; background:#ffe8e3; border-top:3px solid var(--coral); font-size:11px; line-height:1.5; }
+    footer { padding:14px 16px 18px; color:#7a847e; font-size:10px; text-align:center; }
+    @media (max-width:430px) { .stage { width:100%; min-height:100vh; margin:0; border:0; } .switcher { position:relative; } }
+  </style>
+</head>
+<body>
+  <div class="switcher">
+    <div class="switcher-inner">
+      <button class="direction active" data-target="plan-first">A · 处方优先</button>
+      <button class="direction" data-target="adjust-first">B · 调整优先</button>
+      <button class="direction" data-target="profile-first">C · 画像优先</button>
+    </div>
+  </div>
+
+  <section class="stage screen active" id="plan-first">
+    <header><div class="brand"><span>SportRX</span><span class="status">AI 处方已验收</span></div><h1>今天，先完成这一节。</h1><p class="lead">AI 根据你本周剩余时间和最近训练反馈重新安排。</p></header>
+    <nav><span class="selected">今天</span><span>计划</span><span>调整</span><span>进展</span></nav>
+    <main>
+      <div class="eyebrow">今日处方 · 周三</div>
+      <section class="plan"><div class="plan-head"><div><h2>轻松跑 + 短加速</h2><p class="sub">为本周第二次有氧训练保留余量。</p></div><span class="tag">AI 生成</span></div><div class="dose"><div>总时长<strong>32 分钟</strong></div><div>目标强度<strong>RPE 4</strong></div><div>训练方式<strong>跑走结合</strong></div></div></section>
+      <div class="session"><div class="session-row"><strong>热身</strong><span>6 分钟</span></div><p>快走，随后完成踝关节和髋部动态活动。</p></div>
+      <div class="session"><div class="session-row"><strong>主要训练</strong><span>22 分钟</span></div><p>轻松跑 4 分钟 + 快走 1 分钟，循环 4 次；最后完成 2 次 30 秒自然加速。</p></div>
+      <div class="why"><strong>为什么这样安排</strong><br>你上次训练完成且 RPE 为 3，但本周只剩两天可训练。AI 保持总量，增加了少量速度刺激，没有提高主要训练强度。</div>
+      <div class="validation"><b></b><span>已通过适用人群、周总量、单次时长和进阶幅度检查</span></div>
+      <button class="primary">开始训练</button>
+    </main><footer>方向 A：打开即看到最终处方，AI 能力体现在结果里。</footer>
+  </section>
+
+  <section class="stage screen" id="adjust-first">
+    <header><div class="brand"><span>SportRX</span><span class="status">第 2 周</span></div><h1>计划应该适应你的这一周。</h1><p class="lead">先告诉 AI 现实发生了什么，再重新安排。</p></header>
+    <nav><span>今天</span><span>计划</span><span class="selected">调整</span><span>进展</span></nav>
+    <main>
+      <div class="eyebrow">快速调整</div><h2>这一周有什么变化？</h2><p class="sub">选择真实情况，AI 只重排受影响的部分。</p>
+      <div class="chips"><button class="chip hot">今天只有 20 分钟</button><button class="chip">上次太难</button><button class="chip">感觉很轻松</button><button class="chip">想换一种运动</button><button class="chip">跳过今天</button></div>
+      <div class="week"><div class="day"><span>今天</span><strong>快走间歇</strong><span>20 分钟</span></div><div class="day"><span>周五</span><strong>轻松骑行</strong><span>30 分钟</span></div><div class="day"><span>周日</span><strong>持续快走</strong><span>35 分钟</span></div></div>
+      <div class="decision-note"><strong>AI 调整建议</strong><br>将今天缩短 12 分钟，但保留三次训练。减少的时间不转移到周五，避免单次负荷突然增加。</div>
+      <div class="validation"><b></b><span>调整后仍符合本周训练量与恢复间隔约束</span></div>
+      <button class="primary">采用调整后的计划</button>
+    </main><footer>方向 B：调整是产品主动作，适合强调 adaptive prescription。</footer>
+  </section>
+
+  <section class="stage screen" id="profile-first">
+    <header><div class="brand"><span>SportRX</span><span class="status">训练画像已更新</span></div><h1>AI 先理解你，再安排训练。</h1><p class="lead">把已知、未知和本次决策依据放在处方之前。</p></header>
+    <nav><span>今天</span><span>计划</span><span>调整</span><span class="selected">画像</span></nav>
+    <main>
+      <div class="eyebrow">当前训练画像</div><h2>有氧起步 · 低活动成人</h2><p class="sub">基于最近 4 周自报数据和 2 次已完成训练。</p>
+      <div class="profile"><div class="metric accent"><span>现实可用时间</span><strong>3 × 30 分钟</strong></div><div class="metric"><span>近期运动量</span><strong>55 分钟/周</strong></div><div class="metric"><span>训练反应</span><strong>RPE 3–4</strong></div><div class="metric"><span>体能测试</span><strong>Not tested</strong></div></div>
+      <section class="plan"><div class="plan-head"><div><div class="eyebrow">AI 本周策略</div><h2>先稳定频率</h2></div><span class="tag">受约束</span></div><p class="sub">维持中等强度，不使用缺失的体能测试数据，不把目标运动量一次加满。</p></section>
+      <button class="primary">查看 AI 处方</button>
+    </main><footer>方向 C：先建立可信训练画像，适合强调科学与可解释性。</footer>
+  </section>
+
+  <script>
+    const buttons = [...document.querySelectorAll('.direction')];
+    const screens = [...document.querySelectorAll('.screen')];
+    buttons.forEach(button => button.addEventListener('click', () => {
+      buttons.forEach(item => item.classList.toggle('active', item === button));
+      screens.forEach(screen => screen.classList.toggle('active', screen.id === button.dataset.target));
+    }));
+  </script>
+</body>
+</html>

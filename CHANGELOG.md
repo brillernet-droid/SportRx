@@ -2,6 +2,12 @@
 
 ## Unreleased - Population Prescription Foundation
 
+- Shaped the next AI-prescription architecture: AI creates and adapts candidate
+  plans, while deterministic Safety and Constraint Gates remain mandatory.
+  Added a Chinese product-shaping document and a three-direction mobile layout
+  prototype; this is a planned architecture, not a claim that AI prescribing is
+  already active in the current product.
+
 - Added a versioned `Program Pack` registry and deterministic scenario router.
   A Pack, rather than a database, movement catalogue, device, or LLM, now
   defines whether automated dose generation is available for a current context.

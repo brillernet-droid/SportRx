@@ -105,10 +105,15 @@ SportRX 当前的自动处方模块是**有氧运动处方原型**，不是已�
 ## 安全与产品边界
 
 SportRX 不提供疾病诊断、医疗清除、伤病风险百分比、完赛概率、假百分位、赛事
-认证、营养建议或 AI 自动处方。出现需要进一步专业评估的信息时，系统会停止自动
-生成或调整训练计划。AI 也不决定安全状态、训练强度、周运动量或进阶。
+认证或营养建议。出现需要进一步专业评估的信息时，系统会停止自动生成或调整训练
+计划。当前已运行版本仍由规则生成处方；下一阶段将评估“AI 规划处方 + 确定性安全与
+约束验收”，AI 不能改变 Safety Gate 或绕过失败的约束检查。
 
 完整边界见 [产品边界](docs/zh-CN/claim-boundaries.md)。
+
+下一阶段的产品架构与手机端布局方向见
+[AI 处方架构方案](docs/zh-CN/ai-prescription-shaping.md) 和
+[AI 处方布局对比原型](docs/zh-CN/ai-prescription-layout-prototype.html)。
 
 ## 语言与术语
 
@@ -141,9 +146,10 @@ SportRX/
 ## 内部知识 RAG
 
 SportRX 另有一个内部研究型 Knowledge Lab，用于检索已审核的运动科学知识卡并
-在通过门槛后生成带引用和局限的中文研究摘要。它与 v0.1 的规则引擎分开：知识
-RAG 不能改变安全边界、训练剂量或进阶，也不会作为公开用户聊天功能。它是未来
-研究资产，不是当前默认产品体验。其公开元数据与审核规则见
+在通过门槛后生成带引用和局限的中文研究摘要。当前它与 v0.1 的规则处方分开；在
+下一阶段中，已审核知识卡可进入 AI Prescription Planner 的受限上下文，但知识 RAG
+与 AI 都不能改变 Safety Gate 或跳过 Constraint Gate。它不是当前默认产品体验。
+其公开元数据与审核规则见
 [Knowledge Corpus](evidence/knowledge/README.md)。
 
 ## 开发与验证
@@ -160,7 +166,8 @@ PYTHONDONTWRITEBYTECODE=1 python3 -m pytest -q -p no:cacheprovider
 ## 贡献与讨论
 
 欢迎对测试协议、字段设计、产品交付和循证边界提出问题。请不要提交会让系统
-产生医疗诊断、风险预测、完赛预测、假常模或 AI 自动处方的功能建议。
+产生医疗诊断、风险预测、完赛预测、假常模，或绕过 Safety / Constraint Gate 的
+AI 处方功能建议。
 
 ## 动作内容库来源
 
