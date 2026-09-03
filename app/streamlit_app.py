@@ -46,6 +46,7 @@ from sportrx import (
     build_export_bundle,
     build_first_run_guide,
     build_guided_review_console,
+    build_guided_workout,
     build_input_ledger,
     build_intake_precision_audit,
     build_lab_readiness_console,
@@ -162,7 +163,7 @@ from sportrx.benchmark_log import build_component_result
 from sportrx.local_accounts import LocalAccountError, authenticate_local_account, create_local_account
 from sportrx.performance_lab import assess_hybrid_performance, measurement_intake_matrix_csv, measurement_intake_matrix_markdown
 from sportrx.release_qa import REQUIRED_EVIDENCE_FILES
-from sportrx.voice_guidance import build_exercise_voice_script, build_session_voice_script
+from sportrx.voice_guidance import build_exercise_voice_script
 
 
 DEFAULT_PROFILE = {
@@ -250,6 +251,19 @@ V01_DISCOVERY_EXERCISE_LABELS = {
     "cycle cross trainer": "交叉训练机骑行",
     "stationary bike walk": "立式单车轻松骑",
     "walk elliptical cross trainer": "椭圆机步行",
+}
+
+V01_DISCOVERY_EQUIPMENT_LABELS = {
+    "walking on incline treadmill": "跑步机",
+    "walking on stepmill": "踏步机",
+    "back and forth step": "自重",
+    "run": "自重",
+    "run (equipment)": "跑步机",
+    "short stride run": "自重",
+    "stationary bike run v. 3": "固定单车",
+    "cycle cross trainer": "交叉训练机",
+    "stationary bike walk": "固定单车",
+    "walk elliptical cross trainer": "椭圆机",
 }
 
 V01_CATALOGUE_VALUE_LABELS = {
@@ -1020,6 +1034,12 @@ def _v01_return_to_today() -> None:
     _v01_set_page("首页")
 
 
+def _v01_start_guided_workout(exercise_id: str | None = None) -> None:
+    if exercise_id:
+        _v01_select_exercise(exercise_id)
+    _v01_set_page("跟练")
+
+
 def _v01_week_status_label(week: dict[str, Any]) -> str:
     status = str(week.get("status", "awaiting_feedback"))
     if status == "ready":
@@ -1055,6 +1075,15 @@ def _v01_exercise_label(exercise: dict[str, Any]) -> str:
 
 def _v01_catalogue_value_label(value: object) -> str:
     return V01_CATALOGUE_VALUE_LABELS.get(str(value), str(value))
+
+
+def _v01_exercise_equipment_label(exercise: dict[str, Any]) -> str:
+    """Correct known generic upstream equipment labels in the curated shortlist."""
+
+    return V01_DISCOVERY_EQUIPMENT_LABELS.get(
+        str(exercise.get("name", "")),
+        _v01_catalogue_value_label(exercise.get("equipment", "")),
+    )
 
 
 def _v01_voice_player(script: str, component_key: str) -> None:
@@ -1107,6 +1136,220 @@ def _v01_voice_player(script: str, component_key: str) -> None:
         </script>
         """,
         height=58,
+        scrolling=False,
+    )
+
+
+def _v01_guided_runner(workout: dict[str, Any], component_key: str) -> None:
+    """Render a local, client-side timer and voice-led workout surface."""
+
+    safe_key = "".join(char if char.isalnum() else "-" for char in component_key)
+    phases_json = json.dumps(workout["phases"], ensure_ascii=False).replace("</", "<\\/")
+    total_seconds = int(workout["duration_seconds"])
+    components.html(
+        f"""
+        <main id="runner-{safe_key}" class="runner" aria-label="SportRX 跟练计时器">
+          <header class="runner-top">
+            <div>
+              <div class="brand">SportRX</div>
+              <div id="phase-count-{safe_key}" class="phase-count">第 1 段，共 3 段</div>
+            </div>
+            <button id="voice-{safe_key}" class="icon-button" type="button" title="开关语音指导" aria-pressed="true">语音开</button>
+          </header>
+
+          <div class="total-progress" aria-hidden="true"><span id="total-progress-{safe_key}"></span></div>
+
+          <section class="stage" aria-live="polite">
+            <div id="phase-label-{safe_key}" class="phase-label">热身</div>
+            <h1 id="phase-title-{safe_key}">准备训练</h1>
+            <div id="timer-{safe_key}" class="timer">00:00</div>
+            <p id="instruction-{safe_key}" class="instruction">准备好后开始计时。</p>
+            <div class="intensity-line"><span></span> 按处方强度完成</div>
+          </section>
+
+          <section class="up-next">
+            <div class="next-label">下一段</div>
+            <div id="next-title-{safe_key}" class="next-title">主训练</div>
+            <div id="next-time-{safe_key}" class="next-time"></div>
+          </section>
+
+          <nav class="runner-controls" aria-label="训练控制">
+            <button id="previous-{safe_key}" class="control secondary" type="button" title="上一段" aria-label="上一段">‹</button>
+            <button id="toggle-{safe_key}" class="control primary" type="button" title="开始或暂停训练"><span id="toggle-icon-{safe_key}">▶</span><small id="toggle-label-{safe_key}">开始</small></button>
+            <button id="next-{safe_key}" class="control secondary" type="button" title="下一段" aria-label="下一段">›</button>
+          </nav>
+          <p id="runner-status-{safe_key}" class="runner-status">计时和语音都在当前设备运行</p>
+
+          <section id="finish-{safe_key}" class="finish" hidden>
+            <div class="finish-mark">完成</div>
+            <h2>本次训练已结束</h2>
+            <p>回到 SportRX 记录完成情况和 RPE，下一周才会据此调整。</p>
+          </section>
+        </main>
+        <style>
+          :root {{ color-scheme: dark; }}
+          * {{ box-sizing: border-box; }}
+          html, body {{ margin: 0; min-height: 100%; background: #080d0c; color: #f4f8ef; font-family: Inter, "PingFang SC", "Microsoft YaHei", sans-serif; }}
+          button {{ font: inherit; }}
+          .runner {{ position: relative; min-height: 650px; overflow: hidden; background: #080d0c; padding: 20px 18px 18px; display: flex; flex-direction: column; }}
+          .runner-top {{ display: flex; align-items: center; justify-content: space-between; gap: 16px; }}
+          .brand {{ color: #d7ff4c; font-size: 13px; font-weight: 900; letter-spacing: 0; }}
+          .phase-count {{ margin-top: 4px; color: #8f9d94; font-size: 12px; }}
+          .icon-button {{ min-height: 44px; min-width: 72px; border: 1px solid #33423b; border-radius: 8px; color: #eff5ed; background: #111a17; font-size: 12px; font-weight: 800; cursor: pointer; }}
+          .icon-button[aria-pressed="false"] {{ color: #87938b; }}
+          .total-progress {{ height: 4px; margin-top: 18px; overflow: hidden; background: #26312c; }}
+          .total-progress span {{ display: block; width: 0; height: 100%; background: #d7ff4c; transition: width 250ms linear; }}
+          .stage {{ min-height: 330px; flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 28px 4px 18px; text-align: center; }}
+          .phase-label {{ color: #d7ff4c; font-size: 12px; font-weight: 850; }}
+          h1 {{ max-width: 100%; margin: 14px 0 0; color: #f7faf5; font-size: 32px; line-height: 1.12; font-weight: 850; letter-spacing: 0; overflow-wrap: anywhere; }}
+          .timer {{ margin-top: 18px; color: #ffffff; font-size: 78px; line-height: 1; font-weight: 780; font-variant-numeric: tabular-nums; letter-spacing: 0; }}
+          .instruction {{ min-height: 48px; max-width: 330px; margin: 20px auto 0; color: #b7c1ba; font-size: 14px; line-height: 1.6; }}
+          .intensity-line {{ margin-top: 14px; color: #8f9d94; font-size: 12px; }}
+          .intensity-line span {{ display: inline-block; width: 7px; height: 7px; margin-right: 6px; border-radius: 50%; background: #d7ff4c; }}
+          .up-next {{ display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 10px; align-items: center; min-height: 62px; padding: 12px 0; border-top: 1px solid #27332d; border-bottom: 1px solid #27332d; }}
+          .next-label, .next-time {{ color: #7f8c84; font-size: 12px; }}
+          .next-title {{ min-width: 0; color: #e8eee9; font-size: 14px; font-weight: 760; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }}
+          .runner-controls {{ display: grid; grid-template-columns: 56px 1fr 56px; gap: 18px; align-items: center; width: min(100%, 300px); margin: 18px auto 0; }}
+          .control {{ display: grid; place-items: center; border: 0; cursor: pointer; }}
+          .control.secondary {{ width: 56px; height: 56px; border: 1px solid #34433c; border-radius: 50%; color: #eff5ed; background: #121c18; font-size: 35px; line-height: 1; }}
+          .control.primary {{ width: 92px; height: 64px; justify-self: center; border-radius: 32px; color: #08100d; background: #d7ff4c; font-size: 22px; font-weight: 900; }}
+          .control.primary small {{ display: block; margin-top: -4px; font-size: 10px; font-weight: 850; }}
+          .control:focus-visible, .icon-button:focus-visible {{ outline: 3px solid rgba(215,255,76,.42); outline-offset: 3px; }}
+          .runner-status {{ margin: 12px 0 0; color: #6f7c74; font-size: 11px; text-align: center; }}
+          .finish {{ position: absolute; inset: 0; z-index: 5; padding: 30px; background: #0b1210; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }}
+          .finish[hidden] {{ display: none; }}
+          .finish-mark {{ display: grid; place-items: center; width: 78px; height: 78px; border: 2px solid #d7ff4c; border-radius: 50%; color: #d7ff4c; font-size: 14px; font-weight: 900; }}
+          .finish h2 {{ margin: 24px 0 0; font-size: 28px; letter-spacing: 0; }}
+          .finish p {{ max-width: 300px; margin: 12px 0 0; color: #aeb9b2; font-size: 14px; line-height: 1.6; }}
+          @media (max-width: 370px) {{
+            .runner {{ padding-left: 14px; padding-right: 14px; }}
+            h1 {{ font-size: 28px; }}
+            .timer {{ font-size: 66px; }}
+          }}
+          @media (prefers-reduced-motion: reduce) {{ .total-progress span {{ transition: none; }} }}
+        </style>
+        <script>
+          const phases = {phases_json};
+          const totalSeconds = {total_seconds};
+          let phaseIndex = 0;
+          let remaining = phases[0].duration_seconds;
+          let running = false;
+          let started = false;
+          let finished = false;
+          let deadline = 0;
+          let ticker = null;
+          let voiceEnabled = true;
+          let spokenCountdown = new Set();
+
+          const el = (name) => document.getElementById(`${{name}}-{safe_key}`);
+          const formatTime = (seconds) => `${{String(Math.floor(seconds / 60)).padStart(2, "0")}}:${{String(seconds % 60).padStart(2, "0")}}`;
+          const phaseElapsedBefore = () => phases.slice(0, phaseIndex).reduce((sum, phase) => sum + phase.duration_seconds, 0);
+
+          function speak(text) {{
+            if (!voiceEnabled || !window.speechSynthesis || !text) return;
+            window.speechSynthesis.cancel();
+            const speech = new SpeechSynthesisUtterance(text);
+            speech.lang = "zh-CN";
+            speech.rate = 0.94;
+            const voice = window.speechSynthesis.getVoices().find(item => item.lang.toLowerCase().startsWith("zh"));
+            if (voice) speech.voice = voice;
+            window.speechSynthesis.speak(speech);
+          }}
+
+          function render() {{
+            const phase = phases[phaseIndex];
+            const next = phases[phaseIndex + 1];
+            el("phase-count").textContent = `第 ${{phaseIndex + 1}} 段，共 ${{phases.length}} 段`;
+            el("phase-label").textContent = phase.label;
+            el("phase-title").textContent = phase.title;
+            el("timer").textContent = formatTime(remaining);
+            el("instruction").textContent = phase.instruction;
+            el("next-title").textContent = next ? next.title : "完成训练";
+            el("next-time").textContent = next ? formatTime(next.duration_seconds) : "";
+            const completed = phaseElapsedBefore() + (phase.duration_seconds - remaining);
+            el("total-progress").style.width = `${{Math.min(100, completed / totalSeconds * 100)}}%`;
+            el("toggle-icon").textContent = running ? "Ⅱ" : "▶";
+            el("toggle-label").textContent = running ? "暂停" : started ? "继续" : "开始";
+          }}
+
+          function stopTicker() {{
+            if (ticker) window.clearInterval(ticker);
+            ticker = null;
+          }}
+
+          function pause() {{
+            if (!running) return;
+            remaining = Math.max(0, Math.ceil((deadline - Date.now()) / 1000));
+            running = false;
+            stopTicker();
+            render();
+          }}
+
+          function completeWorkout() {{
+            running = false;
+            finished = true;
+            remaining = 0;
+            stopTicker();
+            window.speechSynthesis && window.speechSynthesis.cancel();
+            speak("训练完成。请记录本次完成情况和主观用力程度 R P E。");
+            el("total-progress").style.width = "100%";
+            el("finish").hidden = false;
+          }}
+
+          function moveTo(index, announce = true) {{
+            stopTicker();
+            running = false;
+            phaseIndex = Math.max(0, Math.min(index, phases.length - 1));
+            remaining = phases[phaseIndex].duration_seconds;
+            started = false;
+            spokenCountdown = new Set();
+            window.speechSynthesis && window.speechSynthesis.cancel();
+            render();
+            if (announce) speak(phases[phaseIndex].voice_cue);
+          }}
+
+          function advance() {{
+            if (phaseIndex >= phases.length - 1) {{ completeWorkout(); return; }}
+            moveTo(phaseIndex + 1, false);
+            start();
+          }}
+
+          function tick() {{
+            const nextRemaining = Math.max(0, Math.ceil((deadline - Date.now()) / 1000));
+            if (nextRemaining !== remaining) {{
+              remaining = nextRemaining;
+              if (remaining === 10 && !spokenCountdown.has(10)) {{ spokenCountdown.add(10); speak("还有十秒。"); }}
+              if (remaining <= 3 && remaining > 0 && !spokenCountdown.has(remaining)) {{ spokenCountdown.add(remaining); speak(String(remaining)); }}
+              render();
+            }}
+            if (remaining <= 0) advance();
+          }}
+
+          function start() {{
+            if (finished || running) return;
+            if (!started) speak(phases[phaseIndex].voice_cue);
+            started = true;
+            running = true;
+            deadline = Date.now() + remaining * 1000;
+            stopTicker();
+            ticker = window.setInterval(tick, 250);
+            render();
+          }}
+
+          el("toggle").addEventListener("click", () => running ? pause() : start());
+          el("previous").addEventListener("click", () => moveTo(phaseIndex - 1, true));
+          el("next").addEventListener("click", () => phaseIndex >= phases.length - 1 ? completeWorkout() : moveTo(phaseIndex + 1, true));
+          el("voice").addEventListener("click", () => {{
+            voiceEnabled = !voiceEnabled;
+            el("voice").setAttribute("aria-pressed", String(voiceEnabled));
+            el("voice").textContent = voiceEnabled ? "语音开" : "语音关";
+            if (!voiceEnabled && window.speechSynthesis) window.speechSynthesis.cancel();
+          }});
+          window.addEventListener("beforeunload", () => {{ stopTicker(); window.speechSynthesis && window.speechSynthesis.cancel(); }});
+          render();
+        </script>
+        """,
+        height=670,
         scrolling=False,
     )
 
@@ -13031,7 +13274,7 @@ def _v01_exercise_catalogue_page() -> None:
                     '<article class="v01-discovery-card">'
                     f'<div class="v01-discovery-card-name">{escape(_v01_exercise_label(item))}</div>'
                     f'<div class="v01-discovery-card-meta">{escape(body_part_label(item["body_part"]))} · '
-                    f'{escape(_v01_catalogue_value_label(item["equipment"]))} · {escape(_v01_catalogue_value_label(item["target"]))}</div>'
+                    f'{escape(_v01_exercise_equipment_label(item))} · {escape(_v01_catalogue_value_label(item["target"]))}</div>'
                     '</article>'
                 )
             )
@@ -13108,7 +13351,7 @@ def _v01_exercise_catalogue_page() -> None:
             '<section class="v01-today-session">'
             '<div class="v01-session-kicker">动作说明</div>'
             f'<div class="v01-session-title">{escape(exercise["name"])}</div>'
-            f'<div class="v01-session-detail">目标：{escape(_v01_catalogue_value_label(exercise["target"]))} · 部位：{escape(body_part_label(exercise["body_part"]))} · 器械：{escape(_v01_catalogue_value_label(exercise["equipment"]))}</div>'
+            f'<div class="v01-session-detail">目标：{escape(_v01_catalogue_value_label(exercise["target"]))} · 部位：{escape(body_part_label(exercise["body_part"]))} · 器械：{escape(_v01_exercise_equipment_label(exercise))}</div>'
             '</section>'
         ),
         unsafe_allow_html=True,
@@ -13226,66 +13469,121 @@ def _v01_today_page() -> None:
     session = active_week["sessions"][session_index]
     _v01_page_header("今天，先完成这一节", "打开即看到当前处方；训练结束后花 20 秒记录完成情况和 RPE。")
     st.markdown(
-        '<div class="v01-section-note">处方状态：已通过当前 Program Pack、单次时长和训练量边界检查。</div>',
+        '<div class="v01-section-note">处方状态：已通过当前方案、单次时长和训练量边界检查。</div>',
         unsafe_allow_html=True,
     )
     st.markdown(
         (
             '<section class="v01-today-session">'
-            f'<div class="v01-session-kicker">第 {active_week["week"]} 周 · 第 {session_index + 1} / {active_week["frequency_per_week"]} 次 · {escape(zh(session["day"]))}</div>'
+            f'<div class="v01-session-kicker">第 {active_week["week"]} 周 · 第 {session_index + 1} 次，共 {active_week["frequency_per_week"]} 次 · {escape(zh(session["day"]))}</div>'
             f'<div class="v01-session-title">{escape(_v01_activity(session["activity"]))} · {session["duration_min"]} 分钟</div>'
-            f'<div class="v01-session-detail">目标强度：{escape(_v01_intensity(session["intensity"]))}<br>RPE {session["rpe_0_10"][0]}–{session["rpe_0_10"][1]} · {escape(_v01_talk_test(session["intensity"]))}</div>'
+            f'<div class="v01-session-detail">目标强度：{escape(_v01_intensity(session["intensity"]))}<br>RPE {session["rpe_0_10"][0]} 到 {session["rpe_0_10"][1]} · {escape(_v01_talk_test(session["intensity"]))}</div>'
             '</section>'
         ),
         unsafe_allow_html=True,
     )
     st.markdown(
-        """
-        <div class="v01-rule-list">
-          <div class="v01-rule"><div class="v01-rule-label">开始前</div><div class="v01-rule-copy">用轻松走或轻松骑行热身 5–10 分钟。</div></div>
-          <div class="v01-rule"><div class="v01-rule-label">过程中</div><div class="v01-rule-copy">以完成整段训练为优先；任何异常不适都应停止。</div></div>
-          <div class="v01-rule"><div class="v01-rule-label">结束后</div><div class="v01-rule-copy">回到 SportRX，记录这一次是否完成和本次 RPE。</div></div>
-        </div>
-        """,
+        '<div class="v01-section-note">跟练会在处方总时长内安排热身、主训练和放松，不会额外增加时间。</div>',
         unsafe_allow_html=True,
     )
 
-    st.subheader("语音带练")
-    _v01_voice_player(
-        build_session_voice_script(
-            session,
-            activity_label=_v01_activity(session["activity"]),
-            intensity_label=_v01_intensity(session["intensity"]),
-            talk_test=_v01_talk_test(session["intensity"]),
-        ),
-        f"session-{active_week['week']}-{session_index}",
-    )
-    st.caption("语音来自当前设备，只朗读已通过边界检查的处方内容，不会自行改变训练剂量。")
-
     suggestions = _v01_discovery_exercises(session["activity"])
     if suggestions:
-        st.subheader("本次训练动作")
-        st.caption("已从本地 GitHub 动作库找到与本次训练方式相关的动作。选择后可查看并播放动作步骤。")
-        for item in suggestions:
-            st.markdown(
-                (
-                    '<article class="v01-discovery-card">'
-                    f'<div class="v01-discovery-card-name">{escape(_v01_exercise_label(item))}</div>'
-                    f'<div class="v01-discovery-card-meta">{escape(_v01_catalogue_value_label(item["equipment"]))} · {escape(_v01_catalogue_value_label(item["target"]))}</div>'
-                    '</article>'
-                ),
-                unsafe_allow_html=True,
-            )
-            st.button(
-                f"查看 {_v01_exercise_label(item)} 的动作说明",
-                key=f"v01_today_exercise_{active_week['week']}_{session_index}_{item['id']}",
-                width="stretch",
-                on_click=_v01_open_exercise,
-                args=(item["id"],),
-            )
+        st.subheader("本次跟练动作")
+        suggestion_ids = [item["id"] for item in suggestions]
+        current_selection = st.session_state.v01_exercise_selection
+        if current_selection not in suggestion_ids:
+            current_selection = suggestion_ids[0]
+        exercise_by_id = {item["id"]: item for item in suggestions}
+        selected_exercise_id = st.selectbox(
+            "选择动作参考",
+            suggestion_ids,
+            index=suggestion_ids.index(current_selection),
+            format_func=lambda exercise_id: _v01_exercise_label(exercise_by_id[exercise_id]),
+            key=f"v01_today_exercise_choice_{active_week['week']}_{session_index}",
+        )
+        selected_exercise = exercise_by_id[selected_exercise_id]
+        st.caption(
+            f"{_v01_exercise_equipment_label(selected_exercise)}，"
+            f"主要动作目标：{_v01_catalogue_value_label(selected_exercise['target'])}。动作说明来自本地内容库。"
+        )
+        st.button(
+            "开始跟练",
+            type="primary",
+            width="stretch",
+            on_click=_v01_start_guided_workout,
+            args=(selected_exercise_id,),
+        )
+        st.button(
+            "先看动作说明",
+            width="stretch",
+            on_click=_v01_open_exercise,
+            args=(selected_exercise_id,),
+        )
+    else:
+        st.button(
+            "开始跟练",
+            type="primary",
+            width="stretch",
+            on_click=_v01_start_guided_workout,
+        )
 
-    st.button("记录本次训练", type="primary", width="stretch", on_click=_v01_set_page, args=("记录",))
+    st.caption("跟练页会自动计时、切换阶段并在当前设备播放中文语音。处方时长和强度不会被动作库改写。")
+    st.button("直接记录本次训练", width="stretch", on_click=_v01_set_page, args=("记录",))
     st.button("查看 4 周适应性路线", width="stretch", on_click=_v01_set_page, args=("计划",))
+
+
+def _v01_guided_workout_page() -> None:
+    """Render the focused timer, cue and next-movement workout experience."""
+
+    plan = st.session_state.v01_plan
+    if not isinstance(plan, dict):
+        _v01_set_page("首页")
+        st.rerun()
+    active_week = _v01_active_week(plan)
+    if active_week is None:
+        _v01_set_page("首页")
+        st.rerun()
+
+    summary = _v01_session_summary(active_week)
+    session_index = summary["missing_session_indexes"][0]
+    session = active_week["sessions"][session_index]
+    suggestions = _v01_discovery_exercises(session["activity"])
+    suggestion_ids = {item["id"] for item in suggestions}
+    selected_exercise = get_exercise(st.session_state.v01_exercise_selection) if st.session_state.v01_exercise_selection else None
+    if selected_exercise is not None and selected_exercise["id"] not in suggestion_ids:
+        selected_exercise = None
+    if selected_exercise is None and suggestions:
+        selected_exercise = suggestions[0]
+        _v01_select_exercise(selected_exercise["id"])
+
+    workout = build_guided_workout(
+        session,
+        exercise=selected_exercise,
+        exercise_label=_v01_exercise_label(selected_exercise) if selected_exercise else None,
+        activity_label=_v01_activity(session["activity"]),
+        intensity_label=_v01_intensity(session["intensity"]),
+        talk_test=_v01_talk_test(session["intensity"]),
+    )
+
+    st.button("← 退出跟练", key="v01_exit_guided_workout_top", on_click=_v01_set_page, args=("首页",))
+    st.markdown(
+        (
+            '<div class="v01-nav-label">'
+            f'第 {active_week["week"]} 周 · 第 {session_index + 1} 次训练 · 共 {workout["duration_minutes"]} 分钟'
+            '</div>'
+        ),
+        unsafe_allow_html=True,
+    )
+    _v01_guided_runner(workout, f"week-{active_week['week']}-session-{session_index}")
+    st.button(
+        "训练结束，记录 RPE",
+        type="primary",
+        width="stretch",
+        on_click=_v01_set_page,
+        args=("记录",),
+    )
+    st.caption("计时结束后，请记录是否完成和本次 RPE。训练中如有明显异常不适，应停止训练。")
 
 
 def _v01_progress_page() -> None:
@@ -13375,6 +13673,9 @@ def aerobic_v01_app() -> None:
     if not _v01_has_local_profile():
         _v01_registration_page()
         return
+    if st.session_state.v01_page == "跟练":
+        _v01_guided_workout_page()
+        return
     st.markdown(
         """
         <header class="v01-product-hero">
@@ -13384,7 +13685,7 @@ def aerobic_v01_app() -> None:
             <p class="v01-product-copy">先识别你的当前场景，再用对应方案的清楚规则，把现实时间和运动反馈变成可执行的训练起点。</p>
           </div>
           <div class="v01-product-stats" aria-label="SportRX 计划特点">
-            <div class="v01-product-stat">当前路径<strong>Program Pack</strong></div>
+            <div class="v01-product-stat">当前路径<strong>处方方案</strong></div>
             <div class="v01-product-stat">反馈信号<strong>RPE</strong></div>
           </div>
         </header>

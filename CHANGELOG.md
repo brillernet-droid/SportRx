@@ -10,6 +10,11 @@
 - Selected the prescription-first mobile direction and added device-local
   Chinese voice guidance for the approved session and exercise-catalogue steps.
   Voice playback does not call an external service or change training dose.
+- Replaced the standalone voice button and movement-card stack with a focused
+  guided-workout surface inspired by familiar follow-along training patterns:
+  current movement, large countdown, phase progress, next-phase preview,
+  pause/skip controls, and device-local transition cues. The warm-up, main
+  segment, and cooldown always preserve the prescribed total duration.
 
 - Added a versioned `Program Pack` registry and deterministic scenario router.
   A Pack, rather than a database, movement catalogue, device, or LLM, now

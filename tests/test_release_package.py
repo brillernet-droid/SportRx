@@ -60,6 +60,7 @@ def test_release_package_manifest_is_public_ready():
     assert "sportrx/export_archive.py" in manifest["included_files"]
     assert "sportrx/first_run_guide.py" in manifest["included_files"]
     assert "sportrx/guided_review.py" in manifest["included_files"]
+    assert "sportrx/guided_workout.py" in manifest["included_files"]
     assert "sportrx/input_ledger.py" in manifest["included_files"]
     assert "sportrx/lab_readiness.py" in manifest["included_files"]
     assert "sportrx/measurement_timeline.py" in manifest["included_files"]
@@ -126,6 +127,7 @@ def test_write_release_package_excludes_internal_files(tmp_path):
     assert "sportrx/export_archive.py" in names
     assert "sportrx/first_run_guide.py" in names
     assert "sportrx/guided_review.py" in names
+    assert "sportrx/guided_workout.py" in names
     assert "sportrx/input_ledger.py" in names
     assert "sportrx/lab_readiness.py" in names
     assert "sportrx/measurement_timeline.py" in names

@@ -49,6 +49,7 @@ from .export_bundle import build_export_bundle
 from .feedback_loop import build_feedback_dashboard, feedback_dashboard_markdown
 from .first_run_guide import build_first_run_guide, first_run_guide_markdown
 from .guided_review import build_guided_review_console, guided_review_markdown
+from .guided_workout import build_guided_workout
 from .input_ledger import build_input_ledger, input_ledger_markdown
 from .intake_precision import build_intake_precision_audit, intake_precision_markdown
 from .lab_readiness import build_lab_readiness_console, lab_readiness_markdown
@@ -170,6 +171,7 @@ __all__ = [
     "build_review_pack_zip",
     "build_first_run_guide",
     "build_guided_review_console",
+    "build_guided_workout",
     "build_input_ledger",
     "build_intake_precision_audit",
     "build_lab_readiness_console",
